@@ -1,6 +1,9 @@
 ﻿@page "/admin"
 
 @using Microsoft.AspNetCore.Authorization
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
 
 @attribute [Authorize]
 
@@ -12,8 +15,31 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudText Typo="Typo.h3" GutterBottom="true">You are authenticated!</MudText>
+<MudDataGrid Items="@adminEvents" RowStyle="GetRowStyle">
+    <Columns>
+        <PropertyColumn Property="x => x.Date" Title="DateTime" />
+        <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
+    </Columns>
+</MudDataGrid>
 
-<AuthorizeView>
-    <MudText Class="mb-4">Hello @context.User.Identity?.Name!</MudText>
-</AuthorizeView>
+@code {
+    [Inject] protected IAdminService UserService { get; set; }
+
+    private List<AdminEventDisplay>? adminEvents { get; set; } = new();
+
+    protected override async Task OnInitializedAsync() {
+        adminEvents = await UserService.GetAdminEvents();   
+        Console.WriteLine("lala");
+    }
+
+    private Func<AdminEventDisplay, string> _cellStyleFunc => x =>
+    {
+        string style = "";
+
+        if (x.ActivityType == ActivityType.ArticleRead)
+            style += "background-color:green";
+
+        return style;
+    };
+}
+

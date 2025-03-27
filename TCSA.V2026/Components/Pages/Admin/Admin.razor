@@ -19,6 +19,7 @@
     <Columns>
         <PropertyColumn Property="x => x.Date" Title="DateTime" />
         <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
+        <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
     </Columns>
 </MudDataGrid>
 
@@ -38,6 +39,12 @@
 
         if (x.ActivityType == ActivityType.ArticleRead)
             style += "background-color:green";
+
+        if (x.ActivityType == ActivityType.ProjectSubmitted)
+            style += "background-color:blue";
+
+        if (x.ActivityType == ActivityType.CodeReviewCompleted)
+            style += "background-color:red";
 
         return style;
     };

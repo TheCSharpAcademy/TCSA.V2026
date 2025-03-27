@@ -5,6 +5,8 @@ using MudBlazor.Services;
 using TCSA.V2026.Components;
 using TCSA.V2026.Components.Account;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Helpers;
+using TCSA.V2026.Data.Models;
 using TCSA.V2026.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +45,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+ServiceProviderAccessor.ServiceProvider = app.Services;
 
 using (var scope = app.Services.CreateScope())
 {

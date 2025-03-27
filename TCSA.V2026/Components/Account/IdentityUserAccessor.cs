@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Components.Account
 {

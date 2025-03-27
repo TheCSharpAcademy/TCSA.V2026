@@ -9,6 +9,7 @@ using Microsoft.Extensions.Primitives;
 using TCSA.V2026.Components.Account.Pages;
 using TCSA.V2026.Components.Account.Pages.Manage;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Models;
 
 namespace Microsoft.AspNetCore.Routing
 {

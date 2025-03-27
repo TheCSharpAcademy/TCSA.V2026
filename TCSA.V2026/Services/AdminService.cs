@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.Models;
+using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.Services;
 
@@ -28,7 +31,8 @@ public class AdminService : IAdminService
                 .Select(ua => new AdminEventDisplay { 
                     AppUserId = ua.AppUserId,
                     ActivityType = ua.ActivityType,
-                    Date = ua.DateSubmitted.AddHours(10).ToString("ddd, dd-MMM, HH:mm")
+                    Date = ua.DateSubmitted.AddHours(10).ToString("ddd, dd-MMM, HH:mm"),
+                    ActivityName = AdminHelpers.GetActivityName(ua)
                 })
                 .ToListAsync();
         }

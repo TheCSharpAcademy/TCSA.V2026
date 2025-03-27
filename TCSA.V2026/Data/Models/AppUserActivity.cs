@@ -3,6 +3,7 @@
 public class AppUserActivity
 {
     public int Id { get; set; }
+    public ApplicationUser ApplicationUser { get; set; }
     public string AppUserId { get; set; }
     public int ProjectId { get; set; }
     public int ChallengeId { get; set; }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Components.Account
 {

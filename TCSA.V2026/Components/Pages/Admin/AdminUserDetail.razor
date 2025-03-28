@@ -5,11 +5,11 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-@if (IsLoading) 
+@if (IsLoading)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-} 
-else 
+}
+else
 {
     <MudPaper Width="600px">
         <MudList T="string">
@@ -106,24 +106,55 @@ else
         </MudList>
     </MudPaper>
 
-    <MudDataGrid Items="@User.DashboardProjects">
+    <MudDataGrid Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted)">
         <Columns>
-            <PropertyColumn Property="dp => AdminHelpers.GetProjectName(dp)" Title="Name" />
+            <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
             <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
             <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
+            <TemplateColumn CellClass="d-flex justify-end" Style="@($"height:100%")">
+                <CellTemplate>
+                    <MudStack Row>
+                        @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
+                        {
+                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                       OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
+                                <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
+                            </MudButton>
+                        }
+                        @if (!context.Item.IsCompleted)
+                        {
+                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                       OnClick="@(() => MarkAsCompleted(context.Item.Id))">
+                                <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
+                            </MudButton>
+                        } else 
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" />
+                        }
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
         </Columns>
     </MudDataGrid>
-} 
+}
 
 @code {
     [Parameter] public string UserId { get; set; }
     [Inject] protected IUserService UserService { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
 
     private bool IsLoading = true;
 
     private ApplicationUser User { get; set; }
 
     protected override async Task OnInitializedAsync()
+    {
+        User = await UserService.GetUserForAdmin(UserId);
+        IsLoading = false;
+    }
+
+    protected async Task MarkAsCompleted(int id)
     {
         User = await UserService.GetUserForAdmin(UserId);
         IsLoading = false;

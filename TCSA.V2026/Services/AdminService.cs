@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
@@ -32,7 +33,7 @@ public class AdminService : IAdminService
                     AppUserId = ua.AppUserId,
                     ActivityType = ua.ActivityType,
                     Date = ua.DateSubmitted.AddHours(10).ToString("ddd, dd-MMM, HH:mm"),
-                    ActivityName = AdminHelpers.GetActivityName(ua)
+                    ActivityName = DashboardProjectsHelpers.GetProject(ua.ProjectId).Title
                 })
                 .ToListAsync();
         }

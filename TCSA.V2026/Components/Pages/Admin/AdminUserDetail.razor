@@ -1,5 +1,124 @@
 ﻿@page "/admin/{UserId}"
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
 
+@if (User != null) {
+    <MudPaper Width="600px">
+        <MudList T="string">
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.PermIdentity" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.Id
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.CardMembership" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.DisplayName
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.Map" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.Country
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.Score" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.ExperiencePoints
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.CardTravel" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.FirstName @User.LastName
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.Email
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.GithubUsername
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                     <MudAvatar>
+                        <MudIcon Icon="@Icons.Custom.Brands.Discord" Color="Color.Primary" />
+                     </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @User.DiscordAlias
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @(User.EmailConfirmed ? "Confirmed" : "NotConfirmed")
+                </ChildContent>
+            </MudListItem>
+        </MudList>
+    </MudPaper>
+
+    <MudDataGrid Items="@User.DashboardProjects">
+        <Columns>
+            <PropertyColumn Property="dp => AdminHelpers.GetProjectName(dp)" Title="Name" />
+            <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
+            <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
+        </Columns>
+    </MudDataGrid>
+} 
+else 
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
 @code {
+    [Parameter] public string UserId { get; set; }
+    [Inject] protected IUserService UserService { get; set; }
 
+    private ApplicationUser User { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await UserService.GetUserForAdmin(UserId);
+    }
 }

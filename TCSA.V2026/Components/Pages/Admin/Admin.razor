@@ -20,17 +20,31 @@
         <PropertyColumn Property="x => x.Date" Title="DateTime" />
         <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
         <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
     </Columns>
 </MudDataGrid>
 
 @code {
     [Inject] protected IAdminService UserService { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
 
     private List<AdminEventDisplay>? adminEvents { get; set; } = new();
 
     protected override async Task OnInitializedAsync() {
         adminEvents = await UserService.GetAdminEvents();   
         Console.WriteLine("lala");
+    }
+
+    private Task NavigateToDetails(string userId)
+    {
+        Navigation.NavigateTo($"/admin/{userId}");
+        return Task.CompletedTask;
     }
 
     private Func<AdminEventDisplay, string> _cellStyleFunc => x =>

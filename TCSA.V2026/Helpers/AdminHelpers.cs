@@ -1,4 +1,5 @@
-﻿using TCSA.V2026.Data.Curriculum;
+﻿using System.Diagnostics;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Helpers;
@@ -16,5 +17,16 @@ public static class AdminHelpers
         }
 
         return "Unknown";
+    }
+
+    public static string GetProjectName(DashboardProject project)
+    {
+            return
+                  ArticleHelper.GetArticles()
+                   .FirstOrDefault(a => a.Id == project.ProjectId)?.Title
+               ?? ProjectHelper.GetProjects()
+                   .FirstOrDefault(p => p.Id == project.ProjectId)?.Title
+               ?? CourseHelper.GetCourses().SelectMany(x => x.Articles)
+                   .FirstOrDefault(a => a.Id == project.ProjectId)?.Title;
     }
 }

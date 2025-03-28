@@ -11,6 +11,7 @@ namespace TCSA.V2026.Services;
 public interface IAdminService
 {
     Task<List<AdminEventDisplay>> GetAdminEvents();
+    Task<List<ApplicationUser>> SearchUser(string email);
 }
 
 public class AdminService : IAdminService
@@ -36,6 +37,14 @@ public class AdminService : IAdminService
                     ActivityName = DashboardProjectsHelpers.GetProject(ua.ProjectId).Title
                 })
                 .ToListAsync();
+        }
+    }
+
+    public async Task<List<ApplicationUser>> SearchUser(string email)
+    {
+        using (var context = _factory.CreateDbContext())
+        {
+            return await context.AspNetUsers.Where(u => u.Email.Contains(email)).ToListAsync();
         }
     }
 }

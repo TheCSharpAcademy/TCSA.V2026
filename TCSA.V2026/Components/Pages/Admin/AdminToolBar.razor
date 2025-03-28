@@ -1,0 +1,20 @@
+﻿<MudPaper Elevation="25">
+    <MudToolBar>
+        <MudIconButton Icon="@Icons.Material.Outlined.List" OnClick="NavigateToMain"/>
+        <MudIconButton Icon="@Icons.Material.Outlined.Search" OnClick="NavigateToSearch" />
+    </MudToolBar>
+</MudPaper>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private void NavigateToMain()
+    {
+        Navigation.NavigateTo("/admin");
+    }
+
+    private void NavigateToSearch()
+    {
+        Navigation.NavigateTo("/adminsearch");
+    }
+}

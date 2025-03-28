@@ -1,11 +1,14 @@
 ﻿@page "/admin/{UserId}"
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-@if (IsLoading)
+<AdminToolBar></AdminToolBar>
+
+@if (IsLoading || User == null)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
@@ -117,17 +120,18 @@ else
                         @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
                         {
                             <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                       OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
+                            OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
                                 <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
                             </MudButton>
                         }
                         @if (!context.Item.IsCompleted)
                         {
                             <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                       OnClick="@(() => MarkAsCompleted(context.Item.Id))">
+                            OnClick="@(() => OpenConfirmationDialog(context.Item.Id))">
                                 <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
                             </MudButton>
-                        } else 
+                        }
+                        else
                         {
                             <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" />
                         }
@@ -138,15 +142,30 @@ else
     </MudDataGrid>
 }
 
+<MudDialog @ref="confirmationDialog">
+    <TitleContent>Are you sure?</TitleContent>
+    <DialogContent>
+        <MudText>Are you sure you want to mark this project as completed?</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseDialog" Color="Color.Default">Cancel</MudButton>
+        <MudButton OnClick="ConfirmMarkAsCompleted" Color="Color.Primary">Yes</MudButton>
+    </DialogActions>
+</MudDialog>
+
 @code {
     [Parameter] public string UserId { get; set; }
     [Inject] protected IUserService UserService { get; set; }
+    [Inject] protected IProjectService ProjectService { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+
+    private MudDialog confirmationDialog;
+    private ApplicationUser User;
 
     private bool IsLoading = true;
-
-    private ApplicationUser User { get; set; }
+    private int _selectedProjectId;  // To store the selected project ID
 
     protected override async Task OnInitializedAsync()
     {
@@ -154,9 +173,31 @@ else
         IsLoading = false;
     }
 
-    protected async Task MarkAsCompleted(int id)
+    private async Task ConfirmMarkAsCompleted()
     {
-        User = await UserService.GetUserForAdmin(UserId);
+        var result = await ProjectService.MarkAsCompleted(_selectedProjectId);
         IsLoading = false;
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Project marked as completed successfully!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        await confirmationDialog.CloseAsync();
+    }
+
+    private async Task OpenConfirmationDialog(int projectId)
+    {
+        _selectedProjectId = projectId;
+        await confirmationDialog.ShowAsync();
+    }
+
+    private async Task CloseDialog()
+    {
+        await confirmationDialog.CloseAsync();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
-using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
 
@@ -10,7 +9,7 @@ public interface IProjectService
 {
     Task<BaseResponse> MarkAsCompleted(int projectId);
 }
-public class ProjectService: IProjectService
+public class ProjectService : IProjectService
 {
     private readonly IDbContextFactory<ApplicationDbContext> _factory;
 
@@ -38,7 +37,7 @@ public class ProjectService: IProjectService
                     };
                 }
 
-                project.IsCompleted = true; 
+                project.IsCompleted = true;
                 project.DateCompleted = DateTime.UtcNow;
                 project.AppUser.ExperiencePoints = project.AppUser.ExperiencePoints + DashboardProjectsHelpers.GetProject(project.ProjectId).ExperiencePoints;
 

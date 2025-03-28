@@ -1,0 +1,91 @@
+﻿@page "/adminsearch"
+
+@using Microsoft.AspNetCore.Authorization
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+
+@attribute [Authorize]
+
+<PageTitle>AdminSearch</PageTitle>
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<AdminToolBar></AdminToolBar>
+
+@if (IsLoading)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudPaper Class="pa-4">
+                <MudForm @ref="form" OnSubmit="Submit">
+                    <MudTextField T="string" Label="Email" @bind-Value="emailSearch" />            
+                    <div class="d-flex align-center justify-space-between">
+                        <MudButton OnClick=@Submit 
+                            Variant="Variant.Filled" 
+                            Color="Color.Primary" 
+                            Class="ml-auto" Type="Submit">Submit
+                        </MudButton>  
+                    </div>
+                </MudForm>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    @if(users.Count > 0) {
+        <MudDataGrid Items="@users">
+            <Columns>
+                <PropertyColumn Property="u => u.Email" Title="Email" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudButton 
+                                Size="@Size.Small" 
+                                Variant="@Variant.Filled" 
+                                Color="@Color.Primary" 
+                                OnClick="@(() => NavigateToDetails(context.Item.Id))">Deets
+                            </MudButton>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    }
+}
+
+@code {
+    [Inject] protected IUserService UserService { get; set; }
+    [Inject] protected IAdminService AdminService { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+    private bool IsLoading = true;
+
+    MudForm form;
+    private List<ApplicationUser> users { get; set; } = new();
+    private string emailSearch { get; set; } 
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = false;
+    }
+
+    private async Task Submit()
+    {
+        IsLoading = true;
+        if (!string.IsNullOrEmpty(emailSearch))
+        {
+            users = await AdminService.SearchUser(emailSearch); 
+        }
+
+        IsLoading = false;
+    }
+
+    private Task NavigateToDetails(string userId)
+    {
+        Navigation.NavigateTo($"/admin/{userId}");
+        return Task.CompletedTask;
+    }
+}

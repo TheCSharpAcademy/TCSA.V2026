@@ -3,7 +3,14 @@
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 
-@if (User != null) {
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@if (IsLoading) 
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+} 
+else 
+{
     <MudPaper Width="600px">
         <MudList T="string">
             <MudListItem>
@@ -78,9 +85,9 @@
             </MudListItem>
             <MudListItem>
                 <AvatarContent>
-                     <MudAvatar>
+                    <MudAvatar>
                         <MudIcon Icon="@Icons.Custom.Brands.Discord" Color="Color.Primary" />
-                     </MudAvatar>
+                    </MudAvatar>
                 </AvatarContent>
                 <ChildContent>
                     @User.DiscordAlias
@@ -107,18 +114,18 @@
         </Columns>
     </MudDataGrid>
 } 
-else 
-{
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-}
+
 @code {
     [Parameter] public string UserId { get; set; }
     [Inject] protected IUserService UserService { get; set; }
+
+    private bool IsLoading = true;
 
     private ApplicationUser User { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         User = await UserService.GetUserForAdmin(UserId);
+        IsLoading = false;
     }
 }

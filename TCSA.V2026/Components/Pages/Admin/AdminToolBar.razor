@@ -2,6 +2,7 @@
     <MudToolBar>
         <MudIconButton Icon="@Icons.Material.Outlined.List" OnClick="NavigateToMain"/>
         <MudIconButton Icon="@Icons.Material.Outlined.Search" OnClick="NavigateToSearch" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PendingActions" OnClick="NavigateToPending" />
     </MudToolBar>
 </MudPaper>
 
@@ -16,5 +17,10 @@
     private void NavigateToSearch()
     {
         Navigation.NavigateTo("/adminsearch");
+    }
+
+    private void NavigateToPending()
+    {
+        Navigation.NavigateTo("/adminpending");
     }
 }

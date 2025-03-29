@@ -26,7 +26,7 @@ public class ProjectService : IProjectService
             {
                 var project = context.DashboardProjects
                     .Include(dp => dp.AppUser)
-                    .FirstOrDefault(p => p.ProjectId == projectId);
+                    .FirstOrDefault(p => p.Id == projectId);
 
                 if (project == null)
                 {

@@ -1,0 +1,65 @@
+﻿@page "/adminpending"
+
+@using Microsoft.AspNetCore.Authorization
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+
+@attribute [Authorize]
+
+<PageTitle>Auth</PageTitle>
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<AdminToolBar></AdminToolBar>
+
+@if (IsLoading) 
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+} 
+else 
+{
+    <MudDataGrid Items="@adminPendingProjects" RowStyle="GetRowStyle">
+        <Columns>
+            <PropertyColumn Property="x => x.DateSubmitted" Title="DateTime" />
+            <PropertyColumn Property="x => x.ProjectName" Title="Name"  />
+            <PropertyColumn Property="x => x.UserName" Title="Username" />
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudButton 
+                            Size="@Size.Small" 
+                            Variant="@Variant.Filled" 
+                            Color="@Color.Primary" 
+                            OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets
+                        </MudButton>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+}
+
+
+@code {
+    [Inject] protected IAdminService AdminService { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private List<AdminPendingDisplay>? adminPendingProjects { get; set; } = new();
+
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync() 
+    {
+        adminPendingProjects = await AdminService.GetAdminPendingProjects();
+
+        IsLoading = false;
+    }
+
+    private Task NavigateToDetails(string userId)
+    {
+        Navigation.NavigateTo($"/admin/{userId}");
+        return Task.CompletedTask;
+    }
+}
+

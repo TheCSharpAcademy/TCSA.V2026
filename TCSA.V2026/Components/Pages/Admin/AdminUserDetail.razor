@@ -1,8 +1,14 @@
 ﻿@page "/admin/{UserId}"
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
+
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@inject IDialogService DialogService
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -142,17 +148,6 @@ else
     </MudDataGrid>
 }
 
-<MudDialog @ref="confirmationDialog">
-    <TitleContent>Are you sure?</TitleContent>
-    <DialogContent>
-        <MudText>Are you sure you want to mark this project as completed?</MudText>
-    </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="CloseDialog" Color="Color.Default">Cancel</MudButton>
-        <MudButton OnClick="ConfirmMarkAsCompleted" Color="Color.Primary">Yes</MudButton>
-    </DialogActions>
-</MudDialog>
-
 @code {
     [Parameter] public string UserId { get; set; }
     [Inject] protected IUserService UserService { get; set; }
@@ -161,11 +156,9 @@ else
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
-    private MudDialog confirmationDialog;
     private ApplicationUser User;
 
     private bool IsLoading = true;
-    private int _selectedProjectId;  // To store the selected project ID
 
     protected override async Task OnInitializedAsync()
     {
@@ -173,31 +166,25 @@ else
         IsLoading = false;
     }
 
-    private async Task ConfirmMarkAsCompleted()
-    {
-        var result = await ProjectService.MarkAsCompleted(_selectedProjectId);
-        IsLoading = false;
-
-        if (result.Status == ResponseStatus.Success)
-        {
-            Snackbar.Add("Project marked as completed successfully!", Severity.Success);
-        }
-        else
-        {
-            Snackbar.Add($"Error: {result.Message}", Severity.Error);
-        }
-
-        await confirmationDialog.CloseAsync();
-    }
-
     private async Task OpenConfirmationDialog(int projectId)
     {
-        _selectedProjectId = projectId;
-        await confirmationDialog.ShowAsync();
-    }
+        var options = new DialogOptions { CloseOnEscapeKey = true };
 
-    private async Task CloseDialog()
-    {
-        await confirmationDialog.CloseAsync();
+        var dialog = await DialogService.ShowAsync<TCSADialog>("Simple Dialog", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var apiResult = await ProjectService.MarkAsCompleted(projectId);
+
+            if (apiResult.Status == ResponseStatus.Success) 
+            {
+                Snackbar.Add("Project marked as completed successfully!", Severity.Success);
+            } 
+            else 
+            {
+                Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
     }
 }

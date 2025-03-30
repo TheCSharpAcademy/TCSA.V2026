@@ -20,14 +20,21 @@ public class UserService: IUserService
 
     public async Task<ApplicationUser> GetUserForAdmin(string id)
     {
+        var startTime = DateTime.UtcNow;
         try
         {
             using (var context = _factory.CreateDbContext())
             {
-                return await context.AspNetUsers
-                .Include(x => x.DashboardProjects)
+                 var result = await context.AspNetUsers
+                .Include(u => u.DashboardProjects)
+                .Include(u => u.CodeReviewProjects)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id.Equals(id));
+
+                var loadTime = DateTime.UtcNow - startTime;
+                return result;
             }
+            
         }
         catch (Exception ex)
         {

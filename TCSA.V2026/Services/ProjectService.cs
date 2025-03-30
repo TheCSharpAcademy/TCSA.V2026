@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
 
@@ -39,7 +40,20 @@ public class ProjectService : IProjectService
 
                 project.IsCompleted = true;
                 project.DateCompleted = DateTime.UtcNow;
-                project.AppUser.ExperiencePoints = project.AppUser.ExperiencePoints + DashboardProjectsHelpers.GetProject(project.ProjectId).ExperiencePoints;
+
+                var experiencePoints = DashboardProjectsHelpers.GetProject(project.ProjectId).ExperiencePoints;
+
+                context.UserActivity.Add(new AppUserActivity
+                {
+                    AppUserId = project.AppUser.Id,
+                    ProjectId = project.ProjectId,
+                    DateSubmitted = DateTime.UtcNow,
+                    ActivityType = ActivityType.ProjectCompleted
+                });
+
+                context.Users.Attach(project.AppUser);
+                project.AppUser.ExperiencePoints += experiencePoints;
+                context.Entry(project.AppUser).Property(u => u.ExperiencePoints).IsModified = true;
 
                 await context.SaveChangesAsync();
             }
@@ -59,3 +73,4 @@ public class ProjectService : IProjectService
         }
     }
 }
+

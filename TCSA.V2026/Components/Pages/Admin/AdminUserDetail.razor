@@ -1,5 +1,8 @@
 ﻿@page "/admin/{UserId}"
+@using Microsoft.AspNetCore.Identity.UI.Services
 @using TCSA.V2026.Components.UI
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
@@ -22,6 +25,16 @@ else
 {
     <MudPaper Width="600px">
         <MudList T="string">
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.PunchClock" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    @loadTime.TotalSeconds
+                </ChildContent>
+            </MudListItem>
             <MudListItem>
                 <AvatarContent>
                     <MudAvatar>
@@ -120,7 +133,7 @@ else
             <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
             <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
             <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
-            <TemplateColumn CellClass="d-flex justify-end" Style="@($"height:100%")">
+            <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
                     <MudStack Row>
                         @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
@@ -150,20 +163,42 @@ else
 
 @code {
     [Parameter] public string UserId { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
     [Inject] protected IUserService UserService { get; set; }
     [Inject] protected IProjectService ProjectService { get; set; }
-    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] protected ICommunityService CommunityService { get; set; }
+    [Inject] protected ILeaderboardService LeaderboardService { get; set; }
+    [Inject] protected IPeerReviewService PeerReviewService { get; set; }
+    [Inject] protected IEmailSender EmailSender { get; set; }
+
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
     private ApplicationUser User;
 
+    private List<Project>? projects;
+    private List<Article>? articles;
+    private List<CommunityIssue>? issues;
+    private List<CodeReviewDetail>? reviews;
+    private Level BeltShouldBe;
+
     private bool IsLoading = true;
+    private int XPSum;
+    private int ranking;
+    private TimeSpan loadTime;
 
     protected override async Task OnInitializedAsync()
     {
+        var startTime = DateTime.UtcNow;
+        projects = ProjectHelper.GetProjects();
+        articles = ArticleHelper.GetArticles().ToList();
+        var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
+        articles.AddRange(courseArticles);
+
         User = await UserService.GetUserForAdmin(UserId);
-        IsLoading = false;
+
+        loadTime = DateTime.UtcNow - startTime;
+        IsLoading = false; 
     }
 
     private async Task OpenConfirmationDialog(int projectId)
@@ -177,13 +212,91 @@ else
         {
             var apiResult = await ProjectService.MarkAsCompleted(projectId);
 
-            if (apiResult.Status == ResponseStatus.Success) 
+            if (apiResult.Status == ResponseStatus.Success)
             {
                 Snackbar.Add("Project marked as completed successfully!", Severity.Success);
-            } 
-            else 
+                User = await UserService.GetUserForAdmin(UserId);
+                await ProcessProjectCompleted(projectId);
+            }
+            else
             {
                 Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task ProcessProjectCompleted(int projectId)
+    {
+        string projectTitle = "";
+        var project = projects.FirstOrDefault(x => x.Id == projectId);
+
+        if (project == null)
+        {
+            var issue = await CommunityService.GetIssueByProjectId(projectId);
+            projectTitle = issue.Title;
+        }
+        else
+        {
+            projectTitle = project.Title;
+        }
+
+        var rankingText = await LeaderboardService.GetUserRanking(UserId);
+        var rankingWithSuffix = LeaderboardHelper.GetRanking(rankingText);
+
+        var firstName = User.FirstName ??= "";
+
+        var projectExperiencePoints =
+            project != null
+            ? project.ExperiencePoints
+            : issues.Single(x => x.ProjectId == projectId).ExperiencePoints;
+
+        var body = EmailHelper.GetProjectCompletedBody(firstName, projectTitle, projectExperiencePoints, rankingWithSuffix.ToString());
+
+        await EmailSender.SendEmailAsync(User.Email, "Your Project Was Marked as Complete", body);
+    }
+
+    private async Task GetXPSum()
+    {
+        var ids = new List<int>();
+
+        var projectIds = User.DashboardProjects?
+           .Where(x => x.IsCompleted)
+           .Select(x => x.ProjectId)
+           .ToList();
+
+        if (projectIds != null)
+        {
+            ids.AddRange(projectIds);
+        }
+
+        if (User.CodeReviewProjects != null)
+        {
+            reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
+        }
+
+        if (reviews != null)
+        {
+            var reviewIds = reviews
+          .Where(x => x.IsCompleted)
+          .Select(x => x.ProjectId)
+          .ToList();
+
+            ids.AddRange(reviewIds);
+        }
+
+        foreach (int id in ids)
+        {
+            if (projects.Any(x => x.Id == id))
+            {
+                XPSum = projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
+            }
+            else if (articles.Any(x => x.Id == id))
+            {
+                XPSum = articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
+            }
+            else
+            {
+                XPSum = issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
             }
         }
     }

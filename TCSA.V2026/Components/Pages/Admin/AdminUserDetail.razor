@@ -128,7 +128,7 @@ else
         </MudList>
     </MudPaper>
 
-    <MudDataGrid Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted)">
+    <MudDataGrid Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted).ThenByDescending(x => x.DateSubmitted)">
         <Columns>
             <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
             <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
@@ -146,7 +146,7 @@ else
                         @if (!context.Item.IsCompleted)
                         {
                             <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                            OnClick="@(() => OpenConfirmationDialog(context.Item.Id))">
+                            OnClick="@(() => OpenConfirmationDialog(context.Item.Id, context.Item.ProjectId))">
                                 <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
                             </MudButton>
                         }
@@ -201,22 +201,22 @@ else
         IsLoading = false; 
     }
 
-    private async Task OpenConfirmationDialog(int projectId)
+    private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        var dialog = await DialogService.ShowAsync<TCSADialog>("Simple Dialog", options);
+        var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
         var result = await dialog.Result;
 
         if (!result.Canceled)
         {
-            var apiResult = await ProjectService.MarkAsCompleted(projectId);
+            var apiResult = await ProjectService.MarkAsCompleted(dbProjectId);
 
             if (apiResult.Status == ResponseStatus.Success)
             {
                 Snackbar.Add("Project marked as completed successfully!", Severity.Success);
                 User = await UserService.GetUserForAdmin(UserId);
-                await ProcessProjectCompleted(projectId);
+                await ProcessProjectCompleted(curriculumProjectId);
             }
             else
             {

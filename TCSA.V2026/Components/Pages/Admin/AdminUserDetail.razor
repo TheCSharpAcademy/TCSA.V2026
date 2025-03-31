@@ -26,104 +26,143 @@ else
     <MudPaper Width="600px">
         <MudList T="string">
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.PunchClock" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @loadTime.TotalSeconds
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.PunchClock" Color="Color.Primary" />
+                        </MudAvatar>
+                        Load Time
+                    </MudItem>
+                    <MudItem xs="6">
+                        @loadTime.TotalSeconds
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.PermIdentity" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.Id
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.PermIdentity" Color="Color.Primary" />
+                        </MudAvatar>
+                        User ID
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.Id
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.CardMembership" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.DisplayName
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.CardMembership" Color="Color.Primary" />
+                        </MudAvatar>
+                        Display Name
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.DisplayName
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.Map" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.Country
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.Map" Color="Color.Primary" />
+                        </MudAvatar>
+                        Country
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.Country
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.Score" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.ExperiencePoints
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.Score" Color="Color.Primary" />
+                        </MudAvatar>
+                        Experience Points
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.ExperiencePoints
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.CardTravel" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.FirstName @User.LastName
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.CardTravel" Color="Color.Primary" />
+                        </MudAvatar>
+                        Full Name
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.FirstName @User.LastName
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.Email
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" />
+                        </MudAvatar>
+                        Email
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.Email
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.GithubUsername
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+                        </MudAvatar>
+                        GitHub Username
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.GithubUsername
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Custom.Brands.Discord" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @User.DiscordAlias
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Custom.Brands.Discord" Color="Color.Primary" />
+                        </MudAvatar>
+                        Discord Alias
+                    </MudItem>
+                    <MudItem xs="6">
+                        @User.DiscordAlias
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
+
             <MudListItem>
-                <AvatarContent>
-                    <MudAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Color="Color.Primary" />
-                    </MudAvatar>
-                </AvatarContent>
-                <ChildContent>
-                    @(User.EmailConfirmed ? "Confirmed" : "NotConfirmed")
-                </ChildContent>
+                <MudGrid Container>
+                    <MudItem xs="6">
+                        <MudAvatar>
+                            <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Color="Color.Primary" />
+                        </MudAvatar>
+                        Email Confirmation
+                    </MudItem>
+                    <MudItem xs="6">
+                        @(User.EmailConfirmed ? "Confirmed" : "Not Confirmed")
+                    </MudItem>
+                </MudGrid>
             </MudListItem>
         </MudList>
     </MudPaper>

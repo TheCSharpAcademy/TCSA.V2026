@@ -28,6 +28,7 @@ public class UserService: IUserService
                  var result = await context.AspNetUsers
                 .Include(u => u.DashboardProjects)
                 .Include(u => u.CodeReviewProjects)
+                .Include(u => u.Issues)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id.Equals(id));
 

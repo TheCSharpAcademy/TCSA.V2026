@@ -7,34 +7,35 @@
 
 @attribute [Authorize]
 
-<PageTitle>Auth</PageTitle>
+<PageTitle>Admin</PageTitle>
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-<AdminToolBar></AdminToolBar>
+<MudContainer>
+    <AdminToolBar></AdminToolBar>
 
-@if (IsLoading) 
-{
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-} 
-else 
-{
-    <MudDataGrid Items="@adminEvents" RowStyle="GetRowStyle">
-        <Columns>
-            <PropertyColumn Property="x => x.Date" Title="DateTime" />
-            <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
-            <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudStack Row>
-                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets</MudButton>
-                    </MudStack>
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
-    </MudDataGrid>
-}
-
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudDataGrid Class="mt-2" Items="@adminEvents" RowStyle="GetRowStyle">
+            <Columns>
+                <PropertyColumn Property="x => x.Date" Title="DateTime" />
+                <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
+                <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets</MudButton>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    }
+</MudContainer>
 
 @code {
     [Inject] protected IAdminService UserService { get; set; }
@@ -44,7 +45,7 @@ else
 
     private bool IsLoading = true;
 
-    protected override async Task OnInitializedAsync() 
+    protected override async Task OnInitializedAsync()
     {
         adminEvents = await UserService.GetAdminEvents();
         IsLoading = false;

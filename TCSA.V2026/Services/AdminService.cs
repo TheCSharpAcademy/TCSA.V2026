@@ -58,7 +58,7 @@ public class AdminService : IAdminService
             {
                 return await context.DashboardProjects
                     .Include(p => p.AppUser)
-                    .Where(p => !p.IsCompleted)
+                    .Where(p => !p.IsCompleted && !p.IsArchived)
                     .OrderByDescending(x => x.DateSubmitted)
                     .Select(ua => new AdminPendingDisplay
                     {

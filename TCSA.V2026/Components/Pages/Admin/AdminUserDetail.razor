@@ -15,190 +15,74 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-<AdminToolBar></AdminToolBar>
+<MudContainer>
+    <AdminToolBar></AdminToolBar>
 
-@if (IsLoading || User == null)
-{
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-}
-else
-{
-    <MudPaper Width="600px">
-        <MudList T="string">
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.PunchClock" Color="Color.Primary" />
-                        </MudAvatar>
-                        Load Time
-                    </MudItem>
-                    <MudItem xs="6">
-                        @loadTime.TotalSeconds
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
+    @if (IsLoading || User == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudGrid Class="mt-1">
+            <MudItem xs="6">
+                <MudPaper>
+                    <MudList T="string" Dense="true">
+                        <MudListItem Text="@loadTime.TotalSeconds.ToString()" Icon="@Icons.Material.Filled.PunchClock" />
+                        <MudListItem Text="@User.Id.ToString()" Icon="@Icons.Material.Filled.PermIdentity" />
+                        <MudListItem Text="@User.DisplayName" Icon="@Icons.Material.Filled.CardMembership" />
+                        <MudListItem Text="@User.Country" Icon="@Icons.Material.Filled.Map"/>
 
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.PermIdentity" Color="Color.Primary" />
-                        </MudAvatar>
-                        User ID
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.Id
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
+                        <MudListItem Text="@User.ExperiencePoints.ToString()" Icon="@Icons.Material.Filled.Score" />
+                        <MudListItem Text="@(User.FirstName + User.LastName)" Icon="@Icons.Material.Filled.CardTravel" />
+                        <MudListItem Text="@User.Email" Icon="@Icons.Material.Filled.Email" />
+                        <MudListItem Text="@User.GithubUsername" Icon="@Icons.Custom.Brands.GitHub" />
+                        <MudListItem Text="@User.DiscordAlias" Icon="@Icons.Custom.Brands.Discord" />
+                        <MudListItem Text="@User.Level.ToString()" Icon="@Icons.Material.Filled.Leaderboard" />
+                        <MudListItem Text="@User.EmailConfirmed.ToString()" Icon="@Icons.Material.Filled.ThumbUp" />
+                        <MudListItem Text="@(User.CodeReviewProjects?.Count.ToString())" Icon="@Icons.Material.Filled.Book" />
+                        <MudListItem Text="@(User.Issues?.Count.ToString())" Icon="@Icons.Material.Filled.Book" />
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText>LALALALALAL</MudText>
+            </MudItem>
+        </MudGrid>
 
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.CardMembership" Color="Color.Primary" />
-                        </MudAvatar>
-                        Display Name
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.DisplayName
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.Map" Color="Color.Primary" />
-                        </MudAvatar>
-                        Country
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.Country
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.Score" Color="Color.Primary" />
-                        </MudAvatar>
-                        Experience Points
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.ExperiencePoints
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.CardTravel" Color="Color.Primary" />
-                        </MudAvatar>
-                        Full Name
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.FirstName @User.LastName
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" />
-                        </MudAvatar>
-                        Email
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.Email
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
-                        </MudAvatar>
-                        GitHub Username
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.GithubUsername
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Custom.Brands.Discord" Color="Color.Primary" />
-                        </MudAvatar>
-                        Discord Alias
-                    </MudItem>
-                    <MudItem xs="6">
-                        @User.DiscordAlias
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-
-            <MudListItem>
-                <MudGrid Container>
-                    <MudItem xs="6">
-                        <MudAvatar>
-                            <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Color="Color.Primary" />
-                        </MudAvatar>
-                        Email Confirmation
-                    </MudItem>
-                    <MudItem xs="6">
-                        @(User.EmailConfirmed ? "Confirmed" : "Not Confirmed")
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
-        </MudList>
-    </MudPaper>
-
-    <MudDataGrid Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted).ThenByDescending(x => x.DateSubmitted)">
-        <Columns>
-            <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
-            <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
-            <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudStack Row>
-                        @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
-                        {
-                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                            OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
-                                <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
-                            </MudButton>
-                        }
-                        @if (!context.Item.IsCompleted)
-                        {
-                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                            OnClick="@(() => OpenConfirmationDialog(context.Item.Id, context.Item.ProjectId))">
-                                <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
-                            </MudButton>
-                        }
-                        else
-                        {
-                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" />
-                        }
-                    </MudStack>
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
-    </MudDataGrid>
-}
+        <MudDataGrid Dense="true" Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted).ThenByDescending(x => x.DateSubmitted)">
+            <Columns>
+                <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
+                <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
+                <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
+                            {
+                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
+                                    <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
+                                </MudButton>
+                            }
+                            @if (!context.Item.IsCompleted)
+                            {
+                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                OnClick="@(() => OpenConfirmationDialog(context.Item.Id, context.Item.ProjectId))">
+                                    <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
+                                </MudButton>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" />
+                            }
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    }
+</MudContainer>
 
 @code {
     [Parameter] public string UserId { get; set; }
@@ -217,7 +101,6 @@ else
 
     private List<Project>? projects;
     private List<Article>? articles;
-    private List<CommunityIssue>? issues;
     private List<CodeReviewDetail>? reviews;
     private Level BeltShouldBe;
 
@@ -237,7 +120,8 @@ else
         User = await UserService.GetUserForAdmin(UserId);
 
         loadTime = DateTime.UtcNow - startTime;
-        IsLoading = false; 
+        await GetXPSum();
+        IsLoading = false;
     }
 
     private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
@@ -287,7 +171,7 @@ else
         var projectExperiencePoints =
             project != null
             ? project.ExperiencePoints
-            : issues.Single(x => x.ProjectId == projectId).ExperiencePoints;
+            : User.Issues.Single(x => x.ProjectId == projectId).ExperiencePoints;
 
         var body = EmailHelper.GetProjectCompletedBody(firstName, projectTitle, projectExperiencePoints, rankingWithSuffix.ToString());
 
@@ -335,8 +219,14 @@ else
             }
             else
             {
-                XPSum = issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
+                XPSum = User.Issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
             }
         }
     }
 }
+
+        <style>
+                .custom-list .mud-list-item {
+        max-height: 20px; /* Adjust height as needed */
+    }
+        </style>

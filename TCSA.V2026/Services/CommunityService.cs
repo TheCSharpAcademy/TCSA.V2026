@@ -26,7 +26,7 @@ public class CommunityService : ICommunityService
             using (var context = _factory.CreateDbContext())
             {
                 return await context.Issues
-                    //.Where(i => !i.IsClosed)
+                    .Where(i => !i.IsClosed)
                     //.Where(i => string.IsNullOrEmpty(i.AppUserId) || i.AppUserId.Equals(appUserId))
                     .ToListAsync();
             }

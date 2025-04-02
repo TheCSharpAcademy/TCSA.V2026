@@ -1,6 +1,7 @@
 ﻿@page "/dashboard/community"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Services
 @attribute [Authorize]
@@ -22,6 +23,20 @@
             <Columns>
                 <PropertyColumn Property="x => x.Title" Title="Title" />
                 <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
+                <PropertyColumn Property="x => GetProjectName(x.CommunityProjectId)" Title="XPs" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
+                            {
+                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
+                                    <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
+                                </MudButton>
+                            }
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
         </MudDataGrid>
     }
@@ -33,6 +48,10 @@
     [Inject] private IProjectService ProjectService { get; set; }
     [Inject] protected ICommunityService CommunityService { get; set; }
 
+    [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+
+    private List<Project> projects;
     private List<CommunityIssue>? issuesToShow = new();
     private List<DashboardProject> userProjects = new();
 
@@ -48,11 +67,22 @@
             Navigation.NavigateTo("Account/Login");
         }
 
+        projects = ProjectHelper.GetProjects();
         var claims = authSate.User;
         userId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
 
         issuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(userId);
 
         IsLoading = false;
+    }
+
+    private string GetProjectName(int commProjectId) 
+    {
+        return commProjectId switch
+        {
+            54 => "Point Of Sale",
+            87 => "Academy V2",
+            207 => "Academy 2026"
+        };
     }
 }

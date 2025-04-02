@@ -1,6 +1,10 @@
-﻿@inherits LayoutComponentBase
+﻿@using TCSA.V2026.Services
+@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IJSRuntime JS
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="@ThemeService.IsDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -9,6 +13,8 @@
     <MudAppBar Elevation="1">
         <MudStaticNavDrawerToggle DrawerId="nav-drawer" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
         <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
+        <MudSpacer />
+        <MudSwitch ValueChanged="ToggleTheme" Value="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
     </MudAppBar>
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
@@ -27,6 +33,22 @@
 
 @code {
     private bool _drawerOpen = true;
+
+    protected override void OnInitialized()
+    {
+        var themeCookie = HttpContextAccessor.HttpContext?.Request.Cookies["theme"];
+        if (themeCookie != null)
+        {
+            ThemeService.IsDarkMode = themeCookie == "dark";
+        };
+    }
+
+    private async Task ToggleTheme()
+    {
+        ThemeService.ToggleTheme();
+        // Update cookie via JS interop or via server-side endpoint.
+        await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);
+    }
 }
 
 

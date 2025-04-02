@@ -9,14 +9,35 @@
     <link href=@Assets["_content/MudBlazor/MudBlazor.min.css"] rel="stylesheet" />
     <ImportMap />
     <link rel="icon" type="image/ico" href="favicon.ico" />
-    <HeadOutlet />
+    <HeadOutlet @rendermode="RenderModeForPage" />
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="RenderModeForPage" />
     <script src="_framework/blazor.web.js"></script>
     <script src=@Assets["_content/MudBlazor/MudBlazor.min.js"]></script>
     <script src=@Assets["_content/Extensions.MudBlazor.StaticInput/NavigationObserver.js"]></script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+    </script>
 </body>
-
 </html>
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+    private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path switch
+    {
+        var path when path.StartsWithSegments("/Account/Login", StringComparison.InvariantCultureIgnoreCase) => null,
+        var path when path.StartsWithSegments("/Account/LoginWith2fa", StringComparison.InvariantCultureIgnoreCase) => null,
+        var path when path.StartsWithSegments("/Account/LoginWithRecoveryCode", StringComparison.InvariantCultureIgnoreCase) => null,
+        var path when path.StartsWithSegments("/Account/ExternalLogin", StringComparison.InvariantCultureIgnoreCase) => null,
+        var path when path.StartsWithSegments("/Account/SignOut", StringComparison.InvariantCultureIgnoreCase) => null,
+        _ => new InteractiveServerRenderMode(prerender: false)
+    };
+}

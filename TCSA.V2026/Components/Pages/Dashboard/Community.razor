@@ -19,11 +19,11 @@
     }
     else
     {
-        <MudDataGrid Class="mt-2" Items="@issuesToShow" Dense="true" RowStyle="GetRowStyle">
+        <MudDataGrid Class="mt-2" Items="@issuesToShow.OrderByDescending(i => i.Id)" Dense="true" RowStyle="GetRowStyle">
             <Columns>
-                <PropertyColumn Property="x => x.Title" Title="Title" />
-                <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
-                <PropertyColumn Property="x => GetProjectName(x.CommunityProjectId)" Title="XPs" />
+                <PropertyColumn Property="i => i.Title" Title="Title" />
+                <PropertyColumn Property="i => i.ExperiencePoints" Title="XPs" />
+                <PropertyColumn Property="i => GetProjectName(i.CommunityProjectId)" Title="XPs" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>

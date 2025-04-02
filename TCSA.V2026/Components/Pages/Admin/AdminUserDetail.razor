@@ -10,10 +10,11 @@
 
 <MudDialogProvider />
 <MudSnackbarProvider />
-
 @inject IDialogService DialogService
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@attribute [Authorize(Roles = "Admin")]
 
 <MudContainer>
     <AdminToolBar></AdminToolBar>

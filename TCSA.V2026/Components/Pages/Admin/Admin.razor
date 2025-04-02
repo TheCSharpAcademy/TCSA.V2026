@@ -5,7 +5,7 @@
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Services
 
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>Admin</PageTitle>
 

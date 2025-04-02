@@ -1,4 +1,6 @@
 ﻿@page "/admin/{UserId}"
+
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity.UI.Services
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
@@ -225,9 +227,3 @@
         }
     }
 }
-
-        <style>
-                .custom-list .mud-list-item {
-        max-height: 20px; /* Adjust height as needed */
-    }
-        </style>

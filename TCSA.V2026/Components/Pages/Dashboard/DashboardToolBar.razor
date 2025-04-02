@@ -1,0 +1,25 @@
+﻿<MudPaper Elevation="25">
+    <MudToolBar>
+        <MudTooltip Text="Dashboard">
+            <MudIconButton Icon="@Icons.Material.Outlined.Dashboard" OnClick="NavigateToDashboard" />
+        </MudTooltip>
+        <MudTooltip Text="Community">
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" OnClick="NavigateToCommunity" />
+        </MudTooltip>
+    </MudToolBar>
+</MudPaper>
+
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private void NavigateToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    private void NavigateToCommunity()
+    {
+        Navigation.NavigateTo("/dashboard/community");
+    }
+}

@@ -1,0 +1,58 @@
+﻿@page "/dashboard/community"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+@attribute [Authorize]
+
+<PageTitle>Community</PageTitle>
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudDataGrid Class="mt-2" Items="@issuesToShow" Dense="true" RowStyle="GetRowStyle">
+            <Columns>
+                <PropertyColumn Property="x => x.Title" Title="Title" />
+                <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
+            </Columns>
+        </MudDataGrid>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] protected ICommunityService CommunityService { get; set; }
+
+    private List<CommunityIssue>? issuesToShow = new();
+    private List<DashboardProject> userProjects = new();
+
+    private bool IsLoading = true;
+    private string userId = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        userId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        issuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(userId);
+
+        IsLoading = false;
+    }
+}

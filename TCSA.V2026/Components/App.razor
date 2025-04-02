@@ -34,6 +34,7 @@
     private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path switch
     {
         var path when path.StartsWithSegments("/Account/Login", StringComparison.InvariantCultureIgnoreCase) => null,
+        var path when path.StartsWithSegments("/Account/Register", StringComparison.InvariantCultureIgnoreCase) => null,
         var path when path.StartsWithSegments("/Account/LoginWith2fa", StringComparison.InvariantCultureIgnoreCase) => null,
         var path when path.StartsWithSegments("/Account/LoginWithRecoveryCode", StringComparison.InvariantCultureIgnoreCase) => null,
         var path when path.StartsWithSegments("/Account/ExternalLogin", StringComparison.InvariantCultureIgnoreCase) => null,

@@ -6,7 +6,8 @@ namespace TCSA.V2026.Services;
 
 public interface IUserService
 {
-    Task<ApplicationUser> GetUserById(string id);
+    Task<ApplicationUser> GetUserById(string userId);
+    Task<ApplicationUser> GetDetailedUserById(string userId);
 }
 
 public class UserService: IUserService
@@ -18,7 +19,7 @@ public class UserService: IUserService
         _factory = factory;
     }
 
-    public async Task<ApplicationUser> GetUserById(string id)
+    public async Task<ApplicationUser> GetUserById(string userId)
     {
         try
         {
@@ -26,7 +27,29 @@ public class UserService: IUserService
             {
                 return await context.AspNetUsers
                 .Include(x => x.DashboardProjects)
-                .FirstOrDefaultAsync(x => x.Id.Equals(id));
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    public async Task<ApplicationUser> GetDetailedUserById(string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.AspNetUsers
+                .Include(x => x.UserActivity)
+                .Include(x => x.DashboardProjects)
+                .Include(x => x.Issues)
+                .Include(x => x.UserChallenges)
+                    .ThenInclude(x => x.Challenge)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
             }
         }
         catch (Exception ex)

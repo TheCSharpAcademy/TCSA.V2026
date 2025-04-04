@@ -7,8 +7,8 @@
     <AuthorizeView>
         <Authorized>
             <MudNavLink Href="Dashboard" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
-            <MudNavLink Href="Dashboard/Community" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.GroupWork">Community</MudNavLink>
-            <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink>
+            <MudNavLink Href="Dashboard/Community" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Groups">Community</MudNavLink>
+            @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
             <form action="Account/Logout" method="post">
                 <AntiforgeryToken />
                 <input type="hidden" name="ReturnUrl" value="@currentUrl" />

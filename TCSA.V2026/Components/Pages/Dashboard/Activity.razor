@@ -1,0 +1,76 @@
+﻿@page "/dashboard/activity"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+@attribute [Authorize]
+<MudDialogProvider />
+
+<PageTitle>Activity</PageTitle>
+
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        if (UserActivity != null && UserActivity.Count > 0) {
+            <MudDataGrid Class="mt-2" Items="@UserActivity" RowStyle="GetRowStyle">
+                <Columns>
+                    <PropertyColumn Property="x => x.Date" Title="DateTime" />
+                    <PropertyColumn Property="x => x.ActivityType" Title="Activity" />
+                    <PropertyColumn Property="x => x.Description" Title="Description" />
+                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
+                    <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
+                </Columns>
+            </MudDataGrid>
+        }
+    }
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] protected ICommunityService CommunityService { get; set; }
+
+    [Inject] private IJSRuntime JS { get; set; }
+
+    private ApplicationUser User { get; set; }
+    private List<ActivityDisplay>? UserActivity = new();
+
+    private bool IsLoading = true;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+
+        var user = await UserService.GetDetailedUserById(UserId);
+        UserActivity = ActivityHelper.GetActivityDisplay(user);
+        LoadTime = DateTime.UtcNow - startTime;
+
+        IsLoading = false;
+    }
+}

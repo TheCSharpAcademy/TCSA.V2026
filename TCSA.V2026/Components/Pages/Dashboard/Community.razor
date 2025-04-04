@@ -31,16 +31,25 @@
                         <MudStack Row>
                             @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
                             {
-                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
-                                    <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
+                                <MudButton 
+                                    Size="@Size.Small" 
+                                    Variant="@Variant.Filled" 
+                                    Color="@Color.Warning"
+                                    OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                    StartIcon="fas fa-eye">
+                                    View
                                 </MudButton>
+                    
                             }
                             @if (!User.DashboardProjects.Any(d => d.ProjectId == context.Item.ProjectId))
                             {
-                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                           OnClick="@(() => AssignMyself(context.Item))">
-                                    <MudIcon Icon="@Icons.Material.Filled.Handshake" Color="Color.Primary" />
+                                <MudButton 
+                                    Size="@Size.Small" 
+                                    Variant="@Variant.Filled" 
+                                    Color="@Color.Success"
+                                    OnClick="@(() => AssignMyself(context.Item))"
+                                    StartIcon="fas fa-hand-point-up">
+                                    Pick 
                                 </MudButton>
                             } 
                             else 
@@ -51,10 +60,13 @@
                                 } 
                                 else 
                                 {
-                                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary"
-                                                   OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))">
-                                            <MudIcon Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
-                                        </MudButton>
+                                    <MudButton 
+                                        Size="@Size.Small"
+                                        Variant="@Variant.Filled" Color="@Color.Primary"
+                                        OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))"
+                                        EndIcon="@Icons.Material.Filled.Send">
+                                        Send
+                                    </MudButton>
                                 }
                             }
                         </MudStack>

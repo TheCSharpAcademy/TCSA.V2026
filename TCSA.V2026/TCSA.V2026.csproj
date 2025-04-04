@@ -21,6 +21,9 @@
 
 
   <ItemGroup>
+    <Content Update="Components\Pages\Dashboard\Activity.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="Components\UI\TCSACommunitySubmitDialog.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>

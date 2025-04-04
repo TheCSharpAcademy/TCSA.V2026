@@ -6,6 +6,9 @@
         <MudTooltip Text="Community">
             <MudIconButton Icon="@Icons.Custom.Brands.GitHub" OnClick="NavigateToCommunity" />
         </MudTooltip>
+        <MudTooltip Text="Activity">
+            <MudIconButton Icon="@Icons.Material.Outlined.Hiking" OnClick="NavigateToActivity" />
+        </MudTooltip>
     </MudToolBar>
 </MudPaper>
 
@@ -21,5 +24,10 @@
     private void NavigateToCommunity()
     {
         Navigation.NavigateTo("/dashboard/community");
+    }
+
+    private void NavigateToActivity()
+    {
+        Navigation.NavigateTo("/dashboard/activity");
     }
 }

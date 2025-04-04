@@ -6,7 +6,7 @@ namespace TCSA.V2026.Services;
 
 public interface IUserService
 {
-    Task<ApplicationUser> GetUserForAdmin(string id);
+    Task<ApplicationUser> GetUserById(string id);
 }
 
 public class UserService: IUserService
@@ -18,24 +18,16 @@ public class UserService: IUserService
         _factory = factory;
     }
 
-    public async Task<ApplicationUser> GetUserForAdmin(string id)
+    public async Task<ApplicationUser> GetUserById(string id)
     {
-        var startTime = DateTime.UtcNow;
         try
         {
             using (var context = _factory.CreateDbContext())
             {
-                 var result = await context.AspNetUsers
-                .Include(u => u.DashboardProjects)
-                .Include(u => u.CodeReviewProjects)
-                .Include(u => u.Issues)
-                .AsSplitQuery()
+                return await context.AspNetUsers
+                .Include(x => x.DashboardProjects)
                 .FirstOrDefaultAsync(x => x.Id.Equals(id));
-
-                var loadTime = DateTime.UtcNow - startTime;
-                return result;
             }
-            
         }
         catch (Exception ex)
         {

@@ -3,12 +3,14 @@
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Services
 @attribute [Authorize]
+@inject IDialogService DialogService
+<MudDialogProvider />
 
 <PageTitle>Community</PageTitle>
-
-@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <MudContainer>
     <DashboardToolBar></DashboardToolBar>
@@ -19,7 +21,7 @@
     }
     else
     {
-        <MudDataGrid Class="mt-2" Items="@issuesToShow.OrderByDescending(i => i.Id)" Dense="true" RowStyle="GetRowStyle">
+        <MudDataGrid Class="mt-2" Items="@IssuesToShow.OrderByDescending(i => i.Id)" Dense="true" RowStyle="GetRowStyle">
             <Columns>
                 <PropertyColumn Property="i => i.Title" Title="Title" />
                 <PropertyColumn Property="i => i.ExperiencePoints" Title="XPs" />
@@ -34,6 +36,27 @@
                                     <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
                                 </MudButton>
                             }
+                            @if (!User.DashboardProjects.Any(d => d.ProjectId == context.Item.ProjectId))
+                            {
+                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
+                                           OnClick="@(() => AssignMyself(context.Item))">
+                                    <MudIcon Icon="@Icons.Material.Filled.Handshake" Color="Color.Primary" />
+                                </MudButton>
+                            } 
+                            else 
+                            {
+                                if (User.DashboardProjects.FirstOrDefault(d => d.ProjectId == context.Item.ProjectId).IsPendingReview)
+                                {
+                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Warning">Pending Review</MudChip>
+                                } 
+                                else 
+                                {
+                                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary"
+                                                   OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))">
+                                            <MudIcon Icon="@Icons.Material.Filled.Send" Color="Color.Primary" />
+                                        </MudButton>
+                                }
+                            }
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
@@ -46,17 +69,19 @@
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
     [Inject] protected ICommunityService CommunityService { get; set; }
 
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
-    private List<Project> projects;
-    private List<CommunityIssue>? issuesToShow = new();
-    private List<DashboardProject> userProjects = new();
+    private ApplicationUser User { get; set; }
+    private List<Project> Projects;
+    private List<CommunityIssue>? IssuesToShow = new();
+    private List<DashboardProject> UserProjects = new();
 
     private bool IsLoading = true;
-    private string userId = string.Empty;
+    private string UserId = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,13 +92,46 @@
             Navigation.NavigateTo("Account/Login");
         }
 
-        projects = ProjectHelper.GetProjects();
+        Projects = ProjectHelper.GetProjects();
         var claims = authSate.User;
-        userId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
 
-        issuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(userId);
+        IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
 
         IsLoading = false;
+    }
+
+    private async Task SubmitToReviewDialog(int projectId)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<TCSACommunitySubmitDialog> { { x => x.ProjectId, projectId } };
+        var dialog = await DialogService.ShowAsync<TCSACommunitySubmitDialog>("Submit Issue", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            Snackbar.Add("Issue submitted successfully", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+
+    }
+
+    private async Task AssignMyself(CommunityIssue issue)
+    {
+        var result = await CommunityService.AssignUserToIssue(UserId, issue);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Assignment Successful", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        User = await UserService.GetUserById(UserId);
     }
 
     private string GetProjectName(int commProjectId) 

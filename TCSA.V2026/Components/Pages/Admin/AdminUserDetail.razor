@@ -93,6 +93,7 @@
     [Inject] protected IUserService UserService { get; set; }
     [Inject] protected IProjectService ProjectService { get; set; }
     [Inject] protected ICommunityService CommunityService { get; set; }
+    [Inject] protected IAdminService AdminService { get; set; }
     [Inject] protected ILeaderboardService LeaderboardService { get; set; }
     [Inject] protected IPeerReviewService PeerReviewService { get; set; }
     [Inject] protected IEmailSender EmailSender { get; set; }
@@ -120,7 +121,7 @@
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         articles.AddRange(courseArticles);
 
-        User = await UserService.GetUserForAdmin(UserId);
+        User = await AdminService.GetUserForAdmin(UserId);
 
         loadTime = DateTime.UtcNow - startTime;
         await GetXPSum();
@@ -141,7 +142,7 @@
             if (apiResult.Status == ResponseStatus.Success)
             {
                 Snackbar.Add("Project marked as completed successfully!", Severity.Success);
-                User = await UserService.GetUserForAdmin(UserId);
+                User = await AdminService.GetUserForAdmin(UserId);
                 await ProcessProjectCompleted(curriculumProjectId);
             }
             else
@@ -149,11 +150,15 @@
                 Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
             }
         }
+        else 
+        {
+            Console.WriteLine("lala");
+        }
     }
 
     private async Task ProcessProjectCompleted(int projectId)
     {
-        string projectTitle = "";
+        string projectTitle = string.Empty;
         var project = projects.FirstOrDefault(x => x.Id == projectId);
 
         if (project == null)
@@ -169,7 +174,7 @@
         var rankingText = await LeaderboardService.GetUserRanking(UserId);
         var rankingWithSuffix = LeaderboardHelper.GetRanking(rankingText);
 
-        var firstName = User.FirstName ??= "";
+        var firstName = User.FirstName ??= string.Empty;
 
         var projectExperiencePoints =
             project != null

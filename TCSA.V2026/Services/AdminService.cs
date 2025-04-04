@@ -9,6 +9,7 @@ namespace TCSA.V2026.Services;
 
 public interface IAdminService
 {
+    Task<ApplicationUser> GetUserForAdmin(string id);
     Task<List<AdminEventDisplay>> GetAdminEvents();
     Task<List<AdminPendingDisplay>> GetAdminPendingProjects();
     Task<List<ApplicationUser>> SearchUser(string email);
@@ -23,6 +24,30 @@ public class AdminService : IAdminService
         _factory = factory;
     }
 
+    public async Task<ApplicationUser> GetUserForAdmin(string id)
+    {
+        var startTime = DateTime.UtcNow;
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var result = await context.AspNetUsers
+               .Include(u => u.DashboardProjects)
+               .Include(u => u.CodeReviewProjects)
+               .Include(u => u.Issues)
+               .AsSplitQuery()
+               .FirstOrDefaultAsync(x => x.Id.Equals(id));
+
+                var loadTime = DateTime.UtcNow - startTime;
+                return result;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
     public async Task<List<AdminEventDisplay>> GetAdminEvents()
     {
         try

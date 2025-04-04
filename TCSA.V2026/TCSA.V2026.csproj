@@ -19,4 +19,11 @@
 	<PackageReference Include="SendGrid" Version="9.29.3" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="Components\UI\TCSACommunitySubmitDialog.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -37,9 +37,10 @@ public static class ActivityHelper
                 var experiencePoints = GetXPs(issuesIds, item, communityIssue, challenge);
 
                 activityDisplay.Add(new ActivityDisplay
+
                 {
                     Date = item.DateSubmitted,
-                    Description = GetDescriptionMarkup(issuesIds, item, item.AppUserId, communityIssue, challenge),
+                    Description = GetDescription(issuesIds, item, communityIssue, challenge),
                     ExperiencePoints = GetXPs(issuesIds, item, communityIssue, challenge),
                     CurrentExperiencePoints = currentXP,
                     AppUserId = item.AppUserId,
@@ -84,12 +85,6 @@ public static class ActivityHelper
         }
 
         return ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.ExperiencePoints ?? 0;
-    }
-
-    private static MarkupString GetDescriptionMarkup(List<int> issuesIds, AppUserActivity item, string userId, CommunityIssue? issue = null, Challenge? challenge = null)
-    {
-        var description = GetDescription(issuesIds, item, issue, challenge);
-        return new MarkupString(description);
     }
 
     public static string GetDescription(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null)

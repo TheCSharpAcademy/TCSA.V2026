@@ -23,12 +23,25 @@
     else
     {
         <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        <MudSelect T="ActivityType?" Label="Filter by Activity Type" @bind-Value="SelectedActivityType" Class="my-2" Dense="true" Clearable="true">
+            <MudSelectItem T="ActivityType?" Value="null">All</MudSelectItem>
+            @foreach (var type in Enum.GetValues<ActivityType>())
+            {
+                <MudSelectItem T="ActivityType?" Value="@type">@type.ToString()</MudSelectItem>
+            }
+        </MudSelect>
+
         if (UserActivity != null && UserActivity.Count > 0) {
-            <MudDataGrid Class="mt-2" Items="@UserActivity" RowStyle="GetRowStyle">
+            <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity" RowStyle="GetRowStyle">
                 <Columns>
-                    <PropertyColumn Property="x => x.Date" Title="DateTime" />
-                    <PropertyColumn Property="x => x.ActivityType" Title="Activity" />
-                    <PropertyColumn Property="x => x.Description" Title="Description" />
+                    <PropertyColumn Property="@(x => x.Date.ToString("MMM dd, yyyy, ddd"))" Title="DateTime" />
+                    <TemplateColumn>
+                        <CellTemplate>
+                            <MudStack Row>
+                                @((MarkupString)context.Item.Description)
+                            </MudStack>
+                        </CellTemplate>
+                    </TemplateColumn>
                     <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
                     <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
                 </Columns>
@@ -47,7 +60,22 @@
     [Inject] private IJSRuntime JS { get; set; }
 
     private ApplicationUser User { get; set; }
+    private List<ActivityDisplay>? AllUserActivity = new();
     private List<ActivityDisplay>? UserActivity = new();
+
+    private ActivityType? _selectedActivityType = null;
+    private ActivityType? SelectedActivityType
+    {
+        get => _selectedActivityType;
+        set
+        {
+            if (_selectedActivityType != value)
+            {
+                _selectedActivityType = value;
+                FilterUserActivity();
+            }
+        }
+    }
 
     private bool IsLoading = true;
     private string UserId = string.Empty;
@@ -68,9 +96,25 @@
         User = await UserService.GetUserById(UserId);
 
         var user = await UserService.GetDetailedUserById(UserId);
-        UserActivity = ActivityHelper.GetActivityDisplay(user);
+        AllUserActivity = ActivityHelper.GetActivityDisplay(user);
+
+        FilterUserActivity();
         LoadTime = DateTime.UtcNow - startTime;
 
         IsLoading = false;
+    }
+
+    private void FilterUserActivity()
+    {
+        if (SelectedActivityType is null)
+        {
+            UserActivity = AllUserActivity;
+        }
+        else
+        {
+            UserActivity = AllUserActivity?.Where(x => x.ActivityType == SelectedActivityType.Value).ToList();
+        }
+
+        StateHasChanged();
     }
 }

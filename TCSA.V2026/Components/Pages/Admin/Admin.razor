@@ -20,7 +20,7 @@
     }
     else
     {
-        <MudDataGrid Class="mt-2" Items="@adminEvents" RowStyle="GetRowStyle">
+        <MudDataGrid Class="mt-2" Dense="true" Items="@adminEvents" RowStyle="GetRowStyle">
             <Columns>
                 <PropertyColumn Property="x => x.Date" Title="DateTime" />
                 <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />

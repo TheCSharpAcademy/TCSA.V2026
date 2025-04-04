@@ -22,7 +22,6 @@ public class ApplicationUser : IdentityUser
     public DateTimeOffset CreatedDate { get; set; }
     public Level Level { get; set; }
     public virtual DailyStreak DailyStreak { get; set; }
-
     public List<AppUserActivity> UserActivity { get; set; }
     public List<DashboardProject>? DashboardProjects { get; set; }
     public List<UserReview>? CodeReviewProjects { get; set; }

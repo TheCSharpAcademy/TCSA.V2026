@@ -57,8 +57,6 @@
     [Inject] private IUserService UserService { get; set; }
     [Inject] protected ICommunityService CommunityService { get; set; }
 
-    [Inject] private IJSRuntime JS { get; set; }
-
     private ApplicationUser User { get; set; }
     private List<ActivityDisplay>? AllUserActivity = new();
     private List<ActivityDisplay>? UserActivity = new();

@@ -9,6 +9,9 @@
         <MudTooltip Text="Activity">
             <MudIconButton Icon="@Icons.Material.Outlined.Hiking" OnClick="NavigateToActivity" />
         </MudTooltip>
+        <MudTooltip Text="Peer Reviews">
+            <MudIconButton Icon="@Icons.Material.Outlined.RateReview" OnClick="NavigateToReviews" />
+        </MudTooltip>
     </MudToolBar>
 </MudPaper>
 
@@ -29,5 +32,10 @@
     private void NavigateToActivity()
     {
         Navigation.NavigateTo("/dashboard/activity");
+    }
+
+    private void NavigateToReviews()
+    {
+        Navigation.NavigateTo("/dashboard/reviews");
     }
 }

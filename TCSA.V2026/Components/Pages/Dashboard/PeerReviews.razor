@@ -1,0 +1,166 @@
+﻿@page "/dashboard/reviews"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+@attribute [Authorize]
+
+<PageTitle>Peer Reviews</PageTitle>
+
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        if (AvailableProjects != null && AvailableProjects.Count > 0)
+        {
+            <MudDataGrid Class="mt-2" Dense="true" Items="@AvailableProjects" RowStyle="GetRowStyle">
+                <Columns>
+                    <PropertyColumn Property="p => p.Name" Title="Name" />
+                    <PropertyColumn Property="p => p.Title" Title="Title" />
+                    <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
+                    <PropertyColumn Property="p => p.DurationOpen" Title="Open Since" />
+                    <TemplateColumn CellClass="d-flex justify-end">
+                        <CellTemplate>
+                            <MudStack Row>
+                                @if (!context.Item.IsAssigned)
+                                {
+                                    <MudButton Size="@Size.Small"
+                                               Variant="@Variant.Filled"
+                                               Color="@Color.Success"
+                                               OnClick="@(() => AssignMyself(context.Item.DashboardProjectId))"
+                                               StartIcon="fas fa-hand-point-up">
+                                        Pick
+                                    </MudButton>
+
+                                }
+                                else 
+                                {
+                                    <MudButton Size="@Size.Small"
+                                               Variant="@Variant.Filled"
+                                               Color="@Color.Error"
+                                               OnClick="@(() => ReleaseMyself(context.Item.DashboardProjectId))"
+                                               StartIcon="@Icons.Material.Filled.Close">
+                                        Drop
+                                    </MudButton>
+                                    <MudButton Size="@Size.Small"
+                                               Variant="@Variant.Filled"
+                                               Color="@Color.Primary"
+                                               OnClick="@(() => MarkAsComplete(context.Item.DashboardProjectId, context.Item.AppUserId))"
+                                               StartIcon="@Icons.Material.Filled.CheckCircle">
+                                        Tick
+                                    </MudButton>
+                                }
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Warning"
+                                           OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                           StartIcon="fas fa-eye">
+                                    View
+                                </MudButton>
+                            </MudStack>
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+            </MudDataGrid>
+        }
+    }
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] private IPeerReviewService PeerReviewService { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
+
+    private List<Project>? projects;
+    private List<PeerReviewDisplay> AvailableProjects;
+    private ApplicationUser User;
+
+    private bool IsLoading = true;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
+        LoadTime = DateTime.UtcNow - startTime;
+
+        IsLoading = false;
+    }
+
+    private async Task AssignMyself(int dashboardProjectId)
+    {
+        var result = await PeerReviewService.AssignUserToCodeReview(UserId, dashboardProjectId);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Assignment Successful", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
+    }
+
+    private async Task ReleaseMyself(int dashboardProjectId)
+    {
+        var result = await PeerReviewService.ReleaseUserFromCodeReview(UserId, dashboardProjectId);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Release successful", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
+    }
+
+    private async Task MarkAsComplete(int dashboardProjectId, string reviewerId)
+    {
+        var result = await PeerReviewService.MarkCodeReviewAsCompleted(UserId, dashboardProjectId, reviewerId);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Successfully marked as complete", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
+    }
+}

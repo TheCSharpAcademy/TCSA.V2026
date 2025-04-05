@@ -9,6 +9,7 @@ namespace TCSA.V2026.Services;
 public interface IProjectService
 {
     Task<BaseResponse> MarkAsCompleted(int projectId);
+    Task<bool> IsProjectCompleted(string userId, int projectId);
 }
 public class ProjectService : IProjectService
 {
@@ -17,6 +18,26 @@ public class ProjectService : IProjectService
     public ProjectService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<bool> IsProjectCompleted(string userId, int projectId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.DashboardProjects
+                    .AnyAsync(
+                        x => x.IsCompleted
+                        && x.ProjectId == projectId
+                        && x.AppUserId == userId
+                    );
+            }
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
     }
 
     public async Task<BaseResponse> MarkAsCompleted(int projectId)

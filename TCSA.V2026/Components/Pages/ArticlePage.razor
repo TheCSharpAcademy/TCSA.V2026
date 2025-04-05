@@ -1,0 +1,107 @@
+﻿@page "/article/{ArticleId:int}/{ArticleSlug}"
+@using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@{
+    int blockIndex = 0;
+}
+
+<PageTitle>@Article.Title</PageTitle>
+
+<MudContainer>
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+
+    @if (IsLoggedIn && IsCompleted)
+    {
+        <MudAlert Severity="Severity.Success">You have completed this roadmap step.</MudAlert>
+
+        <MudExpansionPanels Class="mt-2" MultiExpansion="true">
+            @foreach (var block in Article.Blocks)
+            {
+                <MudExpansionPanel Text="@block.Title">
+                    @foreach (var paragraph in block.Paragraphs)
+                    {
+                        if (paragraph.IsPicture)
+                        {
+                            <MudText>Picture Here</MudText>
+                        }
+
+                        if (paragraph.IsVideo)
+                        {
+                            <MudText>Video Here</MudText>
+                        }
+
+                        if (paragraph.IsCode)
+                        {
+                            <pre><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(paragraph.Body))
+                            {
+                                <p>@((MarkupString)(paragraph.Body))</p>
+                            }
+                        }
+                    }
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
+
+    [Parameter] public string ArticleSlug { get; set; }
+    [Parameter] public int ArticleId { get; set; }
+
+    private Article Article { get; set; }
+
+    private bool IsLoggedIn;
+    private bool HasNext;
+    private bool IsCompleted;
+    private bool IsLoading;
+    private string UserId = string.Empty;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await OnParametersSetAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("highlightCode");
+        }
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        Article = ArticleHelper.GetArticles().Single(x => x.Id == ArticleId);
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+            var claims = AuthSate.User;
+            UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
+        }
+
+        IsLoading = false;
+    }
+}

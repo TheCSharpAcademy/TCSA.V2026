@@ -10,6 +10,16 @@
     <link href=@Assets["_content/MudBlazor/MudBlazor.min.css"] rel="stylesheet" />
     <ImportMap />
     <link rel="icon" type="image/ico" href="favicon.ico" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+        window.highlightCode = function () {
+            Prism.highlightAll();
+        };
+    </script>
     <HeadOutlet @rendermode="RenderModeForPage" />
 </head>
 

@@ -26,7 +26,6 @@
         {
             <MudDataGrid Class="mt-2" Dense="true" Items="@AvailableProjects" RowStyle="GetRowStyle">
                 <Columns>
-                    <PropertyColumn Property="p => p.Name" Title="Name" />
                     <PropertyColumn Property="p => p.Title" Title="Title" />
                     <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
                     <PropertyColumn Property="p => p.DurationOpen" Title="Open Since" />
@@ -37,7 +36,7 @@
                                 {
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"
-                                               Color="@Color.Success"
+                                               Color="@Color.Primary"
                                                OnClick="@(() => AssignMyself(context.Item.DashboardProjectId))"
                                                StartIcon="fas fa-hand-point-up">
                                         Pick
@@ -55,9 +54,9 @@
                                     </MudButton>
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"
-                                               Color="@Color.Primary"
+                                               Color="@Color.Success"
                                                OnClick="@(() => MarkAsComplete(context.Item.DashboardProjectId, context.Item.AppUserId))"
-                                               StartIcon="@Icons.Material.Filled.CheckCircle">
+                                               StartIcon="@Icons.Material.Filled.ThumbUp">
                                         Tick
                                     </MudButton>
                                 }

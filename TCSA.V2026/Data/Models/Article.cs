@@ -1,4 +1,6 @@
-﻿namespace TCSA.V2026.Data.Models;
+﻿using MudBlazor;
+
+namespace TCSA.V2026.Data.Models;
 
 public class Article
 {
@@ -29,6 +31,7 @@ public class Block
     public string? ImgUrl { get; set; }
     public string? BookImgUrl { get; set; }
     public List<Paragraph> Paragraphs { get; set; }
+    public List<MudText> MudParagraphs { get; set; }
 }
 
 public class Paragraph

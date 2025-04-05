@@ -11,6 +11,7 @@ public interface IProjectService
     Task<BaseResponse> MarkAsCompleted(int projectId);
     Task<bool> IsProjectCompleted(string userId, int projectId);
 }
+
 public class ProjectService : IProjectService
 {
     private readonly IDbContextFactory<ApplicationDbContext> _factory;

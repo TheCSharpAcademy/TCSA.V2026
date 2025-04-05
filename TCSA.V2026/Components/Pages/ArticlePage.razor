@@ -12,7 +12,7 @@
 
 <PageTitle>@Article.Title</PageTitle>
 
-<MudContainer>
+<MudContainer MaxWidth="MaxWidth.Medium">
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -25,31 +25,41 @@
         <MudExpansionPanels Class="mt-2" MultiExpansion="true">
             @foreach (var block in Article.Blocks)
             {
-                <MudExpansionPanel Text="@block.Title">
-                    @foreach (var paragraph in block.Paragraphs)
-                    {
-                        if (paragraph.IsPicture)
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <div class="d-flex">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" class="mr-3"></MudIcon>
+                            <MudText Typo="Typo.h6">@block.Title</MudText>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                        @foreach (var paragraph in block.Paragraphs)
                         {
-                            <MudText>Picture Here</MudText>
-                        }
-
-                        if (paragraph.IsVideo)
-                        {
-                            <MudText>Video Here</MudText>
-                        }
-
-                        if (paragraph.IsCode)
-                        {
-                            <pre><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
-                        }
-                        else
-                        {
-                            if (!String.IsNullOrEmpty(paragraph.Body))
+                            if (paragraph.IsPicture)
                             {
-                                <p>@((MarkupString)(paragraph.Body))</p>
+                                <MudImage Src="@GetImage(paragraph)" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
+                            }
+
+                            if (paragraph.IsVideo)
+                            {
+                                <div class="video-paragraph d-flex mt-3 mb-4 justify-content-center embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" width="500" height="350" src="@paragraph.VideoUrl" allowfullscreen></iframe>
+                                </div>
+                            }
+
+                            if (paragraph.IsCode)
+                            {
+                                <pre><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrEmpty(paragraph.Body))
+                                {
+                                    <MudText Class="mt-2">@((MarkupString)(paragraph.Body))</MudText>
+                                }
                             }
                         }
-                    }
+                    </ChildContent>
                 </MudExpansionPanel>
             }
         </MudExpansionPanels>
@@ -76,6 +86,8 @@
     {
         await OnParametersSetAsync();
     }
+
+    private string GetImage(Paragraph paragraph) => $"img/{paragraph.PictureUrl}";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -105,3 +117,10 @@
         IsLoading = false;
     }
 }
+
+<style>
+    a {
+        color: #1976d2; /* Material blue */
+        text-decoration: underline;
+    }
+</style>

@@ -1,5 +1,7 @@
-﻿using TCSA.V2026.Data.Helpers;
+﻿using MudBlazor;
+using TCSA.V2026.Data.Helpers;
 using TCSA.V2026.Data.Models;
+using Block = TCSA.V2026.Data.Models.Block;
 
 namespace TCSA.V2026.Data.Curriculum;
 
@@ -70,9 +72,9 @@ public static class ArticleHelper
                             },
                             new Paragraph
                             {
-                                Body = "It’s great to have the opportunity to help you in your journey. I hope The C# Academy will give you some direction! I’m a self-taught software developer and got my first job in my thirties, after years of relentless, daily, coding practice. Many times I felt lost. I can't complain about the amount of resources available on the internet, but it was very difficult to connect the dots. I often felt hopeless and second-guessed myself whenever I got stuck. Hence the desire to create this resource to help others who are going through the same. If you want to know more about my journey, please read <a target='_blank' href='https://www.reddit.com/r/learnprogramming/comments/o7jq75/at_39_i_just_got_an_offer_for_my_first_software/'>this Reddit post.</a>"
+                                Body = "It’s great to have the <b>opportunity</b> to help you in your journey. I hope The C# Academy will give you some direction! I’m a self-taught software developer and got my first job in my thirties, after years of relentless, daily, coding practice. Many times I felt lost. I can't complain about the amount of resources available on the internet, but it was very difficult to connect the dots. I often felt hopeless and second-guessed myself whenever I got stuck. Hence the desire to create this resource to help others who are going through the same. If you want to know more about my journey, please read <a target='_blank' href='https://www.reddit.com/r/learnprogramming/comments/o7jq75/at_39_i_just_got_an_offer_for_my_first_software/'>this Reddit post.</a>"
                             }
-                        }
+                        },
                     },
                     new Block
                     {
@@ -167,7 +169,7 @@ public static class ArticleHelper
                             new Paragraph
                             {
                                 IsPicture = true,
-                                PictureUrl = "IMG_8392-768x576.jpg"
+                                PictureUrl = "art_5_start_here_setup.jpg"
                             }
                         }
                     },
@@ -2036,7 +2038,7 @@ git push</code>"
                             new Paragraph
                             {
                                 Body = "Also, I’m not sure I’ve mentioned this in other posts, but at the time I started writing this blog, I read a fantastic book for folks trying to teach themselves anything: The Art Of Learning, by Josh Waitzkin."
-                            }, 
+                            },
                             new Paragraph
                             {
                                 IsPicture = true,
@@ -2337,7 +2339,7 @@ git push</code>"
                         }
                     },
                     new Block
-                    {   
+                    {
                         Title = "Luck Counts",
                         Paragraphs = new List<Paragraph>
                         {

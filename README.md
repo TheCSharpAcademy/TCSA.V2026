@@ -1,6 +1,8 @@
 # The C# Academy
 
-Welcome to The C# Academy codebase! This repository is the main platform that powers our learning community and serves as a collaborative space for developers of all skill levels.
+Welcome to The C# Academy!
+
+This repository contains the source code that powers our learning community and also serves as a collaborative space for developers of all skill levels.
 
 The C# Academy website is more than just a learning platform - it's a living project where community members can practice real-world development skills. By contributing to this codebase, you'll experience what it's like to work on a production application maintained by multiple developers.
 
@@ -8,7 +10,7 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 ### Community Issues
 
-1. Browse the Community Issues / Create a new Community Issue at
+1. **GitHub**: Browse the **Community Issues** / Create a new **Community Issue** at
 
    https://github.com/users/TheCSharpAcademy/projects/23
 
@@ -16,7 +18,7 @@ The C# Academy website is more than just a learning platform - it's a living pro
    - Create a new branch for your issue
    - You may require permissions on the repository to perform these steps - reach out on Discord.
 
-2. Create a new Issue (if one doesn't already exists) at
+2. **The C# Academy**: Create a new **Issue** (if one doesn't already exists) at
 
    https://www.thecsharpacademy.com/dashboard/community
 
@@ -28,10 +30,10 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 ### Installation Prerequisites
 
-- An IDE (code editor) like Visual Studio or Visual Studio Code.
-- The .NET 9 SDK.
-- An SQL Server installation (Developer, Express, Docker Container)
-- A database management tool like SQL Server Management Studio or DBeaver (optional, only required if you need to run the `GetRanking` stored procedure).
+- An IDE (code editor) like **Visual Studio** or **Visual Studio Code**.
+- The **.NET 9** SDK.
+- An **SQL Server** installation (Developer, Express, Docker Container)
+- A database management tool like **SQL Server Management Studio** or **DBeaver** (optional, only required if you need to run the `GetRanking` stored procedure).
 
 ### Installation Steps
 

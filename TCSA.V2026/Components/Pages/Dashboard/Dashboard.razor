@@ -1,5 +1,10 @@
 ﻿@page "/dashboard"
 @using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
 @attribute [Authorize]
 
 <PageTitle>Dashboard</PageTitle>
@@ -15,17 +20,57 @@
     }
     else
     {
-        
+        <MudExpansionPanels Class="mt-2" MultiExpansion="true">
+            @foreach (var area in Areas)
+            {
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <div class="d-flex">
+                            <MudIcon Icon="@Icons.Material.Filled.Info" class="mr-3"></MudIcon>
+                            <MudText Typo="Typo.h6">@area.CardName</MudText>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                       
+                    </ChildContent>
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
     }
 </MudContainer>
 
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+
+    private List<DashboardAreaInfo> Areas = new();
+    private List<int>? CompletedProjects = new();
+    private ApplicationUser User;
 
     private bool IsLoading = true;
+    private bool IsLoggedIn = false;
+    private string UserId;
 
     protected override async Task OnInitializedAsync()
     {
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
         IsLoading = false;
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+        }
+        else
+        {
+            return;
+        }
+
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+        CompletedProjects = User?.DashboardProjects?.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
+
+        Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects);
     }
 }

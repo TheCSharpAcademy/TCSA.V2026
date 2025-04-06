@@ -8,13 +8,15 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 ### Community Issues
 
-1. Browse the Community Issues / Create a new Community Issue at https://github.com/users/TheCSharpAcademy/projects/23
+1. Browse the Community Issues / Create a new Community Issue at
+   https://github.com/users/TheCSharpAcademy/projects/23
 
    - Assign yourself to the issue
    - Create a new branch for your issue
    - You may require permissions on the repository to perform these steps - reach out on Discord.
 
-2. Create a new Issue (if one doesn't already exists) at https://www.thecsharpacademy.com/dashboard/community
+2. Create a new Issue (if one doesn't already exists) at
+   https://www.thecsharpacademy.com/dashboard/community
    - Select the project.
    - Select the issue type.
    - Enter the issue title from step 1.
@@ -47,9 +49,10 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 4. Paste the following, adjust any values specific to your environment. Save and close.
 
-> [!Tip]
-> DefaultConnection: Replace with your own connection string.
-> GithubClientId and GithubClientSecret: If you want to login via github, follow this guide: https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
+> [!Tip] > `DefaultConnection`: Replace with your own connection string.
+>
+> `GithubClientId` and `GithubClientSecret`: If you want to login via github, follow this guide:
+> https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
 
 ```
 {
@@ -91,7 +94,9 @@ using (var scope = app.Services.CreateScope())
 #### GetRanking Store Procedure
 
 > [!IMPORTANT]  
-> This stored procedure must be run if you want to access the leaderboard pages. Use your database management tool of choice and ensure you are connected to the correct database.
+> This stored procedure must be run if you want to access the leaderboard pages.
+>
+> Use your database management tool of choice and ensure you are connected to the correct database.
 
 ```
 SET ANSI_NULLS ON

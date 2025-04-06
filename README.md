@@ -101,9 +101,9 @@ using (var scope = app.Services.CreateScope())
 #### GetRanking Store Procedure
 
 > [!IMPORTANT]  
-> This stored procedure must be run if you want to access the leaderboard pages.
+> This stored procedure must be created if you want to access the leaderboard pages.
 >
-> Use your database management tool of choice and ensure you are connected to the correct database.
+> Use your database management tool of choice and ensure you are connected to the correct database before running the below script.
 
 ```
 SET ANSI_NULLS ON

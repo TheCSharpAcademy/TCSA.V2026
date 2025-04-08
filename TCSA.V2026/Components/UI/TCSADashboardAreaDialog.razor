@@ -1,0 +1,40 @@
+﻿@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Services
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
+            @MudDialog.Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @foreach (var project in Projects)
+        {
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@project.Title</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.PanoramaFishEye" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+            </MudCard>
+        })
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public int ProjectId { get; set; }
+    [Parameter] public IEnumerable<Article> Projects { get; set; }
+    
+    private void Cancel() => MudDialog.Cancel();
+}

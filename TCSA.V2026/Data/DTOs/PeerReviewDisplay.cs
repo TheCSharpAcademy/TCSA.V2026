@@ -10,6 +10,7 @@ public class PeerReviewDisplay
     public string AppUserId { get; set; }
     public int ExperiencePoints { get; set; }
     public int ProjectId { get; set; }
+    public string ProjectSlug { get; set; }
     public int DashboardProjectId { get; set; }
     public TimeSpan DurationOpen { get; set; }
 }

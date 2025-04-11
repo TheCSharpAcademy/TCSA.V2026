@@ -24,7 +24,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasOne(aua => aua.DashboardProject)
             .WithMany()
             .HasForeignKey(aua => aua.ProjectId)
-            .HasPrincipalKey(dp => dp.ProjectId);
+            .HasPrincipalKey(dp => dp.ProjectId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<AppUserActivity>()
             .HasOne(aua => aua.ApplicationUser)
@@ -35,6 +36,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasOne(ur => ur.User)
             .WithMany(u => u.CodeReviewProjects)
             .HasForeignKey(ur => ur.AppUserId)
+            .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         modelBuilder.Entity<Challenge>()

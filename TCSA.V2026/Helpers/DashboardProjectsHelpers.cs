@@ -216,6 +216,12 @@ public static class DashboardProjectsHelpers
         };
     }
 
+    public static string GetUrl(Article article)
+    {
+        var firstPart = article.Area == Area.StartHere ? "article" : "project";
+        return $"{firstPart}/{article.Id}/{article.Slug}";
+    }
+
     public static bool CheckIfAreaIsCompleted(
        IEnumerable<Project> projects,
        IEnumerable<Article> articles,

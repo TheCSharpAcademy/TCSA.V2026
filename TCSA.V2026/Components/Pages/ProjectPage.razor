@@ -1,0 +1,115 @@
+﻿@page "/project/{ProjectId:int}/{ProjectSlug}"
+@using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+@using static TCSA.V2026.Helpers.Enums
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<PageTitle>@Project.Title</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+
+    @if (IsLoggedIn && IsCompleted)
+    {
+        <MudAlert Severity="Severity.Success">You have completed this roadmap step.</MudAlert>
+
+        <MudPaper Class="pa-16 ma-2" Elevation="0">
+            @if (Project.Introduction != null)
+            {
+                foreach (var paragraph in Project.Introduction)
+                {
+                    <MudText Class="mt-2">@((MarkupString)(paragraph.Body))</MudText>
+                }
+            }
+        </MudPaper>
+
+        <MudPaper Class="pa-16 ma-2" Elevation="0">
+            @if (Project.Id != 86)
+            {
+                <MudText Typo="Typo.body1">@Project.LanguageHeadings.Requirements</MudText>
+                @if (!string.IsNullOrEmpty(Project.RequirementsIntro))
+                {
+                    <MudText Class="mt-2">@((MarkupString)(Project.RequirementsIntro))</MudText>
+                }
+                @if (Project.Requirements != null)
+                {
+                    <MudList T="MarkupString">
+                        @foreach (var req in Project.Requirements)
+                        {
+                            <MudListItem>
+                                <MudText Class="mt-2">@((MarkupString)(req))</MudText>
+                            </MudListItem>
+                        }
+                    </MudList>
+                }
+            }
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
+
+    [Parameter] public string ProjectSlug { get; set; }
+    [Parameter] public int ProjectId { get; set; }
+
+    private Project Project { get; set; }
+
+    private bool IsLoggedIn = false;
+    private bool IsCompleted = false;
+    private bool IsLoading = false;
+    private bool IsPendingReview = false;
+    private ProjectStatus Status { get; set; } = ProjectStatus.None;
+
+    private string UserId = string.Empty;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await OnParametersSetAsync();
+    }
+
+    private string GetImage(Paragraph paragraph) => $"img/{paragraph.PictureUrl}";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("highlightCode");
+        }
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        Project = ProjectHelper.GetProjects().Single(x => x.Id == ProjectId);
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+            var claims = AuthSate.User;
+            UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
+        }
+
+        IsLoading = false;
+    }
+}
+
+<style>
+    a {
+        color: #1976d2; /* Material blue */
+        text-decoration: underline;
+    }
+</style>

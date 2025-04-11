@@ -1,5 +1,6 @@
 ﻿@using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 <MudDialog>
     <TitleContent>
@@ -20,11 +21,13 @@
                         <MudText Typo="Typo.body1">@project.Title</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.PanoramaFishEye" Color="Color.Default" />
+                        <MudIconButton OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(project), "_blank", "noopener,noreferrer"))"
+                            Icon="@Icons.Material.Filled.ViewComfy" 
+                            Color="Color.Default" />
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
-        })
+        }
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -35,6 +38,7 @@
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public int ProjectId { get; set; }
     [Parameter] public IEnumerable<Article> Projects { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
     
     private void Cancel() => MudDialog.Cancel();
 }

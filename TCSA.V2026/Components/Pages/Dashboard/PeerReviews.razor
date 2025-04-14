@@ -28,7 +28,7 @@
                 <Columns>
                     <PropertyColumn Property="p => p.Title" Title="Title" />
                     <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
-                    <PropertyColumn Property="p => p.DurationOpen" Title="Open Since" />
+                    <PropertyColumn Property="p => TimeSpanFormatter.FormatDurationOpen(p.DurationOpen)" Title="Open Since" />
                     <TemplateColumn CellClass="d-flex justify-end">
                         <CellTemplate>
                             <MudStack Row>

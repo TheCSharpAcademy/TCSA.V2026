@@ -22,6 +22,7 @@ public static class SeedData
 
         var user1 = new ApplicationUser
         {
+            Id = "1",
             UserName = "user1@example.com",
             NormalizedUserName = "user1@example.com",
             Email = "user1@example.com",
@@ -40,6 +41,7 @@ public static class SeedData
 
         var user2 = new ApplicationUser
         {
+            Id = "2",
             UserName = "user2@example.com",
             NormalizedUserName = "user2@example.com",
             Email = "user2@example.com",

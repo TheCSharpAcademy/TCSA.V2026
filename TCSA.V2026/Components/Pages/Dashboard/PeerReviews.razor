@@ -28,7 +28,7 @@
                 <Columns>
                     <PropertyColumn Property="p => p.Title" Title="Title" />
                     <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
-                    <PropertyColumn Property="p => TimeSpanFormatter.FormatDurationOpen(p.DurationOpen)" Title="Open Since" />
+                    <PropertyColumn CellStyleFunc="@_durationCellStyleFunc" Property="p => TimeSpanFormatter.FormatDurationOpen(p.DurationOpen)" Title="Open Since" />
                     <TemplateColumn CellClass="d-flex justify-end">
                         <CellTemplate>
                             <MudStack Row>
@@ -162,4 +162,6 @@
 
         AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
     }
+
+    private Func<PeerReviewDisplay, string> _durationCellStyleFunc => p => p.DurationOpen.TotalDays > 7 ? "color: red" : "";
 }

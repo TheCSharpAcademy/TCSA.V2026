@@ -26,7 +26,11 @@
         {
             <MudDataGrid Class="mt-2" Dense="true" Items="@AvailableProjects" RowStyle="GetRowStyle">
                 <Columns>
-                    <PropertyColumn Property="p => p.Title" Title="Title" />
+                    <TemplateColumn Title="Title">
+                        <CellTemplate>
+                            <MudLink Href="@($"project/{context.Item.ProjectId}/{context.Item.ProjectSlug}")" Target="_blank">@context.Item.Title</MudLink>
+                        </CellTemplate>
+                    </TemplateColumn>
                     <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
                     <PropertyColumn Property="p => p.DurationOpen" Title="Open Since" />
                     <TemplateColumn CellClass="d-flex justify-end">
@@ -43,7 +47,7 @@
                                     </MudButton>
 
                                 }
-                                else 
+                                else
                                 {
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"

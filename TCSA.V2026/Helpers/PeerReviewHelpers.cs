@@ -21,6 +21,7 @@ public static class PeerReviewHelpers
                 Title = project.Title,
                 IconUrl = project.IconUrl,
                 ProjectId = dp.ProjectId,
+                ProjectSlug = project.Slug,
                 Name = GetRevieweeName(dp.AppUser),
                 ExperiencePoints = project.ExperiencePoints,
                 GithubUrl = dp.GithubUrl,

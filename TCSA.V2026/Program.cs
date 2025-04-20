@@ -44,7 +44,7 @@ builder.Services.AddAuthentication(options =>
         o.ClientId = builder.Configuration["Values:GithubClientId"];
         o.ClientSecret = builder.Configuration["Values:GithubClientSecret"];
         o.CallbackPath = "/signin-github";
-         // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+        // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
         o.Scope.Add("read:user");
 
     })
@@ -64,6 +64,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 var app = builder.Build();
 
 ServiceProviderAccessor.ServiceProvider = app.Services;
+
+if (app.Environment.IsDevelopment())
+{
+    SeedData.Seed(app.Services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

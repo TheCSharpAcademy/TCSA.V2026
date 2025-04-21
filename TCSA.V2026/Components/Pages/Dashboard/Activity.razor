@@ -77,7 +77,7 @@
 
     private bool IsLoading = true;
     private string UserId = string.Empty;
-    private TimeSpan LoadTime;
+    private TimeSpan LoadTime = TimeSpan.Zero;
 
     protected override async Task OnInitializedAsync()
     {

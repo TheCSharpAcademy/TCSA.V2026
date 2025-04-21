@@ -1,0 +1,104 @@
+﻿@page "/dashboard/leaderboard"
+@using Microsoft.AspNetCore.Authorization
+
+@using System.Security.Claims;
+@using TCSA.V2026.Services
+@using TCSA.V2026.Data.DTOs;
+@attribute [Authorize]
+
+<PageTitle>Leaderboard</PageTitle>
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        if (Users != null && Users.Count > 0)
+        {
+            <MudDataGrid Class="mt-2" Dense="true" Items="@Users">
+                 <Columns>
+                    <PropertyColumn Property="u => u.Ranking" Title="Ranking" />
+                    <PropertyColumn Property="u => u.DisplayName" Title="Name" />
+                    <PropertyColumn Property="u => u.ExperiencePoints" Title="XPs" />
+                 </Columns>
+            </MudDataGrid>
+        }
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private ILeaderboardService LeaderboardService { get; set; }
+
+    private List<UserLeaderboardDisplay>? Users { get; set; } = null;
+    private List<UserReviewLeaderboardDisplay>? ReviewUsers { get; set; } = null;
+
+    private int CurrentPage;
+    private int Ranking;
+    private bool IsLoading = true;
+    private bool IsReviews = false;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime = TimeSpan.Zero;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!AuthSate.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("Account/Login");
+        }
+
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (IsReviews)
+        {
+            await FilterReviews();
+        }
+        else
+        {
+            Ranking = await LeaderboardService.GetUserRanking(UserId);
+
+            CurrentPage = Ranking / 50;
+            await LoadPagination(CurrentPage);
+        }
+        LoadTime = DateTime.UtcNow - startTime;
+        IsLoading = false;
+    }
+
+    protected async Task LoadPagination(int pageNumber)
+    {
+        IsLoading = true;
+
+        var incomingUsers = await LeaderboardService.GetUsersForLeaderboard(pageNumber);
+
+        CurrentPage = pageNumber;
+        Users = incomingUsers.ToList();
+
+        IsLoading = false;
+    }
+
+    protected async Task FilterReviews()
+    {
+        if (!IsReviews)
+        {
+            IsReviews = true;
+
+            var incomingUsers = await LeaderboardService.GetUserForReviewLeaderboard();
+            ReviewUsers = incomingUsers.ToList();
+        }
+        else
+        {
+            IsReviews = false;
+            await LoadPagination(CurrentPage);
+        }
+
+    }
+}

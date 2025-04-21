@@ -12,6 +12,9 @@
         <MudTooltip Text="Peer Reviews">
             <MudIconButton Icon="@Icons.Material.Outlined.RateReview" OnClick="NavigateToReviews" />
         </MudTooltip>
+        <MudTooltip Text="Leaderboard">
+            <MudIconButton Icon="@Icons.Material.Outlined.Leaderboard" OnClick="NavigateToLeaderboard" />
+        </MudTooltip>
     </MudToolBar>
 </MudPaper>
 
@@ -37,5 +40,10 @@
     private void NavigateToReviews()
     {
         Navigation.NavigateTo("/dashboard/reviews");
+    }
+
+    private void NavigateToLeaderboard()
+    {
+        Navigation.NavigateTo("/dashboard/leaderboard");
     }
 }

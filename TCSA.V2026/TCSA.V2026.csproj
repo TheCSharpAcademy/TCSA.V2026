@@ -29,4 +29,10 @@
     </Content>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\Belts\" />
+    <Folder Include="wwwroot\img\Flags\" />
+  </ItemGroup>
+
 </Project>

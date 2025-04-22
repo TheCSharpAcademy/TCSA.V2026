@@ -1,0 +1,70 @@
+﻿@page "/course/{courseId:int}/article/{articleDisplayId:int}/{articleId:int}/{isCode:bool}"
+@using System.Security.Claims
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+
+<MudGrid>
+    <MudItem xs="12" md="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            <MudList T="string" Dense="true">
+               @foreach(var article in Course.Articles) {
+                    <MudListItem Text="@article.Title" /> 
+               }
+            </MudList>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" md="9">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            Lesson 
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Inject] NavigationManager NavigationManager { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+
+    [Parameter] public int CourseId { get; set; }
+    [Parameter] public int ArticleId { get; set; }
+    [Parameter] public int ArticleDisplayId { get; set; }
+    [Parameter] public bool IsCode { get; set; }
+
+    private Course Course { get; set; }
+    private Article Article { get; set; }
+    private List<int> CompletedProjects = new();
+    private bool IsLoggedIn;
+    private bool IsLoading;
+    private bool IsCompleted;
+    private string UserId;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Course = CourseHelper.GetCourses().FirstOrDefault(x => x.Id == CourseId);
+
+        if (Course != null)
+        {
+            Article = Course.Articles.FirstOrDefault(a => a.CourseDisplayId == ArticleDisplayId);
+        }
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+            var claims = AuthSate.User;
+            UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
+        var projects = await ProjectService.GetCompletedProjectsById(UserId);
+        var courseIds = Course.Articles.Select(x => x.Id);
+        CompletedProjects = projects.Where(x => courseIds.Contains(x)).ToList();
+    }
+
+    private void NavigateToArticle(int articleDisplayId, int articleId)
+    {
+        NavigationManager.NavigateTo($"/course/{CourseId}/article/{articleDisplayId}/{articleId}/false", forceLoad: true);
+    }
+}
+

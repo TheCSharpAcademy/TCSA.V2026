@@ -10,6 +10,7 @@ public interface IProjectService
 {
     Task<BaseResponse> MarkAsCompleted(int projectId);
     Task<bool> IsProjectCompleted(string userId, int projectId);
+    Task<List<int>> GetCompletedProjectsById(string userId);
 }
 
 public class ProjectService : IProjectService
@@ -19,6 +20,24 @@ public class ProjectService : IProjectService
     public ProjectService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<List<int>> GetCompletedProjectsById(string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.DashboardProjects
+                    .Where(x => x.AppUserId == userId && x.IsCompleted)
+                    .Select(x => x.ProjectId)
+                    .ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     public async Task<bool> IsProjectCompleted(string userId, int projectId)

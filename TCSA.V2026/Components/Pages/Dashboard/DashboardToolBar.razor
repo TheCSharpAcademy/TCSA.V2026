@@ -18,6 +18,9 @@
         <MudTooltip Text="Roadmap">
             <MudIconButton Icon="@Icons.Material.Outlined.Map" OnClick="NavigateToRoadmap" />
         </MudTooltip>
+        <MudTooltip Text="Courses">
+            <MudIconButton Icon="@Icons.Material.Outlined.Book" OnClick="NavigateToCourses" />
+        </MudTooltip>
     </MudToolBar>
 </MudPaper>
 
@@ -53,5 +56,10 @@
     private void NavigateToRoadmap()
     {
         Navigation.NavigateTo("/dashboard/roadmap");
+    }
+
+    private void NavigateToCourses()
+    {
+        Navigation.NavigateTo("/dashboard/courses");
     }
 }

@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 @using System.Security.Claims;
+@using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 @using TCSA.V2026.Data.DTOs;
 @attribute [Authorize]
@@ -9,6 +10,10 @@
 <PageTitle>Leaderboard</PageTitle>
 <MudContainer>
     <DashboardToolBar></DashboardToolBar>
+    <MudButton
+        FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4">
+        Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
+    </MudButton>
 
     @if (IsLoading)
     {
@@ -19,13 +24,38 @@
         <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
         if (Users != null && Users.Count > 0)
         {
-            <MudDataGrid Class="mt-2" Dense="true" Items="@Users">
-                 <Columns>
-                    <PropertyColumn Property="u => u.Ranking" Title="Ranking" />
-                    <PropertyColumn Property="u => u.DisplayName" Title="Name" />
-                    <PropertyColumn Property="u => u.ExperiencePoints" Title="XPs" />
-                 </Columns>
-            </MudDataGrid>
+            if (!IsReviews) {
+                <MudDataGrid Class="mt-2" Dense="true" Items="@Users">
+                    <Columns>
+                        <PropertyColumn Property="u => u.Ranking" Title="Pos" CellStyle="font-weight:bold" HeaderStyle="font-weight:bold" />
+                        <TemplateColumn Title="XPs" HeaderStyle="font-weight:bold">
+                            <CellTemplate>
+                                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                    <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
+                                    <MudText Style="font-weight:bold" Typo="Typo.subtitle2">@context.Item.ExperiencePoints</MudText>
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn Title="Name" HeaderStyle="font-weight:bold">
+                            <CellTemplate>
+                                <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.DisplayName</MudText>
+                                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                    <MudImage ObjectFit="ObjectFit.Contain" Width="20" Src="@($"img/belts/{context.Item.Level}-belt.png")" Alt="..." />
+                                    <MudText Typo="Typo.subtitle2">@(context.Item.Level) Belt</MudText>
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold">
+                            <CellTemplate>
+                                <MudStack Row="true" AlignItems="AlignItems.Center">
+                                    <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="@FlagHelper.GetFlag(context.Item.Country)" Alt="..." />
+                                    <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.Country</MudText>
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                </MudDataGrid>
+            }
         }
     }
 </MudContainer>

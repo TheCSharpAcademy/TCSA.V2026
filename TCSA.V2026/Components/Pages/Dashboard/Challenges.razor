@@ -1,0 +1,65 @@
+﻿@page "/dashboard/challenges"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+@attribute [Authorize]
+
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        if (ChallengesList != null && ChallengesList.Count > 0)
+        {
+            <MudDataGrid Class="mt-2" Dense="true" Items="@ChallengesList" RowStyle="GetRowStyle">
+                <Columns>
+                    <PropertyColumn Property="x => x.Name" Title="Total XPs" />
+                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
+                </Columns>
+            </MudDataGrid>
+        }
+    }
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IChallengeService ChallengeService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+
+    private List<Challenge> ChallengesList = new();
+    private List<int> completedChallenges = new();
+    private ApplicationUser User { get; set; }
+
+    private bool IsLoading = true;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime = TimeSpan.Zero;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetDetailedUserById(UserId);
+        ChallengesList = await ChallengeService.GetChallenges(User.Level);
+        completedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
+
+        LoadTime = DateTime.UtcNow - startTime;
+
+        IsLoading = false;
+    }
+
+}

@@ -35,4 +35,9 @@
     <Folder Include="wwwroot\img\Flags\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="Services\ChallengeService.cs" />
+  </ItemGroup>
+
 </Project>

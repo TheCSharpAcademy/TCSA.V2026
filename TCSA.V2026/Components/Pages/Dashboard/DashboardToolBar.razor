@@ -15,6 +15,9 @@
         <MudTooltip Text="Leaderboard">
             <MudIconButton Icon="@Icons.Material.Outlined.Leaderboard" OnClick="NavigateToLeaderboard" />
         </MudTooltip>
+        <MudTooltip Text="Roadmap">
+            <MudIconButton Icon="@Icons.Material.Outlined.Map" OnClick="NavigateToRoadmap" />
+        </MudTooltip>
     </MudToolBar>
 </MudPaper>
 
@@ -45,5 +48,10 @@
     private void NavigateToLeaderboard()
     {
         Navigation.NavigateTo("/dashboard/leaderboard");
+    }
+
+    private void NavigateToRoadmap()
+    {
+        Navigation.NavigateTo("/dashboard/roadmap");
     }
 }

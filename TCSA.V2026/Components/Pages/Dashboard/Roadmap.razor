@@ -1,0 +1,79 @@
+﻿@page "/dashboard/roadmap"
+@using Microsoft.AspNetCore.Authorization
+
+@using System.Security.Claims;
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+@using TCSA.V2026.Data.DTOs;
+@attribute [Authorize]
+
+<PageTitle>Roadmap</PageTitle>
+<MudContainer>
+    <DashboardToolBar></DashboardToolBar>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudTimeline TimelinePosition="TimelinePosition.Start">
+            <MudTimelineItem>
+                <MudText Align="Align.Start">Static dot</MudText>
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+               <TCSARoadmapCard Tasks="RoadmapHelper.GetGreenBeltTasks(CompletedProjects)"/>
+            </MudTimelineItem>
+            <MudTimelineItem>
+                <MudText Align="Align.Start">Static dot</MudText>
+            </MudTimelineItem>
+        </MudTimeline>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+
+    private ApplicationUser User { get; set; }
+    private bool IsLoading = true;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime = TimeSpan.Zero;
+    private Level UserLevel { get; set; }
+
+    public static List<int> CompletedProjects = new();
+
+    public static List<RoadmapTask> MissingTasks = new();
+    public static List<RoadmapTask> GreenBeltTasks = new();
+    public static List<RoadmapTask> OliveGreenBeltTasks = new();
+    public static List<RoadmapTask> YellowBeltTasks = new();
+    public static List<RoadmapTask> OrangeBeltTasks = new();
+    public static List<RoadmapTask> RedBeltTasks = new();
+    public static List<RoadmapTask> PurpleBeltTasks = new();
+    public static List<RoadmapTask> BrownBeltTasks = new();
+    public static List<RoadmapTask> GreyBeltTasks = new();
+    public static List<RoadmapTask> BlueBeltTasks = new();
+    public static List<RoadmapTask> BlackBeltTasks = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!AuthSate.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("Account/Login");
+        }
+
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetDetailedUserById(UserId);
+        CompletedProjects = User.DashboardProjects.Where(p => p.IsCompleted).Select(p => p.Id).ToList();
+
+        LoadTime = DateTime.UtcNow - startTime;
+        IsLoading = false;
+    }
+}

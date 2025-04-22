@@ -1,0 +1,13 @@
+﻿@using TCSA.V2026.Data.DTOs
+
+<MudCard Outlined="@true" Elevation="25">
+    <MudCardContent>
+        @foreach(var task in Tasks) {
+            <MudText>@task.Name</MudText>
+        }
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public List<RoadmapTask> Tasks { get; set; } = new List<RoadmapTask>();
+}

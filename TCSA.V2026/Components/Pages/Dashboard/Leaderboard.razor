@@ -11,7 +11,7 @@
 <MudContainer>
     <DashboardToolBar></DashboardToolBar>
     <MudButton
-        FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4">
+        FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4" OnClick="FilterReviews">
         Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
     </MudButton>
 
@@ -53,6 +53,30 @@
                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
+                    </Columns>
+                </MudDataGrid>
+            } else {
+                <MudDataGrid Class="mt-2" Dense="true" Items="@ReviewUsers">
+                    <Columns>
+                        <PropertyColumn Property="u => u.Ranking" Title="Pos" CellStyle="font-weight:bold" HeaderStyle="font-weight:bold" />
+                        <PropertyColumn Property="u => u.DisplayName" Title="Name" CellStyle="font-weight:bold" HeaderStyle="font-weight:bold" />
+                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold">
+                            <CellTemplate>
+                                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                    <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="@FlagHelper.GetFlag(context.Item.Country)" Alt="..." />
+                                    <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.Country</MudText>
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn Title="Total XP" HeaderStyle="font-weight:bold">
+                            <CellTemplate>
+                                <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                    <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
+                                    <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.TotalXp</MudText>
+                                </MudStack>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <PropertyColumn Title="Total Reviews" Property="u => u.ReviewsNumber" CellStyle="font-weight:bold" HeaderStyle="font-weight:bold" />
                     </Columns>
                 </MudDataGrid>
             }

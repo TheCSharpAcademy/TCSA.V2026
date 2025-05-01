@@ -4,12 +4,14 @@ using System.Data;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Helpers.Constants;
 
 namespace TCSA.V2026.Services;
 
 public interface ILeaderboardService
 {
     Task<int> GetUserRanking(string userId);
+    Task<int> GetTotalPages();
     Task<List<UserLeaderboardDisplay>> GetUsersForLeaderboard(int pageNumber);
     Task<List<UserReviewLeaderboardDisplay>> GetUserForReviewLeaderboard();
 }
@@ -53,7 +55,7 @@ public class LeaderboardService : ILeaderboardService
 
                 result = result
                     .OrderByDescending(x => x.TotalXp)
-                    .Take(50)
+                    .Take(PagingConstants.PageSize)
                     .ToList();
 
                 foreach (var user in result)
@@ -74,7 +76,7 @@ public class LeaderboardService : ILeaderboardService
     {
         var users = new List<ApplicationUser>();
         var result = new List<UserLeaderboardDisplay>();
-        var index = pageNumber == 0 ? 0 : pageNumber * 50;
+        var index = (pageNumber - 1) * PagingConstants.PageSize;
 
         try
         {
@@ -85,8 +87,8 @@ public class LeaderboardService : ILeaderboardService
                 .OrderByDescending(x => x.ExperiencePoints)
                 .ThenBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
-                .Skip(pageNumber * 50)
-                .Take(50)
+                .Skip((pageNumber - 1) * PagingConstants.PageSize)
+                .Take(PagingConstants.PageSize)
                 .ToListAsync();
             }
         }
@@ -142,6 +144,24 @@ public class LeaderboardService : ILeaderboardService
                 }
 
                 return -1;
+            }
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
+    }
+
+    public async Task<int> GetTotalPages()
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var count = await context.Users
+                    .CountAsync(x => x.ExperiencePoints > 0);
+
+                return (int)Math.Ceiling((double)count / PagingConstants.PageSize);
             }
         }
         catch (Exception ex)

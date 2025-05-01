@@ -16,7 +16,7 @@
     </MudButton>
 
     @if (Ranking > PagingConstants.PageSize && !IsReviews) {
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => LoadPagination(Ranking / PagingConstants.PageSize)">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => LoadPagination(((Ranking - 1) / PagingConstants.PageSize) + 1)">
             Click to See Your Ranking
         </MudButton>
     }

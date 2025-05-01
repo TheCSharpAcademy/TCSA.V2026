@@ -32,7 +32,9 @@
         {
             if (!IsReviews)
             {
+                if (Pages > 1) {
                 <MudPagination SelectedChanged="LoadPagination" Count="Pages" Selected="CurrentPage" />
+                }
                 <MudDataGrid Class="mt-2" Dense="true" Items="@Users" Breakpoint="Breakpoint.None">
                     <Columns>
                         <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userLeaderboardClassFunc">

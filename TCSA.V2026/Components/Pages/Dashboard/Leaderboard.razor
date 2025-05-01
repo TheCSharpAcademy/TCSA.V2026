@@ -35,12 +35,12 @@
                 <MudPagination SelectedChanged="LoadPagination" Count="Pages" Selected="CurrentPage" />
                 <MudDataGrid Class="mt-2" Dense="true" Items="@Users" Breakpoint="Breakpoint.None">
                     <Columns>
-                        <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.Ranking</MudText>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="XPs" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="XPs" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
                                     <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
@@ -48,7 +48,7 @@
                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Name" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Name" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.DisplayName</MudText>
                                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
@@ -57,7 +57,7 @@
                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
                                     <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="@FlagHelper.GetFlag(context.Item.Country)" Alt="..." />
@@ -70,17 +70,17 @@
             } else {
                 <MudDataGrid Class="mt-2" Dense="true" Items="@ReviewUsers" Breakpoint="Breakpoint.None">
                     <Columns>
-                        <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userReviewLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.Ranking</MudText>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Name" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Name" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userReviewLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.DisplayName</MudText>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Country" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userReviewLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
                                     <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="@FlagHelper.GetFlag(context.Item.Country)" Alt="..." />
@@ -88,7 +88,7 @@
                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Total XP" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Total XP" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userReviewLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
                                     <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
@@ -96,7 +96,7 @@
                                 </MudStack>
                             </CellTemplate>
                         </TemplateColumn>
-                        <TemplateColumn Title="Total Reviews" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
+                        <TemplateColumn Title="Total Reviews" HeaderStyle="font-weight:bold" HeaderClass="pa-2 pa-md-3" CellClassFunc="@_userReviewLeaderboardClassFunc">
                             <CellTemplate>
                                 <MudText Style="font-weight:bold" Typo="Typo.subtitle1">@context.Item.ReviewsNumber</MudText>
                             </CellTemplate>
@@ -181,4 +181,16 @@
             await LoadPagination(CurrentPage);
         }
     }
+
+    private Func<UserLeaderboardDisplay, string> _userLeaderboardClassFunc => user =>
+    {
+        string classNames = "pa-2 pa-md-3";
+        return user.Id == UserId ? $"{classNames} mud-theme-primary" : classNames;
+    };
+
+    private Func<UserReviewLeaderboardDisplay, string> _userReviewLeaderboardClassFunc => user =>
+    {
+        string classNames = "pa-2 pa-md-3";
+        return user.Id == UserId ? $"{classNames} mud-theme-primary" : classNames;
+    };
 }

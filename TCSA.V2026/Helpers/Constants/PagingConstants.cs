@@ -2,5 +2,5 @@
 
 public static class PagingConstants
 {
-    public const int PageSize = 2;
+    public const int PageSize = 50;
 }

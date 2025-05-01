@@ -4,6 +4,7 @@ using System.Data;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Helpers.Constants;
 
 namespace TCSA.V2026.Services;
 
@@ -54,7 +55,7 @@ public class LeaderboardService : ILeaderboardService
 
                 result = result
                     .OrderByDescending(x => x.TotalXp)
-                    .Take(50)
+                    .Take(PagingConstants.PageSize)
                     .ToList();
 
                 foreach (var user in result)
@@ -75,7 +76,7 @@ public class LeaderboardService : ILeaderboardService
     {
         var users = new List<ApplicationUser>();
         var result = new List<UserLeaderboardDisplay>();
-        var index = pageNumber == 0 ? 0 : pageNumber * 50;
+        var index = (pageNumber - 1) * PagingConstants.PageSize;
 
         try
         {
@@ -86,8 +87,8 @@ public class LeaderboardService : ILeaderboardService
                 .OrderByDescending(x => x.ExperiencePoints)
                 .ThenBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
-                .Skip(pageNumber * 50)
-                .Take(50)
+                .Skip((pageNumber - 1) * PagingConstants.PageSize)
+                .Take(PagingConstants.PageSize)
                 .ToListAsync();
             }
         }

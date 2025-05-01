@@ -10,6 +10,7 @@ namespace TCSA.V2026.Services;
 public interface ILeaderboardService
 {
     Task<int> GetUserRanking(string userId);
+    Task<int> GetTotalPages();
     Task<List<UserLeaderboardDisplay>> GetUsersForLeaderboard(int pageNumber);
     Task<List<UserReviewLeaderboardDisplay>> GetUserForReviewLeaderboard();
 }
@@ -142,6 +143,24 @@ public class LeaderboardService : ILeaderboardService
                 }
 
                 return -1;
+            }
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
+    }
+
+    public async Task<int> GetTotalPages()
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var count = await context.Users
+                    .CountAsync(x => x.ExperiencePoints > 0);
+
+                return (count + 1) / PagingConstants.PageSize;
             }
         }
         catch (Exception ex)

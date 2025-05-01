@@ -161,7 +161,7 @@ public class LeaderboardService : ILeaderboardService
                 var count = await context.Users
                     .CountAsync(x => x.ExperiencePoints > 0);
 
-                return (count + 1) / PagingConstants.PageSize;
+                return (int)Math.Ceiling((double)count / PagingConstants.PageSize);
             }
         }
         catch (Exception ex)

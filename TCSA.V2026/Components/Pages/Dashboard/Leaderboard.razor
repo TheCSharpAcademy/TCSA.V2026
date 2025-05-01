@@ -145,7 +145,7 @@
         {
             Ranking = await LeaderboardService.GetUserRanking(UserId);
 
-            CurrentPage = (Ranking + 1) / PagingConstants.PageSize;
+            CurrentPage = ((Ranking - 1) / PagingConstants.PageSize) + 1;
             await LoadPagination(CurrentPage);
         }
 

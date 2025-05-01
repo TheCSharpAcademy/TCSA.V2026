@@ -3,6 +3,7 @@
 
 @using System.Security.Claims;
 @using TCSA.V2026.Helpers
+@using TCSA.V2026.Helpers.Constants
 @using TCSA.V2026.Services
 @using TCSA.V2026.Data.DTOs;
 @attribute [Authorize]
@@ -13,6 +14,12 @@
     <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4" OnClick="FilterReviews">
         Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
     </MudButton>
+
+    @if (Ranking > PagingConstants.PageSize && !IsReviews) {
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => LoadPagination(Ranking / PagingConstants.PageSize)">
+            Click to See Your Ranking
+        </MudButton>
+    }
 
     @if (IsLoading)
     {
@@ -25,6 +32,7 @@
         {
             if (!IsReviews)
             {
+                <MudPagination SelectedChanged="LoadPagination" Count="Pages" Selected="CurrentPage" />
                 <MudDataGrid Class="mt-2" Dense="true" Items="@Users" Breakpoint="Breakpoint.None">
                     <Columns>
                         <TemplateColumn Title="Pos" HeaderStyle="font-weight:bold" CellClass="pa-2 pa-md-3" HeaderClass="pa-2 pa-md-3">
@@ -112,6 +120,7 @@
     private int Ranking;
     private bool IsLoading = true;
     private bool IsReviews = false;
+    private int Pages;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
 
@@ -136,9 +145,11 @@
         {
             Ranking = await LeaderboardService.GetUserRanking(UserId);
 
-            CurrentPage = Ranking / 50;
+            CurrentPage = (Ranking + 1) / PagingConstants.PageSize;
             await LoadPagination(CurrentPage);
         }
+
+        Pages = await LeaderboardService.GetTotalPages();
         LoadTime = DateTime.UtcNow - startTime;
         IsLoading = false;
     }
@@ -169,6 +180,5 @@
             IsReviews = false;
             await LoadPagination(CurrentPage);
         }
-
     }
 }

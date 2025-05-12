@@ -4,6 +4,7 @@ using System.Data;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Helpers;
 using TCSA.V2026.Helpers.Constants;
 
 namespace TCSA.V2026.Services;
@@ -45,7 +46,7 @@ public class LeaderboardService : ILeaderboardService
                     {
                         Id = user.Id,
                         Country = user.Country,
-                        DisplayName = user.DisplayName,
+                        DisplayName = UserDisplayNameHelper.GetDisplayName(user),
                         TotalXp = user.ReviewExperiencePoints,
                         ReviewsNumber = user.CodeReviewProjects.Count()
                     };
@@ -105,7 +106,7 @@ public class LeaderboardService : ILeaderboardService
                 Id = user.Id,
                 Country = user.Country,
                 Level = user.Level,
-                DisplayName = user.DisplayName,
+                DisplayName = UserDisplayNameHelper.GetDisplayName(user),
                 ExperiencePoints = user.ExperiencePoints,
                 Ranking = index
             };

@@ -22,25 +22,31 @@
     }
     else
     {
-        <MudExpansionPanels Class="mt-2" MultiExpansion="true">
-            @foreach (var area in Areas)
-            {
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderAvatar>
-                            <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")"/>
-                        </CardHeaderAvatar>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.body1">@area.CardName</MudText>
-                            <MudText Typo="Typo.body2">@area.Description</MudText>
-                        </CardHeaderContent>
-                        <CardHeaderActions>
-                            <MudIconButton OnClick="@(() => OpenAreaDialog(area.Projects))" Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                        </CardHeaderActions>
-                    </MudCardHeader>
-                </MudCard>
-            }
-        </MudExpansionPanels>
+        @foreach (var area in Areas)
+        {
+            <MudCard Class="mt-1">
+                <MudCardHeader Class="d-flex align-items-center">
+                    <CardHeaderAvatar>
+                        <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1">@area.CardName</MudText>
+                        <MudText Typo="Typo.body2">@area.Description</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton 
+                            Class ="mt-3"
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled"
+                            OnClick="@(() => OpenAreaDialog(area.Projects))"
+                            Color="Color.Primary"
+                            StartIcon="fas fa-eye" >
+                            View Tasks
+                        </MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+            </MudCard>
+        }
     }
 </MudContainer>
 

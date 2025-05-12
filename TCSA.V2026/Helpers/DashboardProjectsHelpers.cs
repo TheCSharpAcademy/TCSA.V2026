@@ -71,7 +71,7 @@ public static class DashboardProjectsHelpers
             }
         }
 
-        return $"{completedProjects} out of {count} tasks completed";
+        return $"{completedProjectsCount} out of {count} tasks completed";
     }
 
     public static Article GetProject(int projectId)

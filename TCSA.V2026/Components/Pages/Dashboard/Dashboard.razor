@@ -14,8 +14,10 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <MudContainer>
-    <DashboardToolBar></DashboardToolBar>
 
+    <DashboardToolBar></DashboardToolBar>
+    <MudCheckBox @bind-Value="@_showCompleted" title="Show Completed" CheckedIcon="@Icons.Material.Outlined.CheckBox" 
+    UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"></MudCheckBox>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -24,8 +26,10 @@
     {
         @foreach (var area in Areas)
         {
-            <MudCard Class="mt-1">
-                <MudCardHeader Class="d-flex align-items-center">
+            if (_showCompleted || (!_showCompleted && !area.IsCompleted))
+            {
+                <MudCard Class="mt-1">
+                    <MudCardHeader Class="d-flex align-items-center">
                     <CardHeaderAvatar>
                         <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
                     </CardHeaderAvatar>
@@ -35,17 +39,17 @@
                     </CardHeaderContent>
                     <CardHeaderActions>
                         <MudButton 
-                            Class ="mt-3"
-                            Size="@Size.Medium"
-                            Variant="@Variant.Filled"
-                            OnClick="@(() => OpenAreaDialog(area.Projects))"
-                            Color="Color.Primary"
-                            StartIcon="fas fa-eye" >
+                        Class ="mt-3"
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        OnClick="@(() => OpenAreaDialog(area.Projects))"
+                        Color="Color.Primary"
+                        StartIcon="fas fa-eye" >
                             View Tasks
                         </MudButton>
                     </CardHeaderActions>
                 </MudCardHeader>
-            </MudCard>
+            </MudCard>}
         }
     }
 </MudContainer>
@@ -58,6 +62,7 @@
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
 
+    private bool _showCompleted = true;
     private List<DashboardAreaInfo> Areas = new();
     private List<int>? CompletedProjects = new();
     private ApplicationUser User;

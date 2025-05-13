@@ -35,7 +35,7 @@
                     </CardHeaderContent>
                     <CardHeaderActions>
                         <MudButton 
-                            Class ="mt-3"
+                            Class ="mt-3 mr-5"
                             Size="@Size.Medium"
                             Variant="@Variant.Filled"
                             OnClick="@(() => OpenAreaDialog(area.Projects))"
@@ -70,7 +70,7 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var parameters = new DialogParameters<TCSADashboardAreaDialog> { { x => x.Projects, projects } };
-        var dialog = await DialogService.ShowAsync<TCSADashboardAreaDialog>("View Projects", parameters, options);
+        var dialog = await DialogService.ShowAsync<TCSADashboardAreaDialog>(null, parameters, options);
 
         var result = await dialog.Result;
 

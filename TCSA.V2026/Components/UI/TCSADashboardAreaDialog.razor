@@ -3,27 +3,30 @@
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 <MudDialog>
-    <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
-            @MudDialog.Title
-        </MudText>
-    </TitleContent>
     <DialogContent>
         @foreach (var project in Projects)
         {
-            <MudCard>
+            <MudCard Class="mt-1 mb-1">
                 <MudCardHeader>
                     <CardHeaderAvatar>
-                        <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                        <MudImage Width="40" Src="@($"img/icons/{project.IconUrl}")" />
                     </CardHeaderAvatar>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.body1">@project.Title</MudText>
+                        <MudText Typo="Typo.h6">@project.Title</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudIconButton OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(project), "_blank", "noopener,noreferrer"))"
-                            Icon="@Icons.Material.Filled.ViewComfy" 
-                            Color="Color.Default" />
+                        <MudChip Class="mt-3 ml-5"
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Success">Completed</MudChip>
+                        <MudButton Class="mt-3 ml-5 mr-5"
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled"
+                            OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(project), "_blank", "noopener,noreferrer"))"
+                            Color="Color.Primary"
+                            StartIcon="fas fa-eye">
+                            View Task
+                        </MudButton>
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>

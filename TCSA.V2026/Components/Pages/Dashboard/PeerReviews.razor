@@ -12,7 +12,7 @@
 
 <PageTitle>Peer Reviews</PageTitle>
 
-<MudContainer>
+<MudContainer Class="pa-0">
     <DashboardToolBar></DashboardToolBar>
 
     @if (IsLoading)
@@ -24,42 +24,52 @@
         <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
         if (AvailableProjects != null && AvailableProjects.Count > 0)
         {
-            <MudDataGrid Class="mt-2" Dense="true" Items="@AvailableProjects" RowStyle="GetRowStyle">
-                <Columns>
-                    <TemplateColumn Title="Title">
-                        <CellTemplate>
-                            <MudLink Href="@($"project/{context.Item.ProjectId}/{context.Item.ProjectSlug}")" Target="_blank">@context.Item.Title</MudLink>
-                        </CellTemplate>
-                    </TemplateColumn>
-                    <PropertyColumn Property="p => p.ExperiencePoints" Title="XPs" />
-                    <PropertyColumn CellStyleFunc="@_durationCellStyleFunc" Property="p => TimeSpanFormatter.FormatDurationOpen(p.DurationOpen)" Title="Open Since" />
-                    <TemplateColumn CellClass="d-flex justify-end">
-                        <CellTemplate>
+            <MudStack Spacing="4">
+                @foreach (var project in AvailableProjects)
+                {
+                    <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5">
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
+                            <MudStack Row Spacing="5">
+                                <MudImage ObjectFit="ObjectFit.Contain" Width="60" Src="@($"img/icons/{project.IconUrl}")" Alt="..." />
+                                <MudStack Spacing="0">
+                                    <MudText Style="@($"font-weight:bolder; color:{Colors.DeepPurple.Lighten1}")" Typo="Typo.subtitle1">@project.Title</MudText>
+                                    <MudText Typo="Typo.subtitle2">@project.Name</MudText>
+                                    <MudText Style="@(project.DurationOpen.TotalDays > 7 ? "color: red" : "")" Class="mt-2" Typo="Typo.caption">
+                                        @TimeSpanFormatter.FormatDurationOpen(project.DurationOpen)
+                                    </MudText>
+                                </MudStack>
+                                <MudStack Row Spacing="1" AlignItems="AlignItems.Center">
+                                    <MudText Style="font-weight:bolder" Typo="Typo.subtitle1">Reward:</MudText>
+                                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                        <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
+                                        <MudText Style="font-weight:bolder" Typo="Typo.subtitle1">@project.ExperiencePoints</MudText>
+                                    </MudStack>
+                                </MudStack>
+                            </MudStack>
                             <MudStack Row>
-                                @if (!context.Item.IsAssigned)
+                                @if (!project.IsAssigned)
                                 {
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"
                                                Color="@Color.Primary"
-                                               OnClick="@(() => AssignMyself(context.Item.DashboardProjectId))"
+                                               OnClick="@(() => AssignMyself(project.DashboardProjectId))"
                                                StartIcon="fas fa-hand-point-up">
                                         Pick
                                     </MudButton>
-
                                 }
                                 else
                                 {
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"
                                                Color="@Color.Error"
-                                               OnClick="@(() => ReleaseMyself(context.Item.DashboardProjectId))"
+                                               OnClick="@(() => ReleaseMyself(project.DashboardProjectId))"
                                                StartIcon="@Icons.Material.Filled.Close">
                                         Drop
                                     </MudButton>
                                     <MudButton Size="@Size.Small"
                                                Variant="@Variant.Filled"
                                                Color="@Color.Success"
-                                               OnClick="@(() => MarkAsComplete(context.Item.DashboardProjectId, context.Item.AppUserId))"
+                                               OnClick="@(() => MarkAsComplete(project.DashboardProjectId, project.AppUserId))"
                                                StartIcon="@Icons.Material.Filled.ThumbUp">
                                         Tick
                                     </MudButton>
@@ -67,15 +77,15 @@
                                 <MudButton Size="@Size.Small"
                                            Variant="@Variant.Filled"
                                            Color="@Color.Warning"
-                                           OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                           OnClick="@(() => JS.InvokeVoidAsync("window.open", project.GithubUrl, "_blank", "noopener,noreferrer"))"
                                            StartIcon="fas fa-eye">
                                     View
                                 </MudButton>
                             </MudStack>
-                        </CellTemplate>
-                    </TemplateColumn>
-                </Columns>
-            </MudDataGrid>
+                        </MudStack>
+                    </MudPaper>
+                }
+            </MudStack>
         }
     }
 </MudContainer>
@@ -166,6 +176,4 @@
 
         AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
     }
-
-    private Func<PeerReviewDisplay, string> _durationCellStyleFunc => p => p.DurationOpen.TotalDays > 7 ? "color: red" : "";
 }

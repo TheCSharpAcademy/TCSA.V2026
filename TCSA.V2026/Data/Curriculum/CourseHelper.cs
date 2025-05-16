@@ -13,6 +13,7 @@ public class CourseHelper
                 Id = 1,
                 Title = "Introduction to Object Oriented Programming",
                 Description = "Learn the most used programming paradigm in web development!",
+                ImgUrl = "icons8-architecture-64.png",
                 Articles = new List<Article>
                 {
                     new Article
@@ -2739,6 +2740,7 @@ public class CourseHelper
                 Id = 3,
                 Title = "Introduction to ASP.NET Core Web APIs",
                 Description = "Master speech capabilities in Azure AI for dynamic, voice-driven applications!",
+                ImgUrl = "icons8-internet-64.png",
                 Articles = new List<Article>
                 {
                     new Article

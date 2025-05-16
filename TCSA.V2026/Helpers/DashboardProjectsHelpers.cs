@@ -3,6 +3,7 @@ using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 using Project = TCSA.V2026.Data.Models.Project;
+using TaskStatus = TCSA.V2026.Data.DTOs.TaskStatus;
 
 namespace TCSA.V2026.Helpers;
 
@@ -81,7 +82,20 @@ public static class DashboardProjectsHelpers
             ?? CourseHelper.GetCourses().SelectMany(x => x.Articles).FirstOrDefault(a => a.Id == projectId);
     }
 
-    public static List<DashboardAreaInfo> GetAreas(List<int> completedProjects)
+    public static TaskStatus GetTaskStatus(int projectId, List<int> completedProjects, List<int> pendingProjects)
+    {
+        if (pendingProjects.Contains(projectId))
+        {
+            return TaskStatus.PendingReview;
+        }
+        if (completedProjects.Contains(projectId))
+        {
+            return TaskStatus.Completed;
+        }
+        return TaskStatus.NotCompleted;
+    }
+
+    public static List<DashboardAreaInfo> GetAreas(List<int> completedProjects, List<int> pendingProjects)
     {
         return new List<DashboardAreaInfo>
         {
@@ -89,7 +103,15 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Start Here",
                 ImgUrl = "icons8-baby-app-96.png",
-                Projects = Articles.Where(x => x.Area == Area.StartHere),
+                Tasks = Articles.Where(x => x.Area == Area.StartHere).Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.StartHere, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartHere, null),
             },
@@ -97,7 +119,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Beginner Console",
                 ImgUrl = "icons8-mommy-and-me-classes-96.png",
-                Projects = Projects.Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Beginner),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Beginner)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Beginner, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.Console, Difficulty.Beginner),
             },
@@ -105,7 +137,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Intermediate Console",
                 ImgUrl = "icons8-teenager-64.png",
-                Projects = Projects.Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Intermediate),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Intermediate)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Intermediate, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Console, Difficulty.Intermediate)
@@ -114,23 +156,53 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Advanced Console",
                 ImgUrl = "icons8-executive-64.png",
-                Projects = Projects.Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Advanced),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Console && x.Difficulty == Difficulty.Advanced)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Advanced, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.Console, Difficulty.Advanced)
             },
-            new DashboardAreaInfo
+            new DashboardAreaInfo           
             {
                 CardName = "Start Applying",
                 ImgUrl = "icons8-permanent-job-96.png",
-                Projects = Projects.Where(x => x.Area == Area.StartApplying),
+                Tasks = Projects
+                .Where(x => x.Area == Area.StartApplying)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.StartApplying, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartApplying, null)
             },
-            new DashboardAreaInfo
+            new DashboardAreaInfo   
             {
                 CardName = "SQL",
                 ImgUrl = "icons8-sql-server-64.png",
-                Projects = Projects.Where(x => x.Area == Area.SQL),
+                Tasks = Projects
+                .Where(x => x.Area == Area.SQL)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.SQL, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.SQL, null)
             },
@@ -138,7 +210,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "ASP.NET Core MVC",
                 ImgUrl = "mvc.png",
-                Projects = Projects.Where(x => x.Area == Area.MVC),
+                Tasks = Projects
+                .Where(x => x.Area == Area.MVC)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.MVC, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,completedProjects, Area.MVC, null)
             },
@@ -146,16 +228,36 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Auth Area",
                 ImgUrl = "icons8-authentication-100.png",
-                Projects = Projects.Where(x => x.Area == Area.Auth),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Auth)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Auth, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                           completedProjects, Area.Auth, null)
             },
-            new DashboardAreaInfo       
+            new DashboardAreaInfo
             {
                 CardName = "React",
                 ImgUrl = "icons8-react-80.png",
-                Projects = Projects.Where(x => x.Area == Area.React),
+                Tasks = Projects
+                .Where(x => x.Area == Area.React)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.React, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.React, null)
@@ -164,7 +266,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Angular",
                 ImgUrl = "icons8-angularjs-96.png",
-                Projects = Projects.Where(x => x.Area == Area.Angular),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Angular)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Angular, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Angular, null)
@@ -173,7 +285,16 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Blazor",
                 ImgUrl = "blazor.png",
-                Projects = Projects.Where(x => x.Area == Area.Blazor),
+                Tasks = Projects.Where(x => x.Area == Area.Blazor)
+                .Select(a => new DashboardTaskDisplay 
+                {     
+                    Id = a.Id, 
+                    IconUrl = a.IconUrl, 
+                    Title = a.Title, 
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug), 
+                    Area = a.Area 
+                }),
                 Description = GetNotCompletedMessage(Area.Blazor, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Blazor, null)
@@ -182,7 +303,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "MAUI",
                 ImgUrl = "maui.png",
-                Projects = Projects.Where(x => x.Area == Area.MAUI),
+                Tasks = Projects
+                .Where(x => x.Area == Area.MAUI)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.MAUI, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.MAUI, null)
@@ -191,7 +322,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Cloud Development",
                 ImgUrl = "icons8-cloud-connection-480.png",
-                Projects = Projects.Where(x => x.Area == Area.Azure),
+                Tasks = Projects
+                .Where(x => x.Area == Area.Azure)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.Azure, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Azure, null)
@@ -200,7 +341,17 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Challenge Projects",
                 ImgUrl = "icons8-challenge-64.png",
-                Projects = Projects.Where(x => x.Area == Area.MonthlyChallenge),
+                Tasks = Projects
+                .Where(x => x.Area == Area.MonthlyChallenge)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.MonthlyChallenge, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                     completedProjects, Area.MonthlyChallenge, null)
@@ -209,17 +360,27 @@ public static class DashboardProjectsHelpers
             {
                 CardName = "Flagship Project",
                 ImgUrl = "flagship.png",
-                Projects = Projects.Where(x => x.Area == Area.GraduationProject).Take(1),
+                Tasks = Projects
+                .Where(x => x.Area == Area.GraduationProject).Take(1)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Area = a.Area
+                }),
                 Description = GetNotCompletedMessage(Area.GraduationProject, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.GraduationProject, null)
             }
         };
     }
 
-    public static string GetUrl(Article article)
+    public static string GetUrl(Area area, int taskId, string taskSlug)
     {
-        var firstPart = article.Area == Area.StartHere ? "article" : "project";
-        return $"{firstPart}/{article.Id}/{article.Slug}";
+        var firstPart = area == Area.StartHere ? "article" : "project";
+        return $"{firstPart}/{taskId}/{taskSlug}";
     }
 
     public static bool CheckIfAreaIsCompleted(

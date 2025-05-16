@@ -11,6 +11,6 @@ public class DashboardAreaInfo
     public bool IsCompleted { get; set; }
     public string CardName { get; set; }
 
-    public IEnumerable<Article> Projects { get; set; }
+    public IEnumerable<DashboardTaskDisplay> Tasks { get; set; }
     public bool IsHidden { get; set; }
 }

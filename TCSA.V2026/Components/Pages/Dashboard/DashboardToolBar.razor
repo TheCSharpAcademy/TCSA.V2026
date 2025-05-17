@@ -24,13 +24,14 @@
         <MudTooltip Text="Courses">
             <MudIconButton Icon="@Icons.Material.Outlined.Games" OnClick="NavigateToChallenges" />
         </MudTooltip>
+        
     </MudToolBar>
 </MudPaper>
 
 
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
-
+    
     private void NavigateToDashboard()
     {
         Navigation.NavigateTo("/dashboard");

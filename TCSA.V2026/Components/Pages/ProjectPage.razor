@@ -10,6 +10,11 @@
 <PageTitle>@Project.Title</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style="position: relative; height: 250px; background-image: url('/img/banners/article-banner.jpg'); background-size: cover; background-position: center;">
+        <div class="jumbotron-overlay">
+            <MudText Typo="Typo.h3" Class="text-white text-center">@Project.Title</MudText>
+        </div>
+    </MudPaper>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -21,7 +26,7 @@
 
         <MudGrid Class="mt-1">
             <MudItem>
-                <MudPaper Class="d-flex flex-column mud-width-full py-1 px-10">
+                <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-10">
                     @if (Project.Introduction != null)
                     {
                         foreach (var paragraph in Project.Introduction)
@@ -128,8 +133,8 @@
 
                                 else if (paragraph.IsVideo)
                                 {
-                                    <div class="video-paragraph d-flex mt-3 mb-4 justify-center embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" width="500" height="350" src="@paragraph.VideoUrl" allowfullscreen></iframe>
+                                    <div class="video-wrapper mt-3 mb-4">
+                                        <iframe class="video-iframe" src="@paragraph.VideoUrl" allowfullscreen></iframe>
                                     </div>
                                 }
 

@@ -28,29 +28,51 @@
         {
             if (_showCompleted || (!_showCompleted && !area.IsCompleted))
             {
-                <MudCard Class="mt-1">
+
+
+                <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
                     <MudCardHeader Class="d-flex align-items-center">
-                    <CardHeaderAvatar>
-                        <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body1">@area.CardName</MudText>
-                        <MudText Typo="Typo.body2">@area.Description</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudButton 
-                        Class ="mt-3"
-                        Size="@Size.Medium"
-                        Variant="@Variant.Filled"
-                        OnClick="@(() => OpenAreaDialog(area.Projects))"
-                        Color="Color.Primary"
-                        StartIcon="fas fa-eye" >
-                            View Tasks
-                        </MudButton>
-                    </CardHeaderActions>
-                </MudCardHeader>
-            </MudCard>}
-        }
+
+                        <CardHeaderAvatar>
+                            <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1" Style="font-weight: bold;">@area.CardName</MudText>
+                            <MudText Typo="Typo.body2">@area.Description</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+
+                            <MudButton 
+                            Class ="mt-3"
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled"
+                            OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                            Color="Color.Primary"
+                            StartIcon="fas fa-eye" ></MudButton>
+
+                            @if (area.IsCompleted)
+                            {
+                                <MudChip Class="mt-3 ml-5"
+                                         T="string"
+                                         Size="@Size.Large"
+                                         Color="Color.Success">
+                                    Completed
+                                </MudChip>
+                            }
+                            <MudButton Class="mt-2 ml-5 mr-5"
+                                       Size="@Size.Medium"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+
+                                View Tasks
+                            </MudButton>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                </MudCard>   
+            }
+        }   
     }
 </MudContainer>
 
@@ -65,17 +87,18 @@
     private bool _showCompleted = true;
     private List<DashboardAreaInfo> Areas = new();
     private List<int>? CompletedProjects = new();
+    private List<int>? PendingProjects = new();
     private ApplicationUser User;
 
     private bool IsLoading = true;
     private bool IsLoggedIn = false;
     private string UserId;
 
-    private async Task OpenAreaDialog(IEnumerable<Article> projects)
+    private async Task OpenAreaDialog(IEnumerable<DashboardTaskDisplay> tasks)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<TCSADashboardAreaDialog> { { x => x.Projects, projects } };
-        var dialog = await DialogService.ShowAsync<TCSADashboardAreaDialog>("View Projects", parameters, options);
+        var parameters = new DialogParameters<TCSADashboardAreaDialog> { { x => x.Tasks, tasks } };
+        var dialog = await DialogService.ShowAsync<TCSADashboardAreaDialog>(null, parameters, options);
 
         var result = await dialog.Result;
 
@@ -103,7 +126,8 @@
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);
         CompletedProjects = User?.DashboardProjects?.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
+        PendingProjects = User?.DashboardProjects?.Where(x => x.IsPendingReview).Select(x => x.ProjectId).ToList();
 
-        Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects);
+        Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects, PendingProjects);
     }
 }

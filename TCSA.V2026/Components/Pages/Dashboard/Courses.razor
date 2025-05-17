@@ -22,9 +22,57 @@
     }
     else
     {
-        foreach(var course in CourseList)
+        foreach (var course in DashboardCourses)
         {
-            <MudGrid>
+            <MudCard Class="mt-1" Style="@(course.Status == DashBoardCourseStatus.Completed ? "border: 2px solid green;" : null)">
+                <MudCardHeader Class="d-flex align-items-center">
+                    <CardHeaderAvatar>
+                        <MudImage Width="40" Src="@($"img/icons/{course.ImgUrl}")" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1" Style="font-weight: bold;">@course.Title</MudText>
+                        <MudText Typo="Typo.body2">@course.Description</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        @if (course.Status == DashBoardCourseStatus.Completed)
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Success">
+                                Completed
+                            </MudChip>
+                        }
+                        else if (course.Status == DashBoardCourseStatus.InProgress)
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Primary">
+                                In Progress
+                            </MudChip>
+                        }
+                        else if (course.Status == DashBoardCourseStatus.NotStarted)
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Info">
+                                Not Started
+                            </MudChip>
+                        }
+                        <MudButton Class="mt-2 ml-5 mr-5"
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        OnClick="@(() => NavigateToCourse(course.Id))"
+                        Color="Color.Primary"
+                        StartIcon="fas fa-eye">
+                            View Tasks
+                        </MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+            </MudCard>
+            @* <MudGrid>
                 <MudItem xs="12" sm="6" md="4">
                     <MudCard>
                         <MudCardMedia Image="images/door.jpg" Height="200" />
@@ -37,7 +85,7 @@
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
-            </MudGrid>
+            </MudGrid> *@
         }
     }
 </MudContainer>
@@ -49,6 +97,7 @@
 
     private ApplicationUser User { get; set; }
     private List<Course> CourseList = CourseHelper.GetCourses();
+    private List<DashboardCourseInfo> DashboardCourses = new();
 
     private bool IsLoading = true;
     private string UserId = string.Empty;
@@ -69,9 +118,46 @@
         User = await UserService.GetUserById(UserId);
 
         var user = await UserService.GetDetailedUserById(UserId);
+        GetCourseInfo();
+
         LoadTime = DateTime.UtcNow - startTime;
 
         IsLoading = false;
+    }
+
+    private void GetCourseInfo()
+    {
+        var oopCourse = CourseList.FirstOrDefault(x => x.Id == 1);
+        var oopIds = oopCourse.Articles.Select(c => c.Id).ToList();
+        var completedOopIds = oopIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
+
+        DashboardCourses.Add
+        (
+            new DashboardCourseInfo
+                {
+                    Id = 1,
+                    Title = oopCourse.Title,
+                    Description = $"{completedOopIds.Count} out of {oopIds.Count} chapters completed",
+                    ImgUrl = oopCourse.ImgUrl,
+                    Status = GetCourseStatus(completedOopIds, oopIds),
+                }
+        );
+
+        var webApiCourse = CourseList.FirstOrDefault(x => x.Id == 3);
+        var webApiIds = webApiCourse.Articles.Select(c => c.Id).ToList();
+        var completeWebApiIds = webApiIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
+
+        DashboardCourses.Add
+        (
+            new DashboardCourseInfo
+                {
+                    Id = 3,
+                    Title = webApiCourse.Title,
+                    Description = $"{completeWebApiIds.Count} out of {webApiIds.Count} chapters completed",
+                    ImgUrl = webApiCourse.ImgUrl,
+                    Status = GetCourseStatus(completeWebApiIds, webApiIds)
+                }
+        );
     }
 
     private void NavigateToCourse(int courseId)
@@ -80,5 +166,21 @@
         var firstArticle = course.Articles.First();
         var isCode = true;
         Navigation.NavigateTo($"/course/{courseId}/article/{firstArticle.CourseDisplayId}/{firstArticle.Id}/{isCode}");
+    }
+
+    private DashBoardCourseStatus GetCourseStatus(List<int> completedIds, List<int> allIds)
+    {
+        if (completedIds.Count == 0)
+        {
+            return DashBoardCourseStatus.NotStarted;
+        }
+        else if (completedIds.Count == allIds.Count)
+        {
+            return DashBoardCourseStatus.Completed;
+        }
+        else
+        {
+            return DashBoardCourseStatus.InProgress;
+        }
     }
 }

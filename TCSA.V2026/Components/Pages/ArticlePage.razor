@@ -13,6 +13,11 @@
 <PageTitle>@Article.Title</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style="position: relative; height: 250px; background-image: url('/img/banners/article-banner.jpg'); background-size: cover; background-position: center;">
+        <div class="jumbotron-overlay">
+            <MudText Typo="Typo.h3" Class="text-white text-center">@Article.Title</MudText>
+        </div>
+    </MudPaper>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -25,7 +30,7 @@
 
     <MudGrid Class="mt-1">
         <MudItem>
-            <MudPaper Class="d-flex flex-column mud-width-full py-1 px-10">
+            <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-10">
                 @foreach (var block in Article.Blocks)
                 {
                     if (!string.IsNullOrWhiteSpace(block.Title))
@@ -44,8 +49,8 @@
 
                         else if (paragraph.IsVideo)
                         {
-                            <div class="video-paragraph d-flex mt-3 mb-4 justify-center embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" width="500" height="350" src="@paragraph.VideoUrl" allowfullscreen></iframe>
+                            <div class="video-wrapper mt-3 mb-4">
+                                <iframe class="video-iframe" src="@paragraph.VideoUrl" allowfullscreen></iframe>
                             </div>
                         }
 
@@ -97,6 +102,7 @@
     private bool IsCompleted;
     private bool IsLoading;
     private string UserId = string.Empty;
+    private string BackgroundImage;
 
     protected async override Task OnInitializedAsync()
     {
@@ -139,4 +145,41 @@
         color: #1976d2; /* Material blue */
         text-decoration: underline;
     }
+
+    .jumbotron {
+        background-image: url('/img/banners/article-banner.jpg');
+        background-size: cover;
+        box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .jumbotron-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .text-white {
+        color: white !important;
+    }
+
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
 </style>
+

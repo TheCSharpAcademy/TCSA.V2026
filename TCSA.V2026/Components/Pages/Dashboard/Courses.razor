@@ -67,25 +67,11 @@
                         OnClick="@(() => NavigateToCourse(course.Id))"
                         Color="Color.Primary"
                         StartIcon="fas fa-eye">
-                            View Tasks
+                            Go To Course
                         </MudButton>
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
-            @* <MudGrid>
-                <MudItem xs="12" sm="6" md="4">
-                    <MudCard>
-                        <MudCardMedia Image="images/door.jpg" Height="200" />
-                        <MudCardContent>
-                            <MudText Typo="Typo.h5">@course.Title</MudText>
-                            <MudText Typo="Typo.body2">@course.Description</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton OnClick="@(() => NavigateToCourse(course.Id))" Variant="Variant.Text" Color="Color.Primary">Go To Course</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-            </MudGrid> *@
         }
     }
 </MudContainer>
@@ -164,7 +150,7 @@
     {
         var course = CourseList.Single(c => c.Id == courseId);
         var firstArticle = course.Articles.First();
-        var isCode = true;
+        var isCode = false;
         Navigation.NavigateTo($"/course/{courseId}/article/{firstArticle.CourseDisplayId}/{firstArticle.Id}/{isCode}");
     }
 

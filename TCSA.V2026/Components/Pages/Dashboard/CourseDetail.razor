@@ -3,22 +3,78 @@
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Services
+@inject IJSRuntime JSRuntime
 
 <MudGrid>
-    <MudItem xs="12" md="3">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-            <MudList T="string" Dense="true">
-               @foreach(var article in Course.Articles) {
-                    <MudListItem Text="@article.Title" /> 
-               }
-            </MudList>
-        </MudPaper>
-    </MudItem>
-    <MudItem xs="12" md="9">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-            Lesson 
-        </MudPaper>
-    </MudItem>
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudItem xs="12" md="3">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <MudList T="string" Dense="true">
+                    @for (int i = 0; i < Course.Articles.Count; i++)
+                    {
+                        var article = Course.Articles[i];
+                        <MudListItem Text=@($"{i + 1}. {article.Title}")
+                                     Style=@(CompletedProjects.Contains(article.Id) ? "background-color: #e0ffe0;" : null)
+                                     OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
+                    }
+                </MudList>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="9">
+            <MudPaper Class="d-flex flex-column mud-width-full py-8 px-5">
+                @foreach (var block in BlocksToShow)
+                {
+                    if (!string.IsNullOrEmpty(block.Title))
+                    {
+                        <MudText Typo="Typo.h6" Class="mb-2 mt-8">@block.Title</MudText>
+                    }
+
+                    @foreach (var paragraph in block.Paragraphs)
+                    {
+                        if (paragraph.IsCode)
+                        {
+                            <MudPaper Class="p-4 my-4 overflow-auto line-numbers">
+                                <pre class="line-numbers"><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                            </MudPaper>
+                        }
+                        else if (paragraph.IsPicture)
+                        {
+                            var imageSrc = $"img/courseimages/{paragraph.PictureUrl}";
+                            <MudPaper Class="d-flex justify-center photo-paragraph my-2 py-10 px-20" Elevation="0">
+                                <MudImage Src="@imageSrc" Alt="Course image" Fluid="true" />
+                            </MudPaper>
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(paragraph.BackgroundColor))
+                            {
+                                var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
+                                var textStyle = $"color: {paragraph.FontColor};";
+
+                                <MudPaper Style="@bgStyle" Elevation="1" Class="my-2">
+                                    <MudText Style="@textStyle" Typo="Typo.body1">
+                                        @((MarkupString)paragraph.Body)
+                                    </MudText>
+                                </MudPaper>
+                            }
+                            else
+                            {
+                                <MudText Class="mt-2" Typo="Typo.body1">
+                                    @((MarkupString)paragraph.Body)
+                                </MudText>
+                            }
+                        }
+                    }
+                }
+            </MudPaper>
+        </MudItem>
+
+    }
 </MudGrid>
 
 @code {
@@ -29,17 +85,19 @@
     [Parameter] public int CourseId { get; set; }
     [Parameter] public int ArticleId { get; set; }
     [Parameter] public int ArticleDisplayId { get; set; }
-    [Parameter] public bool IsCode { get; set; }
+    [Parameter] public bool IsCode { get; set; } = false;
 
+    private List<Data.Models.Block> BlocksToShow = new();
     private Course Course { get; set; }
     private Article Article { get; set; }
     private List<int> CompletedProjects = new();
     private bool IsLoggedIn;
-    private bool IsLoading;
+    private bool IsLoading = true;
     private bool IsCompleted;
     private string UserId;
+    private string _lastRenderedCode = string.Empty;
 
-    protected async override Task OnInitializedAsync()
+    protected async override Task OnParametersSetAsync()
     {
         Course = CourseHelper.GetCourses().FirstOrDefault(x => x.Id == CourseId);
 
@@ -47,6 +105,10 @@
         {
             Article = Course.Articles.FirstOrDefault(a => a.CourseDisplayId == ArticleDisplayId);
         }
+
+        BlocksToShow = IsCode
+      ? Article.Blocks.Where(x => x.IsCourseCodePage).ToList()
+      : Article.Blocks.Where(x => !x.IsCourseCodePage).ToList();
 
         var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
 
@@ -60,6 +122,12 @@
         var projects = await ProjectService.GetCompletedProjectsById(UserId);
         var courseIds = Course.Articles.Select(x => x.Id);
         CompletedProjects = projects.Where(x => courseIds.Contains(x)).ToList();
+        IsLoading = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("highlightCode");
     }
 
     private void NavigateToArticle(int articleDisplayId, int articleId)

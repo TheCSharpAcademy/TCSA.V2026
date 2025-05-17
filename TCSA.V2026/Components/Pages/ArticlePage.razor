@@ -20,51 +20,66 @@
 
     @if (IsLoggedIn && IsCompleted)
     {
-        <MudAlert Severity="Severity.Success">You have completed this roadmap step.</MudAlert>
+        <MudAlert Class="mt-5" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
+    }
 
-        <MudExpansionPanels Class="mt-2" MultiExpansion="true">
-            @foreach (var block in Article.Blocks)
-            {
-                <MudExpansionPanel>
-                    <TitleContent>
-                        <div class="d-flex">
-                            <MudIcon Icon="@Icons.Material.Filled.Info" class="mr-3"></MudIcon>
-                            <MudText Typo="Typo.h6">@block.Title</MudText>
-                        </div>
-                    </TitleContent>
-                    <ChildContent>
-                        @foreach (var paragraph in block.Paragraphs)
+    <MudGrid Class="mt-1">
+        <MudItem>
+            <MudPaper Class="d-flex flex-column mud-width-full py-1 px-10">
+                @foreach (var block in Article.Blocks)
+                {
+                    if (!string.IsNullOrWhiteSpace(block.Title))
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-10 mb-2">@block.Title</MudText>
+                    }
+
+                    @foreach (var paragraph in block.Paragraphs)
+                    {
+                        if (paragraph.IsPicture)
                         {
-                            if (paragraph.IsPicture)
-                            {
-                                <MudImage Src="@GetImage(paragraph)" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
-                            }
+                            <MudPaper Class="d-flex justify-center mx-20 mt-10 " Elevation="0">
+                                <MudImage Src="@GetImage(paragraph)" Alt="Image paragraph" Fluid="true" Class="rounded-lg" />
+                            </MudPaper>
+                        }
 
-                            if (paragraph.IsVideo)
-                            {
-                                <div class="video-paragraph d-flex mt-3 mb-4 justify-content-center embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" width="500" height="350" src="@paragraph.VideoUrl" allowfullscreen></iframe>
-                                </div>
-                            }
+                        else if (paragraph.IsVideo)
+                        {
+                            <div class="video-paragraph d-flex mt-3 mb-4 justify-center embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" width="500" height="350" src="@paragraph.VideoUrl" allowfullscreen></iframe>
+                            </div>
+                        }
 
-                            if (paragraph.IsCode)
+                        else if (paragraph.IsCode)
+                        {
+                            <pre class="line-numbers"><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                        }
+
+                        else if (!string.IsNullOrEmpty(paragraph.Body))
+                        {
+                            if (!string.IsNullOrWhiteSpace(paragraph.BackgroundColor))
                             {
-                                <pre><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                                var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
+                                var textStyle = $"color: {paragraph.FontColor};";
+
+                                <MudPaper Style="@bgStyle" Elevation="1" Class="my-2">
+                                    <MudText Style="@textStyle" Typo="Typo.body1">
+                                        @((MarkupString)paragraph.Body)
+                                    </MudText>
+                                </MudPaper>
                             }
                             else
                             {
-                                if (!String.IsNullOrEmpty(paragraph.Body))
-                                {
-                                    <MudText Class="mt-2">@((MarkupString)(paragraph.Body))</MudText>
-                                }
+                                <MudText Class="mt-2" Typo="Typo.body1">
+                                    @((MarkupString)paragraph.Body)
+                                </MudText>
                             }
                         }
-                    </ChildContent>
-                </MudExpansionPanel>
-            }
+                    }
+                }
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
 
-        </MudExpansionPanels>
-    }
 </MudContainer>
 
 @code {

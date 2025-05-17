@@ -9,6 +9,7 @@ public class DashboardTaskDisplay
     public string Title { get; set; }
     public TaskStatus Status { get; set; }
     public string Slug { get; set; }
+    public string Url { get; set; }
     public Area Area { get; set; }
 }
 

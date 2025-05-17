@@ -109,7 +109,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.StartHere, null, completedProjects),
@@ -127,7 +127,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Beginner, completedProjects),
@@ -145,7 +145,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Intermediate, completedProjects),
@@ -164,7 +164,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Advanced, completedProjects),
@@ -182,7 +182,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.StartApplying, null, completedProjects),
@@ -200,7 +200,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.SQL, null, completedProjects),
@@ -218,7 +218,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.MVC, null, completedProjects),
@@ -236,7 +236,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Auth, null, completedProjects),
@@ -255,7 +255,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.React, null, completedProjects),
@@ -274,7 +274,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Angular, null, completedProjects),
@@ -292,7 +292,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl, 
                     Title = a.Title, 
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug), 
+                    Slug = a.Slug,
                     Area = a.Area 
                 }),
                 Description = GetNotCompletedMessage(Area.Blazor, null, completedProjects),
@@ -311,7 +311,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.MAUI, null, completedProjects),
@@ -330,7 +330,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.Azure, null, completedProjects),
@@ -349,7 +349,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.MonthlyChallenge, null, completedProjects),
@@ -368,7 +368,7 @@ public static class DashboardProjectsHelpers
                     IconUrl = a.IconUrl,
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
-                    Slug = GetUrl(a.Area, a.Id, a.Slug),
+                    Slug = a.Slug,
                     Area = a.Area
                 }),
                 Description = GetNotCompletedMessage(Area.GraduationProject, null, completedProjects),

@@ -28,7 +28,13 @@
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
-                            <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets</MudButton>
+                            <MudButton 
+                                Size="@Size.Small" 
+                                Variant="@Variant.Filled" 
+                                Color="@Color.Primary" 
+                                OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">
+                                Deets
+                            </MudButton>
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>

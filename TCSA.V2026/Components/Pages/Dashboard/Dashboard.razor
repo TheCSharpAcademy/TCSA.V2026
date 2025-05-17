@@ -26,6 +26,7 @@
     {
         @foreach (var area in Areas)
         {
+<<<<<<< HEAD
             if (_showCompleted || (!_showCompleted && !area.IsCompleted))
             {
 
@@ -73,6 +74,39 @@
                 </MudCard>   
             }
         }   
+=======
+            <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
+                <MudCardHeader Class="d-flex align-items-center">
+                    <CardHeaderAvatar>
+                        <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body1" Style="font-weight: bold;">@area.CardName</MudText>
+                        <MudText Typo="Typo.body2">@area.Description</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        @if (area.IsCompleted)
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                                     T="string"
+                                     Size="@Size.Large"
+                                     Color="Color.Success">
+                                Completed
+                            </MudChip>
+                        }
+                        <MudButton Class="mt-2 ml-5 mr-5"
+                                   Size="@Size.Medium"
+                                   Variant="@Variant.Filled"
+                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                   Color="Color.Primary"
+                                   StartIcon="fas fa-eye">
+                            View Tasks
+                        </MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+            </MudCard>
+        }
+>>>>>>> 55b54578b18c1ad505c90d8a176df9f00d82be00
     }
 </MudContainer>
 

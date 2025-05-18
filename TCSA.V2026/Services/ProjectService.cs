@@ -11,7 +11,8 @@ public interface IProjectService
     Task<BaseResponse> MarkAsCompleted(int projectId);
     Task<bool> IsProjectCompleted(string userId, int projectId);
     Task<List<int>> GetCompletedProjectsById(string userId);
-}
+    Task<BaseResponse> PostArticle(int projectId, string userId, string url);
+    }
 
 public class ProjectService : IProjectService
 {
@@ -38,6 +39,44 @@ public class ProjectService : IProjectService
         {
             return null;
         }
+    }
+
+    public async Task<BaseResponse> PostArticle(int projectId, string userId, string url)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var project = await context.DashboardProjects
+                .FirstOrDefaultAsync(dp => dp.ProjectId == projectId && dp.AppUserId == userId && !dp.IsArchived);
+
+                if (project == null)
+                {
+                    await context.DashboardProjects.AddAsync(new DashboardProject
+                    {
+                        ProjectId = projectId,
+                        AppUserId = userId,
+                        IsCompleted = false,
+                        IsArchived = false,
+                        IsPendingNotification = false,
+                        IsPendingReview = true,
+                        DateSubmitted = DateTime.UtcNow,
+                        GithubUrl = url
+                    });
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+
+        return new BaseResponse();
     }
 
     public async Task<bool> IsProjectCompleted(string userId, int projectId)

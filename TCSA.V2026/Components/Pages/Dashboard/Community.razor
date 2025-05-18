@@ -65,7 +65,7 @@
                                         Variant="@Variant.Filled" Color="@Color.Primary"
                                         OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))"
                                         EndIcon="@Icons.Material.Filled.Send">
-                                        Send
+                                        Submit PR
                                     </MudButton>
                                 }
                             }
@@ -117,8 +117,8 @@
     private async Task SubmitToReviewDialog(int projectId)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<TCSACommunitySubmitDialog> { { x => x.ProjectId, projectId } };
-        var dialog = await DialogService.ShowAsync<TCSACommunitySubmitDialog>("Submit Issue", parameters, options);
+        var parameters = new DialogParameters<TCSASubmitProjectDialog> { { x => x.ProjectId, projectId } };
+        var dialog = await DialogService.ShowAsync<TCSASubmitProjectDialog>("Submit Issue", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled)

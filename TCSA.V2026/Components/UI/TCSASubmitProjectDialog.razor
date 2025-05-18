@@ -1,4 +1,5 @@
-﻿@using TCSA.V2026.Data.Models.Responses
+﻿@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Services
 <MudDialog>
     <TitleContent>
@@ -18,16 +19,27 @@
 
 @code {
     [Inject] protected ICommunityService CommunityService { get; set; }
+    [Inject] protected IProjectService ProjectService { get; set; }
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public int ProjectId { get; set; }
+    [Parameter] public bool IsIssue { get; set; }
+    [Parameter] public ApplicationUser User { get; set; }
 
     public string GithubUrl = string.Empty;
 
     private async Task Submit() 
     {
-        var result = await CommunityService.SubmitIssueToReview(ProjectId, GithubUrl);
+        var result = new BaseResponse();
+        if (IsIssue)
+        {
+            result = await CommunityService.SubmitIssueToReview(ProjectId, GithubUrl);
+        } 
+        else
+        {
+            result = await ProjectService.PostArticle(ProjectId, User.Id, GithubUrl);
+        }
 
-        MudDialog.Close(DialogResult.Ok(result.Status == ResponseStatus.Success));
+        MudDialog.Close(DialogResult.Ok(result.Status));
     }
     
     private void Cancel() => MudDialog.Cancel();

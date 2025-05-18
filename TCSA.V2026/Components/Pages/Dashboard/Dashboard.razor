@@ -4,6 +4,7 @@
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 @attribute [Authorize]
@@ -37,18 +38,18 @@
                         @if (area.IsCompleted)
                         {
                             <MudChip Class="mt-3 ml-5"
-                                     T="string"
-                                     Size="@Size.Large"
-                                     Color="Color.Success">
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Success">
                                 Completed
                             </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                                   Color="Color.Primary"
-                                   StartIcon="fas fa-eye">
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                        Color="Color.Primary"
+                        StartIcon="fas fa-eye">
                             View Tasks
                         </MudButton>
                     </CardHeaderActions>
@@ -78,14 +79,26 @@
     private async Task OpenAreaDialog(IEnumerable<DashboardTaskDisplay> tasks)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<TCSADashboardAreaDialog> { { x => x.Tasks, tasks } };
+        var parameters = new DialogParameters<TCSADashboardAreaDialog> 
+        { 
+            { x => x.Tasks, tasks },
+            { p => p.User, User }
+        };
         var dialog = await DialogService.ShowAsync<TCSADashboardAreaDialog>(null, parameters, options);
 
         var result = await dialog.Result;
 
-        if (result.Canceled)
+        if (!result.Canceled)
         {
-            SnackbarService.Add("Issue submitted successfully", Severity.Success);
+            var status = (ResponseStatus)result.Data;
+            var severity = status == ResponseStatus.Success ? Severity.Success : Severity.Error;
+            var message = status == ResponseStatus.Success ? "Project submitted successfully" : "There was an error submitting the project";
+            SnackbarService.Add(message, severity);
+
+            if (status == ResponseStatus.Success)
+            {
+                User = await UserService.GetUserById(UserId);
+            }
         }
     }
 

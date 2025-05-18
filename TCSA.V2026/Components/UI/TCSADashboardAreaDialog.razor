@@ -4,6 +4,8 @@
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 
+@inject IDialogService DialogService
+
 <MudDialog>
     <DialogContent>
         @foreach (var task in Tasks)
@@ -20,21 +22,33 @@
                         @if(task.Status == Data.DTOs.TaskStatus.Completed)
                         {
                             <MudChip Class="mt-3 ml-5"
-                                     T="string"
-                                     Size="@Size.Large"
-                                     Color="Color.Success">
+                            T="string"
+                            Size="@Size.Large"
+                            Color="Color.Success">
                                 Completed
                             </MudChip>
-                        }
+                        } 
                         <MudButton 
-                            Class="mt-3 ml-5 mr-5"
-                            Size="@Size.Medium"
-                            Variant="@Variant.Filled"
-                            OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
-                            Color="Color.Primary"
-                            StartIcon="fas fa-eye">
+                        Class="mt-3 ml-5 mr-5"
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
+                        Color="Color.Primary"
+                        StartIcon="fas fa-eye">
                             View Task
                         </MudButton>
+                        @if (task.Status != Data.DTOs.TaskStatus.Completed)
+                        {
+                            var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
+                            var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update PR" : "Submit PR";
+                            <MudButton Class="mt-3 ml-5 mr-5"
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled" Color="@color"
+                            OnClick="@(() => SubmitToReviewDialog(task.Id))"
+                            EndIcon="@Icons.Material.Filled.Send">
+                                @text
+                            </MudButton>
+                        }
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
@@ -49,7 +63,27 @@
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public int ProjectId { get; set; }
     [Parameter] public IEnumerable<DashboardTaskDisplay> Tasks { get; set; }
+    [Parameter] public ApplicationUser User { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
-    
+
     private void Cancel() => MudDialog.Cancel();
+
+    private async Task SubmitToReviewDialog(int projectId)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<TCSASubmitProjectDialog>
+        {
+            { p => p.ProjectId, projectId },
+            { p => p.User, User }
+        };
+        var dialog = await DialogService.ShowAsync<TCSASubmitProjectDialog>("Submit Project", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var status = (ResponseStatus)result.Data;
+            MudDialog.Close(DialogResult.Ok(status));
+        }
+
+    }
 }

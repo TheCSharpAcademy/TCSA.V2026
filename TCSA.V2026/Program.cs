@@ -47,7 +47,6 @@ builder.Services.AddAuthentication(options =>
         o.CallbackPath = "/signin-github";
         // https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
         o.Scope.Add("read:user");
-
     })
     .AddIdentityCookies();
 

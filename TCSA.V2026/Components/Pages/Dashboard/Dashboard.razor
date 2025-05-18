@@ -14,8 +14,10 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <MudContainer>
-    <DashboardToolBar></DashboardToolBar>
 
+    <DashboardToolBar></DashboardToolBar>
+    <MudCheckBox @bind-Value="@_showCompleted" title="Show Completed" CheckedIcon="@Icons.Material.Outlined.CheckBox" 
+    UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"></MudCheckBox>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -24,37 +26,53 @@
     {
         @foreach (var area in Areas)
         {
-            <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
-                <MudCardHeader Class="d-flex align-items-center">
-                    <CardHeaderAvatar>
-                        <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body1" Style="font-weight: bold;">@area.CardName</MudText>
-                        <MudText Typo="Typo.body2">@area.Description</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        @if (area.IsCompleted)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                                     T="string"
-                                     Size="@Size.Large"
-                                     Color="Color.Success">
-                                Completed
-                            </MudChip>
-                        }
-                        <MudButton Class="mt-2 ml-5 mr-5"
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                                   Color="Color.Primary"
-                                   StartIcon="fas fa-eye">
-                            View Tasks
-                        </MudButton>
-                    </CardHeaderActions>
-                </MudCardHeader>
-            </MudCard>
-        }
+            if (_showCompleted || (!_showCompleted && !area.IsCompleted))
+            {
+
+
+                <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
+                    <MudCardHeader Class="d-flex align-items-center">
+
+                        <CardHeaderAvatar>
+                            <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1" Style="font-weight: bold;">@area.CardName</MudText>
+                            <MudText Typo="Typo.body2">@area.Description</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+
+                            <MudButton 
+                            Class ="mt-3"
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled"
+                            OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                            Color="Color.Primary"
+                            StartIcon="fas fa-eye" ></MudButton>
+
+                            @if (area.IsCompleted)
+                            {
+                                <MudChip Class="mt-3 ml-5"
+                                         T="string"
+                                         Size="@Size.Large"
+                                         Color="Color.Success">
+                                    Completed
+                                </MudChip>
+                            }
+                            <MudButton Class="mt-2 ml-5 mr-5"
+                                       Size="@Size.Medium"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+
+                                View Tasks
+                            </MudButton>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                </MudCard>   
+            }
+        }   
     }
 </MudContainer>
 
@@ -66,6 +84,7 @@
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
 
+    private bool _showCompleted = true;
     private List<DashboardAreaInfo> Areas = new();
     private List<int>? CompletedProjects = new();
     private List<int>? PendingProjects = new();

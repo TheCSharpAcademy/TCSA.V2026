@@ -11,7 +11,7 @@ public interface IProjectService
     Task<BaseResponse> MarkAsCompleted(int projectId);
     Task<bool> IsProjectCompleted(string userId, int projectId);
     Task<List<int>> GetCompletedProjectsById(string userId);
-    Task<BaseResponse> PostArticle(int projectId, string userId, string url);
+    Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle);
     }
 
 public class ProjectService : IProjectService
@@ -41,7 +41,7 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<BaseResponse> PostArticle(int projectId, string userId, string url)
+    public async Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle)
     {
         try
         {
@@ -52,20 +52,31 @@ public class ProjectService : IProjectService
 
                 if (project == null)
                 {
-                    await context.DashboardProjects.AddAsync(new DashboardProject
+                    var newProject = new DashboardProject
                     {
                         ProjectId = projectId,
                         AppUserId = userId,
-                        IsCompleted = false,
+                        IsCompleted = isArticle ? true : false,
                         IsArchived = false,
                         IsPendingNotification = false,
-                        IsPendingReview = true,
+                        IsPendingReview = isArticle? false : true,
                         DateSubmitted = DateTime.UtcNow,
                         GithubUrl = url
-                    });
+                    };
+
+                    await context.DashboardProjects.AddAsync(newProject);
                     await context.SaveChangesAsync();
-                }
-            }
+
+                    await context.UserActivity.AddAsync(
+                    new AppUserActivity
+                    {
+                        ProjectId = project == null ? newProject.Id : project.Id,
+                        AppUserId = userId,
+                        DateSubmitted = DateTime.UtcNow,
+                        ActivityType = ActivityType.ProjectSubmitted
+                    });
+                };
+            };
         }
         catch (Exception ex)
         {

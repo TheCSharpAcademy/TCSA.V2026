@@ -36,7 +36,7 @@
         } 
         else
         {
-            result = await ProjectService.PostArticle(ProjectId, User.Id, GithubUrl);
+            result = await ProjectService.PostArticle(ProjectId, User.Id, GithubUrl, false);
         }
 
         MudDialog.Close(DialogResult.Ok(result.Status));

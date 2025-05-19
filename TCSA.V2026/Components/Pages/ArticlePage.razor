@@ -85,22 +85,37 @@
         </MudItem>
     </MudGrid>
 
+    @if (IsLoggedIn && !IsCompleted)
+    {
+        <div class="d-flex justify-center my-5">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="MarkAsRead"
+                       Disabled="IsSubmitting"
+                       Loading="IsSubmitting">
+                Mark as Read
+            </MudButton>
+        </div>
+    }
+
 </MudContainer>
 
 @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private ISnackbar SnackbarService { get; set; }
 
     [Parameter] public string ArticleSlug { get; set; }
     [Parameter] public int ArticleId { get; set; }
 
     private Article Article { get; set; }
 
-    private bool IsLoggedIn;
-    private bool HasNext;
-    private bool IsCompleted;
-    private bool IsLoading;
+    private bool IsLoggedIn = false;
+    private bool HasNext = false;
+    private bool IsCompleted = false;
+    private bool IsLoading = true;
+    private bool IsSubmitting = false;
     private string UserId = string.Empty;
     private string BackgroundImage;
 
@@ -137,6 +152,26 @@
         }
 
         IsLoading = false;
+    }
+
+    private async Task MarkAsRead()
+    {
+        IsSubmitting = true;
+
+        var response = await ProjectService.PostArticle(ArticleId, UserId, string.Empty, true);
+
+        IsSubmitting = false;
+
+        if (response.Status == Data.Models.Responses.ResponseStatus.Success)
+        {
+            SnackbarService.Add("Article successfuly marked as read", Severity.Success);
+        }
+        else
+        {
+            SnackbarService.Add("There was an error", Severity.Error);
+        }
+
+        IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
     }
 }
 

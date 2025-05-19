@@ -223,20 +223,22 @@ public class PeerReviewService : IPeerReviewService
                 context.DashboardProjects
                     .Update(dashboardProject);
 
-                context.UserActivity.AddRange(new AppUserActivity
-                {
-                    ProjectId = dashboardProject.ProjectId,
-                    AppUserId = dashboardProject.AppUserId,
-                    DateSubmitted = DateTime.UtcNow,
-                    ActivityType = ActivityType.ProjectCompleted
-                },
-                new AppUserActivity
-                {
-                    ProjectId = dashboardProject.ProjectId,
-                    AppUserId = reviewerId,
-                    DateSubmitted = DateTime.UtcNow,
-                    ActivityType = ActivityType.CodeReviewCompleted
-                });
+                context.UserActivity.AddRange(
+                    new AppUserActivity
+                    {
+                        ProjectId = dashboardProject.ProjectId,
+                        AppUserId = dashboardProject.AppUserId,
+                        DateSubmitted = DateTime.UtcNow,
+                        ActivityType = ActivityType.ProjectCompleted
+                    },
+                    new AppUserActivity
+                    {
+                        ProjectId = dashboardProject.ProjectId,
+                        AppUserId = reviewerId,
+                        DateSubmitted = DateTime.UtcNow,
+                        ActivityType = ActivityType.CodeReviewCompleted
+                    }
+                );
 
                 var reviewer = await context.Users
                     .Where(x => x.Id == reviewerId).FirstAsync();

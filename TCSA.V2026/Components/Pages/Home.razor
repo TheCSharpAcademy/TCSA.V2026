@@ -1,5 +1,164 @@
 ﻿@page "/"
-
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
 <PageTitle>Home</PageTitle>
 
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudText Typo="Typo.h3" Class="font-weight-bold">
+                Learn .NET/C# With Real Projects
+            </MudText>
+            <MudText Class="mt-4">
+                Build real-world skills in .NET and C# through hands-on projects, guided practice, and expert mentoring. Our course is practical, engaging, and completely free — forever.
+                <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
+            </MudText>
 
+            <MudStack Row="true" Spacing="2" Class="mt-6">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large">Sign up for free</MudButton>
+            </MudStack>
+
+            <MudPaper Elevation="2" Class="mt-8 p-4 d-flex align-items-center">
+                <MudIcon Icon="@Icons.Material.Filled.Code" Class="me-2" />
+                <MudText>
+                    <b>exercism</b> is an independent, community funded, not-for-profit organisation.
+                    <MudLink Href="https://exercism.org" Target="_blank" Class="ms-1">Learn more</MudLink>
+                </MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
+            Last Updated:
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-12">
+    <MudText Typo="Typo.h3" Align="Align.Center" Class="mb-2 font-weight-bold">First Steps</MudText>
+    
+    <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mb-6 text-secondary">
+        Get started with our program by reading and following the instructions in these articles. 
+        If possible, follow them in order. They cover everything you need to prepare for your C# journey.
+    </MudText>
+
+    <MudGrid Class="mt-5">
+        @foreach (var article in Articles.Where(x => x.Area == Area.StartHere))
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard>
+                    <MudCardMedia Image="@($"img/icons/{article.IconUrl}")" Height="200" />
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5">@article.Title</MudText>
+                        <MudText Typo="Typo.body2">@article.Description</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Class=""
+                                   Size="@Size.Medium"
+                                   Variant="@Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="fas fa-eye"
+                                   OnClick="@(() => NavigateToArticle(article))">
+                            View Article
+                        </MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    protected List<Project> Projects = new();
+    protected List<Article> Articles = new();
+    protected List<IndexAreaInfo> Areas = new();
+    protected Project CertificationProject = new();
+    protected Article ConsoleArticle = new();
+    protected Article GraduationArticle = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Articles = ArticleHelper.GetArticles();
+        Projects = ProjectHelper.GetProjects();
+        CertificationProject = Projects.Single(x => x.Id == 75);
+        ConsoleArticle = Articles.Single(x => x.Id == 9);
+        GraduationArticle = Articles.Single(x => x.Id == 10);
+
+        GetAreas();
+    }
+
+    private void GetAreas()
+    {
+        var areas = new List<Area> { Area.StartApplying, Area.MVC, Area.Angular, Area.React, Area.Blazor, Area.MAUI, Area.Auth, Area.Azure, Area.SQL, Area.MonthlyChallenge, Area.GraduationProject, Area.FreestyleProject };
+
+        var titles = new List<string>
+        {
+            "apply-title.png|Start Applying",
+            "mvc-title.png|MVC",
+            "angular-title.png|Angular",
+            "react-title.png|React",
+            "blazor-title.png|Blazor",
+            "maui-title.png|MAUI",
+            "aa-title.png|Authentication & Authorization",
+            "azure-title.png|Azure",
+            "sql-title.png|SQL",
+            "Challenge Projects",
+            "Graduation Projects",
+            "Freestyle Projects"
+        };
+
+        var descriptions = new List<string>
+        {
+            "With these projects, you'll showcase your work and start applying for jobs.",
+            "Learn the fundamentals of ASP.NET MVC",
+            "Learn how .NET works together with this powerful front-end framework",
+            "Learn how .NET works together with this powerful front-end framework",
+            "Learn the latest .NET solution for web development",
+            "Learn this fantastic technology to build apps for Android, iOS, MacOs and Windows.",
+            "Learn to secure applications using .NET/C#",
+            "Get started in cloud computing deploying applications to Microsoft's state-of-the-art cloud solution.",
+            "Learn the language used to communicate with databases.",
+            "Test your knowledge with a challenge provided by a real-world company given to job candidates.",
+            "Transfer all your acquired knowledge to build and showcase an impressive application.",
+            "Bring your amazing idea to life with a professional standard project."
+        };
+
+        var ids = new List<string>
+        {
+            "jobs-area",
+            "mvc-area",
+            "angular-area",
+            "react-area",
+            "blazor-area",
+            "maui-area",
+            "auth-area",
+            "cloud-area",
+            "sql-area",
+            "challenges-area",
+            "flagship-area",
+            "freestyle"
+        };
+
+        for (int i = 0; i < areas.Count; i++)
+        {
+            Areas.Add(new IndexAreaInfo
+                {
+                    Projects = areas[i] == Area.SQL
+                    ? Projects.Where(x => x.Area == areas[i] && !x.IsClosed).ToList()
+                    : Projects.Where(x => x.Area == areas[i])
+                    .ToList(),
+                    TitleImgUrl = titles[i],
+                    Description = descriptions[i],
+                    Id = ids[i]
+                });
+        }
+    }
+
+    private Task NavigateToArticle(Article article)
+    {
+        Navigation.NavigateTo($"/article/{article.Id}/{article.Slug}");
+        return Task.CompletedTask;
+    }
+}

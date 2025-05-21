@@ -309,7 +309,7 @@ public static class SeedData
             }
 
         };
-        user3.PasswordHash = hasher.HashPassword(user3, "Password124!");
+        user3.PasswordHash = hasher.HashPassword(user3, "Password123!");
 
         var user4 = new ApplicationUser
         {
@@ -491,7 +491,7 @@ public static class SeedData
             }
 
         };
-        user4.PasswordHash = hasher.HashPassword(user4, "Password124!");
+        user4.PasswordHash = hasher.HashPassword(user4, "Password123!");
 
         context.Users.AddRange(user1, user2, user3, user4);
         context.SaveChanges();

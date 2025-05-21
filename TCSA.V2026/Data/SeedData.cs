@@ -493,7 +493,7 @@ public static class SeedData
         };
         user4.PasswordHash = hasher.HashPassword(user4, "Password124!");
 
-        context.Users.AddRange(user1, user2);
+        context.Users.AddRange(user1, user2, user3, user4);
         context.SaveChanges();
     }
 }

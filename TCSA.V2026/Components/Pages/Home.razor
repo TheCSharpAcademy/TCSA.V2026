@@ -49,8 +49,8 @@
                 <MudCard>
                     <MudCardContent Class="d-flex justify-center mt-4">
                         <MudImage Src="@($"img/icons/{article.IconUrl}")"
-                                  Alt="@article.Title"
-                                  Style="width: 100px; height: 100px; object-fit: cover;" />
+                        Alt="@article.Title"
+                        Style="width: 100px; height: 100px; object-fit: cover;" />
                     </MudCardContent>
                     <MudCardContent>
                         <MudText Class="mb-3" Align="Align.Center" Typo="Typo.h5">@article.Title</MudText>
@@ -58,10 +58,10 @@
                     </MudCardContent>
                     <MudCardContent Class="d-flex justify-center mt-4">
                         <MudButton Class=""
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   Color="Color.Primary"
-                                   OnClick="@(() => NavigateToArticle(article, false))">
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        Color="Color.Primary"
+                        OnClick="@(() => NavigateToArticle(article, false))">
                             View Article
                         </MudButton>
                     </MudCardContent>
@@ -86,8 +86,8 @@
                 <MudCard>
                     <MudCardContent Class="d-flex justify-center mt-4">
                         <MudImage Src="@($"img/icons/{p.IconUrl}")"
-                                  Alt="@p.Title"
-                                  Style="width: 100px; height: 100px; object-fit: cover;" />
+                        Alt="@p.Title"
+                        Style="width: 100px; height: 100px; object-fit: cover;" />
                     </MudCardContent>
                     <MudCardContent>
                         <MudText Class="mb-3" Align="Align.Center" Typo="Typo.h5">@p.Title</MudText>
@@ -95,10 +95,10 @@
                     </MudCardContent>
                     <MudCardContent Class="d-flex justify-center mt-2">
                         <MudButton Class=""
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   Color="Color.Primary"
-                                   OnClick="@(() => NavigateToArticle(p, true))">
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        Color="Color.Primary"
+                        OnClick="@(() => NavigateToArticle(p, true))">
                             View Article
                         </MudButton>
                     </MudCardContent>
@@ -112,7 +112,17 @@
 @foreach (var a in Areas)
 {
     <MudContainer MaxWidth="MaxWidth.Large" Class="mt-12">
-        <MudText Typo="Typo.h3" Align="Align.Center" Class="mb-2 font-weight-bold">Title Here</MudText>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+            @if(!string.IsNullOrEmpty(a.TitleImgUrl))
+            {
+                <MudImage Src="@($"img/titles/{a.TitleImgUrl}")"
+                          Alt="@a.Area.ToString()"
+                          Style="width: 80px; height: 80px; object-fit: cover;" />
+            }
+            <MudText Typo="Typo.h4" Class="text-primary">
+                @a.Title
+            </MudText>
+        </div>
 
         <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mb-6 text-secondary">
             @a.Description
@@ -173,17 +183,32 @@
     {
         var areas = new List<Area> { Area.StartApplying, Area.MVC, Area.Angular, Area.React, Area.Blazor, Area.MAUI, Area.Auth, Area.Azure, Area.SQL, Area.MonthlyChallenge, Area.GraduationProject, Area.FreestyleProject };
 
+        var titlePics = new List<string>
+        {
+            "apply-title.png",
+            "mvc-title.png",
+            "angular-title.png",
+            "react-title.png",
+            "blazor-title.png",
+            "maui-title.png",
+            "aa-title.png",
+            "azure-title.png",
+            "sql-title.png",
+            string.Empty,
+            string.Empty,
+            string.Empty
+        };
         var titles = new List<string>
         {
-            "apply-title.png|Start Applying",
-            "mvc-title.png|MVC",
-            "angular-title.png|Angular",
-            "react-title.png|React",
-            "blazor-title.png|Blazor",
-            "maui-title.png|MAUI",
-            "aa-title.png|Authentication & Authorization",
-            "azure-title.png|Azure",
-            "sql-title.png|SQL",
+            "Apply for Jobs",
+            "ASP.NET Core MVC",
+            "Angular",
+            "React",
+            "Blazor",
+            "MAUI",
+            "Authorization and Authentication",
+            "Azure",
+            "SQL",
             "Challenge Projects",
             "Graduation Projects",
             "Freestyle Projects"
@@ -229,7 +254,8 @@
                     ? Projects.Where(x => x.Area == areas[i] && !x.IsClosed).ToList()
                     : Projects.Where(x => x.Area == areas[i])
                     .ToList(),
-                    TitleImgUrl = titles[i],
+                    TitleImgUrl = titlePics[i],
+                    Title = titles[i],
                     Description = descriptions[i],
                     Id = ids[i]
                 });

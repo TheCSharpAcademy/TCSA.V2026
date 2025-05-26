@@ -15,8 +15,10 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <MudContainer>
-    <DashboardToolBar></DashboardToolBar>
 
+    <DashboardToolBar></DashboardToolBar>
+    <MudCheckBox @bind-Value="@_showCompleted" title="Show Completed" CheckedIcon="@Icons.Material.Outlined.CheckBox" 
+    UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"></MudCheckBox>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -38,18 +40,18 @@
                         @if (area.IsCompleted)
                         {
                             <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Success">
+                                     T="string"
+                                     Size="@Size.Large"
+                                     Color="Color.Success">
                                 Completed
                             </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
-                        Size="@Size.Medium"
-                        Variant="@Variant.Filled"
-                        OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                        Color="Color.Primary"
-                        StartIcon="fas fa-eye">
+                                   Size="@Size.Medium"
+                                   Variant="@Variant.Filled"
+                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                   Color="Color.Primary"
+                                   StartIcon="fas fa-eye">
                             View Tasks
                         </MudButton>
                     </CardHeaderActions>
@@ -67,6 +69,7 @@
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
 
+    private bool _showCompleted = true;
     private List<DashboardAreaInfo> Areas = new();
     private List<int>? CompletedProjects = new();
     private List<int>? PendingProjects = new();

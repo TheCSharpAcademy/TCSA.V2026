@@ -140,7 +140,360 @@ public static class SeedData
         };
         user2.PasswordHash = hasher.HashPassword(user2, "Password124!");
 
-        context.Users.AddRange(user1, user2);
+        var user3 = new ApplicationUser
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = "user3@example.com",
+            NormalizedUserName = "user3@example.com",
+            Email = "user3@example.com",
+            NormalizedEmail = "user3@example.com",
+            FirstName = "Jane",
+            LastName = "Doe",
+            Country = "AUS",
+            ExperiencePoints = 1000,
+            ReviewExperiencePoints = 500,
+            ReviewedProjects = 9,
+            EmailConfirmed = true,
+            GithubLogin = false,
+            Level = Level.OliveGreen,
+
+            UserActivity = new List<AppUserActivity>
+            {
+                new AppUserActivity
+                {
+                    ProjectId = 9,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 10,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 11,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 12,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 13,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                }
+            },
+
+            DashboardProjects = new List<DashboardProject>
+            {
+                new DashboardProject
+                {
+                    ProjectId = 9,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 10,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 11,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 12,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 13,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 14,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 15,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 16,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 17,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+            }
+
+        };
+        user3.PasswordHash = hasher.HashPassword(user3, "Password123!");
+
+        var user4 = new ApplicationUser
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = "user4@example.com",
+            NormalizedUserName = "user4@example.com",
+            Email = "user4@example.com",
+            NormalizedEmail = "user4@example.com",
+            FirstName = "Hulk",
+            LastName = "Hogan",
+            Country = "AUS",
+            ExperiencePoints = 1000,
+            ReviewExperiencePoints = 500,
+            ReviewedProjects = 3,
+            EmailConfirmed = true,
+            GithubLogin = false,
+            Level = Level.OliveGreen,
+
+            UserActivity = new List<AppUserActivity>
+            {
+                new AppUserActivity
+                {
+                    ProjectId = 14,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 15,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 16,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 17,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 18,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    ActivityType = ActivityType.ArticleRead,
+                }
+            },
+
+            DashboardProjects = new List<DashboardProject>
+            {
+                new DashboardProject
+                {
+                    ProjectId = 18,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 19,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 20,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 21,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 22,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 23,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 24,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 25,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 26,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 27,
+                    GithubUrl = string.Empty,
+                    IsCompleted = false,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = true,
+                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                }
+            }
+
+        };
+        user4.PasswordHash = hasher.HashPassword(user4, "Password123!");
+
+        context.Users.AddRange(user1, user2, user3, user4);
         context.SaveChanges();
     }
 }

@@ -17,12 +17,52 @@
         <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
         if (ChallengesList != null && ChallengesList.Count > 0)
         {
-            <MudDataGrid Class="mt-2" Dense="true" Items="@ChallengesList" RowStyle="GetRowStyle">
-                <Columns>
-                    <PropertyColumn Property="x => x.Name" Title="Total XPs" />
-                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
-                </Columns>
-            </MudDataGrid>
+            <MudStack Row Class="mt-6 mb-4" Spacing="2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">
+                    Show Completed Challenges
+                </MudButton>
+                <MudSelect T="Level" Label="Filter by Level" Class="flex-grow-0">
+                    @foreach (Level item in Enum.GetValues(typeof(Level)))
+                    {
+                        <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudStack>
+            <MudStack Spacing="4">
+                @foreach (var challenge in ChallengesList)
+                {
+                    <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5">
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
+                            <MudStack Row Spacing="5">
+                                <MudImage ObjectFit="ObjectFit.Contain" Width="60" Src="@($"img/belts/{challenge.Level}-belt.png")" />
+                                <MudStack Spacing="1">
+                                    <MudText Style="font-weight:bolder" Typo="Typo.subtitle1" Class="mud-primary-text">@challenge.Name</MudText>
+                                    <MudText Typo="Typo.body2">@challenge.Description</MudText>
+                                    <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                        <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
+                                        <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.ExperiencePoints</MudText>
+                                    </MudStack>
+                                </MudStack>
+                            </MudStack>
+                            <MudStack Row Spacing="2">
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Warning"
+                                           StartIcon="fas fa-eye">
+                                    View
+                                </MudButton>
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.Cached">
+                                    Synchronize
+                                </MudButton>
+                            </MudStack>
+                        </MudStack>
+                    </MudPaper>
+                }
+            </MudStack>
+            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="ChallengesList.Count" />
         }
     }
 </MudContainer>

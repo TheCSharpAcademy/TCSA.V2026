@@ -5,15 +5,60 @@
         <div class="d-flex flex-row flex-wrap">
             @foreach (var task in Tasks)
             {
-                <MudAvatar>
-                    <MudImage Src=@($"/img/icons/{@task.IconUrl}")></MudImage>
-                </MudAvatar>
+                <div class="m-1">
+                    <!-- Added proper margin class -->
+                    <MudTooltip Text=@($"{task.Name}")>
+                        <MudAvatar Size="Size.Large"
+                                   Class=@($"avatar-spacing clean-avatar {(task.IsCompleted ? "complete-border" : "incomplete-border")}")
+                                   style="position: relative; overflow: hidden;">
+                            <MudImage Src=@($"/img/icons/{task.IconUrl}") />
+
+                            @if (task.IsCompleted)
+                            {
+                                <div class="image-overlay"></div>
+                            }
+                        </MudAvatar>
+                    </MudTooltip>
+                </div>
             }
         </div>
     </MudCardContent>
 </MudCard>
 
-
 @code {
     [Parameter] public List<RoadmapTask> Tasks { get; set; } = new List<RoadmapTask>();
 }
+
+<style>
+    .avatar-spacing {
+        margin: 4px !important; /* spacing around avatar */
+    }
+
+    .complete-border {
+        border: 3px solid rgba(144, 238, 144, 0.7);
+        border-radius: 50%; /* keep circle shape */
+    }
+
+    .incomplete-border {
+        border: 1px solid grey;
+        border-radius: 50%; /* keep circle shape */
+    }
+
+    .clean-avatar {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 50%;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background-color: rgba(144, 238, 144, 0.7);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+    }
+</style>

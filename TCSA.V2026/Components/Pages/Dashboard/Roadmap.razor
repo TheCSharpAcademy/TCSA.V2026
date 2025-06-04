@@ -20,34 +20,34 @@
     else
     {
         <MudTimeline TimelinePosition="TimelinePosition.Start">
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Color="Color.Success" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetGreenBeltTasks(CompletedProjects)"/>
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Class="custom-color-olivegreen" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetOliveGreenBeltTasks(UserLevel, CompletedProjects)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Color="Color.Warning" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetYellowBeltTasks(UserLevel, CompletedProjects)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Class="custom-color-orange" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetOrangeBeltTasks(UserLevel, CompletedProjects)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Color="Color.Error" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetRedBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Class="custom-color-purple" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetPurpleBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Class="custom-color-brown" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetBrownBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Class="custom-color-gray" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetGreyBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Color="Color.Primary" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetBlueBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
-            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+            <MudTimelineItem Color="Color.Dark" Size="Size.Large" Variant="Variant.Outlined" Elevation="1">
                 <TCSARoadmapCard Tasks="RoadmapHelper.GetBlackBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
         </MudTimeline>
@@ -106,3 +106,31 @@
         IsLoading = false;
     }
 }
+
+<style>
+    .custom-color-olivegreen .mud-timeline-item-dot .mud-timeline-item-dot-inner {
+        background-color: darkolivegreen !important;
+        border-color: darkolivegreen !important;
+    }
+
+    .custom-color-orange .mud-timeline-item-dot .mud-timeline-item-dot-inner {
+        background-color: #FF6600 !important;
+        border-color: #FF6600 !important;
+    }
+
+    .custom-color-purple .mud-timeline-item-dot .mud-timeline-item-dot-inner {
+        background-color: purple !important;
+        border-color: purple !important;
+    }
+
+    .custom-color-brown .mud-timeline-item-dot .mud-timeline-item-dot-inner {
+        background-color: saddlebrown !important;
+        border-color: saddlebrown !important;
+    }
+
+    .custom-color-gray .mud-timeline-item-dot .mud-timeline-item-dot-inner {
+        background-color: dimgray !important;
+        border-color: dimgray !important;
+    }
+</style>
+

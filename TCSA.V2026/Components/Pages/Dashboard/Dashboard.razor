@@ -17,15 +17,19 @@
 <MudContainer>
 
     <DashboardToolBar></DashboardToolBar>
-    <MudCheckBox @bind-Value="@_showCompleted" title="Show Completed" CheckedIcon="@Icons.Material.Outlined.CheckBox" 
-    UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"></MudCheckBox>
+    <MudCheckBox @bind-Value="@_showCompleted"
+                 Label="Show Completed"
+                 CheckedIcon="@Icons.Material.Outlined.CheckBox"
+                 UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
+
+
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
     }
     else
     {
-        @foreach (var area in Areas)
+        @foreach (var area in Areas.Where(a => _showCompleted || !a.IsCompleted))
         {
             <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
                 <MudCardHeader Class="d-flex align-items-center">

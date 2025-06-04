@@ -20,14 +20,35 @@
     else
     {
         <MudTimeline TimelinePosition="TimelinePosition.Start">
-            <MudTimelineItem>
-                <MudText Align="Align.Start">Static dot</MudText>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetGreenBeltTasks(CompletedProjects)"/>
             </MudTimelineItem>
             <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
-               <TCSARoadmapCard Tasks="RoadmapHelper.GetGreenBeltTasks(CompletedProjects)"/>
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetOliveGreenBeltTasks(UserLevel, CompletedProjects)" />
             </MudTimelineItem>
-            <MudTimelineItem>
-                <MudText Align="Align.Start">Static dot</MudText>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetYellowBeltTasks(UserLevel, CompletedProjects)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetOrangeBeltTasks(UserLevel, CompletedProjects)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetRedBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetPurpleBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetBrownBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetGreyBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetBlueBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
+            </MudTimelineItem>
+            <MudTimelineItem Color="Color.Primary" Size="Size.Medium" Variant="Variant.Outlined" Elevation="1">
+                <TCSARoadmapCard Tasks="RoadmapHelper.GetBlackBeltTasks(UserLevel, CompletedProjects, ReviewsCount, IssuesCount)" />
             </MudTimelineItem>
         </MudTimeline>
     }
@@ -39,6 +60,8 @@
     [Inject] private IUserService UserService { get; set; }
 
     private ApplicationUser User { get; set; }
+    private int ReviewsCount = 0;
+    private int IssuesCount = 0;
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
@@ -72,6 +95,12 @@
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetDetailedUserById(UserId);
         CompletedProjects = User.DashboardProjects.Where(p => p.IsCompleted).Select(p => p.Id).ToList();
+
+        ReviewsCount = User.CodeReviewProjects != null
+        ? User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted).Count()
+        : 0;
+
+        IssuesCount = User.Issues != null ? User.Issues.Count(x => !x.IsClosed) : 0;
 
         LoadTime = DateTime.UtcNow - startTime;
         IsLoading = false;

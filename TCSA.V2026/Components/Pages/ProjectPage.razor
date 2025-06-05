@@ -47,7 +47,10 @@
                                 @foreach (var req in Project.Requirements)
                                 {
                                     <MudListItem>
-                                        <MudText Class="mt-2" Style="color: black;">@((MarkupString)(req))</MudText>
+                                        <div style="display: flex;">
+                                            <MudIcon Icon="@Icons.Material.Filled.CheckBox" Color="Color.Success" Class="mr-2" />
+                                            <MudText Style="color: black;">@((MarkupString)(req))</MudText>
+                                        </div>
                                     </MudListItem>
                                 }
                             </MudList>
@@ -58,13 +61,13 @@
                         <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Learn</MudText>
                         @if (!string.IsNullOrEmpty(Project.LearningIntro))
                         {
-                            <MudText Class="mt-2">@((MarkupString)(Project.LearningIntro))</MudText>
+                            <MudText Class="mt-2 mb-2">@((MarkupString)(Project.LearningIntro))</MudText>
                         }
-                        <MudList T="MarkupString">
+                        <MudList Class="mt-2" T="MarkupString">
                             @foreach (var item in Project.LearningItems)
                             {
                                 <MudListItem>
-                                    <MudText Class="mt-2">@((MarkupString)(item))</MudText>
+                                    <MudText Style="color: black;" Class="mt-2">@((MarkupString)(item))</MudText>
                                 </MudListItem>
                             }
                         </MudList>
@@ -74,13 +77,16 @@
                         <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Resources</MudText>
                         @if (!string.IsNullOrEmpty(Project.ResourcesIntro))
                         {
-                            <MudText Class="mt-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
+                            <MudText Class="mt-2 mb-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
                         }
                         <MudList T="MarkupString">
                             @foreach (var item in Project.Resources)
                             {
                                 <MudListItem>
-                                    <MudText Class="mt-2">@((MarkupString)(item))</MudText>
+                                    <div style="display: flex;">
+                                        <MudIcon Icon="@Icons.Material.Filled.ArrowCircleRight" Color="Color.Primary" Class="mr-2" />
+                                        <MudText Style="color: black;">@((MarkupString)(item))</MudText>
+                                    </div>
                                 </MudListItem>
                             }
                         </MudList>
@@ -96,7 +102,10 @@
                             @foreach (var tip in Project.Tips)
                             {
                                 <MudListItem>
-                                    <MudText Class="mt-2">@((MarkupString)(tip))</MudText>
+                                    <div style="display: flex;">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckBox" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
+                                        <MudText Style="color: black;">@((MarkupString)(tip))</MudText>
+                                    </div>
                                 </MudListItem>
                             }
                         </MudList>
@@ -108,7 +117,10 @@
                             @foreach (var challenge in Project.Challenges)
                             {
                                 <MudListItem>
-                                    <MudText Class="mt-2">@((MarkupString)(challenge))</MudText>
+                                    <div style="display: flex;">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Medium" Color="Color.Error" Class="mr-2" />
+                                        <MudText Style="color: black;">@((MarkupString)(challenge))</MudText>
+                                    </div>
                                 </MudListItem>
                             }
                         </MudList>
@@ -126,14 +138,14 @@
                             {
                                 if (paragraph.IsPicture)
                                 {
-                                    <MudPaper Class="d-flex justify-center mx-20 mt-10 " Elevation="0">
+                                    <MudPaper Class="d-flex justify-center mx-20 mt-10" Elevation="0">
                                         <MudImage Src="@GetImage(paragraph)" Alt="Image paragraph" Fluid="true" Class="rounded-lg" />
                                     </MudPaper>
                                 }
 
                                 else if (paragraph.IsVideo)
                                 {
-                                    <div class="video-wrapper mt-3 mb-4">
+                                    <div class="video-wrapper mt-5 mb-4">
                                         <iframe class="video-iframe" src="@paragraph.VideoUrl" allowfullscreen></iframe>
                                     </div>
                                 }
@@ -149,7 +161,7 @@
                                     {
                                         var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
                                         var textStyle = $"color: {paragraph.FontColor};";
-                                        <MudText Style="@textStyle" Typo="Typo.body1">
+                                        <MudText Class="mb-1" Style="@textStyle" Typo="Typo.body1">
                                             @((MarkupString)paragraph.Body)
                                         </MudText>
                                     }

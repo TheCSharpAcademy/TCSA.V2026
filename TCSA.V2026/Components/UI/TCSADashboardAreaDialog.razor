@@ -6,49 +6,56 @@
 
 @inject IDialogService DialogService
 
-<MudDialog>
+<MudDialog Style="min-width: 800px;">
     <DialogContent>
         @foreach (var task in Tasks)
         {
-            <MudCard Class="mt-1 mb-1" Style="@(task.Status == Data.DTOs.TaskStatus.Completed ? "border: 2px solid green;" : null)">
+            <MudCard Class="mt-1 mb-1" Style="@GetStyle(task.Status)">
                 <MudCardHeader>
                     <CardHeaderAvatar>
                         <MudImage Width="40" Src="@($"img/icons/{task.IconUrl}")" />
                     </CardHeaderAvatar>
                     <CardHeaderContent>
-                        <MudText Color="Color.Primary" Typo="Typo.h6">@task.Title</MudText>
+                        <MudText Color="Color.Primary" Typo="Typo.h6" NoWrap="true">@task.Title</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        @if(task.Status == Data.DTOs.TaskStatus.Completed)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Success">
-                                Completed
-                            </MudChip>
-                        } 
-                        <MudButton 
-                        Class="mt-3 ml-5 mr-5"
-                        Size="@Size.Medium"
-                        Variant="@Variant.Filled"
-                        OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
-                        Color="Color.Primary"
-                        StartIcon="fas fa-eye">
-                            View
-                        </MudButton>
-                        @if (task.Status != Data.DTOs.TaskStatus.Completed)
-                        {
-                            var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
-                            var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update PR" : "Submit PR";
-                            <MudButton Class="mt-3 ml-5 mr-5"
-                            Size="@Size.Medium"
-                            Variant="@Variant.Filled" Color="@color"
-                            OnClick="@(() => SubmitToReviewDialog(task.Id))"
-                            EndIcon="@Icons.Material.Filled.Send">
-                                @text
-                            </MudButton>
-                        }
+                        <MudGrid>
+                            <MudItem>
+                                @if (task.Status == Data.DTOs.TaskStatus.Completed)
+                                {
+                                    <MudChip Class="mt-3 ml-5"
+                                    T="string"
+                                    Size="@Size.Large"
+                                    Color="Color.Success">
+                                        Completed
+                                    </MudChip>
+                                }
+                            </MudItem>
+                            <MudItem>
+                                @if (task.Status != Data.DTOs.TaskStatus.Completed)
+                                {
+                                    var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
+                                    var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update PR" : "Submit PR";
+                                    <MudButton Class="mt-3 ml-5 mr-5"
+                                    Size="@Size.Medium"
+                                    Variant="@Variant.Filled" Color="@color"
+                                    OnClick="@(() => SubmitToReviewDialog(task.Id))"
+                                    StartIcon="@Icons.Material.Filled.Send">
+                                        @text
+                                    </MudButton>
+                                }
+                            </MudItem>
+                            <MudItem>
+                                <MudButton Class="mt-3 ml-5 mr-5"
+                                Size="@Size.Medium"
+                                Variant="@Variant.Filled"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
+                                Color="Color.Primary"
+                                StartIcon="fas fa-eye">
+                                    View
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
@@ -85,5 +92,19 @@
             MudDialog.Close(DialogResult.Ok(status));
         }
 
+    }
+
+    private string GetStyle(Data.DTOs.TaskStatus status)
+    {
+        var style = "min-width: 600px;"; // or "width: 500px;" if you want fixed width
+        if (status == Data.DTOs.TaskStatus.Completed)
+        {
+            style += "border: 2px solid green;";
+        }
+        if (status == Data.DTOs.TaskStatus.PendingReview)
+        {
+            style += "border: 2px solid orange;";
+        }
+        return style;
     }
 }

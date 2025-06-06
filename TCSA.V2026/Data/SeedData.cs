@@ -22,6 +22,7 @@ public static class SeedData
 
         var user1 = new ApplicationUser
         {
+
             Id = Guid.NewGuid().ToString(),
             UserName = "user1@example.com",
             NormalizedUserName = "user1@example.com",

@@ -1,37 +1,53 @@
 ﻿<MudPaper Elevation="25">
     <MudToolBar>
         <MudTooltip Text="Dashboard">
-            <MudIconButton Icon="@Icons.Material.Outlined.Dashboard" OnClick="NavigateToDashboard" />
+            <MudIconButton Color="Color.Primary"
+                           Icon="@Icons.Material.Outlined.Dashboard"
+                           OnClick="NavigateToDashboard" />
         </MudTooltip>
         <MudTooltip Text="Community">
-            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" OnClick="NavigateToCommunity" />
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub"
+                           Color="Color.Primary"
+                           OnClick="NavigateToCommunity" />
         </MudTooltip>
         <MudTooltip Text="Activity">
-            <MudIconButton Icon="@Icons.Material.Outlined.Hiking" OnClick="NavigateToActivity" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Hiking"
+                           Color="Color.Primary"
+                           OnClick="NavigateToActivity" />
         </MudTooltip>
         <MudTooltip Text="Peer Reviews">
-            <MudIconButton Icon="@Icons.Material.Outlined.RateReview" OnClick="NavigateToReviews" />
+            <MudIconButton Icon="@Icons.Material.Outlined.RateReview"
+                           Color="Color.Primary"
+                           OnClick="NavigateToReviews" />
         </MudTooltip>
         <MudTooltip Text="Leaderboard">
-            <MudIconButton Icon="@Icons.Material.Outlined.Leaderboard" OnClick="NavigateToLeaderboard" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Leaderboard"
+                           Color="Color.Primary"
+                           OnClick="NavigateToLeaderboard" />
         </MudTooltip>
         <MudTooltip Text="Roadmap">
-            <MudIconButton Icon="@Icons.Material.Outlined.Map" OnClick="NavigateToRoadmap" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Map"
+                           Color="Color.Primary"
+                           OnClick="NavigateToRoadmap" />
         </MudTooltip>
         <MudTooltip Text="Courses">
-            <MudIconButton Icon="@Icons.Material.Outlined.Book" OnClick="NavigateToCourses" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Book"
+                           Color="Color.Primary"
+                           OnClick="NavigateToCourses" />
         </MudTooltip>
         <MudTooltip Text="Challenges">
-            <MudIconButton Icon="@Icons.Material.Outlined.Games" OnClick="NavigateToChallenges" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Games"
+                           Color="Color.Primary"
+                           OnClick="NavigateToChallenges" />
         </MudTooltip>
-        
+
     </MudToolBar>
 </MudPaper>
 
 
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
-    
+
     private void NavigateToDashboard()
     {
         Navigation.NavigateTo("/dashboard");

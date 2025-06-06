@@ -16,7 +16,7 @@
                         <MudImage Width="40" Src="@($"img/icons/{task.IconUrl}")" />
                     </CardHeaderAvatar>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@task.Title</MudText>
+                        <MudText Color="Color.Primary" Typo="Typo.h6">@task.Title</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
                         @if(task.Status == Data.DTOs.TaskStatus.Completed)
@@ -35,7 +35,7 @@
                         OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
                         Color="Color.Primary"
                         StartIcon="fas fa-eye">
-                            View Task
+                            View
                         </MudButton>
                         @if (task.Status != Data.DTOs.TaskStatus.Completed)
                         {

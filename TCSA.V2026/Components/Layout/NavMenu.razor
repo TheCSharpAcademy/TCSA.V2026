@@ -3,23 +3,72 @@
 @inject NavigationManager NavigationManager
 
 <MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="" IconColor="Color.Primary" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <AuthorizeView>
         <Authorized>
-            <MudNavLink Href="Dashboard" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
-            <MudNavLink Href="Dashboard/Community" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Groups">Community</MudNavLink>
-            <MudNavLink Href="Dashboard/Reviews" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.RateReview">Peer Reviews</MudNavLink>
-            <MudNavLink Href="Dashboard/Leaderboard" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Leaderboard">Leaderboard</MudNavLink>
-            <MudNavLink Href="Dashboard/Roadmap" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Map">Roadmap</MudNavLink>
-            <MudNavLink Href="Dashboard/Courses" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LibraryBooks">Courses</MudNavLink>
-            <MudNavLink Href="Articles/articles" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Newspaper">Articles</MudNavLink>
-            <MudNavLink Href="Articles/blog" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Book">Blog</MudNavLink>
+            <MudNavLink 
+                Href="Dashboard" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.Dashboard"
+                IconColor="Color.Primary">
+                Dashboard
+            </MudNavLink>
+            <MudNavLink 
+                Href="Dashboard/Community" 
+                Match="NavLinkMatch.Prefix"
+                Icon="@Icons.Material.Filled.Groups"
+                IconColor="Color.Primary">
+                Community
+            </MudNavLink>
+            <MudNavLink 
+                Href="Dashboard/Reviews" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.RateReview"
+                IconColor="Color.Primary">
+                Peer Reviews
+            </MudNavLink>
+            <MudNavLink 
+                Href="Dashboard/Leaderboard" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.Leaderboard"
+                IconColor="Color.Primary">
+                Leaderboard
+            </MudNavLink>
+            <MudNavLink 
+                Href="Dashboard/Roadmap" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.Map"
+                IconColor="Color.Primary">
+                Roadmap
+            </MudNavLink>
+            <MudNavLink 
+                Href="Dashboard/Courses" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.LibraryBooks"
+                IconColor="Color.Primary">
+                Courses
+            </MudNavLink>
+            <MudNavLink 
+                Href="Articles/articles" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.Newspaper"
+                IconColor="Color.Primary">
+                Articles
+            </MudNavLink>
+            <MudNavLink 
+                Href="Articles/blog" 
+                Match="NavLinkMatch.Prefix" 
+                Icon="@Icons.Material.Filled.Book"
+                IconColor="Color.Primary">
+                Blog
+            </MudNavLink>
             @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
             <form action="Account/Logout" method="post">
                 <AntiforgeryToken />
                 <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                 <button type="submit" class="mud-nav-link mud-ripple">
-                    <MudIcon Icon="@Icons.Material.Filled.Logout" Color="Color.Info" Class="mr-3"></MudIcon> Logout
+                    <MudIcon 
+                        Icon="@Icons.Material.Filled.Logout" Color="Color.Primary" Class="mr-3"></MudIcon> Logout
                 </button>
             </form>
         </Authorized>

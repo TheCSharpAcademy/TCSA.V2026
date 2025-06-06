@@ -4,14 +4,14 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject IJSRuntime JS
 
-<MudThemeProvider @bind-IsDarkMode="@ThemeService.IsDarkMode" />
+<MudThemeProvider Theme="MyCustomTheme" @bind-IsDarkMode="@ThemeService.IsDarkMode" />
 <MudPopoverProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudStaticNavDrawerToggle DrawerId="nav-drawer" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
-        <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
+        <MudText Typo="Typo.h5" Class="ml-3">The C# Academy</MudText>
         <MudSpacer />
         <MudSwitch ValueChanged="ToggleTheme" Value="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
     </MudAppBar>
@@ -48,6 +48,20 @@
         // Update cookie via JS interop or via server-side endpoint.
         await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);
     }
+
+    MudTheme MyCustomTheme = new MudTheme()
+        {
+            PaletteLight = new PaletteLight()
+            {
+                Primary = "#1C236D",
+                Secondary = "#832A77",
+                AppbarBackground = "#C9436E",
+            },
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Lighten1
+            },
+        };
 }
 
 

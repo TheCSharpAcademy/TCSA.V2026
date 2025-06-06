@@ -15,8 +15,10 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <MudContainer>
-
-    <DashboardToolBar></DashboardToolBar>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
     <MudCheckBox @bind-Value="@_showCompleted"
                  Label="Show Completed"
                  CheckedIcon="@Icons.Material.Outlined.CheckBox"
@@ -72,6 +74,8 @@
 
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
+
+    [Parameter] public List<RoadmapTask> Tasks { get; set; } = new List<RoadmapTask>();
 
     private bool _showCompleted = true;
     private List<DashboardAreaInfo> Areas = new();

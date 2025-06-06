@@ -1,6 +1,14 @@
-﻿<MudPaper Elevation="25">
-    <MudToolBar>
-        <MudTooltip Text="Dashboard">
+﻿@using TCSA.V2026.Data.Models
+<MudPaper Elevation="25">
+    <MudToolBar Class="mt-5">
+        <MudImage Class="mr-3" Src=@($"img/flags/{User.Country}.png") Width="50"></MudImage>
+        <MudText Style="font-weight: 600; font-size:large">@User.DisplayName</MudText>
+        <MudSpacer />
+        <MudImage Class="mr-1" Src=@($"img/belts/{(Level)User.Level}-belt.png") Width="30"></MudImage>
+        <MudText Class="mr-3" Style="font-weight: 500">@(((Level)User.Level).ToString() + " Belt")</MudText>
+        <MudImage Src="img/experience.png" Width="30"></MudImage>
+        <MudText Style="font-weight: 500">@User.ExperiencePoints</MudText>
+       @*  <MudTooltip Text="Dashboard">
             <MudIconButton Color="Color.Primary"
                            Icon="@Icons.Material.Outlined.Dashboard"
                            OnClick="NavigateToDashboard" />
@@ -39,7 +47,7 @@
             <MudIconButton Icon="@Icons.Material.Outlined.Games"
                            Color="Color.Primary"
                            OnClick="NavigateToChallenges" />
-        </MudTooltip>
+        </MudTooltip> *@
 
     </MudToolBar>
 </MudPaper>
@@ -47,6 +55,7 @@
 
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
+    [Parameter] public ApplicationUser User { get; set; }
 
     private void NavigateToDashboard()
     {

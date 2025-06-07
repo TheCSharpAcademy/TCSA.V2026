@@ -51,6 +51,14 @@
                                      Color="Color.Success">
                                 Completed
                             </MudChip>
+                        }else if(area.Tasks.Where(t => t.Status == Data.DTOs.TaskStatus.Completed).Any())
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                                     T="string"
+                                     Size="@Size.Large"
+                                     Color="Color.Info">
+                                In Progress
+                            </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
                                    Size="@Size.Medium"

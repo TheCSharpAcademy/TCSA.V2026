@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using System;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Data.Models.Responses;
 
 namespace TCSA.V2026.Services;
 
@@ -8,6 +11,7 @@ public interface IUserService
 {
     Task<ApplicationUser> GetUserById(string userId);
     Task<ApplicationUser> GetDetailedUserById(string userId);
+    Task<BaseResponse> SaveProfile(ApplicationUser user);
 }
 
 public class UserService: IUserService
@@ -57,4 +61,30 @@ public class UserService: IUserService
             return null;
         }
     }
+
+    public async Task<BaseResponse> SaveProfile(ApplicationUser user)
+    {
+        try
+        {
+            using var context = _factory.CreateDbContext();
+
+            context.AspNetUsers.Update(user); 
+            await context.SaveChangesAsync(); 
+
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+                Message = "Profile updated successfully."
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+    }
+
 }

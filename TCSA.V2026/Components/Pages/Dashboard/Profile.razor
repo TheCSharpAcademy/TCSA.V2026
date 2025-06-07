@@ -1,0 +1,91 @@
+﻿@page "/dashboard/profile"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+@attribute [Authorize]
+
+<PageTitle>Profile</PageTitle>
+
+<MudContainer>
+    @if (IsLoading || User == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    } else
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+
+        <MudPaper Class="pa-4 mt-5" Elevation="4">
+            <MudText Typo="Typo.h6" GutterBottom="true">Edit User Profile</MudText>
+
+            <MudForm Spacing="4" Model="@User">
+                <MudTextField @bind-Value="User.DisplayName" Label="Display Name" Required="true" />
+                <MudTextField @bind-Value="User.DiscordAlias" Label="Discord Alias" />
+                <MudTextField @bind-Value="User.GithubUsername" Label="Github Username" Required="true" />
+                <MudTextField @bind-Value="User.CodeWarsUsername" Label="CodeWars Username" Required="true" />
+                <MudTextField @bind-Value="User.LinkedInUrl" Label="Linkedin Url" Required="true" />
+                <MudSelect T="string" @bind-Value="User.Country" Label="Country" Required="true">
+                    @foreach (var country in Countries)
+                    {
+                        <MudSelectItem Value="@country">@country</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudButton Color="Color.Primary" OnClick="Save" Class="mt-4">Save</MudButton>
+            </MudForm>
+        </MudPaper>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+
+    [Inject] private ISnackbar SnackbarService { get; set; }
+
+    private ApplicationUser User;
+    private List<string> Countries = FlagHelper.GetCountries();
+
+    private bool IsLoading = true;
+    private bool IsLoggedIn = false;
+    private string UserId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+        }
+        else
+        {
+            return;
+        }
+
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+
+        IsLoading = false;
+    }
+
+    private async Task Save()
+    {
+        var result = await UserService.SaveProfile(User);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            SnackbarService.Add("Profile Update Successfuly", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            SnackbarService.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        User = await UserService.GetUserById(UserId);
+    }
+}

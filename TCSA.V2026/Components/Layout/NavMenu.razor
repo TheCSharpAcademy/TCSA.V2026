@@ -62,6 +62,12 @@
                 IconColor="Color.Primary">
                 Blog
             </MudNavLink>
+            <MudNavLink Href="Dashboard/profile"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.VerifiedUser"
+                        IconColor="Color.Primary">
+                Profile
+            </MudNavLink>
             @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
             <form action="Account/Logout" method="post">
                 <AntiforgeryToken />

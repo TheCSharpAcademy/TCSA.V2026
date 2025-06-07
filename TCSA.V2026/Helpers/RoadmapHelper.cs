@@ -1,4 +1,5 @@
-﻿using TCSA.V2026.Data.Curriculum;
+﻿using System.Reflection.Metadata.Ecma335;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 
@@ -6,9 +7,10 @@ namespace TCSA.V2026.Helpers;
 
 public static class RoadmapHelper
 {
-    public static List<Article>? Articles = ArticleHelper.GetArticles();
-    public static List<Project>? Projects = ProjectHelper.GetProjects();
-    public static Project FlagshipProject = Projects.Single(x => x.Id == 139);
+    private static List<int>? IncompleteTasks = new();
+    private static List<Article>? Articles = ArticleHelper.GetArticles();
+    private static List<Project>? Projects = ProjectHelper.GetProjects();
+    private static Project FlagshipProject = Projects.Single(x => x.Id == 139);
 
     public static readonly int[] GreenRequirements = { 5, 6, 7, 8, 53, 75 };
     public static readonly int[] OliveGreenRequirements = { 11, 12, 13 };
@@ -93,18 +95,6 @@ public static class RoadmapHelper
         "Complete Flagship Project"
     };
 
-    public static List<RoadmapTask> missingTasks = new();
-    public static List<RoadmapTask> greenBeltTasks = new();
-    public static List<RoadmapTask> oliveGreenBeltTasks = new();
-    public static List<RoadmapTask> yellowBeltTasks = new();
-    public static List<RoadmapTask> orangeBeltTasks = new();
-    public static List<RoadmapTask> redBeltTasks = new();
-    public static List<RoadmapTask> purpleBeltTasks = new();
-    public static List<RoadmapTask> brownBeltTasks = new();
-    public static List<RoadmapTask> greyBeltTasks = new();
-    public static List<RoadmapTask> blueBeltTasks = new();
-    public static List<RoadmapTask> blackBeltTasks = new();
-
     public static List<int> completedProjects = new();
     public static List<int> mauiProjects = new();
     public static List<int> angularProjects = new();
@@ -112,8 +102,28 @@ public static class RoadmapHelper
     public static List<int> reactProjects = new();
     public static List<int> mvcProjects = new();
 
-    public static List<RoadmapTask> GetGreenBeltTasks(List<int> completedProjects)
+
+    public static List<RoadmapStage> GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        return new List<RoadmapStage>
+        {
+            GetGreenBeltTasks(completedProjects),
+            GetOliveGreenBeltTasks(level, completedProjects),
+            GetYellowBeltTasks(level, completedProjects),
+            GetOrangeBeltTasks(level, completedProjects),
+            GetRedBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+            GetPurpleBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+            GetBrownBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+            GetGreyBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+            GetBlueBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+            GetBlackBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+        };
+    }
+    public static RoadmapStage GetGreenBeltTasks(List<int> completedProjects)
+    {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-green";
+
         var tasks = Articles
         .Where(x => x.Level == Level.Green)
         .Select(x => new RoadmapTask
@@ -144,18 +154,23 @@ public static class RoadmapHelper
 
         if (tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = greenBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = greenBeltProjectTasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+
+        return result;
     }
-    public static List<RoadmapTask> GetOliveGreenBeltTasks(Level userLevel, List<int> completedProjects)
-    { 
+    public static RoadmapStage GetOliveGreenBeltTasks(Level userLevel, List<int> completedProjects)
+    {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-olivegreen";
+
         var tasks = Projects
         .Where(x => x.Level == Level.OliveGreen)
         .Select(x => new RoadmapTask
@@ -169,20 +184,24 @@ public static class RoadmapHelper
         })
             .ToList();
 
-        if (userLevel > Level.White && oliveGreenBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.White && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = oliveGreenBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetYellowBeltTasks(Level userLevel, List<int> completedProjects)
+    public static RoadmapStage GetYellowBeltTasks(Level userLevel, List<int> completedProjects)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-yellow";
+
         var tasks = Projects
         .Where(x => x.Level == Level.Yellow)
         .Select(x => new RoadmapTask
@@ -196,20 +215,24 @@ public static class RoadmapHelper
         })
             .ToList();
 
-        if (userLevel > Level.Green && yellowBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.Green && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = yellowBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetOrangeBeltTasks(Level userLevel, List<int> completedProjects)
+    public static RoadmapStage GetOrangeBeltTasks(Level userLevel, List<int> completedProjects)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-orange";
+
         var tasks = Projects
         .Where(x => x.Level == Level.Orange)
         .Select(x => new RoadmapTask
@@ -223,20 +246,24 @@ public static class RoadmapHelper
         })
             .ToList();
 
-        if (userLevel > Level.OliveGreen && orangeBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.OliveGreen && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = orangeBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetRedBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetRedBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-red";
+
         var tasks = Projects
         .Where(x => x.Level == Level.Red)
         .Select(x => new RoadmapTask
@@ -268,20 +295,24 @@ public static class RoadmapHelper
             }
             });
 
-        if (userLevel > Level.Yellow && redBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.Yellow && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = redBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetPurpleBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetPurpleBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-purple";
+
         var tasks = new List<RoadmapTask>();
         tasks.AddRange(new List<RoadmapTask> {
             new RoadmapTask {
@@ -323,20 +354,24 @@ public static class RoadmapHelper
             }
         });
 
-        if (userLevel > Level.Orange && purpleBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.Orange && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = purpleBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetBrownBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetBrownBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-brown";
+
         var tasks = Projects
         .Where(x => x.Level == Level.Brown)
         .Select(x => new RoadmapTask
@@ -380,18 +415,22 @@ public static class RoadmapHelper
 
         if (userLevel > Level.Red && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetGreyBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetGreyBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-gray";
+
         var tasks = Projects
             .Where(x => x.Level == Level.Grey)
             .Select(x => new RoadmapTask
@@ -455,20 +494,24 @@ public static class RoadmapHelper
             },
         });
 
-        if (userLevel > Level.Purple && greyBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.Purple && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = greyBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetBlueBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetBlueBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-blue";
+
         var tasks = Projects
        .Where(x => x.Level == Level.Blue)
        .Select(x => new RoadmapTask
@@ -526,20 +569,24 @@ public static class RoadmapHelper
         });
 
 
-        if (userLevel > Level.Brown && blueBeltTasks.Any(x => !x.IsCompleted))
+        if (userLevel > Level.Brown && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = greyBeltTasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
-    public static List<RoadmapTask> GetBlackBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapStage GetBlackBeltTasks(Level userLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
+        var result = new RoadmapStage();
+        result.Class = "custom-color-black";
+
         var tasks = new List<RoadmapTask>();
 
         tasks.AddRange(new List<RoadmapTask> {
@@ -705,14 +752,15 @@ public static class RoadmapHelper
 
         if (userLevel > Level.Grey && tasks.Any(x => !x.IsCompleted))
         {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted);
+            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
 
             foreach (var task in incompleteTasks)
             {
-                missingTasks.Add(task);
+                IncompleteTasks.Add(task);
             }
         }
 
-        return tasks;
+        result.Tasks = tasks;
+        return result;
     }
 }

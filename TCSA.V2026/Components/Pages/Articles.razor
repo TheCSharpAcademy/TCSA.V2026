@@ -23,11 +23,11 @@
                         </MudCardContent>
                         <MudCardActions>
                             <MudButton Class=""
-                                       Size="@Size.Medium"
-                                       Variant="@Variant.Filled"
-                                       Color="Color.Primary"
-                                       StartIcon="fas fa-eye"
-                                       OnClick="@(() => NavigateToArticle(article))">
+                            Size="@Size.Medium"
+                            Variant="@Variant.Filled"
+                            Color="Color.Primary"
+                            StartIcon="fas fa-eye"
+                            OnClick="@(() => NavigateToArticle(article))">
                                 View Article
                             </MudButton>
                         </MudCardActions>
@@ -51,11 +51,16 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        ArticlesList = ArticleHelper.GetArticles().Where(x => !NoDisplayIds.Contains(x.Id)).ToList();
+        ArticlesList = ArticleHelper.GetArticles()
+        .Where(x => !NoDisplayIds.Contains(x.Id))
+        .ToList();
 
         @if (articleType == "blog")
         {
             ArticlesList = ArticlesList.Where(x => x.Area == Area.Blog).ToList();
+        } else
+        {
+            ArticlesList = ArticlesList.Where(x => x.Area != Area.Blog).ToList();
         }
 
         IsLoading = false;

@@ -6,7 +6,10 @@
 @attribute [Authorize]
 
 <MudContainer>
-    <DashboardToolBar></DashboardToolBar>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
     <MudStack Row Class="mt-4" Spacing="4" Breakpoint="Breakpoint.Xs">
         <MudPaper Class="flex-grow-1 pb-3" Elevation="3" Outlined="false">
             <MudStack AlignItems="AlignItems.Center" Spacing="2" Class="py-3 px-4 px-md-5" Style="@($"background-color:{Colors.Green.Lighten1}")">

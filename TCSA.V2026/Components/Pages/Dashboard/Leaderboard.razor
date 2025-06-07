@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 @using System.Security.Claims;
+@using TCSA.V2026.Data.Models
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Helpers.Constants
 @using TCSA.V2026.Services
@@ -10,7 +11,10 @@
 
 <PageTitle>Leaderboard</PageTitle>
 <MudContainer Class="pa-0">
-    <DashboardToolBar></DashboardToolBar>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
     <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4" OnClick="FilterReviews">
         Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
     </MudButton>
@@ -114,15 +118,17 @@
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private ILeaderboardService LeaderboardService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
 
     private List<UserLeaderboardDisplay>? Users { get; set; } = null;
     private List<UserReviewLeaderboardDisplay>? ReviewUsers { get; set; } = null;
 
+    private ApplicationUser User;
     private int CurrentPage;
     private int Ranking;
+    private int Pages;
     private bool IsLoading = true;
     private bool IsReviews = false;
-    private int Pages;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
 
@@ -138,6 +144,7 @@
 
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
 
         if (IsReviews)
         {

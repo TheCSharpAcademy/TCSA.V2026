@@ -14,7 +14,10 @@
 <PageTitle>Activity</PageTitle>
 
 <MudContainer>
-    <DashboardToolBar></DashboardToolBar>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
 
     @if (IsLoading)
     {

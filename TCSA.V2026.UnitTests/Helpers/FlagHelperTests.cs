@@ -35,7 +35,7 @@ public class FlagHelperTests
     [TestCase("United Kingdom", "img/flags/united-kingdom.png")]
     [TestCase("United States", "img/flags/united-states.png")]
     [TestCase("Brazil", "img/flags/brazil.png")]
-    public void GetFlag_ShouldReturnCorrectFlagImagePath_WhenCountryExists(string country, string expected)
+    public void GetFlag_ShouldReturnCorrectFlagImage_WhenCountryExists(string country, string expected)
     {
         // Act
         var result = FlagHelper.GetFlag(country);

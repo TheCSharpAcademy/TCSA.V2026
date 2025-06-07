@@ -362,3 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /TCSA.V2026/appsettings.json
+
+
+#jet brain files
+.idea/

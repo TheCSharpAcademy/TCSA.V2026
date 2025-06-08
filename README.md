@@ -67,7 +67,7 @@ The C# Academy website is more than just a learning platform - it's a living pro
 {
     "AllowedHosts": "*",
     "ConnectionStrings": {
-        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=TCSA_V2; Integrated Security=true;"
+        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=TCSA_V2026; Integrated Security=true;"
     },
     "Logging": {
         "LogLevel": {

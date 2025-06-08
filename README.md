@@ -76,8 +76,8 @@ The C# Academy website is more than just a learning platform - it's a living pro
         }
     },
     "Values": {
-        "GithubClientId": "",
-        "GithubClientSecret": ""
+        "GithubClientId": "abc123",
+        "GithubClientSecret": "abc123"
     }
 }
 ```

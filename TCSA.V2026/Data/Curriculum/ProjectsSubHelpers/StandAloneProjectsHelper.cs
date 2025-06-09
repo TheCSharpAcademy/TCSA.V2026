@@ -27,7 +27,7 @@ internal static class StandAloneProjectsHelper
                 BannerUrl = "",
                 LanguageHeadings = new EnglishHeadings(),
                 Description = "Get started completing this professional C# certification",
-                Area = Area.StandAlone,
+                Area = Area.StartHere,
                 Level = Level.Green,
                 ExperiencePoints = 20,
                 Introduction = new List<Paragraph>

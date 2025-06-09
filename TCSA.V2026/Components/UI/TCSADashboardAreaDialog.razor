@@ -32,15 +32,16 @@
                                 }
                             </MudItem>
                             <MudItem>
-                                @if (task.Status != Data.DTOs.TaskStatus.Completed)
+                                @if (task.Status != Data.DTOs.TaskStatus.Completed && !task.IsReadOnly)
                                 {
                                     var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
-                                    var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update PR" : "Submit PR";
+                                    var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update" : "Submit";
+                                    var icon = task.Status == Data.DTOs.TaskStatus.PendingReview ? Icons.Material.Filled.Edit : Icons.Material.Filled.Send;
                                     <MudButton Class="mt-3 ml-5 mr-5"
                                     Size="@Size.Medium"
                                     Variant="@Variant.Filled" Color="@color"
                                     OnClick="@(() => SubmitToReviewDialog(task.Id))"
-                                    StartIcon="@Icons.Material.Filled.Send">
+                                    StartIcon="@icon">
                                         @text
                                     </MudButton>
                                 }

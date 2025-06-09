@@ -66,12 +66,34 @@
 
         <MudDataGrid Elevation="4" Dense="true" Items="@FilteredActivity">
             <Columns>
-                <PropertyColumn Property="fa => fa.ProjectId" Title="Status" />
+                <PropertyColumn Property="fa => fa.ProjectId" Title="Id" />
                 <PropertyColumn Property="fa => fa.Title" Title="Name" />
                 <PropertyColumn Property="fa => fa.IsCompleted" Title="Status" />
                 <TemplateColumn CellClass="d-flex justify-end">
-
+                    <CellTemplate>
+                        <MudStack Row>
+                            @if(!context.Item.IsCompleted)
+                            {
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Primary"
+                                           OnClick="@(() => ProcessProjectCompleted(context.Item))">
+                                    Mark
+                                </MudButton>
+                            }
+                        </MudStack>
+                    </CellTemplate>
                 </TemplateColumn>
+@*                 <TemplateColumn CellClass="d-flex justify-end">
+                    <MudButton Class=""
+                               Size="@Size.Medium"
+                               Variant="@Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="fas fa-eye"
+                               OnClick="@(() => ProcessProjectCompleted(context.Item.AppUserId))">
+                        View Article
+                    </MudButton>
+                </TemplateColumn> *@
             </Columns>
         </MudDataGrid>
     }
@@ -222,7 +244,8 @@
                 ProjectId = i.ProjectId,
                 ProjectType = ProjectType.Project,
                 Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId)?.Title ?? "Dunno",
-                IsCompleted = i.IsCompleted
+                IsCompleted = i.IsCompleted,
+                DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id
             })
             .ToList();
 
@@ -240,42 +263,42 @@
         return project == null ? User.Issues.FirstOrDefault(x => x.ProjectId == projectId).Title : project.Title;
     }
 
-    private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
+    // private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
+    // {
+    //     var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
-        var result = await dialog.Result;
+    //     var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
+    //     var result = await dialog.Result;
 
-        if (!result.Canceled)
-        {
-            var apiResult = await ProjectService.MarkAsCompleted(dbProjectId);
+    //     if (!result.Canceled)
+    //     {
+    //         var apiResult = await ProjectService.MarkAsCompleted(dbProjectId);
 
-            if (apiResult.Status == ResponseStatus.Success)
-            {
-                Snackbar.Add("Project marked as completed successfully!", Severity.Success);
-                User = await AdminService.GetUserForAdmin(UserId);
-                await ProcessProjectCompleted(curriculumProjectId);
-            }
-            else
-            {
-                Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
-            }
-        }
-        else 
-        {
-            Console.WriteLine("lala");
-        }
-    }
+    //         if (apiResult.Status == ResponseStatus.Success)
+    //         {
+    //             Snackbar.Add("Project marked as completed successfully!", Severity.Success);
+    //             User = await AdminService.GetUserForAdmin(UserId);
+    //             await ProcessProjectCompleted(curriculumProjectId);
+    //         }
+    //         else
+    //         {
+    //             Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
+    //         }
+    //     }
+    //     else 
+    //     {
+    //         Console.WriteLine("lala");
+    //     }
+    // }
 
-    private async Task ProcessProjectCompleted(int projectId)
+    private async Task ProcessProjectCompleted(AdminActivity adminActivity)
     {
         string projectTitle = string.Empty;
-        var project = Projects.FirstOrDefault(x => x.Id == projectId);
+        var project = Projects.FirstOrDefault(x => x.Id == adminActivity.ProjectId);
 
         if (project == null)
         {
-            var issue = await CommunityService.GetIssueByProjectId(projectId);
+            var issue = await CommunityService.GetIssueByProjectId(adminActivity.ProjectId.Value);
             projectTitle = issue.Title;
         }
         else
@@ -291,9 +314,23 @@
         var projectExperiencePoints =
             project != null
             ? project.ExperiencePoints
-            : User.Issues.Single(x => x.ProjectId == projectId).ExperiencePoints;
+            : User.Issues.Single(x => x.ProjectId == adminActivity.ProjectId).ExperiencePoints;
 
         var body = EmailHelper.GetProjectCompletedBody(firstName, projectTitle, projectExperiencePoints, rankingWithSuffix.ToString());
+
+        var result = await ProjectService.MarkAsCompleted(adminActivity.DashboardProjectId.Value);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Project marked!", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        User = await UserService.GetUserById(UserId);
 
         await EmailSender.SendEmailAsync(User.Email, "Your Project Was Marked as Complete", body);
     }

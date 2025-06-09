@@ -96,11 +96,11 @@ public static class RoadmapHelper
     };
 
     public static List<int> completedProjects = new();
-    public static List<int> mauiProjects = new();
-    public static List<int> angularProjects = new();
-    public static List<int> blazorProjects = new();
-    public static List<int> reactProjects = new();
-    public static List<int> mvcProjects = new();
+    public static List<int> mauiProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MAUI).Select(x => x.Id).ToList();
+    public static List<int> angularProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.Angular).Select(x => x.Id).ToList();
+    public static List<int> blazorProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.Blazor).Select(x => x.Id).ToList();
+    public static List<int> reactProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.React).Select(x => x.Id).ToList();
+    public static List<int> mvcProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MVC).Select(x => x.Id).ToList();
 
 
     public static List<RoadmapStage> GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)

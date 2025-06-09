@@ -43,14 +43,20 @@ public class ProjectService : IProjectService
 
     public async Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle)
     {
+        var project = DashboardProjectsHelpers.GetProject(projectId);
         try
         {
             using (var context = _factory.CreateDbContext())
             {
-                var project = await context.DashboardProjects
-                .FirstOrDefaultAsync(dp => dp.ProjectId == projectId && dp.AppUserId == userId && !dp.IsArchived);
+                var user = await context.Users
+                    .Include(u => u.UserActivity)
+                    .Include(u => u.DashboardProjects)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
 
-                if (project == null)
+                var dashboardProject = user?.DashboardProjects?.FirstOrDefault
+                (dp => dp.ProjectId == projectId && dp.AppUserId == userId && !dp.IsArchived);
+
+                if (user != null && user.DashboardProjects != null && dashboardProject == null)
                 {
                     var newProject = new DashboardProject
                     {
@@ -59,22 +65,25 @@ public class ProjectService : IProjectService
                         IsCompleted = isArticle ? true : false,
                         IsArchived = false,
                         IsPendingNotification = false,
-                        IsPendingReview = isArticle? false : true,
+                        IsPendingReview = isArticle ? false : true,
                         DateSubmitted = DateTime.UtcNow,
                         GithubUrl = url
                     };
 
-                    await context.DashboardProjects.AddAsync(newProject);
-                    await context.SaveChangesAsync();
+                    user.DashboardProjects.Add(newProject);
 
-                    await context.UserActivity.AddAsync(
-                    new AppUserActivity
-                    {
-                        ProjectId = project == null ? newProject.Id : project.Id,
-                        AppUserId = userId,
-                        DateSubmitted = DateTime.UtcNow,
-                        ActivityType = ActivityType.ProjectSubmitted
-                    });
+                    user.UserActivity.Add(
+                      new AppUserActivity
+                      {
+                          ProjectId = projectId,
+                          AppUserId = userId,
+                          DateSubmitted = DateTime.UtcNow,
+                          ActivityType = isArticle ? ActivityType.ArticleRead : ActivityType.ProjectSubmitted
+                      });
+
+                    user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
+
+                    await context.SaveChangesAsync();
                 };
             };
         }

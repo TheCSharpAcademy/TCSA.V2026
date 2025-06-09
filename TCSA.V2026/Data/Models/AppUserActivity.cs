@@ -9,7 +9,7 @@ public class AppUserActivity
     public DateTimeOffset DateSubmitted { get; set; }
     public ActivityType ActivityType { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
-    public DashboardProject DashboardProject { get; set; }
+    public DashboardProject? DashboardProject { get; set; }
 }
 
 public enum ActivityType

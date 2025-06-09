@@ -5,30 +5,32 @@
 <PageTitle>Home</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10 mb-10">
-    <MudGrid>
-        <MudItem xs="12" md="6">
-            <MudText Typo="Typo.h3" Class="font-weight-bold">
-                Learn .NET/C# With Real Projects
-            </MudText>
-            <MudText Class="mt-4">
-                Build real-world skills in .NET and C# through hands-on projects, guided practice, and expert mentoring. Our course is practical, engaging, and 
-                <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
-            </MudText>
+    <MudPaper Class="pa-10" Elevation="4">
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudText Typo="Typo.h3" Class="font-weight-bold" Color="Color.Primary">
+                    Learn .NET/C# With Real Projects
+                </MudText>
+                <MudText Class="mt-4">
+                    Build real-world skills in .NET and C# through hands-on projects, guided practice, and expert mentoring. Our course is practical, engaging, and
+                    <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
+                </MudText>
 
-            <MudStack Row="true" Spacing="2" Class="mt-6">
-                <MudButton OnClick="@(() => NavigateToRegistration())"
-                    Variant="Variant.Filled" 
-                    Color="Color.Primary" 
-                    Size="Size.Large">Sign up for free</MudButton>
-            </MudStack>
-        </MudItem>
+                <MudStack Row="true" Spacing="2" Class="mt-6">
+                    <MudButton OnClick="@(() => NavigateToRegistration())"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Size="Size.Large">Sign up for free</MudButton>
+                </MudStack>
+            </MudItem>
 
-        <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
+            <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
                 <MudImage Src="img/banners/main-banner.gif"
                           Alt="Learn .NET with Projects"
                           Style="max-width:70%; height:auto; border-radius: 8px;" />
-        </MudItem>
-    </MudGrid>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
 </MudContainer>
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
@@ -51,31 +53,25 @@
         @foreach (var article in Articles.Where(x => x.Area == Area.StartHere))
         {
             <MudItem xs="12" sm="6" md="3">
-                <MudCard Style="height: 100%;">
-                    <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
-                        <MudImage Src="@($"img/icons/{article.IconUrl}")"
-                        Alt="@article.Title"
-                        Style="width: 100px; height: 100px; object-fit: cover;" />
-                    </MudCardContent>
-                    <MudCardContent>
-                        <MudText Class="mb-3 font-weight-bold"
-                                 Align="Align.Center"
-                                 Color="Color.Primary"
-                                 Typo="Typo.h5">
-                            @article.Title
-                        </MudText>
-                        <MudText Typo="Typo.body2">@article.Description</MudText>
-                    </MudCardContent>
-                    <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
-                        <MudButton Class=""
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   Color="Color.Primary"
-                                   OnClick="@(() => NavigateToArticle(article, false))">
-                            View Article
-                        </MudButton>
-                    </MudCardContent>
-                </MudCard>
+                <div class="clickable-card" @onclick="() => NavigateToArticle(article, false)">
+                    <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
+                        <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
+                            <MudImage Src="@($"img/icons/{article.IconUrl}")"
+                                      Alt="@article.Title"
+                                      Style="width: 100px; height: 100px; object-fit: cover;" />
+                        </MudCardContent>
+                        <MudCardContent Class="mb-5">
+                            <MudText Class="mb-3 font-weight-bold"
+                                     Align="Align.Center"
+                                     Color="Color.Primary"
+                                     Typo="Typo.h5">
+                                @article.Title
+                            </MudText>
+                            <MudText Class="mb-10" Typo="Typo.body2">@article.Description</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </div>
+
             </MudItem>
         }
     </MudGrid>
@@ -93,31 +89,26 @@
         @foreach (var p in Projects.Where(x => x.Area == Area.Console && x.Id != 52 && x.Id != 75))
         {
             <MudItem xs="12" sm="6" md="3">
-                <MudCard Style="height: 100%;">
-                    <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
-                        <MudImage Src="@($"img/icons/{p.IconUrl}")"
-                                  Alt="@p.Title"
-                                  Style="width: 100px; height: 100px; object-fit: cover;" />
-                    </MudCardContent>
-                    <MudCardContent>
-                        <MudText Class="mb-3"
-                                 Align="Align.Center"
-                                 Typo="Typo.h5"
-                                 Color="Color.Primary">
-                            @p.Title
-                        </MudText>
-                        <MudText Align="Align.Center" Typo="Typo.body2">@p.Description</MudText>
-                    </MudCardContent>
-                    <MudCardContent Class="d-flex justify-center mt-2 flex-grow-0">
-                        <MudButton Class=""
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   Color="Color.Primary"
-                        OnClick="@(() => NavigateToArticle(p, true))">
-                            View Article
-                        </MudButton>
-                    </MudCardContent>
-                </MudCard>
+                 <div class="clickable-card" @onclick="() => NavigateToArticle(p, true)">
+                    <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
+                        <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
+                            <MudImage Src="@($"img/icons/{p.IconUrl}")"
+                                      Alt="@p.Title"
+                                      Style="width: 100px; height: 100px; object-fit: cover;" />
+                        </MudCardContent>
+                        <MudCardContent>
+                            <MudText Class="mb-3"
+                                     Align="Align.Center"
+                                     Typo="Typo.h5"
+                                     Color="Color.Primary">
+                                @p.Title
+                            </MudText>
+                            <MudText Align="Align.Center"
+                                     Class="mb-10"
+                                     Typo="Typo.body2">@p.Description</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </div>
             </MudItem>
         }
     </MudGrid>
@@ -132,9 +123,9 @@
             {
                 <MudImage Src="@($"img/titles/{a.TitleImgUrl}")"
                           Alt="@a.Area.ToString()"
-                          Style="width: 80px; height: 80px; object-fit: cover;" />
+                          Style="width: 50px; height: 50px; object-fit: cover;" />
             }
-            <MudText Typo="Typo.h4" Class="text-primary">
+            <MudText Color="Color.Primary" Typo="Typo.h4" Class="text-primary">
                 @a.Title
             </MudText>
         </div>
@@ -143,30 +134,29 @@
             @a.Description
         </MudText>
 
-        <MudGrid Class="mt-5 justify-center">
+        <MudGrid Class="mt-5 d-flex flex-wrap justify-center">
             @foreach (var p in a.Projects)
             {
-                <MudItem xs="12" sm="6" md="3">
-                    <MudCard Style="height: 100%;">
-                        <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
-                            <MudImage Src="@($"img/icons/{p.IconUrl}")"
-                                      Alt="@p.Title"
-                                      Style="width: 100px; height: 100px; object-fit: cover;" />
-                        </MudCardContent>
-                        <MudCardContent>
-                            <MudText Class="mb-3" Align="Align.Center" Typo="Typo.h5">@p.Title</MudText>
-                            <MudText Typo="Typo.body2">@p.Description</MudText>
-                        </MudCardContent>
-                        <MudCardContent Class="d-flex justify-center mt-2 flex-grow-0">
-                            <MudButton Class=""
-                                       Size="@Size.Medium"
-                                       Variant="@Variant.Filled"
-                                       Color="Color.Primary"
-                                       OnClick="@(() => NavigateToArticle(p, true))">
-                                View Project
-                            </MudButton>
-                        </MudCardContent>
-                    </MudCard>
+                <MudItem xs="12" sm="6" md="3" Class="d-flex">
+                    <div class="clickable-card" @onclick="() => NavigateToArticle(p, true)">
+                        <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
+                            <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
+                                <MudImage Src="@($"img/icons/{p.IconUrl}")"
+                                          Alt="@p.Title"
+                                          Style="width: 100px; height: 100px; object-fit: cover;" />
+                            </MudCardContent>
+
+                            <MudCardContent Class="flex-grow-1 d-flex flex-column justify-between">
+                                <MudText Class="mb-3"
+                                         Color="Color.Primary"
+                                         Align="Align.Center"
+                                         Typo="Typo.h5">
+                                    @p.Title
+                                </MudText>
+                                <MudText Class="mb-10" Typo="Typo.body2">@p.Description</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
                 </MudItem>
             }
         </MudGrid>
@@ -196,7 +186,7 @@
 
     private void GetAreas()
     {
-        var areas = new List<Area> { Area.StartApplying, Area.MVC, Area.Angular, Area.React, Area.Blazor, Area.MAUI, Area.Auth, Area.Azure, Area.SQL, Area.MonthlyChallenge, Area.GraduationProject, Area.FreestyleProject };
+        var areas = new List<Area> { Area.StartApplying, Area.MVC, Area.Angular, Area.React, Area.Blazor, Area.MAUI, Area.Auth, Area.Azure, Area.SQL, Area.GraduationProject, Area.MonthlyChallenge, Area.FreestyleProject };
 
         var titlePics = new List<string>
         {
@@ -290,3 +280,20 @@
         return Task.CompletedTask;
     }
 }
+
+<style>
+    .clickable-card {
+        cursor: pointer;
+        width: 100%;
+        height: 90%;
+    }
+
+    .hover-expand {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .hover-expand:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+</style>

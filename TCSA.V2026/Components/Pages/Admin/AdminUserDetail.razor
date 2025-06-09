@@ -27,59 +27,50 @@
     }
     else
     {
-        <MudGrid Class="mt-1">
-            <MudItem xs="6">
-                <MudPaper>
-                    <MudList T="string" Dense="true">
-                        <MudListItem Text="@loadTime.TotalSeconds.ToString()" Icon="@Icons.Material.Filled.PunchClock" />
-                        <MudListItem Text="@User.Id.ToString()" Icon="@Icons.Material.Filled.PermIdentity" />
-                        <MudListItem Text="@User.DisplayName" Icon="@Icons.Material.Filled.CardMembership" />
-                        <MudListItem Text="@User.Country" Icon="@Icons.Material.Filled.Map"/>
-                        <MudListItem Text="@User.ExperiencePoints.ToString()" Icon="@Icons.Material.Filled.Score" />
-                        <MudListItem Text="@(User.FirstName + User.LastName)" Icon="@Icons.Material.Filled.CardTravel" />
-                        <MudListItem Text="@User.Email" Icon="@Icons.Material.Filled.Email" />
-                        <MudListItem Text="@User.GithubUsername" Icon="@Icons.Custom.Brands.GitHub" />
-                        <MudListItem Text="@User.DiscordAlias" Icon="@Icons.Custom.Brands.Discord" />
-                        <MudListItem Text="@User.Level.ToString()" Icon="@Icons.Material.Filled.Leaderboard" />
-                        <MudListItem Text="@User.EmailConfirmed.ToString()" Icon="@Icons.Material.Filled.ThumbUp" />
-                        <MudListItem Text="@(User.CodeReviewProjects?.Count.ToString())" Icon="@Icons.Material.Filled.Book" />
-                        <MudListItem Text="@(User.Issues?.Count.ToString())" Icon="@Icons.Material.Filled.Book" />
-                    </MudList>
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="6">
-                <MudText>LALALALALAL</MudText>
-            </MudItem>
-        </MudGrid>
+        <MudPaper Elevation="4">
+            <MudGrid Class="mt-1">
+                <MudItem xs="6">
+                    <MudPaper>
+                        <MudList T="string" Dense="true">
+                            <MudListItem Text="@loadTime.TotalSeconds.ToString()" Icon="@Icons.Material.Filled.PunchClock" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.Id.ToString()" Icon="@Icons.Material.Filled.PermIdentity" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.DisplayName" Icon="@Icons.Material.Filled.CardMembership" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.Country" Icon="@Icons.Material.Filled.Map" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.ExperiencePoints.ToString()" Icon="@Icons.Material.Filled.Score" IconColor="Color.Primary" />
+                            <MudListItem Text="@(User.FirstName + User.LastName)" Icon="@Icons.Material.Filled.CardTravel" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.Email" Icon="@Icons.Material.Filled.Email" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.GithubUsername" Icon="@Icons.Custom.Brands.GitHub" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.DiscordAlias" Icon="@Icons.Custom.Brands.Discord" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.Level.ToString()" Icon="@Icons.Material.Filled.Leaderboard" IconColor="Color.Primary" />
+                            <MudListItem Text="@User.EmailConfirmed.ToString()" Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Primary" />
+                            <MudListItem Text="@(User.CodeReviewProjects?.Count.ToString())" Icon="@Icons.Material.Filled.Reviews" IconColor="Color.Primary" />
+                            <MudListItem Text="@(User.Issues?.Count.ToString())" Icon="@Icons.Material.Filled.People" IconColor="Color.Primary" />
+                        </MudList>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText>LALALALALAL</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
 
-        <MudDataGrid Dense="true" Items="@User.DashboardProjects.OrderBy(dp => dp.IsCompleted).ThenByDescending(x => x.DateSubmitted)">
+        <MudPaper Elevation="4">
+            <MudSelect T="ProjectType?" Label="Filter by Project Type" @bind-Value="SelectedProjectType" Class="my-2" Dense="true" Clearable="true">
+                <MudSelectItem T="ProjectType?" Value="null">All</MudSelectItem>
+                @foreach (var type in Enum.GetValues<ProjectType>())
+                {
+                    <MudSelectItem T="ProjectType?" Value="@type">@type.ToString()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudPaper>
+
+        <MudDataGrid Elevation="4" Dense="true" Items="@FilteredActivity">
             <Columns>
-                <PropertyColumn Property="dp => DashboardProjectsHelpers.GetProject(dp.ProjectId).Title" Title="Name" />
-                <PropertyColumn Property="dp => dp.DateSubmitted" Title="DateTime" />
-                <PropertyColumn Property="dp => dp.IsCompleted" Title="Status" />
+                <PropertyColumn Property="fa => fa.ProjectId" Title="Status" />
+                <PropertyColumn Property="fa => fa.Title" Title="Name" />
+                <PropertyColumn Property="fa => fa.IsCompleted" Title="Status" />
                 <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        <MudStack Row>
-                            @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
-                            {
-                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))">
-                                    <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
-                                </MudButton>
-                            }
-                            @if (!context.Item.IsCompleted)
-                            {
-                                <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"
-                                OnClick="@(() => OpenConfirmationDialog(context.Item.Id, context.Item.ProjectId))">
-                                    <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" />
-                                </MudButton>
-                            }
-                            else
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" />
-                            }
-                        </MudStack>
-                    </CellTemplate>
+
                 </TemplateColumn>
             </Columns>
         </MudDataGrid>
@@ -100,31 +91,153 @@
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
+    private ProjectType? _selectedProjectType = null;
+    private ProjectType? SelectedProjectType
+    {
+        get => _selectedProjectType;
+        set
+        {
+            if (_selectedProjectType != value)
+            {
+                _selectedProjectType = value;
+                FilterProjectType();
+            }
+        }
+    }
+
     private ApplicationUser User;
 
-    private List<Project>? projects;
-    private List<Article>? articles;
-    private List<CodeReviewDetail>? reviews;
-    private Level BeltShouldBe;
+    private List<Project>? Projects;
+    private List<Article>? Articles;
+    private List<AdminActivity> FilteredActivity = new();
+    private List<AdminActivity> AllAdminActivity = new();
+    private Level BeltShouldBe = Level.White;
 
     private bool IsLoading = true;
-    private int XPSum;
-    private int ranking;
+    private int XPSum = 0;
+    private int ranking = 0;
     private TimeSpan loadTime;
+
+    private void FilterProjectType()
+    {
+        if (SelectedProjectType is null)
+        {
+            FilteredActivity = AllAdminActivity;
+        }
+        else
+        {
+            FilteredActivity = AllAdminActivity?.Where(x => x.ProjectType == SelectedProjectType.Value).ToList();
+        }
+
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        var startTime = DateTime.UtcNow;
-        projects = ProjectHelper.GetProjects();
-        articles = ArticleHelper.GetArticles().ToList();
+        Projects = ProjectHelper.GetProjects();
+        Articles = ArticleHelper.GetArticles().ToList();
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
-        articles.AddRange(courseArticles);
+        Articles.AddRange(courseArticles);
+        var startTime = DateTime.UtcNow;
 
         User = await AdminService.GetUserForAdmin(UserId);
 
         loadTime = DateTime.UtcNow - startTime;
         await GetXPSum();
+        await LoadAdminActivity();
         IsLoading = false;
+
+        // Issues = User.Issues;
+        // CodeReviews = User.CodeReviewProjects.Select(cr => new CodeReviewDetail
+        // {
+        //     ProjectId = cr.DashboardProject.ProjectId,
+        //     IsCompleted = cr.DashboardProject.IsCompleted,
+        //     UserName = UserDisplayNameHelper.GetDisplayName(cr.DashboardProject.AppUser),
+        //     ProjectName = projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId).Title
+        // }).ToList();
+
+        // var issuesIds = User.Issues.Select(x => x.ProjectId);
+        // var reviewIds = CodeReviews.Select(x => x.ProjectId);
+
+        // DashboardProjects = User.DashboardProjects
+        // .Where(x => !issuesIds.Contains(x.ProjectId) && !reviewIds.Contains(x.ProjectId))
+        // .OrderBy(dp => dp.IsCompleted)
+        // .ThenByDescending(x => x.DateSubmitted).ToList();
+    }
+
+    private async Task LoadAdminActivity()
+    {
+        var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
+        var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
+        var articlesIds = Articles.Select(x => x.Id).ToList();
+        var reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
+        var issues = User.Issues?.Select(i => new AdminActivity
+            {
+                ProjectId = i.ProjectId,
+                ProjectType = ProjectType.Issue,
+                Title = i.Title,
+                IsCompleted = i.IsClosed
+            }).ToList() ?? new();
+
+        var reviewsForAdmin = reviews.Select(i => new AdminActivity
+            {
+                ProjectId = i.ProjectId,
+                ProjectType = ProjectType.CodeReview,
+                Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId).Title,
+                IsCompleted = i.IsCompleted
+            }).ToList() ?? new();
+
+        var courseArticlesForAdmin = User.DashboardProjects
+            .Where(dp => courseArticlesIds.Contains(dp.ProjectId))
+            .OrderBy(dp => dp.IsCompleted)
+            .ThenByDescending(x => x.DateSubmitted)
+            .Select(i => new AdminActivity
+                {
+                    ProjectId = i.ProjectId,
+                    ProjectType = ProjectType.CourseArticle,
+                    Title = courseArticles.FirstOrDefault(x => x.Id == i.ProjectId).Title,
+                    IsCompleted = i.IsCompleted
+                })
+            .ToList();
+
+        var articlesForAdmin = User.DashboardProjects
+            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && articlesIds.Contains(dp.ProjectId))
+            .OrderBy(dp => dp.IsCompleted)
+            .ThenByDescending(x => x.DateSubmitted)
+            .Select(i => new AdminActivity
+                {
+                    ProjectId = i.ProjectId,
+                    ProjectType = ProjectType.Article,
+                    Title = Articles.FirstOrDefault(x => x.Id == i.ProjectId).Title,
+                    IsCompleted = i.IsCompleted
+                })
+            .ToList();
+
+        var projectsForAdmin = User.DashboardProjects
+            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && !articlesIds.Contains(dp.ProjectId))
+            .OrderBy(dp => dp.IsCompleted)
+            .ThenByDescending(x => x.DateSubmitted)
+            .Select(i => new AdminActivity
+            {
+                ProjectId = i.ProjectId,
+                ProjectType = ProjectType.Project,
+                Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId)?.Title ?? "Dunno",
+                IsCompleted = i.IsCompleted
+            })
+            .ToList();
+
+        AllAdminActivity.AddRange(articlesForAdmin);
+        AllAdminActivity.AddRange(projectsForAdmin);
+        AllAdminActivity.AddRange(issues);
+        AllAdminActivity.AddRange(reviewsForAdmin);
+        AllAdminActivity.AddRange(courseArticlesForAdmin);
+    }
+
+    private string GetTitle(int projectId)
+    {
+        var project = DashboardProjectsHelpers.GetProject(projectId);
+
+        return project == null ? User.Issues.FirstOrDefault(x => x.ProjectId == projectId).Title : project.Title;
     }
 
     private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
@@ -158,7 +271,7 @@
     private async Task ProcessProjectCompleted(int projectId)
     {
         string projectTitle = string.Empty;
-        var project = projects.FirstOrDefault(x => x.Id == projectId);
+        var project = Projects.FirstOrDefault(x => x.Id == projectId);
 
         if (project == null)
         {
@@ -199,30 +312,30 @@
             ids.AddRange(projectIds);
         }
 
-        if (User.CodeReviewProjects != null)
-        {
-            reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
-        }
+        // if (User.CodeReviewProjects != null)
+        // {
+        //     CodeReviews = await PeerReviewService.GetCodeReviewDetails(UserId);
+        // }
 
-        if (reviews != null)
-        {
-            var reviewIds = reviews
-          .Where(x => x.IsCompleted)
-          .Select(x => x.ProjectId)
-          .ToList();
+        // if (CodeReviews != null)
+        // {
+        //     var reviewIds = CodeReviews
+        //   .Where(x => x.IsCompleted)
+        //   .Select(x => x.ProjectId)
+        //   .ToList();
 
-            ids.AddRange(reviewIds);
-        }
+        //     ids.AddRange(reviewIds);
+        // }
 
         foreach (int id in ids)
         {
-            if (projects.Any(x => x.Id == id))
+            if (Projects.Any(x => x.Id == id))
             {
-                XPSum = projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
+                XPSum = Projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
             }
-            else if (articles.Any(x => x.Id == id))
+            else if (Articles.Any(x => x.Id == id))
             {
-                XPSum = articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
+                XPSum = Articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
             }
             else
             {

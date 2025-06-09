@@ -59,7 +59,7 @@ The C# Academy website is more than just a learning platform - it's a living pro
 > [!Tip]
 > Replace `DefaultConnection` with your own connection string.
 >
-> If you want to login via GitHub, replace `GithubClientId` and `GithubClientSecret` with you own values.
+> If you want to login via GitHub, replace `GithubClientId` and `GithubClientSecret` with your own values.
 >
 > https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
 
@@ -67,7 +67,7 @@ The C# Academy website is more than just a learning platform - it's a living pro
 {
     "AllowedHosts": "*",
     "ConnectionStrings": {
-        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=TCSA_V2; Integrated Security=true;"
+        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=TCSA_V2026; Integrated Security=true;"
     },
     "Logging": {
         "LogLevel": {
@@ -76,27 +76,27 @@ The C# Academy website is more than just a learning platform - it's a living pro
         }
     },
     "Values": {
-        "GithubClientId": "",
-        "GithubClientSecret": ""
+        "GithubClientId": "abc123",
+        "GithubClientSecret": "abc123"
     }
 }
 ```
 
 5. Open the solution `TCSA.V2026.sln`.
 
-6. Go to `Program.cs` and uncomment lines 92 and 93:
-
-> [!Warning]
-> This step is not currently implemented.
+6. Go to `Program.cs` and uncomment the following lines:
 
 ```
-using (var scope = app.Services.CreateScope())
+if (app.Environment.IsDevelopment())
 {
-  var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //dbContext.Database.EnsureDeleted();
-    //dbContext.Database.EnsureCreated();
+    SeedData.Seed(app.Services);
 }
 ```
+
+> [!Note]
+> After running the application you can comment out these lines again to avoid database recreation on every startup.
+>
+> Make sure to repeat this step when database schema changes or new seeding data is added.
 
 7. Run the project.
 

@@ -69,7 +69,7 @@
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetDetailedUserById(UserId);
-        CompletedProjects = User.DashboardProjects.Where(p => p.IsCompleted).Select(p => p.Id).ToList();
+        CompletedProjects = User.DashboardProjects.Where(p => p.IsCompleted).Select(p => p.ProjectId).ToList();
 
         ReviewsCount = User.CodeReviewProjects != null
         ? User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted).Count()

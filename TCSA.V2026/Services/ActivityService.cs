@@ -1,143 +1,97 @@
-﻿//using Microsoft.AspNetCore.Components;
-//using Microsoft.CodeAnalysis;
-//using Microsoft.CodeAnalysis.CSharp.Syntax;
-//using Microsoft.EntityFrameworkCore;
-//using TCSA.V2026.Data;
-//using TCSA.V2026.Data.Curriculum;
-//using TCSA.V2026.Data.DTOs;
-//using TCSA.V2026.Data.Models;
-//using TCSA.V2026.Helpers;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using TCSA.V2026.Data;
+using TCSA.V2026.Data.Curriculum;
+using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.Models;
+using TCSA.V2026.Helpers;
+using static MudBlazor.CategoryTypes;
 
-//namespace TCSA.V2026.Services;
+namespace TCSA.V2026.Services;
 
-//public interface IActivityService
-//{
-//    Task<List<ActivityDisplay>> GetUserActivity(string userId, int initialXP);
-//}
+public interface IActivityService
+{
+    Task<List<ActivityDisplay>> GetUserActivity(string userId, int initialXP);
+}
 
-//public class ActivityService : IActivityService
-//{
-//    private readonly IDbContextFactory<ApplicationDbContext> _factory;
+public class ActivityService : IActivityService
+{
+    private readonly IDbContextFactory<ApplicationDbContext> _factory;
+    private IChallengeService ChallengeService { get; set; }
 
-//    public ActivityService(IDbContextFactory<ApplicationDbContext> factory)
-//    {
-//        _factory = factory;
-//    }
+    public ActivityService(IDbContextFactory<ApplicationDbContext> factory, IChallengeService challengeService)
+    {
+        _factory = factory;
+        ChallengeService = challengeService;
+    }
 
-//    //public async Task<List<ActivityDisplay>> GetUserActivity(string userId, int initialXP)
-//    //{
-//    //    try
-//    //    {
-//    //        using (var context = _factory.CreateDbContext())
-//    //        {
-//    //            var activity = await context.UserActivity
-//    //                .Where(a => a.AppUserId == userId)
-//    //                .ToListAsync();
+    public async Task<List<ActivityDisplay>> GetUserActivity(string userId, int initialXP)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user = await context.Users
+                    .Include(u => u.UserActivity)
+                    .FirstOrDefaultAsync(u => u.Id == userId);
+              
+                var issues = context.Issues.Where(i => i.AppUserId == userId).ToList();
 
-//    //            if(activity == null)
-//    //            {
-//    //                return new List<ActivityDisplay>();
-//    //            }
+                var activityDisplay = await GetActivityDisplay(user.UserActivity, issues, user.Level, user.ExperiencePoints);
 
-//    //            var issues = context.Issues.Where(i => i.AppUserId == userId).ToList();
+                return activityDisplay;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
 
-//    //            var activityDisplay = await GetActivityDisplay(activity, issues, initialXP);
+        return null;
+    }
 
-//    //            return activityDisplay;
-//    //        }
-//    //    }
-//    //    catch (Exception ex)
-//    //    {
-//    //        Console.WriteLine(ex.Message);
-//    //    }
+    private async Task<List<ActivityDisplay>> GetActivityDisplay(
+        List<AppUserActivity> activities,
+        List<CommunityIssue> issues,
+        Level level,
+        int initialXP)
+    {
+        var activityDisplay = new List<ActivityDisplay>();
+        var currentXP = initialXP;
+        var issuesIds = issues.Select(i => i.ProjectId).ToList();
+        var challenges = await ChallengeService.GetChallenges(level);
 
-//    //    return null;
-//    //}
+        foreach (var activity in activities)
+        {
+            var communityIssue = new CommunityIssue();
+            var challenge = new Challenge();
 
-//    //private async Task<List<ActivityDisplay> GetActivityDisplay(
-//    //    List<AppUserActivity> activities,
-//    //    List<CommunityIssue> issues,
-//    //    int initialXP)
-//    //{
-//    //    var activityDisplay = new List<ActivityDisplay>();
-//    //    var currentXP = initialXP;
-//    //    var issuesIds = issues.Select(i => i.ProjectId).ToArray();
+            if (issuesIds.Contains(activity.ProjectId))
+            {
+                communityIssue = issues.FirstOrDefault(i => i.ProjectId == activity.ProjectId);
+            }
 
-//    //    foreach (var activity in activities)
-//    //    {
-//    //        var communityIssue = new CommunityIssue();
-//    //        var challenge = new Challenge();
+            if (activity.ActivityType == ActivityType.ChallengeCompleted)
+            {
+                challenge = challenges.FirstOrDefault(c => c.Id == activity.ChallengeId);
+            }
 
-//    //            if (issuesIds.Contains(activity.ProjectId))
-//    //            {
-//    //                communityIssue = issues.FirstOrDefault(i => i.ProjectId == activity.ProjectId);
-//    //            }
+            var experiencePoints = ActivityHelper.GetXPs(issuesIds, activity, communityIssue, challenge);
 
-//    //            if (activity.ActivityType == ActivityType.ChallengeCompleted)
-//    //            {
-//    //                challenge = await ChallengeService.GetChallengeById(activity.ChallengeId);
-//    //            }
+            activityDisplay.Add(new ActivityDisplay
+            {
+                Date = activity.DateSubmitted,
+                Description = ActivityHelper.GetDescription(issuesIds, activity, communityIssue, challenge),
+                ExperiencePoints = experiencePoints,
+                CurrentExperiencePoints = currentXP,
+                AppUserId = activity.AppUserId,
+                ActivityType = activity.ActivityType
+            });
 
-//    //            var experiencePoints = GetXPs(activity, communityIssue, challenge);
+            currentXP -= experiencePoints;
+        }
 
-//    //            activityDisplay.Add(new ActivityDisplay
-//    //            {
-//    //                Date = activity.DateSubmitted,
-//    //                Description = await GetDescriptionMarkup(activity, activity.AppUserId, communityIssue, challenge),
-//    //                ExperiencePoints = GetXPs(activity, communityIssue, challenge),
-//    //                CurrentExperiencePoints = currentXP,
-//    //                AppUserId = activity.AppUserId,
-//    //                ActivityType = activity.ActivityType
-//    //            });
-
-//    //            currentXP -= experiencePoints;
-//    //    }
-//    //}
-
-//    //private async Task<MarkupString> GetDescriptionMarkup(
-//    //    AppUserActivity item, string userId, 
-//    //    CommunityIssue? issue = null, 
-//    //    Challenge? challenge = null)
-//    //{
-//    //    var description = ActivityHelper.GetDescription(issuesIds, item, issue, challenge);
-//    //    return new MarkupString(description);
-//    //}
-
-//    //public int GetXPs(
-//    //    AppUserActivity item, 
-//    //    CommunityIssue? issue = null, 
-//    //    Challenge? challenge = null)
-//    //{
-//    //    if (item.ActivityType == ActivityType.ProjectSubmitted || item.ActivityType == ActivityType.IssueSubmitted)
-//    //    {
-//    //        return 0;
-//    //    }
-
-//    //    if (item.ActivityType == ActivityType.ChallengeCompleted)
-//    //    {
-//    //        return challenge.ExperiencePoints;
-//    //    }
-
-//    //    if (issuesIds.Contains(item.ProjectId))
-//    //    {
-//    //        return issue.ExperiencePoints;
-//    //    }
-
-//    //    else if (item.ActivityType == ActivityType.ArticleRead)
-//    //    {
-//    //        var articles = ArticleHelper.GetArticles().ToList();
-//    //        var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
-//    //        articles.AddRange(courseArticles);
-
-//    //        return articles.Single(x => x.Id == item.ProjectId).ExperiencePoints;
-//    //    }
-
-//    //    return ProjectHelper.GetProjects().Single(x => x.Id == item.ProjectId).ExperiencePoints;
-//    //}
-
-//    //private string GetDescription(int projectId)
-//    //{
-//    //    var title = DashboardProjectsHelpers.GetProject(projectId).Title;
-//    //    throw new NotImplementedException();
-//    //}
-//}
+        return activityDisplay;
+    }
+}

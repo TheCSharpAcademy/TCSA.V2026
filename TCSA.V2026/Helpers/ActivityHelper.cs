@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
-using TCSA.V2026.Services;
 
 namespace TCSA.V2026.Helpers;
 
@@ -58,7 +56,7 @@ public static class ActivityHelper
         return activityDisplay;
     }
 
-    private static int GetXPs(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null)
+    public static int GetXPs(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null)
     {
         if (item.ActivityType == ActivityType.ProjectSubmitted || item.ActivityType == ActivityType.IssueSubmitted)
         {

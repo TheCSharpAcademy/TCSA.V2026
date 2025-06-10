@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
@@ -14,6 +15,7 @@ public interface IProjectService
     Task<List<int>> GetCompletedProjectsById(string userId);
     Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle);
     Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId);
+    Task<BaseResponse> Archive(int dashboardProjectId);
 }
 
 public class ProjectService : IProjectService
@@ -47,6 +49,58 @@ public class ProjectService : IProjectService
 
                 context.DashboardProjects.Remove(project);
                 context.UserActivity.RemoveRange(activity);
+
+                await context.SaveChangesAsync();
+            }
+
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+    }
+
+    public async Task<BaseResponse> Archive(int dashboardProjectId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var reviewProject = await context.UserReviews
+                    .Include(r => r.DashboardProject)
+                    .Include(r => r.User)
+                        .ThenInclude(u => u.UserActivity)
+                    .FirstOrDefaultAsync(x => x.DashboardProjectId == dashboardProjectId);
+
+                if (reviewProject == null)
+                {
+                    return new BaseResponse
+                    {
+                        Status = ResponseStatus.Fail,
+                        Message = "Project Not Found"
+                    };
+                }
+
+                var academyProject = ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == reviewProject.DashboardProject.ProjectId);
+
+                reviewProject.DashboardProject.IsArchived = true;
+                reviewProject.DashboardProject.IsPendingReview = false;
+                reviewProject.User.UserActivity.Add(new AppUserActivity
+                {
+                    ProjectId = reviewProject.DashboardProject.ProjectId,
+                    AppUserId = reviewProject.AppUserId,
+                    DateSubmitted = DateTime.UtcNow,
+                    ActivityType = ActivityType.CodeReviewCompleted
+                });
+                reviewProject.User.ExperiencePoints = reviewProject.User.ExperiencePoints + academyProject.ExperiencePoints;
 
                 await context.SaveChangesAsync();
             }

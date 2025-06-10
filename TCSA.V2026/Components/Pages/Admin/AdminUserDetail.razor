@@ -86,6 +86,13 @@
                                 </MudButton>
                                 <MudButton Size="@Size.Small"
                                            Variant="@Variant.Filled"
+                                           Color="@Color.Secondary"
+                                           OnClick="@(() => OpenArchiveDialog(context.Item.DashboardProjectId.Value))"
+                                           StartIcon="@Icons.Material.Filled.Archive">
+                                    Archive
+                                </MudButton>
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
                                            Color="@Color.Error"
                                            OnClick="@(() => OpenConfirmationDialog(context.Item.DashboardProjectId.Value))"
                                            StartIcon="fas fa-eye">
@@ -307,6 +314,33 @@
             }
         }
         else 
+        {
+            Console.WriteLine("lala");
+        }
+    }
+
+    private async Task OpenArchiveDialog(int dbProjectId)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var apiResult = await ProjectService.Archive(dbProjectId);
+
+            if (apiResult.Status == ResponseStatus.Success)
+            {
+                Snackbar.Add("Project archived  successfully!", Severity.Success);
+                User = await AdminService.GetUserForAdmin(UserId);
+            }
+            else
+            {
+                Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
+        else
         {
             Console.WriteLine("lala");
         }

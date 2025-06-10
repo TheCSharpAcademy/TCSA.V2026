@@ -170,6 +170,7 @@ public class PeerReviewService : IPeerReviewService
                         review.DashboardProject.ProjectId,
                         review.DashboardProject.IsCompleted,
                         review.DashboardProject.IsArchived,
+                        review.DashboardProject.GithubUrl,
                         UserName = review.DashboardProject.AppUser.FirstName + " " + review.DashboardProject.AppUser.LastName
                     })
                     .Where(project => project.ProjectId != null)
@@ -177,7 +178,8 @@ public class PeerReviewService : IPeerReviewService
                     {
                         ProjectId = project.ProjectId,
                         IsCompleted = project.IsCompleted || project.IsArchived,
-                        UserName = project.UserName
+                        UserName = project.UserName,
+                        GithubUrl = project.GithubUrl
                     })
                     .ToListAsync();
 

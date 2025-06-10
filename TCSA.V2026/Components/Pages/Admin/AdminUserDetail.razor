@@ -27,34 +27,32 @@
     }
     else
     {
-        <MudPaper Elevation="4">
-            <MudGrid Class="mt-1">
-                <MudItem xs="6">
-                    <MudPaper>
-                        <MudList T="string" Dense="true">
-                            <MudListItem Text="@loadTime.TotalSeconds.ToString()" Icon="@Icons.Material.Filled.PunchClock" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.Id.ToString()" Icon="@Icons.Material.Filled.PermIdentity" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.DisplayName" Icon="@Icons.Material.Filled.CardMembership" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.Country" Icon="@Icons.Material.Filled.Map" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.ExperiencePoints.ToString()" Icon="@Icons.Material.Filled.Score" IconColor="Color.Primary" />
-                            <MudListItem Text="@(User.FirstName + User.LastName)" Icon="@Icons.Material.Filled.CardTravel" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.Email" Icon="@Icons.Material.Filled.Email" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.GithubUsername" Icon="@Icons.Custom.Brands.GitHub" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.DiscordAlias" Icon="@Icons.Custom.Brands.Discord" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.Level.ToString()" Icon="@Icons.Material.Filled.Leaderboard" IconColor="Color.Primary" />
-                            <MudListItem Text="@User.EmailConfirmed.ToString()" Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Primary" />
-                            <MudListItem Text="@(User.CodeReviewProjects?.Count.ToString())" Icon="@Icons.Material.Filled.Reviews" IconColor="Color.Primary" />
-                            <MudListItem Text="@(User.Issues?.Count.ToString())" Icon="@Icons.Material.Filled.People" IconColor="Color.Primary" />
-                        </MudList>
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="6">
-                    <MudText>LALALALALAL</MudText>
-                </MudItem>
-            </MudGrid>
-        </MudPaper>
+        <MudGrid Class="mt-1">
+            <MudItem xs="6">
+                <MudPaper Class="mb-5" Elevation="4">
+                    <MudList T="string" Dense="true">
+                        <MudListItem Text="@loadTime.TotalSeconds.ToString()" Icon="@Icons.Material.Filled.PunchClock" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.Id.ToString()" Icon="@Icons.Material.Filled.PermIdentity" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.DisplayName" Icon="@Icons.Material.Filled.CardMembership" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.Country" Icon="@Icons.Material.Filled.Map" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.ExperiencePoints.ToString()" Icon="@Icons.Material.Filled.Score" IconColor="Color.Primary" />
+                        <MudListItem Text="@(User.FirstName + User.LastName)" Icon="@Icons.Material.Filled.CardTravel" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.Email" Icon="@Icons.Material.Filled.Email" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.GithubUsername" Icon="@Icons.Custom.Brands.GitHub" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.DiscordAlias" Icon="@Icons.Custom.Brands.Discord" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.Level.ToString()" Icon="@Icons.Material.Filled.Leaderboard" IconColor="Color.Primary" />
+                        <MudListItem Text="@User.EmailConfirmed.ToString()" Icon="@Icons.Material.Filled.ThumbUp" IconColor="Color.Primary" />
+                        <MudListItem Text="@(User.CodeReviewProjects?.Count.ToString())" Icon="@Icons.Material.Filled.Reviews" IconColor="Color.Primary" />
+                        <MudListItem Text="@(User.Issues?.Count.ToString())" Icon="@Icons.Material.Filled.People" IconColor="Color.Primary" />
+                    </MudList>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText>LALALALALAL</MudText>
+            </MudItem>
+        </MudGrid>
 
-        <MudPaper Elevation="4">
+        <MudPaper Class="pa-4 mb-5" Elevation="4">
             <MudSelect T="ProjectType?" Label="Filter by Project Type" @bind-Value="SelectedProjectType" Class="my-2" Dense="true" Clearable="true">
                 <MudSelectItem T="ProjectType?" Value="null">All</MudSelectItem>
                 @foreach (var type in Enum.GetValues<ProjectType>())
@@ -62,9 +60,15 @@
                     <MudSelectItem T="ProjectType?" Value="@type">@type.ToString()</MudSelectItem>
                 }
             </MudSelect>
+            <MudCheckBox Label="Show Pending"
+            CheckedIcon="@Icons.Material.Outlined.CheckBox"
+            UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"
+            Value="@_showPending"
+            ValueChanged="@((bool value) => Mama(value))" />
+
         </MudPaper>
 
-        <MudDataGrid Elevation="4" Dense="true" Items="@FilteredActivity">
+        <MudDataGrid Class="pa-4" Elevation="4" Dense="true" Items="@FilteredActivity.Where(x => !_showPending || !x.IsPending)">
             <Columns>
                 <PropertyColumn Property="fa => fa.ProjectId" Title="Id" />
                 <PropertyColumn Property="fa => fa.Title" Title="Name" />
@@ -75,16 +79,23 @@
                             @if(!context.Item.IsCompleted)
                             {
                                 <MudButton Size="@Size.Small"
-                                           Variant="@Variant.Filled"
-                                           Color="@Color.Primary"
-                                           OnClick="@(() => ProcessProjectCompleted(context.Item))">
+                                Variant="@Variant.Filled"
+                                Color="@Color.Primary"
+                                OnClick="@(() => ProcessProjectCompleted(context.Item))">
                                     Mark
+                                </MudButton>
+                                <MudButton Size="@Size.Small"
+                                Variant="@Variant.Filled"
+                                Color="@Color.Warning"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                StartIcon="fas fa-eye">
+                                    View
                                 </MudButton>
                             }
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
-@*                 <TemplateColumn CellClass="d-flex justify-end">
+                @*                 <TemplateColumn CellClass="d-flex justify-end">
                     <MudButton Class=""
                                Size="@Size.Medium"
                                Variant="@Variant.Filled"
@@ -113,6 +124,8 @@
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
+    private bool _showPending = false;
+
     private ProjectType? _selectedProjectType = null;
     private ProjectType? SelectedProjectType
     {
@@ -140,6 +153,23 @@
     private int ranking = 0;
     private TimeSpan loadTime;
 
+    private async Task Mama(bool value)
+    {
+        if (value is bool boolValue) 
+        {
+            if (boolValue)
+            {
+                FilteredActivity = AllAdminActivity.Where(x => x.IsCompleted == false).ToList();
+            } 
+            else
+            {
+                FilteredActivity = AllAdminActivity;
+            }
+        }
+        _showPending = !_showPending;
+    }
+
+
     private void FilterProjectType()
     {
         if (SelectedProjectType is null)
@@ -150,6 +180,7 @@
         {
             FilteredActivity = AllAdminActivity?.Where(x => x.ProjectType == SelectedProjectType.Value).ToList();
         }
+
 
         StateHasChanged();
     }
@@ -198,7 +229,8 @@
                 ProjectId = i.ProjectId,
                 ProjectType = ProjectType.Issue,
                 Title = i.Title,
-                IsCompleted = i.IsClosed
+                IsCompleted = i.IsClosed,
+                GithubUrl = i.GithubUrl
             }).ToList() ?? new();
 
         var reviewsForAdmin = reviews.Select(i => new AdminActivity
@@ -206,7 +238,8 @@
                 ProjectId = i.ProjectId,
                 ProjectType = ProjectType.CodeReview,
                 Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId).Title,
-                IsCompleted = i.IsCompleted
+                IsCompleted = i.IsCompleted,
+                GithubUrl = i.GithubUrl
             }).ToList() ?? new();
 
         var courseArticlesForAdmin = User.DashboardProjects
@@ -245,7 +278,8 @@
                 ProjectType = ProjectType.Project,
                 Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId)?.Title ?? "Dunno",
                 IsCompleted = i.IsCompleted,
-                DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id
+                DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id,
+                    GithubUrl = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).GithubUrl
             })
             .ToList();
 
@@ -256,6 +290,11 @@
         AllAdminActivity.AddRange(courseArticlesForAdmin);
 
         FilteredActivity = AllAdminActivity;
+
+        // if (_showPending)
+        // {
+        //     FilteredActivity = AllAdminActivity.Where(x => x.IsCompleted == false).ToList();
+        // }
     }
 
     private string GetTitle(int projectId)

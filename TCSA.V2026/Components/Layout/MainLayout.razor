@@ -46,7 +46,7 @@
     {
         ThemeService.ToggleTheme();
         // Update cookie via JS interop or via server-side endpoint.
-        await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);
+        await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);   
     }
 
     MudTheme MyCustomTheme = new MudTheme()

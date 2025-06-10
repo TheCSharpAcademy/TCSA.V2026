@@ -13,6 +13,7 @@
 <PageTitle>Peer Reviews</PageTitle>
 
 <MudContainer Class="pa-0">
+
     @if (User != null)
     {
         <DashboardToolBar User=@User></DashboardToolBar>
@@ -24,6 +25,8 @@
     }
     else
     {
+        if(User != null && (int)User.Level >= (int)Level.Yellow) 
+        {
         <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
         if (AvailableProjects != null && AvailableProjects.Count > 0)
         {
@@ -89,7 +92,14 @@
                         </CardHeaderContent>
                     </MudCardHeader>
                 </MudCard>
+                }
             }
+        }
+        else
+        {
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" >
+            <MudText  Typo="@Typo.h3"><MudIcon Size="Size.Large"  Icon="@Icons.Material.Outlined.Block" Color="Color.Error"></MudIcon>Not yet. Unlock <MudText Typo="Typo.h3" Color="Color.Warning">Yellow Belt</MudText> to open this area</MudText>
+            </MudStack>
         }
     }
 </MudContainer>

@@ -32,7 +32,9 @@
     {
         @foreach (var area in Areas.Where(a => _showCompleted || !a.IsCompleted))
         {
-            <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : null)">
+            bool isInProgress = !area.IsCompleted && area.Tasks.Where(t => t.Status == Data.DTOs.TaskStatus.Completed).Any();
+
+            <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : isInProgress ? $"border: 2px solid #42a5f5" : null)">
                 <MudCardHeader Class="d-flex align-items-center">
                     <CardHeaderAvatar>
                         <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
@@ -45,10 +47,23 @@
                         @if (area.IsCompleted)
                         {
                             <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Success">
+                            
+                                     T="string"
+                                     Size="@Size.Large"
+                                     Color="Color.Success"
+                                     Variant="Variant.Outlined"
+                                    >
                                 Completed
+                            </MudChip>
+                        }else if(isInProgress)
+                        {
+                            <MudChip Class="mt-3 ml-5"
+                                     T="string"
+                                     Size="@Size.Large"
+                                     Color="Color.Info"
+                                     Variant="Variant.Outlined"
+                                     >
+                                In Progress
                             </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
@@ -115,6 +130,8 @@
         }
     }
 
+  
+
     protected override async Task OnInitializedAsync()
     {
         var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
@@ -128,7 +145,6 @@
         {
             return;
         }
-
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);

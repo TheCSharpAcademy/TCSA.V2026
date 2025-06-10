@@ -2458,7 +2458,7 @@ public class CourseHelper
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Congratulations! You've completed the Intro to Object Oriented Programming course! I hope you have enjoyed the journey. You should know be familiar with the four core principles of OOP. Most importantly you were able to apply this important programming paradigm to a real project." },
+                                    new Paragraph { Body = "Congratulations! You've completed the Intro to Object Oriented Programming course! I hope you have enjoyed the journey. You should now be familiar with the four core principles of OOP. Most importantly you were able to apply this important programming paradigm to a real project." },
                                 }
                             },
                             new Block

@@ -76,35 +76,32 @@
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
-                            @if(!context.Item.IsCompleted)
+                            @if (!context.Item.IsCompleted)
                             {
                                 <MudButton Size="@Size.Small"
-                                Variant="@Variant.Filled"
-                                Color="@Color.Primary"
-                                OnClick="@(() => ProcessProjectCompleted(context.Item))">
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Primary"
+                                           OnClick="@(() => ProcessProjectCompleted(context.Item))">
                                     Mark
                                 </MudButton>
                                 <MudButton Size="@Size.Small"
-                                Variant="@Variant.Filled"
-                                Color="@Color.Warning"
-                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
-                                StartIcon="fas fa-eye">
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Error"
+                                           OnClick="@(() => OpenConfirmationDialog(context.Item.DashboardProjectId.Value))"
+                                           StartIcon="fas fa-eye">
+                                    Delete
+                                </MudButton>
+                                <MudButton Size="@Size.Small"
+                                           Variant="@Variant.Filled"
+                                           Color="@Color.Warning"
+                                           OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                           StartIcon="fas fa-eye">
                                     View
                                 </MudButton>
                             }
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
-                @*                 <TemplateColumn CellClass="d-flex justify-end">
-                    <MudButton Class=""
-                               Size="@Size.Medium"
-                               Variant="@Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="fas fa-eye"
-                               OnClick="@(() => ProcessProjectCompleted(context.Item.AppUserId))">
-                        View Article
-                    </MudButton>
-                </TemplateColumn> *@
             </Columns>
         </MudDataGrid>
     }
@@ -196,26 +193,10 @@
         User = await AdminService.GetUserForAdmin(UserId);
 
         loadTime = DateTime.UtcNow - startTime;
+
         await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
-
-        // Issues = User.Issues;
-        // CodeReviews = User.CodeReviewProjects.Select(cr => new CodeReviewDetail
-        // {
-        //     ProjectId = cr.DashboardProject.ProjectId,
-        //     IsCompleted = cr.DashboardProject.IsCompleted,
-        //     UserName = UserDisplayNameHelper.GetDisplayName(cr.DashboardProject.AppUser),
-        //     ProjectName = projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId).Title
-        // }).ToList();
-
-        // var issuesIds = User.Issues.Select(x => x.ProjectId);
-        // var reviewIds = CodeReviews.Select(x => x.ProjectId);
-
-        // DashboardProjects = User.DashboardProjects
-        // .Where(x => !issuesIds.Contains(x.ProjectId) && !reviewIds.Contains(x.ProjectId))
-        // .OrderBy(dp => dp.IsCompleted)
-        // .ThenByDescending(x => x.DateSubmitted).ToList();
     }
 
     private async Task LoadAdminActivity()
@@ -304,33 +285,32 @@
         return project == null ? User.Issues.FirstOrDefault(x => x.ProjectId == projectId).Title : project.Title;
     }
 
-    // private async Task OpenConfirmationDialog(int dbProjectId, int curriculumProjectId)
-    // {
-    //     var options = new DialogOptions { CloseOnEscapeKey = true };
+    private async Task OpenConfirmationDialog(int dbProjectId)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
 
-    //     var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
-    //     var result = await dialog.Result;
+        var dialog = await DialogService.ShowAsync<TCSADialog>("Are you Sure?", options);
+        var result = await dialog.Result;
 
-    //     if (!result.Canceled)
-    //     {
-    //         var apiResult = await ProjectService.MarkAsCompleted(dbProjectId);
+        if (!result.Canceled)
+        {
+            var apiResult = await ProjectService.DeleteProject(dbProjectId, UserId);
 
-    //         if (apiResult.Status == ResponseStatus.Success)
-    //         {
-    //             Snackbar.Add("Project marked as completed successfully!", Severity.Success);
-    //             User = await AdminService.GetUserForAdmin(UserId);
-    //             await ProcessProjectCompleted(curriculumProjectId);
-    //         }
-    //         else
-    //         {
-    //             Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
-    //         }
-    //     }
-    //     else 
-    //     {
-    //         Console.WriteLine("lala");
-    //     }
-    // }
+            if (apiResult.Status == ResponseStatus.Success)
+            {
+                Snackbar.Add("Project deleted  successfully!", Severity.Success);
+                User = await AdminService.GetUserForAdmin(UserId);
+            }
+            else
+            {
+                Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
+        else 
+        {
+            Console.WriteLine("lala");
+        }
+    }
 
     private async Task ProcessProjectCompleted(AdminActivity adminActivity)
     {

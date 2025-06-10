@@ -8,8 +8,6 @@
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 @attribute [Authorize]
-
-
 <MudDialogProvider />
 
 <PageTitle>Dashboard</PageTitle>
@@ -21,7 +19,6 @@
     {
         <DashboardToolBar User=@User></DashboardToolBar>
     }
-    
     <MudCheckBox @bind-Value="@_showCompleted"
                  Label="Show Completed"
                  CheckedIcon="@Icons.Material.Outlined.CheckBox"
@@ -92,7 +89,6 @@
 
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
-   
 
     [Parameter] public List<RoadmapTask> Tasks { get; set; } = new List<RoadmapTask>();
 
@@ -108,7 +104,6 @@
 
     private async Task OpenAreaDialog(IEnumerable<DashboardTaskDisplay> tasks)
     {
-       
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var parameters = new DialogParameters<TCSADashboardAreaDialog> 
         { 
@@ -148,8 +143,6 @@
         {
             return;
         }
-        
-     
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);

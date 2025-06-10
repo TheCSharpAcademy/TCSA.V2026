@@ -5,7 +5,6 @@
 @inject IJSRuntime JS
 
 <MudThemeProvider Theme="MyCustomTheme" @bind-IsDarkMode="@ThemeService.IsDarkMode" />
-
 <MudPopoverProvider />
 <MudSnackbarProvider />
 
@@ -33,7 +32,6 @@
 
 @code {
     private bool _drawerOpen = true;
-    
 
     protected override void OnInitialized()
     {
@@ -48,8 +46,7 @@
     {
         ThemeService.ToggleTheme();
         // Update cookie via JS interop or via server-side endpoint.
-        await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);
-        
+        await JS.InvokeVoidAsync("setCookie", "theme", ThemeService.IsDarkMode ? "dark" : "light", 365);   
     }
 
     MudTheme MyCustomTheme = new MudTheme()
@@ -62,9 +59,8 @@
             },
             PaletteDark = new PaletteDark()
             {
-                Primary = Colors.Blue.Lighten1,
+                Primary = Colors.Blue.Lighten1
             },
-            
         };
 }
 

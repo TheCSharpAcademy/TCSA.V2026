@@ -11,7 +11,7 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-<AdminToolBar></AdminToolBar>
+<AdminToolBar Count="adminPendingProjects?.Count()"></AdminToolBar>
 
 @if (IsLoading) 
 {

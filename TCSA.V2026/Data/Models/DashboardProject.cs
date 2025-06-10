@@ -32,3 +32,13 @@ public class DashboardProject
     [NotMapped]
     public string? Reviewer { get; set; }
 }
+
+public enum ProjectType
+{
+    CurriculumArticle,
+    CourseArticle,
+    Article,
+    Project,
+    Issue,
+    CodeReview
+}

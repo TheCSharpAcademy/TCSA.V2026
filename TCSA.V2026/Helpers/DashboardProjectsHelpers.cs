@@ -20,7 +20,7 @@ public static class DashboardProjectsHelpers
 
         if (area == Area.StartHere)
         {
-            count = Articles.Where(x => x.Area == area).Count();
+            count = Articles.Where(x => x.Area == area).Count() + 1;
             ids = Articles.Where(x => x.Area == area).Select(x => x.Id).ToList();
 
             foreach (int id in ids)
@@ -29,6 +29,11 @@ public static class DashboardProjectsHelpers
                 {
                     completedProjectsCount += 1;
                 }
+            }
+
+            if (completedProjects.Contains(75))
+            {
+                completedProjectsCount += 1;
             }
         }
 
@@ -101,6 +106,7 @@ public static class DashboardProjectsHelpers
         {
             new DashboardAreaInfo
             {
+                Area = Area.StartHere,
                 CardName = "Start Here",
                 ImgUrl = "icons8-baby-app-96.png",
                 Tasks = Articles.Where(x => x.Area == Area.StartHere).Select(a => new DashboardTaskDisplay
@@ -110,8 +116,9 @@ public static class DashboardProjectsHelpers
                     Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
-                    Area = a.Area
-                }),
+                    Area = a.Area,
+                    IsReadOnly = true
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.StartHere, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartHere, null),
             },
@@ -129,7 +136,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Beginner, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.Console, Difficulty.Beginner),
             },
@@ -147,7 +154,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Intermediate, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Console, Difficulty.Intermediate)
@@ -166,11 +173,11 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Console, Difficulty.Advanced, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.Console, Difficulty.Advanced)
             },
-            new DashboardAreaInfo           
+            new DashboardAreaInfo
             {
                 CardName = "Start Applying",
                 ImgUrl = "icons8-permanent-job-96.png",
@@ -184,11 +191,11 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.StartApplying, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartApplying, null)
             },
-            new DashboardAreaInfo   
+            new DashboardAreaInfo
             {
                 CardName = "SQL",
                 ImgUrl = "icons8-sql-server-64.png",
@@ -202,7 +209,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.SQL, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.SQL, null)
             },
@@ -220,7 +227,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.MVC, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,completedProjects, Area.MVC, null)
             },
@@ -238,7 +245,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Auth, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                           completedProjects, Area.Auth, null)
@@ -257,7 +264,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.React, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.React, null)
@@ -276,7 +283,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Angular, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Angular, null)
@@ -286,15 +293,15 @@ public static class DashboardProjectsHelpers
                 CardName = "Blazor",
                 ImgUrl = "blazor.png",
                 Tasks = Projects.Where(x => x.Area == Area.Blazor)
-                .Select(a => new DashboardTaskDisplay 
-                {     
-                    Id = a.Id, 
-                    IconUrl = a.IconUrl, 
-                    Title = a.Title, 
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
-                    Area = a.Area 
-                }),
+                    Area = a.Area
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Blazor, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Blazor, null)
@@ -313,7 +320,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.MAUI, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.MAUI, null)
@@ -332,7 +339,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.Azure, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                         completedProjects, Area.Azure, null)
@@ -351,7 +358,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.MonthlyChallenge, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                     completedProjects, Area.MonthlyChallenge, null)
@@ -370,7 +377,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area
-                }),
+                }).ToList(),
                 Description = GetNotCompletedMessage(Area.GraduationProject, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.GraduationProject, null)
             }

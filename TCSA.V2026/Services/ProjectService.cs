@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -12,7 +13,8 @@ public interface IProjectService
     Task<bool> IsProjectCompleted(string userId, int projectId);
     Task<List<int>> GetCompletedProjectsById(string userId);
     Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle);
-    }
+    Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId);
+}
 
 public class ProjectService : IProjectService
 {
@@ -21,6 +23,47 @@ public class ProjectService : IProjectService
     public ProjectService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var project = context.DashboardProjects
+                    .FirstOrDefault(p => p.Id == dashboardProjectId);
+
+                if (project == null)
+                {
+                    return new BaseResponse
+                    {
+                        Status = ResponseStatus.Fail,
+                        Message = "Project Not Found"
+                    };
+                }
+
+                var activity = context.UserActivity.Where(a => a.AppUserId == userId && a.ProjectId == project.ProjectId);
+
+                context.DashboardProjects.Remove(project);
+                context.UserActivity.RemoveRange(activity);
+
+                await context.SaveChangesAsync();
+            }
+
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
     }
 
     public async Task<List<int>> GetCompletedProjectsById(string userId)
@@ -81,7 +124,7 @@ public class ProjectService : IProjectService
                           ActivityType = isArticle ? ActivityType.ArticleRead : ActivityType.ProjectSubmitted
                       });
 
-                    user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
+                    user.ExperiencePoints = isArticle ? (user.ExperiencePoints + project.ExperiencePoints) : user.ExperiencePoints;
 
                     await context.SaveChangesAsync();
                 };

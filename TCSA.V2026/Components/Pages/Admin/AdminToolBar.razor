@@ -3,10 +3,14 @@
         <MudIconButton Icon="@Icons.Material.Outlined.List" OnClick="NavigateToMain"/>
         <MudIconButton Icon="@Icons.Material.Outlined.Search" OnClick="NavigateToSearch" />
         <MudIconButton Icon="@Icons.Material.Outlined.PendingActions" OnClick="NavigateToPending" />
+        <MudIcon Icon="@Icons.Material.Outlined.Numbers" /> 
+        <MudText Style="font-weight: 600; font-size:large">@Count</MudText>
     </MudToolBar>
 </MudPaper>
 
 @code {
+    [Parameter] public int? Count { get; set; }
+
     [Inject] private NavigationManager Navigation { get; set; }
 
     private void NavigateToMain()

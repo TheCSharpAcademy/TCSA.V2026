@@ -20,10 +20,9 @@
         <DashboardToolBar User=@User></DashboardToolBar>
     }
     <MudCheckBox @bind-Value="@_showCompleted"
-                 Label="Show Completed"
-                 CheckedIcon="@Icons.Material.Outlined.CheckBox"
-                 UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
-
+    Label="Show Completed"
+    CheckedIcon="@Icons.Material.Outlined.CheckBox"
+    UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
 
     @if (IsLoading)
     {
@@ -68,11 +67,11 @@
                             </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                                   Color="Color.Primary"
-                                   StartIcon="fas fa-eye">
+                        Size="@Size.Medium"
+                        Variant="@Variant.Filled"
+                        OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                        Color="Color.Primary"
+                        StartIcon="fas fa-eye">
                             View Tasks
                         </MudButton>
                     </CardHeaderActions>
@@ -86,6 +85,7 @@
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IUserService UserService { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
 
     [Inject] private ISnackbar SnackbarService { get; set; }
     [Inject] private IDialogService DialogService { get; set; }
@@ -100,6 +100,8 @@
 
     private bool IsLoading = true;
     private bool IsLoggedIn = false;
+    private bool IsFccCompleted = false;
+    private bool IsFccPending = false;
     private string UserId;
 
     private async Task OpenAreaDialog(IEnumerable<DashboardTaskDisplay> tasks)
@@ -149,6 +151,20 @@
         CompletedProjects = User?.DashboardProjects?.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
         PendingProjects = User?.DashboardProjects?.Where(x => x.IsPendingReview).Select(x => x.ProjectId).ToList();
 
+        IsFccCompleted = CompletedProjects.Contains(75);
+        IsFccPending = PendingProjects.Contains(75);
+
         Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects, PendingProjects);
+
+        var fcc = DashboardProjectsHelpers.Projects.FirstOrDefault(x => x.Id == 75);
+
+        Areas.FirstOrDefault(x => x.Area == Area.StartHere).Tasks.Add(new DashboardTaskDisplay
+            {
+                Id = 75,
+                IconUrl = fcc.IconUrl,
+                Title = fcc.Title,
+                Status = DashboardProjectsHelpers.GetTaskStatus(fcc.Id, CompletedProjects, PendingProjects),
+                Area = fcc.Area
+            });
     }
 }

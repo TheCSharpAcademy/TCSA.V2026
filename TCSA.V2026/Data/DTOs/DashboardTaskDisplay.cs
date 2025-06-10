@@ -11,6 +11,7 @@ public class DashboardTaskDisplay
     public string Slug { get; set; }
     public string Url { get; set; }
     public Area Area { get; set; }
+    public bool IsReadOnly { get; set; }
 }
 
 public enum TaskStatus

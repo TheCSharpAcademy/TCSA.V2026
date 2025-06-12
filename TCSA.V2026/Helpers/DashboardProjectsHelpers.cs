@@ -444,6 +444,11 @@ public static class DashboardProjectsHelpers
             }
         }
 
+        if (!completedProjects.Contains(75))
+        {
+            return false;
+        }
+
         return true;
     }
 }

@@ -236,7 +236,9 @@ public class ProjectService : IProjectService
                 }
 
                 project.IsCompleted = true;
+                project.IsPendingReview = false;
                 project.DateCompleted = DateTime.UtcNow;
+                project.IsPendingNotification = true;
 
                 var experiencePoints = DashboardProjectsHelpers.GetProject(project.ProjectId).ExperiencePoints;
 

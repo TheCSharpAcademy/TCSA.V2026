@@ -77,47 +77,5 @@
         }
     }
 
-    private string GetCountry(string country)
-    {
-        return string.IsNullOrEmpty(country) ? "earth" : country;
-    }
-
-    private void NavigateToDashboard()
-    {
-        Navigation.NavigateTo("/dashboard");
-    }
-
-    private void NavigateToCommunity()
-    {
-        Navigation.NavigateTo("/dashboard/community");
-    }
-
-    private void NavigateToActivity()
-    {
-        Navigation.NavigateTo("/dashboard/activity");
-    }
-
-    private void NavigateToReviews()
-    {
-        Navigation.NavigateTo("/dashboard/reviews");
-    }
-
-    private void NavigateToLeaderboard()
-    {
-        Navigation.NavigateTo("/dashboard/leaderboard");
-    }
-
-    private void NavigateToRoadmap()
-    {
-        Navigation.NavigateTo("/dashboard/roadmap");
-    }
-
-    private void NavigateToCourses()
-    {
-        Navigation.NavigateTo("/dashboard/courses");
-    }
-    private void NavigateToChallenges()
-    {
-        Navigation.NavigateTo("/dashboard/challenges");
-    }
+    private string GetCountry(string country) => string.IsNullOrEmpty(country) ? "earth" : country;
 }

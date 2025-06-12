@@ -27,24 +27,38 @@
     }
     else
     {
-        <MudGrid Class="mt-1">
-            <MudItem xs="12">
-                <MudPaper Class="mb-5 pa-5" Elevation="4">
-                    <MudGrid>
-                        @foreach (var prop in typeof(AdminUserDetailDisplay).GetProperties())
-                        {
-                            <MudItem xs="6">
-                                <MudText Typo="Typo.body1" Color="Color.Primary">@prop.Name</MudText>
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudText Typo="Typo.body1">@prop.GetValue(UserDisplay)?.ToString()</MudText>
-                            </MudItem>
-                        }
-                    </MudGrid>
-                </MudPaper>
+        <MudPaper Class="mb-5 pa-5" Elevation="4">
+            <MudGrid>
+                @foreach (var prop in typeof(AdminUserDetailDisplay).GetProperties())
+                {
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.body1" Color="Color.Primary">@prop.Name</MudText>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.body1">@prop.GetValue(UserDisplay)?.ToString()</MudText>
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudPaper>
+
+        <MudPaper Class="mb-5 pa-5" Elevation="4">
+            <MudItem xs="6">
+                <MudText Typo="Typo.body1" Color="Color.Primary">Change Belt</MudText>
+                <MudSelect T="Level" Label="Select Belt Level" @bind-Value="SelectedLevel" Class="my-2" Dense="true">
+                    @foreach (Level lvl in Enum.GetValues(typeof(Level)))
+                    {
+                        <MudSelectItem T="Level" Value="@lvl">@lvl</MudSelectItem>
+                    }
+
+                </MudSelect>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitLevel">
+                    Submit
+                </MudButton>
+            </MudItem>
+            <MudItem xs="6">
 
             </MudItem>
-        </MudGrid>
+        </MudPaper>
 
         <MudPaper Class="pa-4 mb-5" Elevation="4">
             <MudSelect T="ProjectType?" Label="Filter by Project Type" @bind-Value="SelectedProjectType" Class="my-2" Dense="true" Clearable="true">
@@ -125,6 +139,8 @@
 
     private bool _showPending = false;
 
+    private Level SelectedLevel = Level.White; 
+
     private ProjectType? _selectedProjectType = null;
     private ProjectType? SelectedProjectType
     {
@@ -170,7 +186,7 @@
                 Email = User.Email ?? string.Empty,
                 Country = User.Country,
                 ExperiencePoints = User.ExperiencePoints,
-                Level = (User.Level + 1).ToString(),
+                Level = (User.Level).ToString(),
                 GithubUsername = User.GithubUsername ?? string.Empty,
                 DiscordAlias = User.DiscordAlias ?? string.Empty,
                 IssuesCompleted = User.Issues?.Count(x => x.IsClosed) ?? 0,
@@ -182,6 +198,25 @@
         await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
+    }
+
+    private async Task SubmitLevel()
+    {
+        var result = await AdminService.ChangeBelt(UserId, SelectedLevel);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Belt Updated!", Severity.Success);
+
+            var name = string.IsNullOrEmpty(User.FirstName) ? User.GithubUsername : User.FirstName;
+            var body = EmailHelper.GetNewBeltBody(User.FirstName, name ?? string.Empty, SelectedLevel);
+            await EmailSender.SendEmailAsync(User.Email, "You achieved a new belt!", body);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
     }
 
     private async Task LoadAdminActivity()
@@ -291,10 +326,6 @@
                 Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
             }
         }
-        else 
-        {
-            Console.WriteLine("lala");
-        }
     }
 
     private async Task OpenArchiveDialog(int dbProjectId)
@@ -317,10 +348,6 @@
             {
                 Snackbar.Add($"Error: {apiResult.Message}", Severity.Error);
             }
-        }
-        else
-        {
-            Console.WriteLine("lala");
         }
     }
 

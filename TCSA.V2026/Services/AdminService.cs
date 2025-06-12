@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.Services;
@@ -13,6 +14,7 @@ public interface IAdminService
     Task<List<AdminEventDisplay>> GetAdminEvents();
     Task<List<AdminPendingDisplay>> GetAdminPendingProjects();
     Task<List<ApplicationUser>> SearchUser(string email);
+    Task<BaseResponse> ChangeBelt(string userId, Level newBelt);
 }
 
 public class AdminService : IAdminService
@@ -22,6 +24,34 @@ public class AdminService : IAdminService
     public AdminService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<BaseResponse> ChangeBelt(string userId, Level newBelt)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user = await context.AspNetUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+                user.Level = newBelt;
+
+                await context.SaveChangesAsync();
+
+            }
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
     }
 
     public async Task<ApplicationUser> GetUserForAdmin(string id)

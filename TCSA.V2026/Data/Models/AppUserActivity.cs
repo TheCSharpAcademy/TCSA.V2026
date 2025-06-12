@@ -19,6 +19,7 @@ public enum ActivityType
     ProjectCompleted,
     CodeReviewCompleted,
     IssueSubmitted,
-    ChallengeCompleted
+    ChallengeCompleted,
+    NewBelt
 }
 

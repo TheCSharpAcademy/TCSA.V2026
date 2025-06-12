@@ -1,54 +1,31 @@
-﻿@using TCSA.V2026.Data.Models
+﻿@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+
+@inject IDialogService DialogService
+
 <MudPaper Elevation="25">
     <MudToolBar Class="mt-5">
         <MudImage Class="mr-3" Src=@($"img/flags/{GetCountry(User.Country)}.png") Width="50"></MudImage>
-        <MudText Style="font-weight: 600; font-size:large">@User.DisplayName</MudText>
-        <MudSpacer />
+        <MudText Class="mr-5" Style="font-weight: 600; font-size:large">@User.DisplayName</MudText>
         <MudImage Class="mr-1" Src=@($"img/belts/{(Level)User.Level+1}-belt.png") Width="30"></MudImage>
-        <MudText Class="mr-3" Style="font-weight: 500">@(((Level)User.Level+1).ToString() + " Belt")</MudText>
+        <MudText Class="mr-3" Style="font-weight: 500">@(((Level)User.Level + 1).ToString() + " Belt")</MudText>
         <MudImage Src="img/experience.png" Width="30"></MudImage>
         <MudText Style="font-weight: 500">@User.ExperiencePoints</MudText>
-        @*  <MudTooltip Text="Dashboard">
-            <MudIconButton Color="Color.Primary"
-                           Icon="@Icons.Material.Outlined.Dashboard"
-                           OnClick="NavigateToDashboard" />
-        </MudTooltip>
-        <MudTooltip Text="Community">
-            <MudIconButton Icon="@Icons.Custom.Brands.GitHub"
-                           Color="Color.Primary"
-                           OnClick="NavigateToCommunity" />
-        </MudTooltip>
-        <MudTooltip Text="Activity">
-            <MudIconButton Icon="@Icons.Material.Outlined.Hiking"
-                           Color="Color.Primary"
-                           OnClick="NavigateToActivity" />
-        </MudTooltip>
-        <MudTooltip Text="Peer Reviews">
-            <MudIconButton Icon="@Icons.Material.Outlined.RateReview"
-                           Color="Color.Primary"
-                           OnClick="NavigateToReviews" />
-        </MudTooltip>
-        <MudTooltip Text="Leaderboard">
-            <MudIconButton Icon="@Icons.Material.Outlined.Leaderboard"
-                           Color="Color.Primary"
-                           OnClick="NavigateToLeaderboard" />
-        </MudTooltip>
-        <MudTooltip Text="Roadmap">
-            <MudIconButton Icon="@Icons.Material.Outlined.Map"
-                           Color="Color.Primary"
-                           OnClick="NavigateToRoadmap" />
-        </MudTooltip>
-        <MudTooltip Text="Courses">
-            <MudIconButton Icon="@Icons.Material.Outlined.Book"
-                           Color="Color.Primary"
-                           OnClick="NavigateToCourses" />
-        </MudTooltip>
-        <MudTooltip Text="Challenges">
-            <MudIconButton Icon="@Icons.Material.Outlined.Games"
-                           Color="Color.Primary"
-                           OnClick="NavigateToChallenges" />
-        </MudTooltip> *@
-
+        <MudSpacer />
+        <div Class="d-flex justify-space-around flex-wrap">
+            @if (Notifications.Any(x => x.IsActive))
+            {
+                <MudBadge Content="@Notifications.Count(x => x.IsActive)" Overlap="true" Color="Color.Error" Class="mx-6 my-4">
+                    <MudIconButton OnClick="OpenDialog" Icon="@Icons.Material.Filled.Notifications" Color="Color.Primary" />
+                </MudBadge>
+            }
+            else
+            {
+                <MudIconButton OnClick="OpenDialog" Icon="@Icons.Material.Filled.Notifications" Color="Color.Primary" />
+            }
+        </div>
     </MudToolBar>
 </MudPaper>
 
@@ -56,6 +33,55 @@
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
     [Parameter] public ApplicationUser User { get; set; }
+
+    private List<TCSANotificationItem> Notifications = new();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        var projects = ProjectHelper.GetProjects();
+
+        Notifications = User.DashboardProjects
+        .Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7))
+        .Select(
+            dp => new TCSANotificationItem
+            {
+                IconUrl = projects.FirstOrDefault(p => p.Id == dp.ProjectId).IconUrl,
+                Description = GetDescription(dp.ProjectId),
+                IsActive = dp.IsPendingNotification
+            }
+        ).ToList();
+    }
+
+    private string GetDescription(int projectId)
+    {
+        var project = ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == projectId);
+        return $"Your project {project.Title} was marked as completed!"; 
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<TCSANotificationDialog>
+        {
+            { p => p.Notifications, Notifications }
+        };
+        var dialog = await DialogService.ShowAsync<TCSANotificationDialog>(null, parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // var status = (ResponseStatus)result.Data;
+            // var severity = status == ResponseStatus.Success ? Severity.Success : Severity.Error;
+            // var message = status == ResponseStatus.Success ? "Project submitted successfully" : "There was an error submitting the project";
+            // SnackbarService.Add(message, severity);
+
+            // if (status == ResponseStatus.Success)
+            // {
+            //     User = await UserService.GetUserById(UserId);
+            // }
+        }
+    }
 
     private string GetCountry(string country)
     {

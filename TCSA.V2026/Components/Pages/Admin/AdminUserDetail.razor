@@ -186,6 +186,7 @@
                 Email = User.Email ?? string.Empty,
                 Country = User.Country,
                 ExperiencePoints = User.ExperiencePoints,
+                ExpectedPoints = GetExpectedPoints(),
                 Level = (User.Level).ToString(),
                 GithubUsername = User.GithubUsername ?? string.Empty,
                 DiscordAlias = User.DiscordAlias ?? string.Empty,
@@ -198,6 +199,30 @@
         await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
+    }
+
+    private int GetExpectedPoints()
+    {
+        var result = 0;
+        foreach (var p in User.DashboardProjects.Where(x => x.IsCompleted))
+        {
+            var project = Projects.FirstOrDefault(x => x.Id == p.ProjectId)
+            ?? Articles.FirstOrDefault(x => x.Id == p.ProjectId); 
+            result += project.ExperiencePoints;
+        }
+
+        foreach (var i in User.Issues)
+        {
+            result += i.ExperiencePoints;
+        }
+
+        foreach (var cr in User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted || x.DashboardProject.IsArchived))
+        {
+            var project = Projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId);
+            result += project.ExperiencePoints;
+        }
+
+        return result;
     }
 
     private async Task SubmitLevel()

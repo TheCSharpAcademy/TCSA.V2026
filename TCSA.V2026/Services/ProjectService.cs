@@ -16,6 +16,7 @@ public interface IProjectService
     Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle);
     Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId);
     Task<BaseResponse> Archive(int dashboardProjectId);
+    Task<BaseResponse> AcknowledgeNotifications(string userId);
 }
 
 public class ProjectService : IProjectService
@@ -25,6 +26,40 @@ public class ProjectService : IProjectService
     public ProjectService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<BaseResponse> AcknowledgeNotifications(string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var projects = context.DashboardProjects
+                    .Where(p => p.AppUserId == userId)
+                    .Where(p => p.IsPendingNotification)
+                    .ToList();
+
+                foreach (var p in projects)
+                {
+                    p.IsPendingNotification = false;
+                }
+
+                await context.SaveChangesAsync();
+
+            }
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
     }
 
     public async Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId)

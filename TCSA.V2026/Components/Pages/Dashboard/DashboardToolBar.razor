@@ -2,6 +2,7 @@
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
 
 @inject IDialogService DialogService
 
@@ -33,6 +34,7 @@
 @code {
     [Inject] private NavigationManager Navigation { get; set; }
     [Parameter] public ApplicationUser User { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
 
     private List<TCSANotificationItem> Notifications = new();
 
@@ -71,15 +73,7 @@
 
         if (!result.Canceled)
         {
-            // var status = (ResponseStatus)result.Data;
-            // var severity = status == ResponseStatus.Success ? Severity.Success : Severity.Error;
-            // var message = status == ResponseStatus.Success ? "Project submitted successfully" : "There was an error submitting the project";
-            // SnackbarService.Add(message, severity);
-
-            // if (status == ResponseStatus.Success)
-            // {
-            //     User = await UserService.GetUserById(UserId);
-            // }
+            await ProjectService.AcknowledgeNotifications(User.Id);
         }
     }
 

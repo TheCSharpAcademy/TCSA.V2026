@@ -104,6 +104,7 @@
         user.FirstName = string.Empty;
         user.LastName = string.Empty;
         user.DisplayName = Input.DisplayName;
+        user.Level = Level.White;
 
         var result = await UserManager.CreateAsync(user, Input.Password);
 

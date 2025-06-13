@@ -40,5 +40,6 @@ public enum ProjectType
     Article,
     Project,
     Issue,
-    CodeReview
+    CodeReview,
+    Challenge
 }

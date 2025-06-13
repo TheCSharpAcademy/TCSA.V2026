@@ -1,6 +1,7 @@
 ﻿@page "/adminpending"
 
 @using Microsoft.AspNetCore.Authorization
+@using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Services
@@ -11,7 +12,7 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-<AdminToolBar Count="adminPendingProjects?.Count()"></AdminToolBar>
+<AdminToolBar Count="AdminPendingProjects?.Count()"></AdminToolBar>
 
 @if (IsLoading) 
 {
@@ -19,25 +20,36 @@
 } 
 else 
 {
-    <MudDataGrid Items="@adminPendingProjects" RowStyle="GetRowStyle">
-        <Columns>
-            <PropertyColumn Property="x => x.DateSubmitted" Title="DateTime" />
-            <PropertyColumn Property="x => x.ProjectName" Title="Name"  />
-            <PropertyColumn Property="x => x.UserName" Title="Username" />
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudStack Row>
-                        <MudButton 
-                            Size="@Size.Small" 
-                            Variant="@Variant.Filled" 
-                            Color="@Color.Primary" 
-                            OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">Deets
-                        </MudButton>
-                    </MudStack>
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
-    </MudDataGrid>
+
+    <MudPaper Class="pa-4 mb-5" Elevation="4">
+        <MudSelect T="string" Label="Filter by Project" @bind-Value="SelectedProject" Class="my-2" Dense="true" Clearable="true">
+            <MudSelectItem T="string" Value="null">All</MudSelectItem>
+            @foreach (var p in ProjectHelper.GetProjects())
+            {
+                <MudSelectItem T="string" Value="p.Title">@p.Title</MudSelectItem>
+            }
+
+        </MudSelect>
+        <MudDataGrid Items="@FilteredAdminPendingProjects" RowStyle="GetRowStyle">
+            <Columns>
+                <PropertyColumn Property="x => x.DateSubmitted" Title="DateTime" />
+                <PropertyColumn Property="x => x.ProjectName" Title="Name" />
+                <PropertyColumn Property="x => x.UserName" Title="Username" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudButton Size="@Size.Small"
+                            Variant="@Variant.Filled"
+                            Color="@Color.Primary"
+                            OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">
+                                Deets
+                            </MudButton>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    </MudPaper>
 }
 
 
@@ -45,15 +57,46 @@ else
     [Inject] protected IAdminService AdminService { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
 
-    private List<AdminPendingDisplay>? adminPendingProjects { get; set; } = new();
+    private List<AdminPendingDisplay>? AdminPendingProjects { get; set; } = new();
+    private List<AdminPendingDisplay>? FilteredAdminPendingProjects { get; set; } = new();
+
+    private string _selectedProject = null;
+    private string SelectedProject
+    {
+        get => _selectedProject;
+        set
+        {
+            if (_selectedProject != value)
+            {
+                _selectedProject = value;
+                FilterProject();
+            }
+        }
+    }
 
     private bool IsLoading = true;
 
     protected override async Task OnInitializedAsync() 
     {
-        adminPendingProjects = await AdminService.GetAdminPendingProjects();
+        AdminPendingProjects = await AdminService.GetAdminPendingProjects();
+        FilteredAdminPendingProjects = AdminPendingProjects;
 
         IsLoading = false;
+    }
+
+    private void FilterProject()
+    {
+        if (SelectedProject is null)
+        {
+            FilteredAdminPendingProjects = AdminPendingProjects;
+        }
+        else
+        {
+            FilteredAdminPendingProjects = AdminPendingProjects.Where(x => x.ProjectName == SelectedProject).ToList();
+        }
+
+
+        StateHasChanged();
     }
 
     private Task NavigateToDetails(string userId)

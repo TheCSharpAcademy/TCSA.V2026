@@ -172,6 +172,7 @@
     {
         Projects = ProjectHelper.GetProjects();
         Articles = ArticleHelper.GetArticles().ToList();
+
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         Articles.AddRange(courseArticles);
         var startTime = DateTime.UtcNow;
@@ -230,6 +231,11 @@
         {
             var project = Projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId);
             result += project.ExperiencePoints;
+        }
+
+        foreach (var c in User.UserChallenges)
+        {
+            result += c.Challenge.ExperiencePoints;
         }
 
         return result;
@@ -315,7 +321,20 @@
                 Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId)?.Title ?? "Dunno",
                 IsCompleted = i.IsCompleted,
                 DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id,
-                    GithubUrl = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).GithubUrl
+                GithubUrl = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).GithubUrl
+            })
+            .ToList();
+
+            var challengesForAdmin = User.UserChallenges
+            .OrderBy(c => c.CompletedAt)
+            .Select(c => new AdminActivity
+            {
+                 ProjectId = c.ChallengeId,
+                 ProjectType = ProjectType.Challenge,
+                 Title = c.Challenge.Name,
+                 IsCompleted = true,
+                 DashboardProjectId = 0,
+                 GithubUrl = "N/A"
             })
             .ToList();
 

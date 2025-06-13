@@ -50,7 +50,7 @@
     </MudText>
 
     <MudGrid Class="mt-5">
-        @foreach (var article in Articles.Where(x => x.Area == Area.StartHere))
+        @foreach (var article in Articles.Where(x => x.Area == Area.StartHere && x.Id != 9)) // not showing "Console App" Article
         {
             <MudItem xs="12" sm="6" md="3">
                 <div class="clickable-card" @onclick="() => NavigateToArticle(article, false)">

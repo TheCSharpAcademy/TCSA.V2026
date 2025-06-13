@@ -198,7 +198,7 @@
 
         loadTime = DateTime.UtcNow - startTime;
 
-        await GetXPSum();
+        //await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
     }
@@ -233,9 +233,12 @@
             result += project.ExperiencePoints;
         }
 
-        foreach (var c in User.UserChallenges)
+        if (User.UserChallenges != null)
         {
-            result += c.Challenge.ExperiencePoints;
+            foreach (var c in User.UserChallenges)
+            {
+                result += c.Challenge.ExperiencePoints;
+            }
         }
 
         return result;
@@ -325,7 +328,7 @@
             })
             .ToList();
 
-            var challengesForAdmin = User.UserChallenges
+            var challengesForAdmin = User.UserChallenges?
             .OrderBy(c => c.CompletedAt)
             .Select(c => new AdminActivity
             {
@@ -449,51 +452,51 @@
         await EmailSender.SendEmailAsync(User.Email, "Your Project Was Marked as Complete", body);
     }
 
-    private async Task GetXPSum()
-    {
-        var ids = new List<int>();
+    // private async Task GetXPSum()
+    // {
+    //     var ids = new List<int>();
 
-        var projectIds = User.DashboardProjects?
-           .Where(x => x.IsCompleted)
-           .Select(x => x.ProjectId)
-           .ToList();
+    //     var projectIds = User.DashboardProjects?
+    //        .Where(x => x.IsCompleted)
+    //        .Select(x => x.ProjectId)
+    //        .ToList();
 
-        if (projectIds != null)
-        {
-            ids.AddRange(projectIds);
-        }
+    //     if (projectIds != null)
+    //     {
+    //         ids.AddRange(projectIds);
+    //     }
 
-        // if (User.CodeReviewProjects != null)
-        // {
-        //     CodeReviews = await PeerReviewService.GetCodeReviewDetails(UserId);
-        // }
+    //     // if (User.CodeReviewProjects != null)
+    //     // {
+    //     //     CodeReviews = await PeerReviewService.GetCodeReviewDetails(UserId);
+    //     // }
 
-        // if (CodeReviews != null)
-        // {
-        //     var reviewIds = CodeReviews
-        //   .Where(x => x.IsCompleted)
-        //   .Select(x => x.ProjectId)
-        //   .ToList();
+    //     // if (CodeReviews != null)
+    //     // {
+    //     //     var reviewIds = CodeReviews
+    //     //   .Where(x => x.IsCompleted)
+    //     //   .Select(x => x.ProjectId)
+    //     //   .ToList();
 
-        //     ids.AddRange(reviewIds);
-        // }
+    //     //     ids.AddRange(reviewIds);
+    //     // }
 
-        foreach (int id in ids)
-        {
-            if (Projects.Any(x => x.Id == id))
-            {
-                XPSum = Projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
-            }
-            else if (Articles.Any(x => x.Id == id))
-            {
-                XPSum = Articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
-            }
-            else
-            {
-                XPSum = User.Issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
-            }
-        }
-    }
+    //     foreach (int id in ids)
+    //     {
+    //         if (Projects.Any(x => x.Id == id))
+    //         {
+    //             XPSum = Projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
+    //         }
+    //         else if (Articles.Any(x => x.Id == id))
+    //         {
+    //             XPSum = Articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
+    //         }
+    //         else
+    //         {
+    //             XPSum = User.Issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
+    //         }
+    //     }
+    // }
 
     private async Task Mama(bool value)
     {

@@ -8,7 +8,7 @@
 
 @attribute [Authorize(Roles = "Admin")]
 
-<PageTitle>Auth</PageTitle>
+<PageTitle>Admin</PageTitle>
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
@@ -20,7 +20,6 @@
 } 
 else 
 {
-
     <MudPaper Class="pa-4 mb-5" Elevation="4">
         <MudSelect T="string" Label="Filter by Project" @bind-Value="SelectedProject" Class="my-2" Dense="true" Clearable="true">
             <MudSelectItem T="string" Value="null">All</MudSelectItem>
@@ -42,7 +41,7 @@ else
                             Variant="@Variant.Filled"
                             Color="@Color.Primary"
                             OnClick="@(() => NavigateToDetails(context.Item.AppUserId))">
-                                Deets
+                                Details
                             </MudButton>
                         </MudStack>
                     </CellTemplate>
@@ -51,7 +50,6 @@ else
         </MudDataGrid>
     </MudPaper>
 }
-
 
 @code {
     [Inject] protected IAdminService AdminService { get; set; }
@@ -95,7 +93,6 @@ else
             FilteredAdminPendingProjects = AdminPendingProjects.Where(x => x.ProjectName == SelectedProject).ToList();
         }
 
-
         StateHasChanged();
     }
 
@@ -105,4 +102,3 @@ else
         return Task.CompletedTask;
     }
 }
-

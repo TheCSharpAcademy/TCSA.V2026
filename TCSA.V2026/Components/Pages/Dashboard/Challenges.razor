@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Services
 @attribute [Authorize]
 
@@ -17,7 +18,7 @@
                 <MudText Typo="Typo.subtitle1" Style="font-weight: bold; color: white;">COMPLETED</MudText>
             </MudStack>
             <MudStack Spacing="0" AlignItems="AlignItems.Center" Class="px-4 px-md-5">
-                <MudText Style="font-size: 2.5rem; font-weight: bolder;">@completedChallenges.Count</MudText>
+                <MudText Style="font-size: 2.5rem; font-weight: bolder;">@CompletedChallenges.Count</MudText>
                 <MudText Style="font-size: 1.25rem;">Challenges</MudText>
             </MudStack>
         </MudPaper>
@@ -67,7 +68,7 @@
             <MudStack Spacing="4">
                 @foreach (var challenge in ChallengesList)
                 {
-                    <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5">
+                    <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
                         <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
                             <MudStack Row Spacing="5">
                                 <MudImage ObjectFit="ObjectFit.Contain" Width="60" Src="@($"img/belts/{challenge.Level}-belt.png")" />
@@ -82,17 +83,22 @@
                             </MudStack>
                             <MudStack Row Spacing="2">
                                 <MudButton Size="@Size.Small"
-                                           Variant="@Variant.Filled"
-                                           Color="@Color.Warning"
-                                           StartIcon="fas fa-eye">
+                                Variant="@Variant.Filled"
+                                Color="@Color.Warning"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", $"https://www.codewars.com/kata/{challenge.ExternalId}", "_blank", "noopener,noreferrer"))"
+                                StartIcon="fas fa-eye">
                                     View
                                 </MudButton>
-                                <MudButton Size="@Size.Small"
-                                           Variant="@Variant.Filled"
-                                           Color="@Color.Primary"
-                                           StartIcon="@Icons.Material.Filled.Cached">
-                                    Synchronize
-                                </MudButton>
+                                @if (!CompletedChallenges.Contains(challenge.Id))
+                                {
+                                    <MudButton Size="@Size.Small"
+                                               Variant="@Variant.Filled"
+                                               Color="@Color.Primary"
+                                               OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
+                                               StartIcon="@Icons.Material.Filled.Cached">
+                                        Sync
+                                    </MudButton>
+                                }
                             </MudStack>
                         </MudStack>
                     </MudPaper>
@@ -107,10 +113,14 @@
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IChallengeService ChallengeService { get; set; }
+    [Inject] private ICodewarsService CodewarsService { get; set; }
     [Inject] private IUserService UserService { get; set; }
 
+    [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+
     private List<Challenge> ChallengesList = new();
-    private List<int> completedChallenges = new();
+    private List<int> CompletedChallenges = new();
     private ApplicationUser User { get; set; }
 
     private bool IsLoading = true;
@@ -131,10 +141,27 @@
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetDetailedUserById(UserId);
         ChallengesList = await ChallengeService.GetChallenges(User.Level);
-        completedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
+        CompletedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
 
         LoadTime = DateTime.UtcNow - startTime;
 
         IsLoading = false;
+    }
+
+    private async Task Sync(int challengeId, string externalId)
+    {
+        var result = await CodewarsService.Sync(User.CodeWarsUsername, challengeId, externalId, UserId);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Sync Successful", Severity.Success);
+            User = await UserService.GetUserById(UserId);
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+
+        User = await UserService.GetUserById(UserId);
     }
 }

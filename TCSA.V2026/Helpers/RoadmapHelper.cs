@@ -102,6 +102,17 @@ public static class RoadmapHelper
     public static List<int> reactProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.React).Select(x => x.Id).ToList();
     public static List<int> mvcProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MVC).Select(x => x.Id).ToList();
 
+    public static string GetExpectedBelt(List<int> completedProjects, int issues, int reviews)
+    {
+        var level = Level.White;
+
+        level = GreenRequirements.All(completedProjects.Contains) ? Level.Green : level;
+        level = (level >= Level.Green && OliveGreenRequirements.All(completedProjects.Contains)) ? Level.OliveGreen : level;
+        level = (level >= Level.OliveGreen && YellowRequirements.All(completedProjects.Contains)) ? Level.Yellow : level;
+        level = (level >= Level.Yellow && OrangeRequirements.All(completedProjects.Contains)) ? Level.Orange : level;
+
+        return level.ToString();
+    }
 
     public static List<RoadmapStage> GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
     {

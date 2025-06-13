@@ -55,23 +55,23 @@
                                     >
                                 Completed
                             </MudChip>
-                        }else if(isInProgress)
+                        }
+                        else if(isInProgress)
                         {
                             <MudChip Class="mt-3 ml-5"
                                      T="string"
                                      Size="@Size.Large"
                                      Color="Color.Info"
-                                     Variant="Variant.Outlined"
-                                     >
+                                     Variant="Variant.Outlined">
                                 In Progress
                             </MudChip>
                         }
                         <MudButton Class="mt-2 ml-5 mr-5"
-                        Size="@Size.Medium"
-                        Variant="@Variant.Filled"
-                        OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                        Color="Color.Primary"
-                        StartIcon="fas fa-eye">
+                                   Size="@Size.Medium"
+                                   Variant="@Variant.Filled"
+                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                   Color="Color.Primary"
+                                   StartIcon="fas fa-eye">
                             View Tasks
                         </MudButton>
                     </CardHeaderActions>
@@ -155,14 +155,18 @@
         Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects, PendingProjects);
 
         var fcc = DashboardProjectsHelpers.Projects.FirstOrDefault(x => x.Id == 75);
+        var cp = DashboardProjectsHelpers.Articles.FirstOrDefault(x => x.Id == 9);
 
-        Areas.FirstOrDefault(x => x.Area == Area.StartHere).Tasks.Add(new DashboardTaskDisplay
+        Areas.FirstOrDefault(x => x.Area == Area.StartHere).Tasks.AddRange(
+            new DashboardTaskDisplay
             {
                 Id = 75,
                 IconUrl = fcc.IconUrl,
+                Slug = fcc.Slug,
                 Title = fcc.Title,
                 Status = DashboardProjectsHelpers.GetTaskStatus(fcc.Id, CompletedProjects, PendingProjects),
                 Area = fcc.Area
-            });
+            }
+        );
     }
 }

@@ -751,7 +751,7 @@ public static class ArticleHelper
                 CardImgUrl = "console-apps.png",
                 BannerUrl = "",
                 Description = "Building console applications will allow you to focus on the back end before diving into the complexities of front-end. Here’s why.",
-                Area = Area.Console,
+                Area = Area.StartHere,
                 Level = Level.Green,
                 ExperiencePoints = 5,
                 Blocks = new List<Block>

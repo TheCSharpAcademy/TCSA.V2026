@@ -20,7 +20,7 @@ public static class DashboardProjectsHelpers
 
         if (area == Area.StartHere)
         {
-            count = Articles.Where(x => x.Area == area).Count() + 1;
+            count = Articles.Where(x => x.Area == area).Count() + 1; // adding fcc 
             ids = Articles.Where(x => x.Area == area).Select(x => x.Id).ToList();
 
             foreach (int id in ids)
@@ -444,7 +444,7 @@ public static class DashboardProjectsHelpers
             }
         }
 
-        if (!completedProjects.Contains(75))
+        if (!completedProjects.Contains(75) || !completedProjects.Contains(9))
         {
             return false;
         }

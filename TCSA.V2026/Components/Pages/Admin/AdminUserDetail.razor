@@ -186,6 +186,7 @@
                 Email = User.Email ?? string.Empty,
                 Country = User.Country,
                 ExperiencePoints = User.ExperiencePoints,
+                ExpectedLevel = GetExpectedLevel(),
                 ExpectedPoints = GetExpectedPoints(),
                 Level = (User.Level).ToString(),
                 GithubUsername = User.GithubUsername ?? string.Empty,
@@ -199,6 +200,15 @@
         await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
+    }
+
+    private string GetExpectedLevel()
+    {
+        var completedProjects = User.DashboardProjects.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
+        var reviews = User.ReviewedProjects;
+        var issues = User.Issues.Count();
+
+        return RoadmapHelper.GetExpectedBelt(completedProjects, reviews, issues);
     }
 
     private int GetExpectedPoints()

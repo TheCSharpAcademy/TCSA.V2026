@@ -51,25 +51,34 @@ public class CodewarsService: ICodewarsService
         string jsonResponse = await response.Content.ReadAsStringAsync();
         CodeWarsApiResponse apiResponse = JsonSerializer.Deserialize<CodeWarsApiResponse>(jsonResponse);
 
-        try
+        if (apiResponse.data.Any(x => x.id == externalId))
         {
-            using (var context = _factory.CreateDbContext())
+            try
             {
-                var project = context.UserChallenges.Add(new UserChallenge
+                using (var context = _factory.CreateDbContext())
                 {
-                    UserId = userId,
-                    ChallengeId = challengeId,
-                    CompletedAt = DateTime.UtcNow
-                });
-                await context.SaveChangesAsync();
-            }
+                    var project = context.UserChallenges.Add(new UserChallenge
+                    {
+                        UserId = userId,
+                        ChallengeId = challengeId,
+                        CompletedAt = DateTime.UtcNow
+                    });
+                    await context.SaveChangesAsync();
+                }
 
-            return result;
-        }
-        catch (Exception ex)
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Status = ResponseStatus.Fail;
+                return result;
+            }
+        } 
+        else
         {
-            result.Message = ex.Message;
             result.Status = ResponseStatus.Fail;
+            result.Message = "You haven't completed this challenge yet.";
             return result;
         }
     }

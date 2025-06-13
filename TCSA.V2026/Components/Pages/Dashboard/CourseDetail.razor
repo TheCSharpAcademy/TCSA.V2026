@@ -19,19 +19,26 @@
                     {
                         var article = Course.Articles[i];
                         <MudListItem Text=@($"{i + 1}. {article.Title}")
-                                     Style=@(CompletedProjects.Contains(article.Id) ? "background-color: #e0ffe0;" : null)
-                                     OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
+                        Style=@(CompletedProjects.Contains(article.Id) ? "background-color: #e0ffe0;" : null)
+                        OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
                     }
                 </MudList>
             </MudPaper>
         </MudItem>
         <MudItem xs="12" md="9">
-            <MudPaper Class="d-flex flex-column mud-width-full py-8 px-5">
+            <MudPaper Class="d-flex flex-column mud-width-full mt-3 py-5 px-5">
+                @if (IsLoggedIn && IsCompleted)
+                {
+                    <MudAlert Class="mt-3 mb-3" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
+                }
+
+                <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2 mt-8">@Article.Title</MudText>
+
                 @foreach (var block in BlocksToShow)
                 {
                     if (!string.IsNullOrEmpty(block.Title))
                     {
-                        <MudText Typo="Typo.h6" Class="mb-2 mt-8">@block.Title</MudText>
+                        <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2 mt-8">@block.Title</MudText>
                     }
 
                     @foreach (var paragraph in block.Paragraphs)
@@ -71,6 +78,18 @@
                         }
                     }
                 }
+                @if (IsLoggedIn && !IsCompleted)
+                {
+                    <div class="d-flex justify-center my-5 mt-5">
+                        <MudButton Variant="Variant.Filled"
+                        class="mt-5"
+                        Color="Color.Primary"
+                        OnClick="MarkAsRead"
+                        Disabled="IsSubmitting">
+                            Mark as Read
+                        </MudButton>
+                    </div>
+                }
             </MudPaper>
         </MudItem>
 
@@ -82,6 +101,8 @@
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
 
+    [Inject] private ISnackbar SnackbarService { get; set; }
+
     [Parameter] public int CourseId { get; set; }
     [Parameter] public int ArticleId { get; set; }
     [Parameter] public int ArticleDisplayId { get; set; }
@@ -91,11 +112,32 @@
     private Course Course { get; set; }
     private Article Article { get; set; }
     private List<int> CompletedProjects = new();
-    private bool IsLoggedIn;
+    private bool IsLoggedIn = false;
     private bool IsLoading = true;
-    private bool IsCompleted;
+    private bool IsCompleted = false;
+    private bool IsSubmitting = false;
     private string UserId;
     private string _lastRenderedCode = string.Empty;
+
+    private async Task MarkAsRead()
+    {
+        IsSubmitting = true;
+
+        var response = await ProjectService.PostArticle(ArticleId, UserId, string.Empty, true);
+
+        IsSubmitting = false;
+
+        if (response.Status == Data.Models.Responses.ResponseStatus.Success)
+        {
+            SnackbarService.Add("Article successfuly marked as read", Severity.Success);
+        }
+        else
+        {
+            SnackbarService.Add("There was an error", Severity.Error);
+        }
+
+        IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
+    }
 
     protected async override Task OnParametersSetAsync()
     {
@@ -122,6 +164,8 @@
         var projects = await ProjectService.GetCompletedProjectsById(UserId);
         var courseIds = Course.Articles.Select(x => x.Id);
         CompletedProjects = projects.Where(x => courseIds.Contains(x)).ToList();
+
+        IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
         IsLoading = false;
     }
 

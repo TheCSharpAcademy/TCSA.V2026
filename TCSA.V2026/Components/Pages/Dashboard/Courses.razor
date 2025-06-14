@@ -146,6 +146,22 @@
                     Status = GetCourseStatus(completeWebApiIds, webApiIds)
                 }
         );
+
+        var wpfCourse = CourseList.FirstOrDefault(x => x.Id == 5);
+        var wpfCourseIds = wpfCourse.Articles.Select(c => c.Id).ToList();
+        var completeWpfCourseIds = wpfCourseIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
+
+        DashboardCourses.Add
+        (
+            new DashboardCourseInfo
+                {
+                    Id = 5,
+                    Title = wpfCourse.Title,
+                    Description = $"{completeWpfCourseIds.Count} out of {wpfCourseIds.Count} chapters completed",
+                    ImgUrl = wpfCourse.ImgUrl,
+                    Status = GetCourseStatus(completeWpfCourseIds, wpfCourseIds)
+                }
+        );
     }
 
     private void NavigateToCourse(int courseId)

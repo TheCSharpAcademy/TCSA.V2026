@@ -5291,6 +5291,83 @@ public class CourseHelper
                         }
                     }
                 }
+            },
+            new Course
+            {
+                Id = 5,
+                Title = "Introduction to WPF",
+                Description = "Build stunning desktop apps with XAML and C# in WPF!",
+                ImgUrl = "icons8-application-64.png",
+                Articles = new List<Article>
+                {
+                    new Article
+                    {
+                        Id = 500070,
+                        CourseDisplayId = 1,
+                        Title = "Introduction",
+                        Slug = "intro-to-wpf-intro",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Title = "What is WPF?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { 
+                                        Body = "Windows Presentation Foundation, or WPF, is a powerful framework for building modern desktop applications on Windows. First introduced by Microsoft as part of the .NET Framework, WPF leverages the combination of <b>XAML (a declarative markup language)</b> and C# to create visually rich and interactive user interfaces. WPF is designed to provide flexibility in UI design, offering capabilities such as data binding, advanced graphics, animations, and styling." 
+                                    },
+                                    new Paragraph {
+                                       Body = "At its core, WPF is built on a <b>vector-based rendering engine</b>, which allows for scalable, resolution-independent visuals. This means that the interface looks sharp and performs consistently across different screen resolutions. With support for both 2D and 3D graphics, developers can create applications that are not just functional but also visually stunning." 
+                                    },
+                                     //new Paragraph {
+                                     //   IsPicture = true,
+                                     //   PictureUrl = "sql-image.jpeg"}
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Why Learn WPF?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                       Body = "WPF remains a key technology for developers building robust and feature-rich desktop applications. Its comprehensive tools and components enable developers to focus on crafting user experiences rather than worrying about the complexities of UI management."
+                                    },
+                                    new Paragraph
+                                    {
+                                       Body = "WPF is also highly extensible, supporting both enterprise-grade applications and smaller personal projects. Despite the rise of web and mobile technologies, WPF is still widely used in industries like finance, healthcare, and engineering, where desktop applications are preferred for their reliability, performance, and offline capabilities."
+                                    },
+                                    new Paragraph
+                                    {
+                                       Body = "While WPF may not enjoy the hype of newer technologies, it remains a reliable and powerful framework with a dedicated community and a solid place in enterprise development. Its longevity is a testament to its design and capability, making it an excellent choice for developers focused on building sophisticated desktop applications."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Key Features of WPF",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "WPF provides developers with a set of tools that simplify application development. Some of the most notable features include: - **Data Binding:** Connect UI components directly to data sources, ensuring real-time updates and synchronization.\r\n- **Styles and Templates:** Customize and theme your application to maintain a consistent look and feel.\r\n- **Animation and Graphics:** Build dynamic and visually appealing applications with support for animations and rich media.\r\n- **Layouts:** Arrange UI components dynamically, ensuring the application looks great on any window size or resolution.\r\n" }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        BackgroundColor="#1C236D",
+                                        FontColor="#FFF",
+                                        Body = "Did you know that WPF was originally codenamed \"Avalon\" during its development at Microsoft! Before it was formally introduced with .NET Framework 3.0 in 2006, Avalon was envisioned as the next big leap in desktop UI—bringing together declarative XAML, advanced graphics with DirectX, and a fully vector-based rendering engine. Kind of like a secret identity before it put on the WPF cape. \U0001f9b8‍♂️" }
+                                }
+                            },
+                        }
+                    }
+                }
             }
         };
     }

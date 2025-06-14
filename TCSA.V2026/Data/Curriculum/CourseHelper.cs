@@ -5302,7 +5302,7 @@ public class CourseHelper
                 {
                     new Article
                     {
-                        Id = 500070,
+                        Id = 500100,
                         CourseDisplayId = 1,
                         Title = "Introduction",
                         Slug = "intro-to-wpf-intro",

@@ -87,13 +87,30 @@
                 <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                 <button type="submit" class="mud-nav-link mud-ripple">
                     <MudIcon 
-                        Icon="@Icons.Material.Filled.Logout" Color="Color.Primary" Class="mr-3"></MudIcon> Logout
+                        Icon="@Icons.Material.Filled.Logout" Color="Color.Primary" Class="mr-3"></MudIcon>
+                        <MudText Color="Color.Primary">
+                        Logout
+                        </MudText>
                 </button>
             </form>
         </Authorized>
         <NotAuthorized>
-            <MudNavLink Href="Account/Register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">Register</MudNavLink>
-            <MudNavLink Href="Account/Login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Password">Login</MudNavLink>
+            <MudNavLink Href="Account/Register"
+                        IconColor="Color.Primary"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Person">
+                <MudText Color="Color.Primary">
+                    Register
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="Account/Login"
+                        IconColor="Color.Primary"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Login">
+                <MudText Color="Color.Primary">
+                    Login
+                </MudText>
+            </MudNavLink>
         </NotAuthorized>
     </AuthorizeView>
     <AuthorizeView Roles="Admin">

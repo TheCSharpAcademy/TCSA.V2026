@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using MudBlazor
+@using TCSA.V2026.Components.UI.SVGs
 @using TCSA.V2026.Data
 @using MudBlazor.StaticInput
 @using TCSA.V2026.Data.Models
@@ -23,10 +24,10 @@ else
             <AntiforgeryToken />
             <input type="hidden" name="ReturnUrl" value="@ReturnUrl" />
             <p>
-                @foreach (var provider in externalLogins)
-                {
-                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                }
+
+                <button type="submit" class="btn btn-primary" name="provider" value="GitHub" title="Log in using your Github account">
+                    <GithubSVG />
+                </button>
             </p>
         </div>
     </form>

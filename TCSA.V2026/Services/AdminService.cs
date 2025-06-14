@@ -35,6 +35,16 @@ public class AdminService : IAdminService
                 var user = await context.AspNetUsers.FirstOrDefaultAsync(u => u.Id == userId);
 
                 user.Level = newBelt;
+                user.HasPendingBeltNotification = true;
+
+                await context.UserActivity.AddAsync(new AppUserActivity
+                {
+                    AppUserId = userId,
+                    ProjectId = 0,
+                    ChallengeId = 0,
+                    DateSubmitted = DateTimeOffset.UtcNow,
+                    ActivityType = ActivityType.NewBelt
+                });
 
                 await context.SaveChangesAsync();
 

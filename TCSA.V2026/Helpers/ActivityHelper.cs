@@ -13,7 +13,7 @@ public static class ActivityHelper
         var currentXP = user.ExperiencePoints;
         var issuesIds = user.Issues.Select(user => user.Id).ToList();
 
-        foreach (var item in user.UserActivity)
+        foreach (var item in user.UserActivity.OrderByDescending(x => x.DateSubmitted))
         {
             try
             {
@@ -38,7 +38,7 @@ public static class ActivityHelper
 
                 {
                     Date = item.DateSubmitted,
-                    Description = GetDescription(issuesIds, item, communityIssue, challenge),
+                    Description = GetDescription(issuesIds, item, communityIssue, challenge, user.Level),
                     ExperiencePoints = GetXPs(issuesIds, item, communityIssue, challenge),
                     CurrentExperiencePoints = currentXP,
                     AppUserId = item.AppUserId,
@@ -85,7 +85,7 @@ public static class ActivityHelper
         return ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.ExperiencePoints ?? 0;
     }
 
-    public static string GetDescription(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null)
+    public static string GetDescription(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null, Level? level = null)
     {
         var articles = ArticleHelper.GetArticles().ToList();
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
@@ -105,6 +105,8 @@ public static class ActivityHelper
                 return $"You've finished a code review for a <b>{ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b> project.";
             case ActivityType.ChallengeCompleted:
                 return $"You've completed the challenge <b>{challenge.Name}</b>.";
+            case ActivityType.NewBelt:
+                return $"You've achieved {level} belt";
             default:
                 return "";
         }

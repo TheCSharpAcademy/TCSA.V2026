@@ -1,6 +1,7 @@
 ﻿@page "/dashboard/activity"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
+@using System.ComponentModel.DataAnnotations
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
@@ -25,28 +26,38 @@
     }
     else
     {
-        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
-        <MudSelect T="ActivityType?" Label="Filter by Activity Type" @bind-Value="SelectedActivityType" Class="my-2" Dense="true" Clearable="true">
+        @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
+        <MudSelect T="ActivityType?"
+                   Label="Filter by Activity Type"
+                   @bind-Value="SelectedActivityType"
+                   Class="my-2" Dense="true" Clearable="true">
             <MudSelectItem T="ActivityType?" Value="null">All</MudSelectItem>
             @foreach (var type in Enum.GetValues<ActivityType>())
             {
-                <MudSelectItem T="ActivityType?" Value="@type">@type.ToString()</MudSelectItem>
+                <MudSelectItem T="ActivityType?" Value="@type">@GetEnumDisplayName(type)</MudSelectItem>
             }
         </MudSelect>
 
-        if (UserActivity != null && UserActivity.Count > 0) {
-            <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity" RowStyle="GetRowStyle">
+        if (UserActivity != null && UserActivity.Count > 0)
+        {
+            <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity">
                 <Columns>
-                    <PropertyColumn Property="@(x => x.Date.ToString("MMM dd, yyyy, ddd"))" Title="DateTime" />
-                    <TemplateColumn>
+                    <TemplateColumn Title="Date" HeaderStyle="color: #1C236D !important;">
                         <CellTemplate>
-                            <MudStack Row>
-                                @((MarkupString)context.Item.Description)
-                            </MudStack>
+                            <MudText Style="@GetDateCellStyle(context.Item)">
+                                @context.Item.Date.ToString("MMM dd, yyyy, ddd")
+                            </MudText>
                         </CellTemplate>
                     </TemplateColumn>
-                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs" />
-                    <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
+                    <TemplateColumn>
+                        <CellTemplate>
+                            <MudText Style="white-space:nowrap">
+                                @((MarkupString)context.Item.Description)
+                            </MudText>
+                        </CellTemplate>
+                    </TemplateColumn>
+                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" HeaderStyle="color: #1C236D !important;" />
+                    <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" HeaderStyle="color: #1C236D !important;" />
                 </Columns>
             </MudDataGrid>
         }
@@ -118,4 +129,29 @@
 
         StateHasChanged();
     }
+
+    private string GetDateCellStyle(ActivityDisplay activity)
+    {
+        var commonStyles = "padding: 10px 10px 10px 20px;  border-radius: 4px; white-space: nowrap;";
+        return activity.ActivityType switch
+        {
+            ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange;  {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen;  {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; {commonStyles}",
+            ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; {commonStyles}",
+            _ => ""
+        };
+    }
+    private string GetEnumDisplayName(ActivityType type)
+    {
+        var fieldInfo = type.GetType().GetField(type.ToString());
+        var attributes = fieldInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
+
+        return attributes?.FirstOrDefault() is DisplayAttribute displayAttribute
+            ? displayAttribute.Name
+            : type.ToString(); // Fall back to raw enum name if no attribute is found
+    }
+
 }

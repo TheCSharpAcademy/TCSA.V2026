@@ -1,4 +1,6 @@
-﻿namespace TCSA.V2026.Data.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TCSA.V2026.Data.Models;
 
 public class AppUserActivity
 {
@@ -14,12 +16,24 @@ public class AppUserActivity
 
 public enum ActivityType
 {
+    [Display(Name = "Article Read")]
     ArticleRead,
+
+    [Display(Name = "Project Submitted")]
     ProjectSubmitted,
+
+    [Display(Name = "Project Completed")]
     ProjectCompleted,
+
+    [Display(Name = "Code Review Completed")]
     CodeReviewCompleted,
+
+    [Display(Name = "Issue Submitted")]
     IssueSubmitted,
+
+    [Display(Name = "Challenge Completed")]
     ChallengeCompleted,
+
+    [Display(Name = "New Belt")]
     NewBelt
 }
-

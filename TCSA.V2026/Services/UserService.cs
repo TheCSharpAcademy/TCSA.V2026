@@ -31,6 +31,7 @@ public class UserService: IUserService
             {
                 return await context.AspNetUsers
                 .Include(x => x.DashboardProjects)
+                .Include(x => x.UserActivity)
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
             }
         }

@@ -47,12 +47,22 @@
         .Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7))
         .Select(
             dp => new TCSANotificationItem
-            {
-                IconUrl = projects.FirstOrDefault(p => p.Id == dp.ProjectId).IconUrl,
-                Description = GetDescription(dp.ProjectId),
-                IsActive = dp.IsPendingNotification
-            }
+                {
+                    IconUrl = projects.FirstOrDefault(p => p.Id == dp.ProjectId).IconUrl,
+                    Description = GetDescription(dp.ProjectId),
+                    IsActive = dp.IsPendingNotification
+                }
         ).ToList();
+
+        if (User.UserActivity.Any(x => x.ActivityType == ActivityType.NewBelt && x.DateSubmitted >= DateTime.UtcNow.AddDays(-7)))
+        {
+            Notifications.Add(new TCSANotificationItem
+                {
+                    IconUrl = $"{(Level)User.Level}-belt.png",
+                    Description = $"You achieved {User.Level} belt!",
+                    IsActive = User.HasPendingBeltNotification
+                });
+        }
     }
 
     private string GetDescription(int projectId)
@@ -72,7 +82,7 @@
 
         var result = await dialog.Result;
 
-        if (!result.Canceled)
+        if (!result.Canceled && Notifications.Any(x => x.IsActive))
         {
             await ProjectService.AcknowledgeNotifications(User.Id);
         }

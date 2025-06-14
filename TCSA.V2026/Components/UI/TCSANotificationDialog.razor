@@ -9,7 +9,7 @@
             {
                 <MudPaper Elevation="2" Class="pa-2 my-1">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <MudImage Src="@($"img/icons/{n.IconUrl}")" Width="40" />
+                        <MudImage Src="@GetIcon(n.Description, n.IconUrl)" Width="30" Class="mr-3"/>
                         <MudText>@n.Description</MudText>
                     </div>
                 </MudPaper>
@@ -25,6 +25,11 @@
 @code {
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public IEnumerable<TCSANotificationItem> Notifications { get; set; }
+
+    private string GetIcon(string description, string iconUrl)
+    {
+        return description.Contains("belt") ? $"img/belts/{iconUrl}" : $"img/icons/{iconUrl}";
+    }
 
     private void Submit() => MudDialog.Close(DialogResult.Ok(true));
 

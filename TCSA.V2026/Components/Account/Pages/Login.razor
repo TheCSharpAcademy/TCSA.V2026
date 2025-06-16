@@ -34,9 +34,6 @@
                                                 Label="Password" InputType="InputType.Password" Placeholder="password"
                                                 UserAttributes="@(new() { { "autocomplete", "current-password" }, { "aria-required", "true" } } )" />
                         </MudItem>
-                        @*                 <MudItem md="12">
-                    <MudStaticCheckBox For="@(() => Input.RememberMe)" @bind-Value="Input.RememberMe">Remember me</MudStaticCheckBox>
-                </MudItem> *@
                         <MudItem md="12">
                             <MudStaticButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" FormAction="FormAction.Submit">Log in</MudStaticButton>
                         </MudItem>
@@ -47,7 +44,7 @@
                     <MudItem md="12">
                         <MudLink 
                             Class="d-flex justify-center mt-3" 
-                            Href="Account/ForgotPassword">Forgot your password?</MudLink><br />
+                            Href="/Account/ForgotPassword">Forgot your password?</MudLink><br />
                         <MudLink 
                             Style="margin-top: -20px;"
                             Class="d-flex justify-center" 

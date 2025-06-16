@@ -1,7 +1,7 @@
 ﻿@page "/admin/{UserId}"
 
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Identity.UI.Services
+@using Microsoft.AspNetCore.Identity
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
@@ -132,7 +132,7 @@
     [Inject] protected IAdminService AdminService { get; set; }
     [Inject] protected ILeaderboardService LeaderboardService { get; set; }
     [Inject] protected IPeerReviewService PeerReviewService { get; set; }
-    [Inject] protected IEmailSender EmailSender { get; set; }
+    [Inject] protected ICustomEmailSender EmailSender { get; set; }
 
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }

@@ -8,11 +8,12 @@
 @using TCSA.V2026.Data
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
 @inject SignInManager<ApplicationUser> SignInManager
-@inject IEmailSender<ApplicationUser> EmailSender
+@inject ICustomEmailSender EmailSender
 @inject ILogger<Register> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager

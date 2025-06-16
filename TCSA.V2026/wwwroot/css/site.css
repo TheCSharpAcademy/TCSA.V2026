@@ -1,4 +1,37 @@
-﻿.jumbotron {
+﻿@media (max-width: 600px) {
+    .responsive-banner {
+        font-size: 1.5rem; /* Smaller for mobile */
+    }
+}
+
+@media (min-width: 601px) {
+    .responsive-banner {
+        font-size: 2.5rem; /* Larger for desktop */
+    }
+}
+
+.responsive-center {
+    text-align: left;
+    display: block;
+}
+
+/* On small screens: center everything */
+@media (max-width: 960px) {
+    .responsive-center {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .responsive-center .mt-4,
+        .responsive-center .mt-6 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+}
+
+.jumbotron {
     background-image: url('/img/banners/article-banner.jpg');
     background-size: cover;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4) !important;

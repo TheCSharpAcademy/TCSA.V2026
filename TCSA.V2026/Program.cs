@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using MudBlazor.Services;
@@ -34,9 +33,9 @@ builder.Services.AddScoped<IPeerReviewService, PeerReviewService>();
 builder.Services.AddScoped<ICommunityService, CommunityService>();
 builder.Services.AddScoped<IChallengeService, ChallengeService>();
 builder.Services.AddScoped<ICodewarsService, CodewarsService>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ThemeService>();

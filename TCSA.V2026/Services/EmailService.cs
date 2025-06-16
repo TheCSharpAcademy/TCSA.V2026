@@ -4,10 +4,19 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Services;
 
-public class EmailSender : IEmailSender
+public interface ICustomEmailSender : IEmailSender<ApplicationUser>
+{
+    Task SendEmailAsync(string toEmail, string subject, string message);
+    Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink);
+    Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink);
+    Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode);
+}
+
+public class EmailSender : ICustomEmailSender
 {
     private readonly IConfiguration _configuration;
     private string _apiKey;
@@ -47,6 +56,21 @@ public class EmailSender : IEmailSender
         msg.SetClickTracking(false, false);
         var response = await client.SendEmailAsync(msg);
     }
+
+    public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)
+    {
+        await SendEmailAsync(email, "Reset your password", $"Please reset your password by <a href='{resetLink}'>clicking here</a>.");
+        Console.WriteLine("cazzo");
+    }
+
+
+    public Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode) =>
+        SendEmailAsync(email, "Reset your password", $"Please reset your password using the following code: {resetCode}");
 }
 
 public class AuthMessageSenderOptions

@@ -179,6 +179,8 @@
     {
         var result = await PeerReviewService.MarkCodeReviewAsCompleted(UserId, dashboardProjectId, reviewerId);
 
+        // TODO SEND EMAILS
+
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Successfully marked as complete", Severity.Success);

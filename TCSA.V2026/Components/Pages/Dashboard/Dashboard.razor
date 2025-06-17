@@ -33,49 +33,93 @@
         {
             bool isInProgress = !area.IsCompleted && area.Tasks.Where(t => t.Status == Data.DTOs.TaskStatus.Completed).Any();
 
-            <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : isInProgress ? $"border: 2px solid #42a5f5" : null)">
-                <MudCardHeader Class="d-flex align-items-center">
-                    <CardHeaderAvatar>
-                        <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: bold;">@area.CardName</MudText>
-                        <MudText Typo="Typo.body2">@area.Description</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        @if (area.IsCompleted)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                            
-                                     T="string"
-                                     Size="@Size.Large"
-                                     Color="Color.Success"
-                                     Variant="Variant.Outlined"
-                                    >
-                                Completed
-                            </MudChip>
-                        }
-                        else if(isInProgress)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                                     T="string"
-                                     Size="@Size.Large"
-                                     Color="Color.Info"
-                                     Variant="Variant.Outlined">
-                                In Progress
-                            </MudChip>
-                        }
-                        <MudButton Class="mt-2 ml-5 mr-5"
-                                   Size="@Size.Medium"
-                                   Variant="@Variant.Filled"
-                                   OnClick="@(() => OpenAreaDialog(area.Tasks))"
-                                   Color="Color.Primary"
-                                   StartIcon="fas fa-eye">
-                            View Tasks
-                        </MudButton>
-                    </CardHeaderActions>
-                </MudCardHeader>
-            </MudCard>
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : isInProgress ? $"border: 2px solid #42a5f5" : null)">
+                    <MudCardHeader Class="d-flex align-items-center">
+                        <CardHeaderAvatar>
+                            <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: bold;">@area.CardName</MudText>
+                            <MudText Typo="Typo.body2">@area.Description</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            @if (area.IsCompleted)
+                            {
+                                <MudChip Class="mt-3 ml-5"
+                                         T="string"
+                                         Size="@Size.Large"
+                                         Color="Color.Success"
+                                         Variant="Variant.Outlined">
+                                    Completed
+                                </MudChip>
+                            }
+                            else if (isInProgress)
+                            {
+                                <MudChip Class="mt-3 ml-5"
+                                         T="string"
+                                         Size="@Size.Large"
+                                         Color="Color.Info"
+                                         Variant="Variant.Outlined">
+                                    In Progress
+                                </MudChip>
+                            }
+                            <MudButton Class="mt-2 ml-5 mr-5"
+                                       Size="@Size.Medium"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+                                View Tasks
+                            </MudButton>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                </MudCard>
+            </MudHidden>
+
+            <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                <MudCard Class="mt-1" Style="@(area.IsCompleted ? "border: 2px solid green;" : isInProgress ? $"border: 2px solid #42a5f5" : null)">
+                    <MudCardHeader Class="d-flex align-items-center flex-wrap justify-space-between ">
+                        <CardHeaderAvatar>
+                            <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: bold;">@area.CardName</MudText>
+                            <MudText Typo="Typo.body2">@area.Description</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            @if (area.IsCompleted)
+                            {
+                                <MudChip Class="mt-1 ml-5 mr-5 mt-5"
+                                         T="string"
+                                         Size="@Size.Small"
+                                         Color="Color.Success"
+                                         Variant="Variant.Outlined">
+                                    Completed
+                                </MudChip>
+                            }
+                            else if (isInProgress)
+                            {
+                                <MudChip Class="mt-1 ml-5 mr-5 mt-5"
+                                         T="string"
+                                         Size="@Size.Small"
+                                         Color="Color.Info"
+                                         Variant="Variant.Outlined">
+                                    In Progress
+                                </MudChip>
+                            }
+                            <MudButton Class="mt-1 mt-5"
+                                       Size="@Size.Small"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => OpenAreaDialog(area.Tasks))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+                                View Tasks
+                            </MudButton>
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                </MudCard>
+            </MudHidden>
         }
     }
 </MudContainer>

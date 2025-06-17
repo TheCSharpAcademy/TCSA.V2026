@@ -2,6 +2,10 @@
     .responsive-banner {
         font-size: 1.5rem; /* Smaller for mobile */
     }
+
+    .mud-typography.mud-typography-body1.mud-switch.mud-switch-label-medium.mud-input-content-placement-end {
+        display: none;
+    }
 }
 
 @media (min-width: 601px) {

@@ -12,9 +12,16 @@
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudStaticNavDrawerToggle DrawerId="nav-drawer" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
-        <MudText Typo="Typo.h5" Class="ml-3">The C# Academy</MudText>
+        <MudImage Src="/img/logo.png" Width="40" />
         <MudSpacer />
-        <MudSwitch ValueChanged="ToggleTheme" Value="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
+        <MudSwitch 
+            ThumbIcon="@Icons.Material.Outlined.ModeNight"
+            ValueChanged="ToggleTheme" 
+            Value="@ThemeService.IsDarkMode" 
+            Color="Color.Primary" 
+            Class="ma-4" 
+            T="bool" 
+            Label="Toggle Light/Dark Mode" />
         <MudIconButton Icon=@Icons.Custom.Brands.Discord OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://discord.gg/aDMDET8ywB", "_blank", "noopener,noreferrer"))"/>
         <MudIconButton Icon=@Icons.Custom.Brands.YouTube OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://www.youtube.com/channel/UCUb14APzNlpUcDElcCEw5OA", "_blank", "noopener,noreferrer"))" />
         <MudIconButton Icon=@Icons.Custom.Brands.LinkedIn OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://www.linkedin.com/school/thecsharpacademy/", "_blank", "noopener,noreferrer"))" />

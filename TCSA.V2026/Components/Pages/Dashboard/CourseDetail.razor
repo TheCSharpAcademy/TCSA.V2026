@@ -60,10 +60,10 @@
                         {
                             if (!string.IsNullOrWhiteSpace(paragraph.BackgroundColor))
                             {
-                                var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
+                                var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem";
                                 var textStyle = $"color: {paragraph.FontColor};";
 
-                                <MudPaper Style="@bgStyle" Elevation="1" Class="my-2">
+                                <MudPaper Style="@bgStyle" Elevation="1" Class="my-5">
                                     <MudText Style="@textStyle" Typo="Typo.body1">
                                         @((MarkupString)paragraph.Body)
                                     </MudText>

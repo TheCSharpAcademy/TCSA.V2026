@@ -5352,7 +5352,18 @@ public class CourseHelper
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "WPF provides developers with a set of tools that simplify application development. Some of the most notable features include: - **Data Binding:** Connect UI components directly to data sources, ensuring real-time updates and synchronization.\r\n- **Styles and Templates:** Customize and theme your application to maintain a consistent look and feel.\r\n- **Animation and Graphics:** Build dynamic and visually appealing applications with support for animations and rich media.\r\n- **Layouts:** Arrange UI components dynamically, ensuring the application looks great on any window size or resolution.\r\n" }
+                                       Body = "WPF provides developers with a set of tools that simplify application development. Some of the most notable features include:<br> ➡️ <b>Data Binding</b>: Connect UI components directly to data sources, ensuring real-time updates and synchronization.<br>➡️ <b>Styles and Templates</b>: Customize and theme your application to maintain a consistent look and feel.<br>➡️ <b>Animations and Graphics</b>:Build dynamic and visually appealing applications with support for animations and rich media.<br>➡️ <b>Layouts</b> Arrange UI components dynamically, ensuring the application looks great on any window size or resolution.\r\n" }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Other frameworks",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Microsoft has provided numerous frameworks and technologies over the years for building desktop applications on Windows. Early on, developers used Win32 API, a low-level C-based interface offering direct control over Windows components. Then came MFC (Microsoft Foundation Classes), a C++ wrapper around Win32 that simplified UI programming while still requiring manual memory management and COM interactions. Later, Microsoft introduced Windows Forms (WinForms) with .NET, which brought a higher-level, event-driven programming model and RAD (rapid application development) tools in Visual Studio, making it easier for developers to build GUI applications with drag-and-drop interfaces. Other notable options include UWP (Universal Windows Platform), which aimed to unify development across PCs, tablets, Xbox, and other Windows 10+ devices, but suffered from limited adoption and ecosystem constraints. More recently, Microsoft introduced WinUI, part of the Windows App SDK, which evolves UWP into a modern, flexible framework that works well with both Win32 and .NET apps." },
+                                    new Paragraph {
+                                       Body = "With so many options? Why pick WPF? In The C# Academy's opinion, WPF is the most mature and reliable of the above. Even considering the downside of being limited to building Windows Apps, a production app demands a battle-tested framework and that can be said of WPF. It's also important to learning WPF means learning XAML, which is used by a few of frameworks above. Even if you decide to switch later, the knowledge from WPF will transfer to the chosen framework." }
                                 }
                             },
                             new Block
@@ -5363,6 +5374,72 @@ public class CourseHelper
                                         BackgroundColor="#1C236D",
                                         FontColor="#FFF",
                                         Body = "Did you know that WPF was originally codenamed \"Avalon\" during its development at Microsoft! Before it was formally introduced with .NET Framework 3.0 in 2006, Avalon was envisioned as the next big leap in desktop UI—bringing together declarative XAML, advanced graphics with DirectX, and a fully vector-based rendering engine. Kind of like a secret identity before it put on the WPF cape. \U0001f9b8‍♂️" }
+                                }
+                            },
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500101,
+                        CourseDisplayId = 2,
+                        Title = "About the Course",
+                        Slug = "intro-to-wpf-about",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Title = "What to Expect?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "This course is designed as a hands-on introduction to Windows Presentation Foundation (WPF). Instead of overwhelming you with abstract concepts or exhaustive theory, we’ll focus on building a practical and engaging project from start to finish. By the end of the course, you’ll have a fully functional desktop application that showcases the power and versatility of WPF."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "What Will We Build?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "The project we’ll create is a recipes manager—an application that allows users to manage, edit, and save their favorite recipes. Through this project, you’ll explore WPF’s key features, including dynamic layouts, user interaction through controls, and data persistence using SQLite with Entity Framework."
+                                    },
+                                    new Paragraph {
+                                       Body = "This course takes a practical approach, skipping the advanced **Model-View-ViewModel (MVVM)** design pattern, which is commonly used in WPF applications. Instead, we’ll stick to a straightforward code-behind pattern to make it easier for you to understand the core mechanics of WPF. While MVVM is a powerful tool for building scalable and maintainable applications, it can be complex for beginners. For now, our goal is to focus on the basics and build a strong foundation."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Pre-requisites",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "- It’s important to note that this course is not for absolute beginners. To get the most out of the lessons, you should already have a working knowledge of:\r\n    - **C#:** Understanding classes, methods, events, and basic object-oriented programming is essential.\r\n    - **SQL:** You should be familiar with basic SQL concepts, such as creating tables and performing CRUD (Create, Read, Update, Delete) operations.\r\n    - **Entity Framework:** A basic understanding of how Entity Framework works, including setting up a database context and performing queries, will be helpful.\r\n"
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "ADD APP PHOTO",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "ADD APP PHOTO"
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        BackgroundColor="#1C236D",
+                                        FontColor="#FFF",
+                                        Body = "Bill Gates had to be convinced Yep, the big guy himself. The WPF team needed to pitch the vision of a unified UI framework that could handle documents, media, and interactivity. Gates eventually gave the green light, and WPF became part of .NET Framework 3.0 in 2006." }
                                 }
                             },
                         }

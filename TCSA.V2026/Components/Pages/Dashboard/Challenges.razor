@@ -55,9 +55,10 @@
         if (ChallengesList != null && ChallengesList.Count > 0)
         {
             <MudStack Row Class="mt-6 mb-4" Spacing="2">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">
-                    Show Completed Challenges
-                </MudButton>
+                <MudCheckBox @bind-Value="@_showCompleted"
+                Label="Show Completed"
+                CheckedIcon="@Icons.Material.Outlined.CheckBox"
+                UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
                 <MudSelect T="Level" Label="Filter by Level" Class="flex-grow-0">
                     @foreach (Level item in Enum.GetValues(typeof(Level)))
                     {
@@ -123,6 +124,7 @@
     private List<int> CompletedChallenges = new();
     private ApplicationUser User { get; set; }
 
+    private bool _showCompleted = false;
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;

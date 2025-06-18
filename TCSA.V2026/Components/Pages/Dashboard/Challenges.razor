@@ -150,6 +150,10 @@
         IsLoading = false;
     }
 
+    private bool IsCompleted(int id) {
+        return CompletedChallenges.Contains(id);
+    }
+
     private async Task Sync(int challengeId, string externalId)
     {
         var result = await CodewarsService.Sync(User.CodeWarsUsername, challengeId, externalId, UserId);

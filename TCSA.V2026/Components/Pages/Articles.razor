@@ -15,13 +15,15 @@
             @foreach (var article in ArticlesList)
             {
                 <MudItem xs="12" sm="6" md="3">
-                    <MudCard Style="height:100%">
-                        <MudCardMedia Image="@($"img/cardimages/{article.CardImgUrl}")" Height="200" />
-                        <MudCardContent>
-                            <MudText Typo="Typo.h5" Style="margin-bottom:5px">@article.Title</MudText>
-                            <MudText Typo="Typo.body2">@article.Description</MudText>
-                        </MudCardContent>
-                    </MudCard>
+                    <MudLink OnClick="@(() => NavigateToArticle(article))">
+                        <MudCard Style="height:100%" Elevation="3">
+                            <MudCardMedia Image="@($"img/cardimages/{article.CardImgUrl}")" Height="200" />
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5" Style="margin-bottom:5px">@article.Title</MudText>
+                                <MudText Typo="Typo.body2">@article.Description</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudLink>
                 </MudItem>
             }
         </MudGrid>

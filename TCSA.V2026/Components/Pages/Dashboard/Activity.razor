@@ -27,9 +27,9 @@
     {
         @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
         <MudSelect T="ActivityType?"
-                   Label="Filter by Activity Type"
-                   @bind-Value="SelectedActivityType"
-                   Class="my-2" Dense="true" Clearable="true">
+        Label="Filter by Activity Type"
+        @bind-Value="SelectedActivityType"
+        Class="my-2" Dense="true" Clearable="true">
             <MudSelectItem T="ActivityType?" Value="null">All</MudSelectItem>
             @foreach (var type in Enum.GetValues<ActivityType>())
             {
@@ -39,26 +39,52 @@
 
         if (UserActivity != null && UserActivity.Count > 0)
         {
-            <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity">
-                <Columns>
-                    <TemplateColumn Title="Date" HeaderStyle="color: #1C236D !important;">
-                        <CellTemplate>
-                            <MudText Style="@GetDateCellStyle(context.Item)">
-                                @context.Item.Date.ToString("MMM dd, yyyy, ddd")
-                            </MudText>
-                        </CellTemplate>
-                    </TemplateColumn>
-                    <TemplateColumn>
-                        <CellTemplate>
-                            <MudText Style="white-space:nowrap">
-                                @((MarkupString)context.Item.Description)
-                            </MudText>
-                        </CellTemplate>
-                    </TemplateColumn>
-                    <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" HeaderStyle="color: #1C236D !important;" />
-                    <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" HeaderStyle="color: #1C236D !important;" />
-                </Columns>
-            </MudDataGrid>
+            <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                @foreach(var a in UserActivity)
+                {
+                    <MudCard Class="mt-1">
+                        <MudCardHeader Class="d-flex align-items-center flex-wrap justify-space-between ">
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body2">@a.Date.ToString("MMM dd, yyyy, ddd")</MudText>
+                                <MudText Typo="Typo.body1" Color="Color.Primary" Style=@GetDateCellStyleMobile(a)> @((MarkupString)a.Description)</MudText>
+                                <MudGrid Class="pt-1">
+                                    <MudItem xs="6" Class="d-flex align-items-center">
+                                        <MudText Typo="Typo.body2" Class="mr-1">XPs Won: </MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Primary" Style="font-weight: bold;"> @a.ExperiencePoints</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6" Class="d-flex align-items-center">
+                                        <MudText Typo="Typo.body2" Class="mr-1">Total XPs:</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Error" Style="font-weight: bold;">  @a.CurrentExperiencePoints</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                    </MudCard>
+                }
+            </MudHidden>
+
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity">
+                    <Columns>
+                        <TemplateColumn Title="Date" HeaderStyle="color: #1C236D !important;">
+                            <CellTemplate>
+                                <MudText Style="@GetDateCellStyle(context.Item)">
+                                    @context.Item.Date.ToString("MMM dd, yyyy, ddd")
+                                </MudText>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn>
+                            <CellTemplate>
+                                <MudText Style="white-space:nowrap">
+                                    @((MarkupString)context.Item.Description)
+                                </MudText>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" HeaderStyle="color: #1C236D !important;" />
+                        <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" HeaderStyle="color: #1C236D !important;" />
+                    </Columns>
+                </MudDataGrid>
+            </MudHidden>
         }
     }
 </MudContainer>
@@ -143,6 +169,22 @@
             _ => ""
         };
     }
+
+    private string GetDateCellStyleMobile(ActivityDisplay activity)
+    {
+        var commonStyles = "padding: 10px 10px 10px 20px;  border-radius: 4px;";
+        return activity.ActivityType switch
+        {
+            ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange;  {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen;  {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; {commonStyles}",
+            ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; {commonStyles}",
+            _ => ""
+        };
+    }
+
     private string GetEnumDisplayName(ActivityType type)
     {
         var fieldInfo = type.GetType().GetField(type.ToString());

@@ -5428,7 +5428,7 @@ public class CourseHelper
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "ADD APP PHOTO"
+                                       Body = "ADD APP PHOTO. Talk about VS INSTALLATION"
                                     },
                                 }
                             },
@@ -5442,6 +5442,126 @@ public class CourseHelper
                                         Body = "Bill Gates had to be convinced Yep, the big guy himself. The WPF team needed to pitch the vision of a unified UI framework that could handle documents, media, and interactivity. Gates eventually gave the green light, and WPF became part of .NET Framework 3.0 in 2006." }
                                 }
                             },
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500102,
+                        CourseDisplayId = 3,
+                        Title = "Project Creation",
+                        Slug = "intro-to-wpf-project-creation",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "In this chapter, we’ll walk through the process of creating your very first WPF project and running it. We won’t dive into any coding yet; instead, we’ll focus on getting the project set up correctly in Visual Studio, ensuring that everything is ready to go before we start building our application."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Selecting WPF",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Launch Visual Studio on your machine. Once Visual Studio is open, click on the **Create a new project** button. This will bring up the project template wizard. When searching for WPF you'll see a few options: WPF with Visual Basic (VB), WPF App (.NET Framework) and WPF Applicaton with C#. Select Select WPF Application (not .NET Framework). "
+                                    },
+                                    new Paragraph {
+                                       Body = "This course takes a practical approach, skipping the advanced **Model-View-ViewModel (MVVM)** design pattern, which is commonly used in WPF applications. Instead, we’ll stick to a straightforward code-behind pattern to make it easier for you to understand the core mechanics of WPF. While MVVM is a powerful tool for building scalable and maintainable applications, it can be complex for beginners. For now, our goal is to focus on the basics and build a strong foundation."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Configuring Your Project",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "After selecting the WPF App template, you'll be prompted to name your project. - **Project Name:** You can name your project something like `RecipeManagerApp`.\r\n- **Location:** Choose a directory where you want to save your project.\r\n- **Solution Name:** Visual Studio will automatically set the solution name to match your project name, but you can change it if needed.\r\n- Once you’ve configured your project, click **Create**.\r\n" },
+
+                                        new Paragraph {
+                                       Body = "Visual Studio will now generate a default WPF project for you. It will include several files and folders, but the most important for us right now is the `MainWindow.xaml` file, which contains the UI layout of the application, and the `MainWindow.xaml.cs` file, where we will write the logic to control how the application behaves."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Running Your Project",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In Visual Studio, go to the **Build** menu and select **Build Solution** (or simply press `Ctrl + Shift + B`). This will compile your application and check for any errors."
+                                    },
+                                    new Paragraph {
+                                       Body = "To run the application, click the green **Start** button in Visual Studio, or press `F5`. This will start the app and launch the `MainWindow.xaml` by default. You should see a blank window appear with the default WPF UI layout. It won’t have any functionality yet, but the project is now set up and running."
+                                    },
+                                     new Paragraph {
+                                       Body = "After verifying that the application runs successfully, close the window. We’re now ready to start customizing the project to suit our needs."
+                                    },
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500103,
+                        CourseDisplayId = 4,
+                        Title = "Exploring the Template",
+                        Slug = "intro-to-wpf-exploring",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Title = "MainWindow.xaml",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "`MainWindow.xaml` is the primary file where the user interface (UI) of your WPF application is defined. It uses **XAML (Extensible Application Markup Language)**, a declarative markup language, to describe the structure and layout of the UI elements such as buttons, text boxes, labels, and grids. In this file, you can arrange controls, set properties like size and color, and apply styles. This file serves as the blueprint for the window users will interact with in the application."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "App.xaml",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "`App.xaml` is responsible for defining application-wide resources, styles, and global settings that can be shared across all windows and controls in the application. It typically includes things like color schemes, fonts, and custom resources that can be accessed anywhere in the app. This file also specifies which window should open when the application starts, typically the `MainWindow`. It serves as the entry point for application-level settings and resources."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "App.xaml.cs",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "The `App.xaml.cs` file contains the application logic, handling startup and shutdown events. This file includes the code that runs when the application is launched, such as initializing application-level resources and defining which window should appear first. For example, it may launch `MainWindow.xaml` when the application starts, and clean up resources when the application closes. It serves as the entry point for the app's life cycle."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "So what's XAML?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "XAML (Extensible Application Markup Language) is a markup language used to define the structure and appearance of user interfaces in WPF applications. It’s a declarative language, meaning you describe the elements of your UI in a hierarchical, readable format rather than writing procedural code to create and manipulate each UI element manually. XAML is tightly integrated with C# in WPF, with C# handling the logic and XAML defining the layout. In a WPF project, XAML files describe elements such as buttons, grids, text boxes, and other controls, along with their properties like size, color, and alignment."
+                                    },
+                                    new Paragraph {
+                                       Body = "XAML is designed to be both human-readable and machine-readable, making it easy for designers and developers to collaborate on a project. Designers can focus on laying out the interface in XAML, while developers work on the functionality in C#. One of the main advantages of XAML is that it allows for a clear separation of concerns between the UI and logic, making it easier to maintain and scale applications. It also allows for powerful features like data binding, where UI elements are linked directly to data sources, ensuring the interface automatically updates when the underlying data changes"
+                                    },
+                                }
+                            }
                         }
                     }
                 }

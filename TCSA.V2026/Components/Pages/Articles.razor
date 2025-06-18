@@ -21,16 +21,6 @@
                             <MudText Typo="Typo.h5" Style="margin-bottom:5px">@article.Title</MudText>
                             <MudText Typo="Typo.body2">@article.Description</MudText>
                         </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Class=""
-                            Size="@Size.Medium"
-                            Variant="@Variant.Filled"
-                            Color="Color.Primary"
-                            StartIcon="fas fa-eye"
-                            OnClick="@(() => NavigateToArticle(article))">
-                                View Article
-                            </MudButton>
-                        </MudCardActions>
                     </MudCard>
                 </MudItem>
             }

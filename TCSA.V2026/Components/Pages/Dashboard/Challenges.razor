@@ -67,7 +67,7 @@
                 </MudSelect>
             </MudStack>
             <MudStack Spacing="4">
-                @foreach (var challenge in ChallengesList)
+                @foreach (var challenge in FilteredChallenges)
                 {
                     <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
                         <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
@@ -93,10 +93,10 @@
                                 @if (!CompletedChallenges.Contains(challenge.Id))
                                 {
                                     <MudButton Size="@Size.Small"
-                                               Variant="@Variant.Filled"
-                                               Color="@Color.Primary"
-                                               OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
-                                               StartIcon="@Icons.Material.Filled.Cached">
+                                    Variant="@Variant.Filled"
+                                    Color="@Color.Primary"
+                                    OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
+                                    StartIcon="@Icons.Material.Filled.Cached">
                                         Sync
                                     </MudButton>
                                 }
@@ -105,7 +105,7 @@
                     </MudPaper>
                 }
             </MudStack>
-            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="ChallengesList.Count" />
+            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="FilteredChallenges.Count" />
         }
     }
 </MudContainer>
@@ -123,6 +123,8 @@
     private List<Challenge> ChallengesList = new();
     private List<int> CompletedChallenges = new();
     private ApplicationUser User { get; set; }
+    private List<Challenge> FilteredChallenges =>
+        _showCompleted ? ChallengesList.Where(c => IsCompleted(c.Id)).ToList() : ChallengesList;
 
     private bool _showCompleted = false;
     private bool IsLoading = true;

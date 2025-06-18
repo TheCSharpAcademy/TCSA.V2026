@@ -4,17 +4,26 @@
         @MudDialog.Title
     </TitleContent>
     <DialogContent>
-        <MudStack>
-            @foreach (var n in Notifications)
-            {
-                <MudPaper Elevation="2" Class="pa-2 my-1">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <MudImage Src="@GetIcon(n.Description, n.IconUrl)" Width="30" Class="mr-3"/>
-                        <MudText>@n.Description</MudText>
-                    </div>
-                </MudPaper>
-            }
-        </MudStack>
+        @if (Notifications != null && Notifications.Any())
+        {
+            <MudStack>
+                @foreach (var n in Notifications)
+                {
+                    <MudPaper Elevation="2" Class="pa-2 my-1">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <MudImage Src="@GetIcon(n.Description, n.IconUrl)" Width="30" Class="mr-3" />
+                            <MudText>@n.Description</MudText>
+                        </div>
+                    </MudPaper>
+                }
+            </MudStack>
+        } else
+        {
+            <MudText Typo="Typo.body1">
+                You don’t have any notifications at the moment. Enjoy your day!
+            </MudText>
+        }
+
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

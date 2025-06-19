@@ -55,9 +55,10 @@
         if (ChallengesList != null && ChallengesList.Count > 0)
         {
             <MudStack Row Class="mt-6 mb-4" Spacing="2">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">
-                    Show Completed Challenges
-                </MudButton>
+                <MudCheckBox @bind-Value="@_showCompleted"
+                Label="Show Completed"
+                CheckedIcon="@Icons.Material.Outlined.CheckBox"
+                UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
                 <MudSelect T="Level" Label="Filter by Level" Class="flex-grow-0">
                     @foreach (Level item in Enum.GetValues(typeof(Level)))
                     {
@@ -66,7 +67,7 @@
                 </MudSelect>
             </MudStack>
             <MudStack Spacing="4">
-                @foreach (var challenge in ChallengesList)
+                @foreach (var challenge in FilteredChallenges)
                 {
                     <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
                         <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
@@ -92,10 +93,10 @@
                                 @if (!CompletedChallenges.Contains(challenge.Id))
                                 {
                                     <MudButton Size="@Size.Small"
-                                               Variant="@Variant.Filled"
-                                               Color="@Color.Primary"
-                                               OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
-                                               StartIcon="@Icons.Material.Filled.Cached">
+                                    Variant="@Variant.Filled"
+                                    Color="@Color.Primary"
+                                    OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
+                                    StartIcon="@Icons.Material.Filled.Cached">
                                         Sync
                                     </MudButton>
                                 }
@@ -104,7 +105,7 @@
                     </MudPaper>
                 }
             </MudStack>
-            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="ChallengesList.Count" />
+            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="FilteredChallenges.Count" />
         }
     }
 </MudContainer>
@@ -122,7 +123,10 @@
     private List<Challenge> ChallengesList = new();
     private List<int> CompletedChallenges = new();
     private ApplicationUser User { get; set; }
+    private List<Challenge> FilteredChallenges =>
+        _showCompleted ? ChallengesList.Where(c => IsCompleted(c.Id)).ToList() : ChallengesList;
 
+    private bool _showCompleted = false;
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
@@ -146,6 +150,10 @@
         LoadTime = DateTime.UtcNow - startTime;
 
         IsLoading = false;
+    }
+
+    private bool IsCompleted(int id) {
+        return CompletedChallenges.Contains(id);
     }
 
     private async Task Sync(int challengeId, string externalId)

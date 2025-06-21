@@ -3387,7 +3387,7 @@ public class CourseHelper
                                      new Paragraph { Body = "In FlightsService, under the constructor, let's implement the method for creation of a flight:" },
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "public Flight Createflight(Flight flight)\r\n    {\r\n        var savedFlight = Context.Flights.Add(flight);\r\n        Context.SaveChanges();\r\n        return savedFlight.Entity;\r\n    }"
+                                        Body = "public Flight Createflight(Flight flight)\r\n    {\r\n        var savedFlight = _dbContext.Flights.Add(flight);\r\n        _dbContext.SaveChanges();\r\n        return savedFlight.Entity;\r\n    }"
                                     },
                                     new Paragraph { Body = "In CreateFlight we're adding a flight to the table. The <b>Add() method</b> adds the entity to the context, but it doesn't immediately send the command to the database. Instead, it stages the entity to be added to the database when <b>SaveChanges</b> is called. The object returned by this operation is <b>EntityEntry&lt;Flight&gt</b> and represents the entity (Flight) being tracked by the DbContext. It provides access to information about the entity and its state within the context. This includes properties such as Entity, which represents the entity itself, and various methods and properties for working with the entity's state, tracking changes, etc." },
                                 },
@@ -3400,7 +3400,7 @@ public class CourseHelper
                                 {
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public string? DeleteFlight(int id)\r\n    {\r\n        Flight savedFlight = Context.Flights.Find(id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        Context.Flights.Remove(savedFlight);\r\n\r\n        return $\"Successfully deleted flight with id: {id}\";\r\n    }" },
+                                          Body = "public string? DeleteFlight(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Flights.Remove(savedFlight);\r\n\r\n        return $\"Successfully deleted flight with id: {id}\";\r\n    }" },
                                        new Paragraph { Body = "When deleting a flight we first check if it exists. If it doesn't we return null and let the caller deal with it. We then return a meaningful message in case the operation is successful." }
                                 },
                             },
@@ -3411,7 +3411,7 @@ public class CourseHelper
                                 {
                                      new Paragraph {
                                          IsCode = true,
-                                         Body = "public List&lt;Flight&gt GetAllFlights()\r\n    {\r\n        return Context.Flights.ToList();\r\n    }" },
+                                         Body = "public List&lt;Flight&gt GetAllFlights()\r\n    {\r\n        return _dbContext.Flights.ToList();\r\n    }" },
                                      new Paragraph {
                                        Body = "This implementation is self-explanatory. However, it's important to note that calling ToList() in GetAllFlights executes the query <b>immediately and loads all data into memory</b>, which might not be efficient for large datasets. We'll show how to deal with issue later in the course"
                                     },
@@ -3424,7 +3424,7 @@ public class CourseHelper
                                 {
                                      new Paragraph {
                                          IsCode = true,
-                                         Body = "public Flight? GetFlightById(int id)\r\n    {\r\n        Flight savedFlight = Context.Flights.Find(id);\r\n        return savedFlight == null ? null : savedFlight;\r\n    }" },
+                                         Body = "public Flight? GetFlightById(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n        return savedFlight == null ? null : savedFlight;\r\n    }" },
                                      new Paragraph {
                                        Body = "Here we're looking for a Flight with the id provided. We use a <b>ternary expression</b> to return null if no flight was found and return the flight object if it was found."
                                     },
@@ -3437,7 +3437,7 @@ public class CourseHelper
                                 {
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public Flight UpdateFlight(Flight flight)\r\n    {\r\n        Flight savedFlight = Context.Flights.Find(flight.Id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        Context.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        Context.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
+                                          Body = "public Flight UpdateFlight(Flight flight)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(flight.Id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        _dbContext.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
                                        new Paragraph {
                                            Body = "Similarly to GetFlightById(), we're looking for a flight with the given id, returning null if none is found. <b>Context.Entry(savedFlight)</b> gets the DbEntityEntry for savedFlight, which represents its entry in the Entity Framework context. <b>CurrentValues.SetValues(flight)</b> copies the properties from the provided flight object into savedFlight. Essentially, this line takes all values from flight and updates savedFlight with those values."
                                        },

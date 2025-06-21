@@ -3055,6 +3055,21 @@ public class CourseHelper
                                        Body = "The call to <b>base(options)</b> in the constructor is crucial. It passes the configuration options up to the DbContext base class so that the EF Core can use these options to <b>set up the database context </b>appropriately." }
                                 },
                             },
+                            new Block{
+                                Title = "Connection string",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Before connecting to the database we have to add a connection string to <b>appsettings.json</b> file."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "{\r\n   \"ConnectionStrings\": {\r\n        \"DefaultConnection\": \"Data Source=Flights.db\"\r\n   },\r\n  \"Logging\":{\r\n   //ommited for brevity...\r\n}"
+                                    }
+                                }
+                            },
                             new Block
                             {
                                 Title = "Program.cs",

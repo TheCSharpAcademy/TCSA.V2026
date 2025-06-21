@@ -3400,7 +3400,7 @@ public class CourseHelper
                                 {
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public string? DeleteFlight(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Flights.Remove(savedFlight);\r\n\r\n        return $\"Successfully deleted flight with id: {id}\";\r\n    }" },
+                                          Body = "public string? DeleteFlight(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Flights.Remove(savedFlight);\r\n        _dbContext.SaveChanges();\r\n\r\n        return $\"Successfully deleted flight with id: {id}\";\r\n    }" },
                                        new Paragraph { Body = "When deleting a flight we first check if it exists. If it doesn't we return null and let the caller deal with it. We then return a meaningful message in case the operation is successful." }
                                 },
                             },
@@ -3437,7 +3437,7 @@ public class CourseHelper
                                 {
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public Flight UpdateFlight(Flight flight)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(flight.Id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        _dbContext.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
+                                          Body = "public Flight UpdateFlight(int id, Flight flight)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        _dbContext.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        _dbContext.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
                                        new Paragraph {
                                            Body = "Similarly to GetFlightById(), we're looking for a flight with the given id, returning null if none is found. <b>Context.Entry(savedFlight)</b> gets the DbEntityEntry for savedFlight, which represents its entry in the Entity Framework context. <b>CurrentValues.SetValues(flight)</b> copies the properties from the provided flight object into savedFlight. Essentially, this line takes all values from flight and updates savedFlight with those values."
                                        },
@@ -3730,7 +3730,7 @@ public class CourseHelper
                                      },
                                         new Paragraph {
                                          IsCode = true,
-                                         Body = " [HttpGet(\"{id}\")]\r\n    public ActionResult&lt;Flight&gt GetFlightById(int id)\r\n    {\r\n        var result = _flightService.GetFlightById(id);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }\r\n\r\n\r\n    [HttpPut]\r\n    public ActionResult&lt;Flight&gt UpdateFlight(Flight flight)\r\n    {\r\n        var result = _flightService.GetFlightById(flight.Id);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }\r\n\r\n    [HttpDelete(\"{id}\")]\r\n    public ActionResult&lt;Flight&gt DeleteFlight(int id)\r\n    {\r\n        var result = _flightService.GetFlightById(id);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }"
+                                         Body = "    [HttpGet(\"{id}\")]\r\n    public ActionResult&lt;Flight&gt GetFlightById(int id)\r\n    {\r\n        var result = _flightService.GetFlightById(id);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }\r\n\r\n\r\n    [HttpPut]\r\n    public ActionResult&lt;Flight&gt UpdateFlight(int id, Flight flight)\r\n    {\r\n        var result = _flightService.UpdateFlight(id, updatedFlight);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }\r\n\r\n    [HttpDelete(\"{id}\")]\r\n    public ActionResult&lt;Flight&gt DeleteFlight(int id)\r\n    {\r\n        var result = _flightService.DeleteFlight(id);\r\n\r\n        if (result == null)\r\n        {\r\n            return NotFound();\r\n        }\r\n\r\n        return Ok(result);\r\n    }"
                                      }
                                 }
                             },

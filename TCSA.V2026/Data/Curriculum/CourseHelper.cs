@@ -3314,7 +3314,7 @@ public class CourseHelper
                                     new Paragraph { Body = "Let's create a new class called FlightService, inside a new <b>Services folder</b>. Above the class declaration, declare the following interface:" },
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public interface IFlightService\r\n    {\r\n        public List&lt;Flight&gt GetAllFlights();\r\n        public Flight? GetFlightById(int id);\r\n        public Flight CreateFlight(Flight flight);\r\n        public Flight UpdateFlight(int id, Flight updatedFlight);\r\n        public string? DeleteFlights(int id);\r\n    }" },
+                                          Body = "public interface IFlightService\r\n    {\r\n        public List&lt;Flight&gt GetAllFlights();\r\n        public Flight? GetFlightById(int id);\r\n        public Flight CreateFlight(Flight flight);\r\n        public Flight UpdateFlight(int id, Flight updatedFlight);\r\n        public string? DeleteFlight(int id);\r\n    }" },
                                        new Paragraph { Body = "This interface <b>serves as a contract</b> defining the functionality that any class implementing IFlightService must provide. It allows for different implementations of flight-related services while ensuring consistency in the methods exposed by those implementations. In this specific case, we're using methods for executing <b>CRUD (Create, Read, Update, Delete) operations</b> against a data table. " }
                                 },
                             },
@@ -3395,7 +3395,7 @@ public class CourseHelper
                             },
                             new Block
                             {
-                                Title = "Delete Flights",
+                                Title = "Delete Flight",
                                 Paragraphs = new List<Paragraph>
                                 {
                                       new Paragraph {
@@ -3411,7 +3411,7 @@ public class CourseHelper
                                 {
                                      new Paragraph {
                                          IsCode = true,
-                                         Body = "public List<Flight> GetFlights()\r\n    {\r\n        return Context.Flights.ToList();\r\n    }" },
+                                         Body = "public List&lt;Flight&gt GetAllFlights()\r\n    {\r\n        return Context.Flights.ToList();\r\n    }" },
                                      new Paragraph {
                                        Body = "This implementation is self-explanatory. However, it's important to note that calling ToList() in GetAllFlights executes the query <b>immediately and loads all data into memory</b>, which might not be efficient for large datasets. We'll show how to deal with issue later in the course"
                                     },
@@ -3437,7 +3437,7 @@ public class CourseHelper
                                 {
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "public Flight Updateflight(Flight flight)\r\n    {\r\n        Flight savedFlight = Context.Flights.Find(flight.Id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        Context.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        Context.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
+                                          Body = "public Flight UpdateFlight(Flight flight)\r\n    {\r\n        Flight savedFlight = Context.Flights.Find(flight.Id);\r\n\r\n        if (savedFlight == null)\r\n        {\r\n            return null;\r\n        }\r\n\r\n        Context.Entry(savedFlight).CurrentValues.SetValues(flight);\r\n        Context.SaveChanges();\r\n\r\n        return savedFlight;\r\n    }" },
                                        new Paragraph {
                                            Body = "Similarly to GetFlightById(), we're looking for a flight with the given id, returning null if none is found. <b>Context.Entry(savedFlight)</b> gets the DbEntityEntry for savedFlight, which represents its entry in the Entity Framework context. <b>CurrentValues.SetValues(flight)</b> copies the properties from the provided flight object into savedFlight. Essentially, this line takes all values from flight and updates savedFlight with those values."
                                        },
@@ -3483,7 +3483,7 @@ public class CourseHelper
                                      },
                                       new Paragraph {
                                           IsCode = true,
-                                          Body = "    [ApiController]\r\n    [Route(\"api/[controller]\")]\r\n    //example: http://localhost:5609/api/flight/\r\n    public class FlightController : ControllerBase\r\n    {\r\n        private readonly IFlightService _flightService;\r\n        public FlightController(IFlightService flightService)\r\n        {\r\n            _flightService = flightService;\r\n        }\r\n    }" },
+                                          Body = "    [ApiController]\r\n    [Route(\"api/[controller]\")]\r\n    //example: http://localhost:5609/api/flight/\r\n    public class FlightsController : ControllerBase\r\n    {\r\n        private readonly IFlightService _flightService;\r\n        public FlightController(IFlightService flightService)\r\n        {\r\n            _flightService = flightService;\r\n        }\r\n    }" },
                                        new Paragraph {
                                          Body = "The <b>[Route(\"api/[controller]\")]</b> attribute specifies the routing pattern for the controller. The <b>[controller]</b> placeholder is replaced with the name of the controller, minus the \"Controller\" suffix. So, for FlightController, the route becomes <b>api/flight</b>. We'll expand on the subject of routing later in this lesson."
                                      },

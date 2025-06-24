@@ -50,7 +50,7 @@
                                 <MudListItem>
                                     <div style="display: flex;">
                                         <MudIcon Icon="@Icons.Material.Filled.CheckBox" Color="Color.Success" Class="mr-2" />
-                                        <MudText Style="color: black;">@((MarkupString)(req))</MudText>
+                                        <MudText>@((MarkupString)(req))</MudText>
                                     </div>
                                 </MudListItem>
                             }
@@ -68,7 +68,7 @@
                         @foreach (var item in Project.LearningItems)
                         {
                             <MudListItem>
-                                <MudText Style="color: black;" Class="mt-2">@((MarkupString)(item))</MudText>
+                                <MudText Class="mt-2">@((MarkupString)(item))</MudText>
                             </MudListItem>
                         }
                     </MudList>
@@ -86,7 +86,7 @@
                             <MudListItem>
                                 <div style="display: flex;">
                                     <MudIcon Icon="@Icons.Material.Filled.ArrowCircleRight" Color="Color.Primary" Class="mr-2" />
-                                    <MudText Style="color: black;">@((MarkupString)(item))</MudText>
+                                    <MudText>@((MarkupString)(item))</MudText>
                                 </div>
                             </MudListItem>
                         }
@@ -105,7 +105,7 @@
                             <MudListItem>
                                 <div style="display: flex;">
                                     <MudIcon Icon="@Icons.Material.Filled.CheckBox" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
-                                    <MudText Style="color: black;">@((MarkupString)(tip))</MudText>
+                                    <MudText>@((MarkupString)(tip))</MudText>
                                 </div>
                             </MudListItem>
                         }
@@ -120,7 +120,7 @@
                             <MudListItem>
                                 <div style="display: flex;">
                                     <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Medium" Color="Color.Error" Class="mr-2" />
-                                    <MudText Style="color: black;">@((MarkupString)(challenge))</MudText>
+                                    <MudText>@((MarkupString)(challenge))</MudText>
                                 </div>
                             </MudListItem>
                         }

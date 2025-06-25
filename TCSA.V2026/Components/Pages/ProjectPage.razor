@@ -44,7 +44,7 @@
                     }
                     @if (Project.Requirements != null)
                     {
-                        <MudList ReadOnly="true" T="MarkupString">
+                        <MudList ReadOnly="true" T="MarkupString" Color="Color.Default">
                             @foreach (var req in Project.Requirements)
                             {
                                 <MudListItem>
@@ -64,7 +64,7 @@
                     {
                         <MudText Class="mt-2 mb-2">@((MarkupString)(Project.LearningIntro))</MudText>
                     }
-                    <MudList Class="mt-2" T="MarkupString">
+                    <MudList Class="mt-2" T="MarkupString" Color="Color.Default">
                         @foreach (var item in Project.LearningItems)
                         {
                             <MudListItem>
@@ -80,7 +80,7 @@
                     {
                         <MudText Class="mt-2 mb-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
                     }
-                    <MudList T="MarkupString">
+                    <MudList T="MarkupString" Color="Color.Default">
                         @foreach (var item in Project.Resources)
                         {
                             <MudListItem>
@@ -99,7 +99,7 @@
                 @if (Project.Tips != null)
                 {
                     <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Tips</MudText>
-                    <MudList T="MarkupString">
+                    <MudList T="MarkupString" Color="Color.Default">
                         @foreach (var tip in Project.Tips)
                         {
                             <MudListItem>
@@ -114,7 +114,7 @@
                 @if (Project.Challenges != null)
                 {
                     <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Challenges</MudText>
-                    <MudList T="MarkupString">
+                    <MudList T="MarkupString" Color="Color.Default">
                         @foreach (var challenge in Project.Challenges)
                         {
                             <MudListItem>

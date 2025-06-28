@@ -74,6 +74,7 @@ public class AdminService : IAdminService
                 var result = await context.AspNetUsers
                .Include(u => u.DashboardProjects)
                .Include(u => u.CodeReviewProjects)
+                   .ThenInclude(cr => cr.DashboardProject)
                .Include(u => u.Issues)
                .AsSplitQuery()
                .FirstOrDefaultAsync(x => x.Id.Equals(id));

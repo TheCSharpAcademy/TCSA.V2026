@@ -172,9 +172,9 @@
     {
         Projects = ProjectHelper.GetProjects();
         Articles = ArticleHelper.GetArticles().ToList();
-
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         Articles.AddRange(courseArticles);
+
         var startTime = DateTime.UtcNow;
 
         User = await AdminService.GetUserForAdmin(UserId);
@@ -214,9 +214,13 @@
 
     private int GetExpectedPoints()
     {
+        var issuesIds = User.Issues?.Select(i => i.ProjectId).ToList() ?? new List<int>();
+
         var result = 0;
-        foreach (var p in User.DashboardProjects.Where(x => x.IsCompleted))
+        foreach (var p in User.DashboardProjects.Where(x => !issuesIds.Contains(x.ProjectId) && x.IsCompleted))
         {
+            var check = p.Id;
+            var check2 = p.ProjectId;
             var project = Projects.FirstOrDefault(x => x.Id == p.ProjectId)
             ?? Articles.FirstOrDefault(x => x.Id == p.ProjectId); 
             result += project.ExperiencePoints;
@@ -227,10 +231,18 @@
             result += i.ExperiencePoints;
         }
 
-        foreach (var cr in User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted || x.DashboardProject.IsArchived))
+        foreach (var cr in User.CodeReviewProjects)
         {
-            var project = Projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId);
-            result += project.ExperiencePoints;
+            if (cr.DashboardProject == null)
+            {
+                Console.WriteLine($"Review project with dashboard id = {cr.DashboardProjectId} is null");
+            }
+
+            if (!cr.DashboardProject.IsCompleted || !cr.DashboardProject.IsArchived)
+            {
+                var project = Projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId);
+                result += project.ExperiencePoints;
+            }
         }
 
         if (User.UserChallenges != null)

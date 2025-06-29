@@ -46,7 +46,7 @@
                         <MudCardHeader Class="d-flex align-items-center flex-wrap justify-space-between ">
                             <CardHeaderContent>
                                 <MudText Typo="Typo.body2">@a.Date.ToString("MMM dd, yyyy, ddd")</MudText>
-                                <MudText Typo="Typo.body1" Color="Color.Primary" Style=@GetDateCellStyleMobile(a)> @((MarkupString)a.Description)</MudText>
+                                <MudText Typo="Typo.body1" Style=@GetDateCellStyleMobile(a)> @((MarkupString)a.Description)</MudText>
                                 <MudGrid Class="pt-1">
                                     <MudItem xs="6" Class="d-flex align-items-center">
                                         <MudText Typo="Typo.body2" Class="mr-1">XPs Won: </MudText>
@@ -66,7 +66,7 @@
             <MudHidden Breakpoint="Breakpoint.MdAndDown">
                 <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity">
                     <Columns>
-                        <TemplateColumn Title="Date" HeaderStyle="color: #1C236D !important;">
+                        <TemplateColumn Title="Date">
                             <CellTemplate>
                                 <MudText Style="@GetDateCellStyle(context.Item)">
                                     @context.Item.Date.ToString("MMM dd, yyyy, ddd")
@@ -80,8 +80,8 @@
                                 </MudText>
                             </CellTemplate>
                         </TemplateColumn>
-                        <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" HeaderStyle="color: #1C236D !important;" />
-                        <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" HeaderStyle="color: #1C236D !important;" />
+                        <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" />
+                        <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
                     </Columns>
                 </MudDataGrid>
             </MudHidden>
@@ -161,11 +161,11 @@
         return activity.ActivityType switch
         {
             ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
-            ActivityType.ProjectSubmitted => $"background-color: orange;  {commonStyles}",
-            ActivityType.ProjectCompleted => $"background-color: lightgreen;  {commonStyles}",
-            ActivityType.ArticleRead => $"background-color: lightblue; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange; color: black; {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen; color: black; {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; color: black; {commonStyles}",
             ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
-            ActivityType.IssueSubmitted => $"background-color: salmon; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; color: black; {commonStyles}",
             _ => ""
         };
     }
@@ -176,11 +176,11 @@
         return activity.ActivityType switch
         {
             ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
-            ActivityType.ProjectSubmitted => $"background-color: orange;  {commonStyles}",
-            ActivityType.ProjectCompleted => $"background-color: lightgreen;  {commonStyles}",
-            ActivityType.ArticleRead => $"background-color: lightblue; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange; color: black; {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen; color: black; {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; color: black; {commonStyles}",
             ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
-            ActivityType.IssueSubmitted => $"background-color: salmon; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; color: black; {commonStyles}",
             _ => ""
         };
     }

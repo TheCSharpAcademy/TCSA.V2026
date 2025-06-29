@@ -6326,21 +6326,6 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         Body = "It’s a common indicator of a missing DI registration."
-                                    }
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Inversion of Control",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph
-                                    {
-                                        Body = "By using constructor injection and a DI container, we’re also introducing a key software design principle: <b>Inversion of Control (IoC)</b>. IoC shifts the responsibility of object creation from our code to a central system - in this case, the DI container. Note that Dependency Injection is just one way to achieve IoC. Other patterns, such as the Service Locator, Builder, or Event-driven patterns, also promote this principle."
-                                    },
-                                    new Paragraph
-                                    {
-                                        Body = "To complete the setup, we still need to register all our services in <code>program.cs</code> - the <b>composition root</b> of our application. In the next chapter, we’ll learn how to configure the DI container properly."
                                     },
                                     new Paragraph
                                     {
@@ -6424,6 +6409,21 @@ public class CourseHelper
                                     }
                                 }
                             },
+                                                        new Block
+                            {
+                                Title = "Inversion of Control",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "By using constructor injection and a DI container, we’re also introducing a key software design principle: <b>Inversion of Control (IoC)</b>. IoC shifts the responsibility of object creation from our code to a central system - in this case, the DI container. Note that Dependency Injection is just one way to achieve IoC. Other patterns, such as the Service Locator, Builder, or Event-driven patterns, also promote this principle."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "To complete the setup, we still need to register all our services in <code>program.cs</code> - the <b>composition root</b> of our application. In the next chapter, we’ll learn how to configure the DI container properly."
+                                    }
+                                }
+                            },
                             new Block
                             {
                                 Title = "IServiceProvider",
@@ -6472,7 +6472,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "var builder = WebApplication.CreateBuilder(args);\r\n\r\n// Add services to the container.\r\n\r\nbuilder.Services.AddScoped<IEmployeeService, EmployeeService>();\r\nbuilder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();\r\nbuilder.Services.AddScoped<IEmployeeData, EmployeeData>();\r\n\r\nbuilder.Services.AddControllers();\r\n//..."
+                                        Body = "var builder = WebApplication.CreateBuilder(args);\r\n\r\n// Add services to the container.\r\n\r\nbuilder.Services.AddScoped&ltIEmployeeService, EmployeeService&gt();\r\nbuilder.Services.AddScoped&ltIEmployeeRepository, EmployeeRepository&gt();\r\nbuilder.Services.AddScoped&ltIEmployeeData, EmployeeData&gt();\r\n\r\nbuilder.Services.AddControllers();\r\n//..."
                                     },
                                     new Paragraph
                                     {
@@ -6511,6 +6511,537 @@ public class CourseHelper
                                         BackgroundColor="#1C236D",
                                         FontColor="#FFF",
                                         Body = "You can find the code for this project <a href='https://github.com/nwdorian/DependencyInjectionFundamentals/tree/main/WebApiExamples/TeamPulseDI/TeamPulse.Api' target='_blank'>on this link</a>."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500157,
+                        CourseDisplayId = 8,
+                        Title = "Service Lifetimes",
+                        Slug = "service-lifetimes",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Remember when we said that dependency injection is about instantiating classes? Well, that was only part of the story (and we kept it simple on purpose)."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "While dependency injection does handle <b>object creation</b>, it’s also equally responsible for <b>object disposal</b> - something we didn’t think about much when using the <b>new</b> keyword."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "When you manually <b>new</b>-up an object, <b>you</b> are responsible for managing its lifetime. In some cases, like working with database connections via ADO.NET or Dapper, we utilized <code>using</code> declarations to ensure those connections were properly disposed. But that only works for objects that implement the <b>IDisposable</b> interface. As for everything else? Those objects are eventually cleaned up by the .NET <b>Garbage Collector</b> - whenever it gets around to it."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Object disposal can be a real concern in long-running applications, and that’s another reason why dependency injection exists: it doesn’t just construct objects, it <b>tracks</b> them and <b>disposes</b> of them properly when they’re no longer needed."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "What is a lifetime of an application?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Application lifetime</b> refers to the period during which your application is running."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "When developing locally, we often start the app, test a few endpoints, then shut it down and go back to coding. That cycle may last just a few minutes. But in <b>production</b>, applications can run for days, weeks, or even months without restarting."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This shift in mindset, from short-lived dev sessions to long-lived production processes, is what makes <b>service lifetimes</b> and proper <b>object disposal</b> so important. If your application runs continuously, you need to ensure that the objects it creates don’t hang around longer than necessary, consuming memory or holding onto resources like database connections or file handles."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Service lifetimes",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "In ASP.NET, services can be registered with one of three lifetimes: <b>Singleton</b>, <b>Scoped</b>, or <b>Transient</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Just like <i>application lifetime</i> refers to how long the application is running, a <i>service lifetime</i> refers to how long a specific object remains in memory. ASP.NET gives us control over when our dependencies are created and disposed of - this is handled through service lifetimes."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Choosing the correct lifetime helps us manage memory efficiently and avoid unnecessary object creation or resource leaks."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Singleton",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "The DI container \"holds\" <b>only one</b> instance of the object for the entire <b>application lifetime</b>. Whoever wants to use this object will get the <b>same object reference</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Lifetime of the object is equal to the <b>lifetime of the application</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Used for caching, configuration or services that manage global state."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c6-ch8-singleton.png"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Image</b>: Only the <b>Data class</b> has been registered as singleton. For each different request that comes in the same object is reused - there is only one object in the DI container."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Scoped",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "The DI container \"holds\" many objects, but a <b>new instance</b> is created only per <b>each HTTP request</b>. Within the same request, the same object is reused wherever the dependency is injected."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Once the request is completed, the object is disposed of."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Lifetime of the object is equal to the <b>lifetime of the request</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This is the <b>recommended lifetime</b> to use in ASP.NET, because it fits naturally with the request-response cycle of a web application."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "EF Core's <b>DbContext</b> is a scoped service by default."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c6-ch8-scoped.png"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Image</b>: All classes are registered as scoped. If the controller requires three instances of a service class and two instances of a repository class it only gets one instance of each class per request and those same objects are reused during the lifetime of the request - because of scoped service registration."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Transient",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "A <b>new instance</b> is created <b>every time</b> the object is requested."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "The DI container is \"holding\" many objects and gives a new one every time, it never reuses the same object reference - each injection results in a completely new object."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Lifetime of the object is equal to the lifetime of the <b>variable that represents the service object.</b>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Used for lightweight services or when you explicitly need a fresh object every time."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c6-ch8-transient.png"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Image</b>: If the controller needs three instances of a service class and two instances of a repository class it get's a new instance of each class every time it's requested - created objects are never reused."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Additional clarification",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "You don't have to write this code yourself, i's only for demonstration purposes."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "If we duplicated the line where we fetch employees and have two calls to the <code>EmployeeService</code> in the same request - like this:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "[Route(\"api/[controller]\")]\r\n[ApiController]\r\npublic class EmployeesController : ControllerBase\r\n{\r\n    private readonly IEmployeeService _employeeService;\r\n\r\n    public EmployeesController(IEmployeeService employeeService)\r\n    {\r\n        _employeeService = employeeService;\r\n    }\r\n\r\n    [HttpGet]\r\n    public IActionResult GetAll()\r\n    {\r\n        var employees1 = _employeeService.GetAllEmployees();\r\n        var employees2 = _employeeService.GetAllEmployees(); // Duplicated method call\r\n        return Ok(employees);\r\n    }\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "We are calling the same field <code>_employeeService</code> twice - this field was <b>injected once via constructor</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "The number of times we call methods on <code>_employeeService</code> does not change how many instances of <code>IEmployeeService</code> are created.<b><br>The number of times a service was injected is what matters.</b>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Scoped</b>:<ul style='padding-left: 1.5rem;'><li>One instance of <code>EmployeeService</code> is created <b>per request</b>.</li><li>Both calls to <code>_employeeService.GetAllEmployees()</code> use the <b>same instance</b>.</li></ul><b>Transient</b>:<ul style='padding-left: 1.5rem;'><li>Controller  requested <code>IEmployeeService</code> <b>only once</b>, via constructor injection.</li><li>So <b>only one instance</b> was created by the container for that request, even if you call its methods multiple times.</li><li>Just like in case of scoped, both method calls use the <b>same instance</b>.</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "You would get two instances only if you had <b>multiple injections</b> to the controller for the same transient service within the same request."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public class SomeClass\r\n{\r\n    public SomeClass(IEmployeeService employeeService1, IEmployeeService employeeService2)\r\n    {\r\n        // Two constructor parameters of the same transient type\r\n        // If IEmployeeService is transient → two different instances are injected\r\n    }\r\n}"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Injecting services with different lifetimes into one another",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Never inject Scoped and Transient services into a Singleton service.</b> This effectively converts the transient or scoped service into the singleton."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Never inject Transient services into a Scoped service</b>. This converts the transient into the a scoped service."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Conclusion",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Each lifetime comes with trade-offs. Singleton services are memory-efficient but shared, Scoped services are request-safe and balanced, and Transient services offer maximum isolation but can increase memory usage if overused."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500158,
+                        CourseDisplayId = 9,
+                        Title = "Dependency Injection in Console Applications",
+                        Slug = "di-in-console-apps",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "We've already covered a lot of ground, to speed things up a bit let's reuse some code from previous lessons."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create a new console application and give it a name <b>TeamPulseConsole</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create the same Data, Repository and Service classes and interfaces from the WebApi project, feel free to copy the code over. This is what the starting point should look like:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c6-ch9-team-pulse-console.png"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Extending the application",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "We should be familiar with <code>Spectre.Console</code> <a href='https://www.nuget.org/packages/spectre.console' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>, let's add it to our application."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "dotnet add package Spectre.Console"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create a folder <b>Helpers</b> and inside it add a <code>TableVisualization</code> class."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "We can mark <code>DisplayEmployeesTable</code> method with static as it doesn't access instance data."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public class TableVisualization\r\n{\r\n    public static void DisplayEmployeeTable(List&ltEmployee&gt employees)\r\n    {\r\n        var table = new Table();\r\n        table.Title = new TableTitle(\"Employees\");\r\n        table.AddColumns(\"Id\", \"Name\", \"Email\", \"Department\");\r\n\r\n        foreach (var employee in employees)\r\n        {\r\n            table.AddRow(employee.Id.ToString(), employee.Name, employee.Email, employee.Department);\r\n        }\r\n\r\n        AnsiConsole.Write(table);\r\n    }\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Next, create a <b>Views</b> folder with <code>IEmployeeView</code> interface and <code>EmployeeView</code> class."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public interface IEmployeeView\r\n{\r\n    void DisplayAllEmployees();\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<code>EmployeeView</code> class will display data based on some logic."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Make it inherit from <code>IEmployeeView</code> interface and inject <code>IEmployeeService</code> through the constructor:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public class EmployeeView : IEmployeeView\r\n{\r\n    private readonly IEmployeeService _employeeService;\r\n\r\n    public EmployeeView(IEmployeeService employeeService)\r\n    {\r\n        _employeeService = employeeService;\r\n    }\r\n\r\n    public void DisplayAllEmployees()\r\n    {\r\n        var employees = _employeeService.GetAllEmployees();\r\n\r\n        if (employees.Count == 0)\r\n        {\r\n            AnsiConsole.MarkupLine(\"[red]No employees found in the database![/]\");\r\n            AnsiConsole.WriteLine(\"Press any key to continue...\");\r\n            System.Console.ReadLine();\r\n            return;\r\n        }\r\n\r\n        TableVisualization.DisplayEmployeeTable(employees);\r\n        AnsiConsole.WriteLine(\"Press any key to continue...\");\r\n        System.Console.ReadLine();\r\n    }\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create a <b>Menus</b> folder with <code>IMainMenu</code> interface and <code>MainMenu</code> class."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public interface IMainMenu\r\n{\r\n    void Display();\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<code>MainMenu</code> will display a simple menu and call the methods from <code>EmployeeView</code>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Make it inherit from <code>IMainMenu</code> and inject <code>IEmployeeView</code> through the constructor:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public class MainMenu : IMainMenu\r\n{\r\n    private readonly IEmployeeView _employeeView;\r\n\r\n    public MainMenu(IEmployeeView employeeView)\r\n    {\r\n        _employeeView = employeeView;\r\n    }\r\n\r\n    public void Display()\r\n    {\r\n        var exit = false;\r\n        while (!exit)\r\n        {\r\n            AnsiConsole.Clear();\r\n            var selection = AnsiConsole.Prompt(\r\n                new SelectionPrompt&ltstring&gt()\r\n                .Title(\"Select from the menu:\")\r\n                .AddChoices(\"Show All\", \"Exit\")\r\n            );\r\n\r\n            switch (selection)\r\n            {\r\n                case \"Show All\":\r\n                    _employeeView.DisplayAllEmployees();\r\n                    break;\r\n                case \"Exit\":\r\n                    exit = true;\r\n                    break;\r\n            }\r\n        }\r\n    }\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "We are done with setting up code, up next we will look into different ways of implementing DI in console applications."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Implementing dependency injection in console applications",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "There are two ways to implement dependency injection in console applications:<ol style='padding-left: 1.5rem;'><li>Using <code>Microsoft.Extensions.DependencyInjection</code> NuGet package directly</li><li>Using <code>Host.CreateApplicationBuilder()</code> from <code>Microsoft.Extensions.Hosting</code> NuGet package</li></ol>"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Microsoft.Extensions.DependencyInjection",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Install the <a href='https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "dotnet add package Microsoft.Extensions.DependencyInjection"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This package allows us to instantiate our own service collection and then build the DI container with registered services. Let's have a look at <code>program.cs</code>:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "// Instantiate a new service collection\r\nvar serviceCollection = new ServiceCollection();\r\n\r\n// Register services\r\nserviceCollection.AddTransient&ltIMainMenu, MainMenu&gt();\r\nserviceCollection.AddTransient&ltIEmployeeView, EmployeeView&gt();\r\nserviceCollection.AddTransient&ltIEmployeeService, EmployeeService&gt();\r\nserviceCollection.AddTransient&ltIEmployeeRepository, EmployeeRepository&gt();\r\nserviceCollection.AddTransient&ltIEmployeeData, EmployeeData&gt();\r\n\r\n// Build the service provider (our DI container) with the registered services\r\nvar serviceProvider = serviceCollection.BuildServiceProvider();\r\n\r\n// Retrieve the main menu instance from the container\r\nvar mainMenu = serviceProvider.GetRequiredService&ltIMainMenu&gt();\r\n\r\n// Start the application by displaying the main menu\r\nmainMenu.Display();"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Host.CreateApplicationBuilder()",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "<code>Host.CreateApplicationBuilder()</code> is a simplified, modern approach introduced in <b>.NET 7</b> to set up a host for console applications. It's very similar to <code>WebApplicationBuilder</code> we had in WebApi project and offers direct access to:<ul style='padding-left: 1.5rem;'><li>Dependency injection</li><li>Configuration</li><li>Logging</li><li>Environment</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This is the recommended way to implement dependency injection in console applications."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Before proceeding, remove the <code>Microsoft.Extensions.DependencyInjection</code> package from your project."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "To use <code>Host.CreateApplicationBuilder()</code> you only need to install <code>Microsoft.Extensions.Hosting</code> <a href='https://www.nuget.org/packages/microsoft.extensions.hosting' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "dotnet add package Microsoft.Extensions.Hosting"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This package <b>already includes</b>:<ul style='padding-left: 1.5rem;'><li><code>Microsoft.Extensions.DependencyInjection</code></li><li><code>Microsoft.Extensions.Configuration</code></li><li><code>Microsoft.Extensions.Logging</code></li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "You can find out more about <code>.NET Generic Host</code> on the <a href='https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>link</a>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Next, modify <code>program.cs</code> with the following code:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "// Create a new HostBuilder with built-in configuration, logging, and DI setup\r\nvar builder = Host.CreateApplicationBuilder();\r\n\r\n// Register services\r\nbuilder.Services.AddTransient&ltIMainMenu, MainMenu&gt();\r\nbuilder.Services.AddTransient&ltIEmployeeView, EmployeeView&gt();\r\nbuilder.Services.AddTransient&ltIEmployeeService, EmployeeService&gt();\r\nbuilder.Services.AddTransient&ltIEmployeeRepository, EmployeeRepository&gt();\r\nbuilder.Services.AddTransient&ltIEmployeeData, EmployeeData&gt();\r\n\r\n// Build the host, which finalizes configuration and prepares the DI container\r\nusing var host = builder.Build();\r\n\r\n// Retrieve the main menu service from the DI container\r\nvar mainMenu = host.Services.GetRequiredService&ltIMainMenu&gt();\r\n\r\n// Start the application by displaying the main menu\r\nmainMenu.Display();"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "You can now see why it's said ASP.NET comes in with built-in Dependency Injection functionality. After creating a new <b>WebApi</b> project, <code>program.cs</code> already has the <code>WebApplicationBuilder</code> created. Simple console applications are not a part of ASP.NET framework so we have to manually introduce DI support."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Service lifetimes in console applications",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "In ASP.NET, the scoped lifetime is tied to the <b>HTTP request</b>, but in <b>console applications</b>, there’s no built-in request pipeline, so scoped services don't work the same way. They will actually behave like singleton services."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "That's why <b>transient</b> is the recommended service lifetime in console applications."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Only use <b>singleton</b> when registering <code>HttpClient</code>, configuration, logging or caching services."
+                                    },
+                                    new Paragraph
+                                    {
+                                        BackgroundColor="#1C236D",
+                                        FontColor="#FFF",
+                                        Body = "You can find the code for this project <a href='https://github.com/nwdorian/DependencyInjectionFundamentals/tree/main/ConsoleExamples/TeamPulseConsole/TeamPulse.Console' target='_blank'>on this link</a>."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500159,
+                        CourseDisplayId = 10,
+                        Title = "Service Collection Extension Pattern",
+                        Slug = "service-colletion-extension-pattern",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "As your application <b>grows in complexity</b>, you have to register more and more services in <code>program.cs</code> which can make it bloated and unreadable."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "To avoid this we can move <b>service registration</b> to an extension class to provide a more <b>organized structure</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create an <b>Extensions</b> folder with a static class <code>ServiceCollectionExtensions</code>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Then create an extension method on the <code>IServiceCollection</code> interface and move all service registrations from <code>program.cs</code> to it."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public static class ServiceCollectionExtensions\r\n{\r\n    public static IServiceCollection AddCustomServices(this IServiceCollection services)\r\n    {\r\n        services.AddTransient&ltIMainMenu, MainMenu&gt();\r\n        services.AddTransient&ltIEmployeeView, EmployeeView&gt();\r\n        services.AddTransient&ltIEmployeeService, EmployeeService&gt();\r\n        services.AddTransient&ltIEmployeeRepository, EmployeeRepository&gt();\r\n        services.AddTransient&ltIEmployeeData, EmployeeData&gt();\r\n\r\n        return services;\r\n    }\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Afterwards, in <code>program.cs</code> simply call the method on the <code>builder.Services</code> property:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "var builder = Host.CreateApplicationBuilder();\r\n\r\nbuilder.Services.AddCustomServices(); // Extension method\r\n\r\nusing var host = builder.Build();\r\n// ..."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Methods that register services to the DI container are by convention prefixed with \"<b>Add</b>\" so it's good convention to follow."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This pattern can be utilized with various service registrations making <code>program.cs</code> clean and tidy and it allows us to organize services into <b>logical groups of related functionality</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Additional example with <code>DbContext</code> registration:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public static class ServiceCollectionExtensions\r\n{\r\n	public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)\r\n	{\r\n	    services.AddDbContext<CustomDbContext>(options => options.UseSqlServer(connectionString));\r\n\r\n	    return services;\r\n	}\r\n}\r\n\r\n// program.cs\r\nvar connectionString = builder.Configuration.GetConnectionString(\"Default\");\r\nbuilder.Services.AddDatabase(connectionString);\r\n\r\n// or in one line\r\nbuilder.Services.AddDatabase(Configuration.GetConnectionString(\"Default\"));"
+                                    },
+                                    new Paragraph
+                                    {
+                                        BackgroundColor="#1C236D",
+                                        FontColor="#FFF",
+                                        Body = "You can find the code for this project <a href='https://github.com/nwdorian/DependencyInjectionFundamentals/tree/main/ConsoleExamples/TeamPulseConsole/TeamPulse.Console' target='_blank'>on this link</a>."
                                     }
                                 }
                             }

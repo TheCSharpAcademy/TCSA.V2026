@@ -5702,11 +5702,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Let's start by creating a small console application to showcase the problems with tight coupling and how we can refactor our code to use dependency injection. We will create an application where musicians can play songs on different instruments.<br>In an IDE of your choice create a new .NET 9 console application. We gave it a name <code>GrooveGrid.Console</code> but you can name it anything you'd like."
+                                        Body = "Let's start by creating a small console application to showcase the problems with tight coupling and how we can refactor our code to use dependency injection. We will create an application where musicians can play songs on different instruments.<br>In an IDE of your choice create a new .NET 9 console application. We gave it a name <b>GrooveGrid</b> but you can name it anything you'd like."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "First we create an instrument for our musician."
+                                        Body = "First we create an instrument for our musician:"
                                     },
                                     new Paragraph
                                     {
@@ -5715,7 +5715,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next we create a class that represents the musicians. To be able to play the songs, musicians need a <code>Perform()</code> method. The musician should use their instrument - in this case a <code>Guitar</code>, to play a song."
+                                        Body = "Next we create a class that represents the musicians. To be able to play the songs, musicians need a <code>Perform()</code> method. The musician should use their instrument, in this case a <code>Guitar</code>, to play a song:"
                                     },
                                     new Paragraph
                                     {
@@ -5724,7 +5724,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now, in <code>program.cs</code> we simply create a musician and play the song."
+                                        Body = "Now, in <code>program.cs</code> we simply create a musician and play the song:"
                                     },
                                     new Paragraph
                                     {
@@ -5737,7 +5737,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This is all fine, but what if we wanted our musician to play another instrument ? Since the <code>Guitar</code> object is created with a <b>new</b> keyword inside the <code>Musician</code> class, we would have to <b>modify the implementation</b> of this class to make a change. If we wanted our musician to use <code>Drums</code> we would have to change the <code>Musician</code>'s code - literally delete the line where <code>Guitar</code> is <b>new</b>-ed up and replace it with a <code>Drums</code> class. In other words, our <code>Musician</code> class is <b>tightly coupled</b> to a <code>Guitar</code> class."
+                                        Body = "This is all fine, but what if we wanted our musician to play another instrument?"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Since the <code>Guitar</code> object is created with a <b>new</b> keyword inside the <code>Musician</code> class, we would have to <b>modify the implementation</b> of this class to make a change. If we wanted our musician to use <code>Drums</code> we would have to change the <code>Musician</code>'s code - literally delete the line where <code>Guitar</code> is <b>new</b>-ed up and replace it with a <code>Drums</code> class. In other words, our <code>Musician</code> class is <b>tightly coupled</b> to a <code>Guitar</code> class."
                                     },
                                     new Paragraph
                                     {
@@ -5770,8 +5774,12 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Loose coupling means that two objects are <b>independent</b> of each other - if we make changes to one object it will not affect the code of another class. By achieving <b>loose coupling</b> in our codebase we can better manage <b>future changes</b> and easily extend our application with more <b>complex functionalities</b>.<br>In order to avoid tight coupling, we can provide a layer of abstraction by using <b>interfaces</b> to help <b>decouple</b> our classes. Interfaces serve as a contract, allowing classes to depend on an abstraction rather then concrete implementation."
+                                        Body = "Loose coupling means that two objects are <b>independent</b> of each other - if we make changes to one object it will not affect the code of another class. By achieving <b>loose coupling</b> in our codebase we can better manage <b>future changes</b> and easily extend our application with more <b>complex functionalities</b>."
                                     },
+                                    new Paragraph
+                                    {
+                                        Body = "In order to avoid tight coupling, we can provide a layer of abstraction by using <b>interfaces</b> to help <b>decouple</b> our classes. Interfaces serve as a contract, allowing classes to depend on an abstraction rather then concrete implementation."
+                                    }
                                 }
                             },
                             new Block
@@ -5790,7 +5798,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next, our <code>Guitar</code> class can implement this interface"
+                                        Body = "Next, the <code>Guitar</code> class can implement this interface:"
                                     },
                                     new Paragraph
                                     {
@@ -5799,7 +5807,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "And we can alter our <code>Musician</code> class"
+                                        Body = "And we can alter the <code>Musician</code> class:"
                                     },
                                     new Paragraph
                                     {
@@ -5808,11 +5816,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now we can provide our musician with different instruments. Rather then creating the <code>Guitar</code> inside the <code>Musician</code> class, we can expose it as a <b>constructor parameter</b> instead. We can then <b>inject</b> the <code>Guitar</code> via the <code>Musician</code>'s constructor to play it. This is an example of dependency injection (specifically, <i>constructor injection</i>)."
+                                        Body = "Now we can provide our musician with different instruments. Rather then creating the <code>Guitar</code> inside the <code>Musician</code> class, we exposed it as a <b>constructor parameter</b> instead. We can then <b>inject</b> the <code>Guitar</code> via the <code>Musician</code>'s constructor to play it. This is an example of dependency injection (specifically, <i>constructor injection</i>)."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This is how <code>program.cs</code> looks like now."
+                                        Body = "This is how <code>program.cs</code> looks like now:"
                                     },
                                     new Paragraph
                                     {
@@ -5828,7 +5836,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Let's create another instrument our <code>Musician</code> could use"
+                                        Body = "Let's create another instrument a <code>Musician</code> could use:"
                                     },
                                     new Paragraph
                                     {
@@ -5837,7 +5845,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now in <code>program.cs</code> we can create a duo band."
+                                        Body = "Now in <code>program.cs</code> we can create a duo band:"
                                     },
                                     new Paragraph
                                     {
@@ -5857,7 +5865,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "The refactored code we ended up with is called <i>dependency injection by hand</i> or <i>Poor Man's DI</i> - because every time we want to create a `Musician` we have to provide it's constructor with some concrete implementation of the <code>IInstrument</code> interface."
+                                        Body = "The refactored code we ended up with is called <i>dependency injection by hand</i> or <i>Poor Man's DI</i>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Every time we want to create a <code>Musician</code> we have to provide it's constructor with some concrete implementation of the <code>IInstrument</code> interface."
                                     },
                                     new Paragraph
                                     {
@@ -5880,7 +5892,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Not necessarily - by moving all of the object creation code into <code>program.cs</code> we have created a so called <b>Composition Root</b>. A central place where all our dependencies are wired up."
+                                        Body = "Not necessarily, while the syntax is a bit unusual, by moving all of the object creation code into <code>program.cs</code> we have created a so called <b>Composition Root</b>. A central place where all our dependencies are wired up."
                                     },
                                     new Paragraph
                                     {
@@ -5956,11 +5968,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This approach also satisfies the <a href='https://deviq.com/principles/explicit-dependencies-principle' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Explicit Dependencies Principle</a> which states that <b>methods and classes should explicitly require any collaborating objects they need in order to function correctly.</b> It makes types honest about dependencies, so that by only looking at types we can see what we are working with. Helps us avoid runtime surprises like missing a dependency we thought we didn't need."
+                                        Body = "This approach also satisfies the <a href='https://deviq.com/principles/explicit-dependencies-principle' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Explicit Dependencies Principle</a> which states that <b>methods and classes should explicitly require any collaborating objects they need in order to function correctly.</b> It makes types honest about dependencies, so that by only looking at types we can see what we are working with. This helps us avoid runtime surprises like missing a dependency we thought we didn't need."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Think about the constructor dependency list as a <b>cooking recipe</b>. By looking at the constructor we instantly see all the things our classes and services <b>need to function</b>."
+                                        Body = "Think about the constructor dependency list as a <b>cooking recipe</b>. By looking at the constructor we instantly see all the things our classes and services <b>need in order to function</b>."
                                     },
                                     new Paragraph
                                     {
@@ -5988,7 +6000,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Even though method injection might be a more memory efficient approach you will most commonly see constructor injection in majority of codebases."
+                                        Body = "Even though method injection might be a more memory efficient approach, you will most commonly see constructor injection in majority of codebases."
                                     },
                                     new Paragraph
                                     {
@@ -6032,7 +6044,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "To demonstrate the use of dependency injection in ASP.NET we will create a <b>WebApi</b> for tracking employees of a company. To enforce previous lessons we will start with manually <b>new</b>-ing up dependencies and later convert to dependency injection syntax."
+                                        Body = "To demonstrate the use of dependency injection in ASP.NET we will create a <b>WebApi</b> for tracking employees of a company. To enforce previous lessons we start with manually <b>new</b>-ing up dependencies and will later convert to dependency injection syntax."
                                     },
                                     new Paragraph
                                     {
@@ -6081,7 +6093,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public class EmployeeData\r\n{\r\n    public EmployeeData()\r\n    {\r\n        Employees = GetEmployees();\r\n    }\r\n    public List<Employee> Employees { get; set; }\r\n    public List<Employee> GetEmployees()\r\n    {\r\n        return new List<Employee>\r\n        {\r\n            new Employee\r\n            {\r\n                Id = 1,\r\n                Name = \"John Smith\",\r\n                Email = \"jsmith@gmail.com\",\r\n                Department = \"Accounting\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 2,\r\n                Name = \"Jane Taylor\",\r\n                Email = \"jtaylor@gmail.com\",\r\n                Department = \"Management\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 3,\r\n                Name = \"Mark Wilson\",\r\n                Email = \"mwilson@gmail.com\",\r\n                Department = \"Development\"\r\n            }\r\n        };\r\n    }\r\n}"
+                                        Body = "public class EmployeeData\r\n{\r\n    public EmployeeData()\r\n    {\r\n        Employees = GetEmployees();\r\n    }\r\n\r\n    public List&ltEmployee&gt Employees { get; set; }\r\n\r\n    public List&ltEmployee&gt GetEmployees()\r\n    {\r\n        return new List<Employee>\r\n        {\r\n            new Employee\r\n            {\r\n                Id = 1,\r\n                Name = \"John Smith\",\r\n                Email = \"jsmith@gmail.com\",\r\n                Department = \"Accounting\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 2,\r\n                Name = \"Jane Taylor\",\r\n                Email = \"jtaylor@gmail.com\",\r\n                Department = \"Management\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 3,\r\n                Name = \"Mark Wilson\",\r\n                Email = \"mwilson@gmail.com\",\r\n                Department = \"Development\"\r\n            }\r\n        };\r\n    }\r\n}"
                                     }
                                 }
                             },
@@ -6101,7 +6113,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public class EmployeeRepository\r\n{\r\n    // By manually creating an instance of a dependency class means we have tight coupling\r\n    private readonly EmployeeData _dataSource = new();\r\n    // Get all employees from the database\r\n    public List<Employee> GetAllEmployees()\r\n    {\r\n        return _dataSource.Employees;\r\n    }\r\n}"
+                                        Body = "public class EmployeeRepository\r\n{\r\n    // By manually creating an instance of a dependency class means we have tight coupling\r\n    private readonly EmployeeData _dataSource = new();\r\n    // Get all employees from the database\r\n    public List&ltEmployee&gt GetAllEmployees()\r\n    {\r\n        return _dataSource.Employees;\r\n    }\r\n}"
                                     }
                                 }
                             },
@@ -6112,7 +6124,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "In the <b>Controllers</b> folder create a new class <code>EmployeesController</code>. Make it inherit from <code>ControllerBase</code> and decorate it with an <code>[ApiController]</code> and a standard routing attribute. We only need one controller action - a <code>GET</code> request to retrieve the employee data."
+                                        Body = "In the <b>Controllers</b> folder create a new class <code>EmployeesController</code>. Make it inherit from <code>ControllerBase</code> and decorate it with an <code>[ApiController]</code> and a standard routing attribute. We only need one controller action - a <code>GET</code> endpoint to retrieve the employee data."
                                     },
                                     new Paragraph
                                     {
@@ -6175,7 +6187,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "// ...\r\nbuilder.Services.AddControllers();\r\n// ..."
+                                        Body = "builder.Services.AddControllers();"
                                     },
                                     new Paragraph
                                     {
@@ -6214,7 +6226,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public interface IEmployeeData\r\n{\r\n    List<Employee> Employees { get; set; }\r\n    List<Employee> GetEmployees();\r\n}"
+                                        Body = "public interface IEmployeeData\r\n{\r\n    List&ltEmployee&gt Employees { get; set; }\r\n    List&ltEmployee&gt GetEmployees();\r\n}"
                                     },
                                     new Paragraph
                                     {
@@ -6239,7 +6251,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public class EmployeeRepository : IEmployeeRepository\r\n{\r\n    // By injecting the dependency object trough the contructor we achieve loose coupling\r\n    private readonly IEmployeeData _dataSource;\r\n\r\n    public EmployeeRepository(IEmployeeData dataSource)\r\n    {\r\n        _dataSource = dataSource;\r\n    }\r\n	// ...\r\n"
+                                        Body = "public class EmployeeRepository : IEmployeeRepository\r\n{\r\n    // By injecting the dependency object trough the constructor we achieve loose coupling\r\n    private readonly IEmployeeData _dataSource;\r\n\r\n    public EmployeeRepository(IEmployeeData dataSource)\r\n    {\r\n        _dataSource = dataSource;\r\n    }\r\n	// ...\r\n"
                                     },
                                     new Paragraph
                                     {
@@ -6248,7 +6260,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public interface IEmployeeRepository\r\n{\r\n    List<Employee> GetAllEmployees();\r\n}"
+                                        Body = "public interface IEmployeeRepository\r\n{\r\n    List&ltEmployee&gt GetAllEmployees();\r\n}"
                                     }
                                 }
                             },
@@ -6264,7 +6276,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public class EmployeeService : IEmployeeService\r\n{\r\n    // By injecting the dependency object trough the contructor we achieve loose coupling\r\n    private readonly IEmployeeRepository _employeeRepository;\r\n\r\n    public EmployeeService(IEmployeeRepository employeeRepository)\r\n    {\r\n        _employeeRepository = employeeRepository;\r\n    }\r\n    // ...\r\n"
+                                        Body = "public class EmployeeService : IEmployeeService\r\n{\r\n    // By injecting the dependency object trough the constructor we achieve loose coupling\r\n    private readonly IEmployeeRepository _employeeRepository;\r\n\r\n    public EmployeeService(IEmployeeRepository employeeRepository)\r\n    {\r\n        _employeeRepository = employeeRepository;\r\n    }\r\n    // ...\r\n"
                                     },
                                     new Paragraph
                                     {
@@ -6273,7 +6285,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public interface IEmployeeService\r\n{\r\n    List<Employee> GetAllEmployees();\r\n}"
+                                        Body = "public interface IEmployeeService\r\n{\r\n    List&ltEmployee&gt GetAllEmployees();\r\n}"
                                     }
                                 }
                             },
@@ -6289,7 +6301,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "[Route(\"api/[controller]\")]\r\n[ApiController]\r\npublic class EmployeesController : ControllerBase\r\n{\r\n    // By injecting the dependency object trough the contructor we achieve loose coupling\r\n    private readonly IEmployeeService _employeeService;\r\n\r\n    public EmployeesController(IEmployeeService employeeService)\r\n    {\r\n        _employeeService = employeeService;\r\n    }\r\n    // ...\r\n"
+                                        Body = "[Route(\"api/[controller]\")]\r\n[ApiController]\r\npublic class EmployeesController : ControllerBase\r\n{\r\n    // By injecting the dependency object trough the constructor we achieve loose coupling\r\n    private readonly IEmployeeService _employeeService;\r\n\r\n    public EmployeesController(IEmployeeService employeeService)\r\n    {\r\n        _employeeService = employeeService;\r\n    }\r\n    // ...\r\n"
                                     }
                                 }
                             },
@@ -6305,7 +6317,7 @@ public class CourseHelper
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "System.InvalidOperationException: Unable to resolve service for type 'TeamPulse.Api.Services.IEmployeeService' while attempting to activate 'TeamPulse.Api.Controllers.EmployeesController'."
+                                        Body = "System.InvalidOperationException: Unable to resolve service for type 'TeamPulse.Api.Services.IEmployeeService'\r\nwhile attempting to activate 'TeamPulse.Api.Controllers.EmployeesController'."
                                     },
                                     new Paragraph
                                     {
@@ -6313,7 +6325,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The reason is simple: we <b>haven’t registered</b> our services in the <b>DI container</b>. Before introducing constructor injection, we manually instantiated classes using the <b>new</b> keyword. But in ASP.NET, we delegate the <b>responsibility of object creation</b> to the DI container. If a dependency hasn’t been registered, the container doesn’t know how to create it."
+                                        Body = "The reason is simple: we <b>haven’t registered</b> our services with the <b>DI container</b>. Before introducing constructor injection, we manually instantiated classes using the <b>new</b> keyword. But in ASP.NET, we delegate the <b>responsibility of object creation</b> to the DI container. If a dependency hasn’t been registered, the container doesn’t know how to create it."
                                     },
                                     new Paragraph
                                     {
@@ -6321,7 +6333,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This behavior is actually <b>beneficial</b>. The DI container follows a <b>deferred resolution</b> model: objects are only created when they're needed. However, this means we can accidentally run our app in a \"broken\" state if something hasn’t been registered properly. That’s why it’s important to <b>recognize and understand errors</b> like: <code>\"Unable to resolve service for type...\"</code>"
+                                        Body = "This behavior is actually <b>beneficial</b>. The DI container follows a <b>deferred resolution</b> model: objects are only created when they're needed. However, this means we can accidentally run our app in a \"broken\" state if something hasn’t been registered properly. That’s why it’s important to <b>recognize and understand errors</b> like: <i>\"Unable to resolve service for type...\"</i>"
                                     },
                                     new Paragraph
                                     {
@@ -6354,7 +6366,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Before we go further let's take a short moment to reiterate an important point. <b>Dependency injection is simply about instantiating classes.</b> When you try to understand the topics we are discussing, the best baseline to have is \"<i>How does this relate to new-ing up classes?</i>\"."
+                                        Body = "Before we go further let's take a short moment to reiterate an important point. <b>Dependency injection is simply about instantiating classes.</b> When you try to understand the topics we are discussing, the best baseline to have is \"<i>How does this relate to creating objects?</i>\"."
                                     }
                                 }
                             },
@@ -6392,7 +6404,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Think of the DI container as a <b>black box</b> that holds all the registered objects and knows how to provide the right objects when they’re needed. While it may seem like it \"contains\" all the objects, in reality, they are only created when required - such as when an HTTP request is made."
+                                        Body = "Think of the DI container as a <b>black box</b> that holds many registered objects and knows how to provide the right objects when they’re needed. While it may seem like it \"contains\" all the objects, in reality, they are only created when required - such as when an HTTP request is made."
                                     },
                                     new Paragraph
                                     {
@@ -6409,18 +6421,18 @@ public class CourseHelper
                                     }
                                 }
                             },
-                                                        new Block
+                            new Block
                             {
                                 Title = "Inversion of Control",
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph
                                     {
-                                        Body = "By using constructor injection and a DI container, we’re also introducing a key software design principle: <b>Inversion of Control (IoC)</b>. IoC shifts the responsibility of object creation from our code to a central system - in this case, the DI container. Note that Dependency Injection is just one way to achieve IoC. Other patterns, such as the Service Locator, Builder, or Event-driven patterns, also promote this principle."
+                                        Body = "By using constructor injection and a DI container, we’re also introducing a key software design principle - <b>Inversion of Control (IoC)</b>. IoC shifts the responsibility of object creation from our code to a central system - in this case, the DI container. Note that Dependency Injection is just one way to achieve IoC. Other patterns, such as the Service Locator, Builder, or Event driven patterns, also promote this principle."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "To complete the setup, we still need to register all our services in <code>program.cs</code> - the <b>composition root</b> of our application. In the next chapter, we’ll learn how to configure the DI container properly."
+                                        Body = "To complete the application, we still need to register all our services in <code>program.cs</code> - the <b>composition root</b> of our application."
                                     }
                                 }
                             },
@@ -6467,7 +6479,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Use the <code>AddScoped<interface, type>()</code> method for service registration. It's a <b>generic method</b> where you have to define the <b>interface and a class</b> that implements that interface. Then the DI container knows which concrete type to provide while resolving services."
+                                        Body = "Use the <code>AddScoped&ltinterface, type&gt()</code> method for service registration. It's a <b>generic method</b> where you have to define the <b>interface and a class</b> that implements that interface. Then the DI container knows which concrete type to provide while resolving services."
                                     },
                                     new Paragraph
                                     {
@@ -6492,7 +6504,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "When an HTTP request <b>comes in</b>, ASP.NET routes it to the appropriate controller. The DI container is responsible for creating an instance of the <b>EmployeesController</b>. Since the controller has a dependency on <code>IEmployeeService</code>, the DI container attempts to resolve that dependency by creating an instance of the registered concrete type: <code>EmployeeService</code>."
+                                        Body = "When an HTTP request <b>comes in</b>, ASP.NET routes it to the appropriate controller."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "The DI container is then responsible for creating an instance of the <code>EmployeesController</code>. Since the controller has a dependency on <code>IEmployeeService</code>, the DI container attempts to resolve that dependency by creating an instance of the registered concrete type - <code>EmployeeService</code>."
                                     },
                                     new Paragraph
                                     {
@@ -6541,7 +6557,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "When you manually <b>new</b>-up an object, <b>you</b> are responsible for managing its lifetime. In some cases, like working with database connections via ADO.NET or Dapper, we utilized <code>using</code> declarations to ensure those connections were properly disposed. But that only works for objects that implement the <b>IDisposable</b> interface. As for everything else? Those objects are eventually cleaned up by the .NET <b>Garbage Collector</b> - whenever it gets around to it."
+                                        Body = "When you manually <b>new</b>-up an object, <b>you</b> are responsible for managing its lifetime. In some cases, like working with database connections via ADO.NET or Dapper, we utilized <code>using</code> declarations to ensure those connections were properly disposed. But that only works for objects that implement the <code>IDisposable</code> interface. As for everything else? Those objects are eventually cleaned up by the .NET <b>Garbage Collector</b> - whenever it gets around to it."
                                     },
                                     new Paragraph
                                     {
@@ -6594,7 +6610,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "The DI container \"holds\" <b>only one</b> instance of the object for the entire <b>application lifetime</b>. Whoever wants to use this object will get the <b>same object reference</b>."
+                                        Body = "The DI container \"holds\" <b>only one</b> instance of the object for the entire <b>application lifetime</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Whoever wants to use this object will get the <b>same object reference</b>."
                                     },
                                     new Paragraph
                                     {
@@ -6611,7 +6631,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<b>Image</b>: Only the <b>Data class</b> has been registered as singleton. For each different request that comes in the same object is reused - there is only one object in the DI container."
+                                        Body = "<b>Image</b>: Only the <b>Data class</b> has been registered as singleton. For each different request that comes in the same object is reused as there is only one object in the DI container."
                                     }
                                 }
                             },
@@ -6622,7 +6642,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "The DI container \"holds\" many objects, but a <b>new instance</b> is created only per <b>each HTTP request</b>. Within the same request, the same object is reused wherever the dependency is injected."
+                                        Body = "The DI container is \"holding\" many objects, but a <b>new instance</b> is created only per <b>each HTTP request</b>. Within the same request, the same object is reused wherever the dependency is injected."
                                     },
                                     new Paragraph
                                     {
@@ -6647,7 +6667,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<b>Image</b>: All classes are registered as scoped. If the controller requires three instances of a service class and two instances of a repository class it only gets one instance of each class per request and those same objects are reused during the lifetime of the request - because of scoped service registration."
+                                        Body = "<b>Image</b>: All classes are registered as scoped. If the controller requires three instances of a service class and two instances of a repository class it only gets one instance of each class per request and those same objects are reused during the lifetime of the request."
                                     }
                                 }
                             },
@@ -6679,7 +6699,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<b>Image</b>: If the controller needs three instances of a service class and two instances of a repository class it get's a new instance of each class every time it's requested - created objects are never reused."
+                                        Body = "<b>Image</b>: If the controller needs three instances of a service class and two instances of a repository class it get's a new instance of each class every time it's requested - already created objects are never reused."
                                     }
                                 }
                             },
@@ -6694,7 +6714,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "If we duplicated the line where we fetch employees and have two calls to the <code>EmployeeService</code> in the same request - like this:"
+                                        Body = "If we duplicated the line where we fetch employees and have two calls to the <code>EmployeeService</code> in the same request, like this:"
                                     },
                                     new Paragraph
                                     {
@@ -6707,7 +6727,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The number of times we call methods on <code>_employeeService</code> does not change how many instances of <code>IEmployeeService</code> are created.<b><br>The number of times a service was injected is what matters.</b>"
+                                        Body = "The number of times we call methods on the field does not change how many instances of <code>IEmployeeService</code> are created.<b><br>The number of times a service was injected is what matters.</b>"
                                     },
                                     new Paragraph
                                     {
@@ -6715,7 +6735,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "You would get two instances only if you had <b>multiple injections</b> to the controller for the same transient service within the same request."
+                                        Body = "You would get two instances only if you had <b>multiple injections</b> to the controller for the same transient service within the same request:"
                                     },
                                     new Paragraph
                                     {
@@ -6731,7 +6751,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "<b>Never inject Scoped and Transient services into a Singleton service.</b> This effectively converts the transient or scoped service into the singleton."
+                                        Body = "<b>Never inject Scoped and Transient services into a Singleton service.</b> This will effectively convert a transient or scoped service into the singleton."
                                     },
                                     new Paragraph
                                     {
@@ -6806,7 +6826,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "We can mark <code>DisplayEmployeesTable</code> method with static as it doesn't access instance data."
+                                        Body = "We can mark <code>DisplayEmployeesTable</code> method as static as it doesn't access instance data:"
                                     },
                                     new Paragraph
                                     {
@@ -6828,7 +6848,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Make it inherit from <code>IEmployeeView</code> interface and inject <code>IEmployeeService</code> through the constructor:"
+                                        Body = "Make it inherit the <code>IEmployeeView</code> interface and inject <code>IEmployeeService</code> through the constructor:"
                                     },
                                     new Paragraph
                                     {
@@ -6850,7 +6870,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Make it inherit from <code>IMainMenu</code> and inject <code>IEmployeeView</code> through the constructor:"
+                                        Body = "Make it inherit the <code>IMainMenu</code> interface and inject <code>IEmployeeView</code> through the constructor:"
                                     },
                                     new Paragraph
                                     {
@@ -6906,7 +6926,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "<code>Host.CreateApplicationBuilder()</code> is a simplified, modern approach introduced in <b>.NET 7</b> to set up a host for console applications. It's very similar to <code>WebApplicationBuilder</code> we had in WebApi project and offers direct access to:<ul style='padding-left: 1.5rem;'><li>Dependency injection</li><li>Configuration</li><li>Logging</li><li>Environment</li></ul>"
+                                        Body = "<code>Host.CreateApplicationBuilder()</code> is a simplified, modern approach introduced in <b>.NET 7</b> to set up a host for console applications. It's very similar to <code>WebApplicationBuilder</code> we have in WebApi projects and offers direct access to:<ul style='padding-left: 1.5rem;'><li>Dependency injection</li><li>Configuration</li><li>Logging</li><li>Environment</li></ul>"
                                     },
                                     new Paragraph
                                     {
@@ -6944,7 +6964,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "You can now see why it's said ASP.NET comes in with built-in Dependency Injection functionality. After creating a new <b>WebApi</b> project, <code>program.cs</code> already has the <code>WebApplicationBuilder</code> created. Simple console applications are not a part of ASP.NET framework so we have to manually introduce DI support."
+                                        Body = "You can now see why it's said ASP.NET comes with built-in Dependency Injection functionality. After creating a new <b>WebApi</b> project, <code>program.cs</code> already has the <code>WebApplicationBuilder</code> created. Console applications are not a part of ASP.NET framework so we have to manually introduce DI support."
                                     }
                                 }
                             },
@@ -7004,7 +7024,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Then create an extension method on the <code>IServiceCollection</code> interface and move all service registrations from <code>program.cs</code> to it."
+                                        Body = "Then create an extension method on the <code>IServiceCollection</code> interface and move all service registrations from <code>program.cs</code> to it:"
                                     },
                                     new Paragraph
                                     {
@@ -7022,7 +7042,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Methods that register services to the DI container are by convention prefixed with \"<b>Add</b>\" so it's good convention to follow."
+                                        Body = "Microsoft prefixes methods that register services to the DI container with \"<b>Add</b>\" by convention so it's a good practice to follow."
                                     },
                                     new Paragraph
                                     {
@@ -7042,6 +7062,208 @@ public class CourseHelper
                                         BackgroundColor="#1C236D",
                                         FontColor="#FFF",
                                         Body = "You can find the code for this project <a href='https://github.com/nwdorian/DependencyInjectionFundamentals/tree/main/ConsoleExamples/TeamPulseConsole/TeamPulse.Console' target='_blank'>on this link</a>."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500160,
+                        CourseDisplayId = 11,
+                        Title = "Frequently Asked Questions",
+                        Slug = "faq",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Here you can find some frequently asked questions that were often discussed in The C# Academy <a href='https://discord.com/invite/aDMDET8ywB' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Discord Server</a>"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Do I have to use interfaces with dependency injection?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Yes and no."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "You can absolutely inject <b>concrete classes</b> directly without using interfaces and your application will still function correctly. The generic service registration methods also allow to only specify the concrete class:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "builder.Services.AddScoped&ltEmployeeService&gt();"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "However, by doing so, you <b>miss out on key benefits</b> of using interfaces, such as:<ul style='padding-left: 1.5rem;'><li>Loose coupling between components</li><li>Easier testing (especially mocking)</li><li>Better adherence to <b>SOLID</b> principles like the <b>Dependency Inversion Principle</b></li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "In short: <i>you’re not required</i> to use interfaces, but <b>you should</b> if you want clean, maintainable, and scalable code."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Which dependency injection framework to use ?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "You have several options when it comes to dependency injection in .NET."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Microsoft’s built-in <b>dependency injection container</b> is just one of them, others include popular third-party frameworks like <b>Autofac</b>, <b>Ninject</b>, and <b>StructureMap</b>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "While all these frameworks ultimately solve the same problem, <b>Microsoft's built-in DI</b> is <b>most commonly used today</b>, especially since it has matured significantly over the years."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Autofac</b> was more widely adopted in earlier versions of .NET, and it's still a solid choice, particularly in legacy projects or companies that have standardized on it. One feature developers like about Autofac is it's <b>module system</b> for organizing registrations. That said, similar organization can be achieved with Microsoft's DI using <i>Service Collection Extension Pattern</i>."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Stick with Microsoft’s built-in DI for <b>learning, personal projects, or new applications</b>, unless your team or company specifically uses something else like Autofac."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Do I have to think about the order of registering services?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "In general - no. Though, you should be aware of the behavior when it comes to registering the same service multiple times."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "If you register the same service/interface multiple times, the last registration wins."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "services.AddSingleton&ltIDataService, SqlDataService&gt();\r\nservices.AddSingleton&ltIDataService, InMemoryDataService&gt(); // This one will be used\r\n"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "If each interface/class pair is unique, the order doesn't matter."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Rule of thumb: register services in any order unless you're overriding something - then the last one wins."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Why are we using private fields in constructor injection?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "This is a simple answer - constructor parameters are only available inside the constructor scope. Assigning them to class fields makes them available in the entire class. "
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Should I use primary constructors?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Your certainly can! Primary constructors (introduced in C# 12) simplify how we write constructors for certain types, especially record and class declarations, by allowing you to declare constructor parameters directly in the class header."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "// classic constructor injection syntax\r\npublic class StudentService\r\n{\r\n	private readonly IStudentRepository _studentRepository;\r\n\r\n	public StudentService(IStudentRepository studentRepository)\r\n	{\r\n		_studentRepository = studentRepository;\r\n	}\r\n	// ...\r\n}\r\n\r\n// primary constructors syntax\r\npublic class StudentService(IStudentRepository studentRepository)\r\n{\r\n	// ...\r\n}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Have a closer look into primary constructors before deciding whether to use them or not. Here is a <a href='https://endjin.com/blog/2024/10/csharp-12-primary-constructors' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>detailed article</a> which explains pros and cons."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500161,
+                        CourseDisplayId = 12,
+                        Title = "Conclusion",
+                        Slug = "conclusion",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Title = "🎉 Congratulations! You've Completed the Dependency Injection Course!",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "You should now be familiar with one of the most foundational concepts in modern .NET development - Dependency Injection design pattern. Understanding Dependency Injection means understanding how to write <b>modular</b>, <b>testable</b>, and <b>maintainable</b> applications, which is key whether you're building web apps, APIs, or desktop tools."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "What to do next ?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Take a moment to reflect on what you've learned:<ul style='padding-left: 1.5rem;'><li>What parts of DI now make sense to you that were confusing before?</li><li>Are there parts you're still unsure about, like service lifetimes, containers, or constructor injection?</li><li>How has this changed the way you think about structuring your applications?</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "If you're following our <a href='https://thecsharpacademy.com/#' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>learning roadmap</a> there are upcoming projects where DI plays a central role, starting from <a href='https://thecsharpacademy.com/project/17/shifts-logger' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Shifts Logger</a>. Have your own idea for a project? Perfect! Try applying DI in a WebApi or start small with a CRUD service console app. <b>The best way to reinforce this knowledge is to build with it.</a>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This course is always here for you to revisit. Each time you go through it, you'll understand things more deeply, learn something new or see the same topic from a different perspective."
+                                    }
+                                },
+                            },
+                            new Block
+                            {
+                                Title = "Additional resources",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "<ul style='padding-left: 1.5rem;'><li>Official Microsoft <a href='https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Documentation</a></li><li>Great <a href='https://www.coreprogramm.com/2020/02/difference-between-addsingleton-addScoped-addTransient.html' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>article</a> to dig deeper into service lifetimes with a practical example</li><li>A video on how to <a href='https://www.youtube.com/watch?v=GZ7MYupyOlY' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>build your own IoC container</a></li><li>Amazing quality of life tip that shows how to <a href='https://ardalis.com/configure-visual-studio-to-name-private-fields-with-underscore/' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>configure Visual Studio 2022 to name private fields with underscore</a></li></ul>"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "🎊 Congratulations on Your Progress!",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "You've leveled up your architecture skills and taken a big step toward building professional-grade software. Keep building, keep experimenting, and most of all - <b>keep going</b>!"
                                     }
                                 }
                             }

@@ -14,7 +14,8 @@
         <MudStaticNavDrawerToggle DrawerId="nav-drawer" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
         <MudImage Src="/img/logo.png" Width="40" />
         <MudSpacer />
-        <MudSwitch 
+        <MudSwitch
+            UserAttributes="@(new Dictionary<string, object> { ["id"] = "theme-toggle" })"
             ThumbIcon="@Icons.Material.Outlined.ModeNight"
             ValueChanged="ToggleTheme" 
             Value="@ThemeService.IsDarkMode" 

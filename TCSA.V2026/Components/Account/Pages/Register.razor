@@ -79,6 +79,13 @@
     </MudItem>
 </MudGrid>
 
+<script src="js/theme-toggle.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.initializeThemeToggle?.();
+    });
+</script>
+
 @code {
     private IEnumerable<IdentityError>? identityErrors;
 

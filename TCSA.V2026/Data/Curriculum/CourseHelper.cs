@@ -5649,7 +5649,23 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<b>Single Responsibility Principle</b><ul style='padding-left: 1.5rem;'><li>DI helps ensure that a class has only one reason to change by delegating the responsibility of creating dependencies to an external container.</li><li>Without DI, a class might handle both its main functionality and the creation of its dependencies, violating SRP.</li></ul><b>Open/Closed Principle</b><ul style='padding-left: 1.5rem;'><li>With DI, classes depend on abstractions (interfaces or abstract classes) rather than concrete implementations, making it easy to extend functionality without modifying existing code.</li><li>You can introduce new implementations of an interface without altering the existing classes.</li></ul><b>Dependency Inversion Principle</b><ul style='padding-left: 1.5rem;'><li>DI is a direct implementation of this principle because it ensures that high-level modules depend on abstractions rather than concrete implementations.</li></ul>Liskov Substitution Principle<ul style='padding-left: 1.5rem;'><li>Although DI doesn't directly enforce this, it encourages using interfaces which can help maintain LSP.</li></ul>Interface Segregation Principle<ul style='padding-left: 1.5rem;'><li>DI doesn't enforce how interfaces are designed, but it benefits from well-segregated interfaces.</li></ul>"
+                                        Body = "<b>Single Responsibility Principle</b><ul style='padding-left: 1.5rem;'><li>DI helps ensure that a class has only one reason to change by delegating the responsibility of creating dependencies to an external container.</li><li>Without DI, a class might handle both its main functionality and the creation of its dependencies, violating SRP.</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Open/Closed Principle</b><ul style='padding-left: 1.5rem;'><li>With DI, classes depend on abstractions (interfaces or abstract classes) rather than concrete implementations, making it easy to extend functionality without modifying existing code.</li><li>You can introduce new implementations of an interface without altering the existing classes.</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Dependency Inversion Principle</b><ul style='padding-left: 1.5rem;'><li>DI is a direct implementation of this principle because it ensures that high-level modules depend on abstractions rather than concrete implementations.</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Liskov Substitution Principle</b><ul style='padding-left: 1.5rem;'><li>Although DI doesn't directly enforce this, it encourages using interfaces which can help maintain LSP.</li></ul>"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "<b>Interface Segregation Principle</b><ul style='padding-left: 1.5rem;'><li>DI doesn't enforce how interfaces are designed, but it benefits from well-segregated interfaces.</li></ul>"
                                     },
                                     new Paragraph
                                     {

@@ -70,3 +70,10 @@
     height: 100%;
     border: 0;
 }
+
+.inline-code {
+    background-color: #424242;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #f8f8f2;
+}

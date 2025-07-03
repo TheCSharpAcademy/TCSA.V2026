@@ -275,7 +275,18 @@ public class ProjectService : IProjectService
                 project.DateCompleted = DateTime.UtcNow;
                 project.IsPendingNotification = true;
 
-                var experiencePoints = DashboardProjectsHelpers.GetProject(project.ProjectId).ExperiencePoints;
+                int experiencePoints;
+                var dashboardProject = DashboardProjectsHelpers.GetProject(project.ProjectId);
+
+                if (dashboardProject == null)
+                {
+                    var issue = await context.Issues.FirstOrDefaultAsync(x => x.ProjectId == project.ProjectId);
+                    experiencePoints = issue.ExperiencePoints;     
+                } 
+                else
+                {
+                    experiencePoints = dashboardProject.ExperiencePoints;
+                }
 
                 context.UserActivity.Add(new AppUserActivity
                 {

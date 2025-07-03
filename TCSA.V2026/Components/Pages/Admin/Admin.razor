@@ -68,13 +68,19 @@
         string style = "";
 
         if (x.ActivityType == ActivityType.ArticleRead)
-            style += "background-color:green";
+            style += "background-color:green; color: white;";
 
         if (x.ActivityType == ActivityType.ProjectSubmitted)
-            style += "background-color:blue";
+            style += "background-color:yellow;";
 
         if (x.ActivityType == ActivityType.CodeReviewCompleted)
-            style += "background-color:red";
+            style += "background-color:red; color:white;";
+
+        if (x.ActivityType == ActivityType.IssueSubmitted)
+            style += "background-color:purple; color: white;";
+
+        if (x.ActivityType == ActivityType.ProjectCompleted)
+            style += "background-color:blue; color: white;";
 
         return style;
     };

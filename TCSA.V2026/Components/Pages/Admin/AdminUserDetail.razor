@@ -280,14 +280,17 @@
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
         var articlesIds = Articles.Select(x => x.Id).ToList();
+        var issuesIds = User.Issues.Select(i => i.ProjectId).ToList();    
         var reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
+
         var issues = User.Issues?.Select(i => new AdminActivity
             {
                 ProjectId = i.ProjectId,
                 ProjectType = ProjectType.Issue,
                 Title = i.Title,
                 IsCompleted = i.IsClosed,
-                GithubUrl = i.GithubUrl
+                GithubUrl = i.GithubUrl,
+                DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id
             }).ToList() ?? new();
 
         var reviewsForAdmin = reviews.Select(i => new AdminActivity
@@ -313,7 +316,7 @@
             .ToList();
 
         var articlesForAdmin = User.DashboardProjects
-            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && articlesIds.Contains(dp.ProjectId))
+            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && articlesIds.Contains(dp.ProjectId) && issuesIds.Contains(dp.ProjectId))
             .OrderBy(dp => dp.IsCompleted)
             .ThenByDescending(x => x.DateSubmitted)
             .Select(i => new AdminActivity
@@ -326,7 +329,7 @@
             .ToList();
 
         var projectsForAdmin = User.DashboardProjects
-            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && !articlesIds.Contains(dp.ProjectId))
+            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && !articlesIds.Contains(dp.ProjectId) && !issuesIds.Contains(dp.ProjectId))
             .OrderBy(dp => dp.IsCompleted)
             .ThenByDescending(x => x.DateSubmitted)
             .Select(i => new AdminActivity
@@ -340,7 +343,7 @@
             })
             .ToList();
 
-            var challengesForAdmin = User.UserChallenges?
+        var challengesForAdmin = User.UserChallenges?
             .OrderBy(c => c.CompletedAt)
             .Select(c => new AdminActivity
             {

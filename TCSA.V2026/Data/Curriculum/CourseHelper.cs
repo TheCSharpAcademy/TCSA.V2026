@@ -5715,7 +5715,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next we create a class that represents the musicians. To be able to play the songs, musicians need a <code>Perform()</code> method. The musician should use their instrument, in this case a <code>Guitar</code>, to play a song:"
+                                        Body = "Next we create a class that represents the musicians. To be able to play the songs, musicians need a <code class='inline-code'>Perform()</code> method. The musician should use their instrument, in this case a <code class='inline-code'>Guitar</code>, to play a song:"
                                     },
                                     new Paragraph
                                     {
@@ -5724,7 +5724,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now, in <code>program.cs</code> we simply create a musician and play the song:"
+                                        Body = "Now, in <code class='inline-code'>program.cs</code> we simply create a musician and play the song:"
                                     },
                                     new Paragraph
                                     {
@@ -5741,11 +5741,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Since the <code>Guitar</code> object is created with a <b>new</b> keyword inside the <code>Musician</code> class, we would have to <b>modify the implementation</b> of this class to make a change. If we wanted our musician to use <code>Drums</code> we would have to change the <code>Musician</code>'s code - literally delete the line where <code>Guitar</code> is <b>new</b>-ed up and replace it with a <code>Drums</code> class. In other words, our <code>Musician</code> class is <b>tightly coupled</b> to a <code>Guitar</code> class."
+                                        Body = "Since the <code class='inline-code'>Guitar</code> object is created with a <b>new</b> keyword inside the <code class='inline-code'>Musician</code> class, we would have to <b>modify the implementation</b> of this class to make a change. If we wanted our musician to use <code class='inline-code'>Drums</code> we would have to change the <code class='inline-code'>Musician</code>'s code - literally delete the line where <code class='inline-code'>Guitar</code> is <b>new</b>-ed up and replace it with a <code class='inline-code'>Drums</code> class. In other words, our <code class='inline-code'>Musician</code> class is <b>tightly coupled</b> to a <code class='inline-code'>Guitar</code> class."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Using the <b>new</b> keyword for services and dependencies we want to work with is like <b>using lego bricks with super glue</b>. That doesn't mean there is no place for the <b>new</b> keyword - if you're just <b>new</b>-ing up an entity or creating a <code>DateTime</code> object - that's completely fine."
+                                        Body = "Using the <b>new</b> keyword for services and dependencies we want to work with is like <b>using lego bricks with super glue</b>. That doesn't mean there is no place for the <b>new</b> keyword - if you're just <b>new</b>-ing up an entity or creating a <code class='inline-code'>DateTime</code> object - that's completely fine."
                                     },
                                     new Paragraph
                                     {
@@ -5798,7 +5798,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next, the <code>Guitar</code> class can implement this interface:"
+                                        Body = "Next, the <code class='inline-code'>Guitar</code> class can implement this interface:"
                                     },
                                     new Paragraph
                                     {
@@ -5807,7 +5807,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "And we can alter the <code>Musician</code> class:"
+                                        Body = "And we can alter the <code class='inline-code'>Musician</code> class:"
                                     },
                                     new Paragraph
                                     {
@@ -5816,11 +5816,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now we can provide our musician with different instruments. Rather then creating the <code>Guitar</code> inside the <code>Musician</code> class, we exposed it as a <b>constructor parameter</b> instead. We can then <b>inject</b> the <code>Guitar</code> via the <code>Musician</code>'s constructor to play it. This is an example of dependency injection (specifically, <i>constructor injection</i>)."
+                                        Body = "Now we can provide our musician with different instruments. Rather then creating the <code class='inline-code'>Guitar</code> inside the <code class='inline-code'>Musician</code> class, we exposed it as a <b>constructor parameter</b> instead. We can then <b>inject</b> the <code class='inline-code'>Guitar</code> via the <code class='inline-code'>Musician</code>'s constructor to play it. This is an example of dependency injection (specifically, <i>constructor injection</i>)."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This is how <code>program.cs</code> looks like now:"
+                                        Body = "This is how <code class='inline-code'>program.cs</code> looks like now:"
                                     },
                                     new Paragraph
                                     {
@@ -5836,7 +5836,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Let's create another instrument a <code>Musician</code> could use:"
+                                        Body = "Let's create another instrument a <code class='inline-code'>Musician</code> could use:"
                                     },
                                     new Paragraph
                                     {
@@ -5845,7 +5845,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Now in <code>program.cs</code> we can create a duo band:"
+                                        Body = "Now in <code class='inline-code'>program.cs</code> we can create a duo band:"
                                     },
                                     new Paragraph
                                     {
@@ -5869,7 +5869,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Every time we want to create a <code>Musician</code> we have to provide it's constructor with some concrete implementation of the <code>IInstrument</code> interface."
+                                        Body = "Every time we want to create a <code class='inline-code'>Musician</code> we have to provide it's constructor with some concrete implementation of the <code class='inline-code'>IInstrument</code> interface."
                                     },
                                     new Paragraph
                                     {
@@ -5877,7 +5877,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "On the other hand we have also achieved our goal - we are able to <b>modify the functionality</b> of the <code>Musician</code> class <b>without changing any code</b> inside it. We can create many different instruments which make our musician behave in different ways, with the important distinction that we don't have to modify <code>Musician</code>'s code."
+                                        Body = "On the other hand we have also achieved our goal - we are able to <b>modify the functionality</b> of the <code class='inline-code'>Musician</code> class <b>without changing any code</b> inside it. We can create many different instruments which make our musician behave in different ways, with the important distinction that we don't have to modify <code class='inline-code'>Musician</code>'s code."
                                     }
                                 }
                             },
@@ -5888,19 +5888,19 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "So is it bad that we now have to use this weird syntax in <code>program.cs</code>, chaining the <b>new</b> keywords inside the constructor during object instantiation?"
+                                        Body = "So is it bad that we now have to use this weird syntax in <code class='inline-code'>program.cs</code>, chaining the <b>new</b> keywords inside the constructor during object instantiation?"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Not necessarily, while the syntax is a bit unusual, by moving all of the object creation code into <code>program.cs</code> we have created a so called <b>Composition Root</b>. A central place where all our dependencies are wired up."
+                                        Body = "Not necessarily, while the syntax is a bit unusual, by moving all of the object creation code into <code class='inline-code'>program.cs</code> we have created a so called <b>Composition Root</b>. A central place where all our dependencies are wired up."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Having object instantiation in <code>program.cs</code> is a common practice in all .NET applications that use Dependency Injection - from simple console apps to <b>WebApi</b> and <b>MVC</b> projects - <code>program.cs</code> is the composition root of the application. In latest versions of .NET it is actually quite rare to not see it being done in <code>program.cs</code> (note that before .NET 6 this was done in the <code>startup.cs</code> class)."
+                                        Body = "Having object instantiation in <code class='inline-code'>program.cs</code> is a common practice in all .NET applications that use Dependency Injection - from simple console apps to <b>WebApi</b> and <b>MVC</b> projects - <code class='inline-code'>program.cs</code> is the composition root of the application. In latest versions of .NET it is actually quite rare to not see it being done in <code class='inline-code'>program.cs</code> (note that before .NET 6 this was done in the <code class='inline-code'>startup.cs</code> class)."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The caveat is that while <i>dependency injection by hand</i> works well in small projects, as the <b>application grows</b> it becomes cumbersome to <b>manually wire up</b> all the objects with the <b>new</b> keyword. Imagine adding just one more class, for example a <code>Band</code> to our application and having to do:"
+                                        Body = "The caveat is that while <i>dependency injection by hand</i> works well in small projects, as the <b>application grows</b> it becomes cumbersome to <b>manually wire up</b> all the objects with the <b>new</b> keyword. Imagine adding just one more class, for example a <code class='inline-code'>Band</code> to our application and having to do:"
                                     },
                                     new Paragraph
                                     {
@@ -5924,7 +5924,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "✅ <b>Single Responsibility Principle</b>: <code>Musician</code> only performs the songs, but it doesn't have the responsibility of creating dependencies anymore.<br>✅ <b>Open/Closed Principle</b>: Add new instruments without modifying <code>Musician</code>.<br>✅ <b>Dependency Inversion Principle</b>: <code>Musician</code> depends on an abstraction (<code>IInstrument</code>), not a specific instrument."
+                                        Body = "✅ <b>Single Responsibility Principle</b>: <code class='inline-code'>Musician</code> only performs the songs, but it doesn't have the responsibility of creating dependencies anymore.<br>✅ <b>Open/Closed Principle</b>: Add new instruments without modifying <code class='inline-code'>Musician</code>.<br>✅ <b>Dependency Inversion Principle</b>: <code class='inline-code'>Musician</code> depends on an abstraction (<code class='inline-code'>IInstrument</code>), not a specific instrument."
                                     },
                                     new Paragraph
                                     {
@@ -6052,7 +6052,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "In an IDE of your choice create a new <b>WebApi</b> project with controllers and clean up the default <code>WeatherForecast</code> examples and classes. This is what you should end up with."
+                                        Body = "In an IDE of your choice create a new <b>WebApi</b> project with controllers and clean up the default <code class='inline-code'>WeatherForecast</code> examples and classes. This is what you should end up with."
                                     },
                                     new Paragraph
                                     {
@@ -6068,7 +6068,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Let's start by creating the <code>Employee</code> model class to hold the data. Create a new folder <b>Models</b> and inside it create a new class <code>Employee</code> with the following code:"
+                                        Body = "Let's start by creating the <code class='inline-code'>Employee</code> model class to hold the data. Create a new folder <b>Models</b> and inside it create a new class <code class='inline-code'>Employee</code> with the following code:"
                                     },
                                     new Paragraph
                                     {
@@ -6084,11 +6084,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Next, create a data source class. We are using an in-memory data for simplicity and ease of demonstration. This class holds some <b>hardcoded data</b> and represents a table in the database with employee information. It will be used by the <code>EmployeeRepository</code> class which makes it a dependency class."
+                                        Body = "Next, create a data source class. We are using an in-memory data for simplicity and ease of demonstration. This class holds some <b>hardcoded data</b> and represents a table in the database with employee information. It will be used by the <code class='inline-code'>EmployeeRepository</code> class which makes it a dependency class."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create a new folder <b>DataSource</b> and inside it create a new class <code>EmployeeData</code> with the following code:"
+                                        Body = "Create a new folder <b>DataSource</b> and inside it create a new class <code class='inline-code'>EmployeeData</code> with the following code:"
                                     },
                                     new Paragraph
                                     {
@@ -6104,11 +6104,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Repositories are classes commonly used for <b>data retrieval</b>. In a real world scenario this class would be responsible for interacting with the <b>database</b>. It will be used by the <code>EmployeeService</code> class which also makes it a dependency class."
+                                        Body = "Repositories are classes commonly used for <b>data retrieval</b>. In a real world scenario this class would be responsible for interacting with the <b>database</b>. It will be used by the <code class='inline-code'>EmployeeService</code> class which also makes it a dependency class."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create a new folder <b>Repositories</b> and inside it a new class <code>EmployeeRepository</code> with the following code:"
+                                        Body = "Create a new folder <b>Repositories</b> and inside it a new class <code class='inline-code'>EmployeeRepository</code> with the following code:"
                                     },
                                     new Paragraph
                                     {
@@ -6124,7 +6124,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "In the <b>Controllers</b> folder create a new class <code>EmployeesController</code>. Make it inherit from <code>ControllerBase</code> and decorate it with an <code>[ApiController]</code> and a standard routing attribute. We only need one controller action - a <code>GET</code> endpoint to retrieve the employee data."
+                                        Body = "In the <b>Controllers</b> folder create a new class <code class='inline-code'>EmployeesController</code>. Make it inherit from <code class='inline-code'>ControllerBase</code> and decorate it with an <code class='inline-code'>[ApiController]</code> and a standard routing attribute. We only need one controller action - a <code class='inline-code'>GET</code> endpoint to retrieve the employee data."
                                     },
                                     new Paragraph
                                     {
@@ -6140,7 +6140,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Let's run the application and make sure it works. We didn't install Swagger or Scalar, so you can make a request trough Postman, go to <code>localhost:port/api/employees</code> or use the <code>TeamPulse.Api.http</code> file like this:"
+                                        Body = "Let's run the application and make sure it works. We didn't install Swagger or Scalar, so you can make a request trough Postman, go to <code class='inline-code'>localhost:port/api/employees</code> or use the <code class='inline-code'>TeamPulse.Api.http</code> file like this:"
                                     },
                                     new Paragraph
                                     {
@@ -6182,7 +6182,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The answer lies in <b>ASP.NET Core’s built-in DI container</b>. It’s responsible for creating controller instances when a <b>request</b> comes in. Controllers are automatically registered with the DI container when you call this method in <code>program.cs</code>:"
+                                        Body = "The answer lies in <b>ASP.NET Core’s built-in DI container</b>. It’s responsible for creating controller instances when a <b>request</b> comes in. Controllers are automatically registered with the DI container when you call this method in <code class='inline-code'>program.cs</code>:"
                                     },
                                     new Paragraph
                                     {
@@ -6221,7 +6221,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Start by creating an <code>IEmployeeData</code> interface inside the <b>DataSource</b> folder with the following code:"
+                                        Body = "Start by creating an <code class='inline-code'>IEmployeeData</code> interface inside the <b>DataSource</b> folder with the following code:"
                                     },
                                     new Paragraph
                                     {
@@ -6230,7 +6230,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next make the <code>EmployeeData</code> inherit the previously created interface:"
+                                        Body = "Next make the <code class='inline-code'>EmployeeData</code> inherit the previously created interface:"
                                     },
                                     new Paragraph
                                     {
@@ -6246,7 +6246,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Now we use the <code>IEmployeeData</code> interface and implement constructor injection in the <code>EmployeeRepository</code> class:"
+                                        Body = "Now we use the <code class='inline-code'>IEmployeeData</code> interface and implement constructor injection in the <code class='inline-code'>EmployeeRepository</code> class:"
                                     },
                                     new Paragraph
                                     {
@@ -6255,7 +6255,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create an <code>IEmployeeRepository</code> interface inside the <b>Repositories</b> folder and make the <code>EmployeeRepository</code> inherit the interface:"
+                                        Body = "Create an <code class='inline-code'>IEmployeeRepository</code> interface inside the <b>Repositories</b> folder and make the <code class='inline-code'>EmployeeRepository</code> inherit the interface:"
                                     },
                                     new Paragraph
                                     {
@@ -6271,7 +6271,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "We do the same process again, use the <code>IEmployeeRepository</code> interface and implement constructor injection in the <code>EmployeeService</code> class:"
+                                        Body = "We do the same process again, use the <code class='inline-code'>IEmployeeRepository</code> interface and implement constructor injection in the <code class='inline-code'>EmployeeService</code> class:"
                                     },
                                     new Paragraph
                                     {
@@ -6280,7 +6280,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create an <code>IEmployeeService</code> interface inside the <b>Services</b> folder and make the <code>EmployeeService</code> inherit the interface:"
+                                        Body = "Create an <code class='inline-code'>IEmployeeService</code> interface inside the <b>Services</b> folder and make the <code class='inline-code'>EmployeeService</code> inherit the interface:"
                                     },
                                     new Paragraph
                                     {
@@ -6296,7 +6296,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "Repeating the process, we implement constructor injection with <code>IEmployeeService</code> interface in the <code>EmployeesController</code> class:"
+                                        Body = "Repeating the process, we implement constructor injection with <code class='inline-code'>IEmployeeService</code> interface in the <code class='inline-code'>EmployeesController</code> class:"
                                     },
                                     new Paragraph
                                     {
@@ -6432,7 +6432,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "To complete the application, we still need to register all our services in <code>program.cs</code> - the <b>composition root</b> of our application."
+                                        Body = "To complete the application, we still need to register all our services in <code class='inline-code'>program.cs</code> - the <b>composition root</b> of our application."
                                     }
                                 }
                             },
@@ -6443,11 +6443,11 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "ASP.NET framework provides us with a <b>built-in</b> DI container called <code>IServiceProvider</code>."
+                                        Body = "ASP.NET framework provides us with a <b>built-in</b> DI container called <code class='inline-code'>IServiceProvider</code>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "We register our services to the <code>IServiceProvider</code> so that it knows which objects to create when they are requested. It exposes a property representing a <b>collection of services</b> of type <code>IServiceCollection</code>. We can add our own services to the <code>IServiceCollection</code> and register them with the container."
+                                        Body = "We register our services to the <code class='inline-code'>IServiceProvider</code> so that it knows which objects to create when they are requested. It exposes a property representing a <b>collection of services</b> of type <code class='inline-code'>IServiceCollection</code>. We can add our own services to the <code class='inline-code'>IServiceCollection</code> and register them with the container."
                                     },
                                     new Paragraph
                                     {
@@ -6466,7 +6466,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "We can add custom services in <code>program.cs</code> anywhere after creating the <code>WebApplicationBuilder</code> and before calling the <code>Build()</code> method on it."
+                                        Body = "We can add custom services in <code class='inline-code'>program.cs</code> anywhere after creating the <code class='inline-code'>WebApplicationBuilder</code> and before calling the <code class='inline-code'>Build()</code> method on it."
                                     },
                                     new Paragraph
                                     {
@@ -6475,11 +6475,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Access the <code>IServiceCollection</code> trough <code>Services</code> property of the <code>builder</code> variable"
+                                        Body = "Access the <code class='inline-code'>IServiceCollection</code> trough <code class='inline-code'>Services</code> property of the <code class='inline-code'>builder</code> variable"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Use the <code>AddScoped&ltinterface, type&gt()</code> method for service registration. It's a <b>generic method</b> where you have to define the <b>interface and a class</b> that implements that interface. Then the DI container knows which concrete type to provide while resolving services."
+                                        Body = "Use the <code class='inline-code'>AddScoped&ltinterface, type&gt()</code> method for service registration. It's a <b>generic method</b> where you have to define the <b>interface and a class</b> that implements that interface. Then the DI container knows which concrete type to provide while resolving services."
                                     },
                                     new Paragraph
                                     {
@@ -6488,7 +6488,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Try sending a <code>GET</code> request again - the application should now work correctly. That’s because we’ve <b>registered</b> the necessary classes with the <b>DI container</b>, telling it exactly how to resolve the dependencies our application needs. By registering these classes in the DI container, we enable ASP.NET to <b>automatically resolve</b> and supply the correct implementations whenever they're needed."
+                                        Body = "Try sending a <code class='inline-code'>GET</code> request again - the application should now work correctly. That’s because we’ve <b>registered</b> the necessary classes with the <b>DI container</b>, telling it exactly how to resolve the dependencies our application needs. By registering these classes in the DI container, we enable ASP.NET to <b>automatically resolve</b> and supply the correct implementations whenever they're needed."
                                     }
                                 }
                             },
@@ -6508,15 +6508,15 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The DI container is then responsible for creating an instance of the <code>EmployeesController</code>. Since the controller has a dependency on <code>IEmployeeService</code>, the DI container attempts to resolve that dependency by creating an instance of the registered concrete type - <code>EmployeeService</code>."
+                                        Body = "The DI container is then responsible for creating an instance of the <code class='inline-code'>EmployeesController</code>. Since the controller has a dependency on <code class='inline-code'>IEmployeeService</code>, the DI container attempts to resolve that dependency by creating an instance of the registered concrete type - <code class='inline-code'>EmployeeService</code>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Similarly, <code>EmployeeService</code> depends on <code>IEmployeeRepository</code>, which the container resolves by creating an instance of <code>EmployeeRepository</code>."
+                                        Body = "Similarly, <code class='inline-code'>EmployeeService</code> depends on <code class='inline-code'>IEmployeeRepository</code>, which the container resolves by creating an instance of <code class='inline-code'>EmployeeRepository</code>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This <b>recursive</b> process of resolving dependencies continues until all required dependencies are satisfied. Then, the fully-constructed <code>EmployeesController</code> is ready to handle the request."
+                                        Body = "This <b>recursive</b> process of resolving dependencies continues until all required dependencies are satisfied. Then, the fully-constructed <code class='inline-code'>EmployeesController</code> is ready to handle the request."
                                     },
                                     new Paragraph
                                     {
@@ -6557,7 +6557,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "When you manually <b>new</b>-up an object, <b>you</b> are responsible for managing its lifetime. In some cases, like working with database connections via ADO.NET or Dapper, we utilized <code>using</code> declarations to ensure those connections were properly disposed. But that only works for objects that implement the <code>IDisposable</code> interface. As for everything else? Those objects are eventually cleaned up by the .NET <b>Garbage Collector</b> - whenever it gets around to it."
+                                        Body = "When you manually <b>new</b>-up an object, <b>you</b> are responsible for managing its lifetime. In some cases, like working with database connections via ADO.NET or Dapper, we utilized <code class='inline-code'>using</code> declarations to ensure those connections were properly disposed. But that only works for objects that implement the <code class='inline-code'>IDisposable</code> interface. As for everything else? Those objects are eventually cleaned up by the .NET <b>Garbage Collector</b> - whenever it gets around to it."
                                     },
                                     new Paragraph
                                     {
@@ -6714,7 +6714,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "If we duplicated the line where we fetch employees and have two calls to the <code>EmployeeService</code> in the same request, like this:"
+                                        Body = "If we duplicated the line where we fetch employees and have two calls to the <code class='inline-code'>EmployeeService</code> in the same request, like this:"
                                     },
                                     new Paragraph
                                     {
@@ -6723,15 +6723,15 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "We are calling the same field <code>_employeeService</code> twice - this field was <b>injected once via constructor</b>."
+                                        Body = "We are calling the same field <code class='inline-code'>_employeeService</code> twice - this field was <b>injected once via constructor</b>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "The number of times we call methods on the field does not change how many instances of <code>IEmployeeService</code> are created.<b><br>The number of times a service was injected is what matters.</b>"
+                                        Body = "The number of times we call methods on the field does not change how many instances of <code class='inline-code'>IEmployeeService</code> are created.<b><br>The number of times a service was injected is what matters.</b>"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<b>Scoped</b>:<ul style='padding-left: 1.5rem;'><li>One instance of <code>EmployeeService</code> is created <b>per request</b>.</li><li>Both calls to <code>_employeeService.GetAllEmployees()</code> use the <b>same instance</b>.</li></ul><b>Transient</b>:<ul style='padding-left: 1.5rem;'><li>Controller  requested <code>IEmployeeService</code> <b>only once</b>, via constructor injection.</li><li>So <b>only one instance</b> was created by the container for that request, even if you call its methods multiple times.</li><li>Just like in case of scoped, both method calls use the <b>same instance</b>.</li></ul>"
+                                        Body = "<b>Scoped</b>:<ul style='padding-left: 1.5rem;'><li>One instance of <code class='inline-code'>EmployeeService</code> is created <b>per request</b>.</li><li>Both calls to <code class='inline-code'>_employeeService.GetAllEmployees()</code> use the <b>same instance</b>.</li></ul><b>Transient</b>:<ul style='padding-left: 1.5rem;'><li>Controller  requested <code class='inline-code'>IEmployeeService</code> <b>only once</b>, via constructor injection.</li><li>So <b>only one instance</b> was created by the container for that request, even if you call its methods multiple times.</li><li>Just like in case of scoped, both method calls use the <b>same instance</b>.</li></ul>"
                                     },
                                     new Paragraph
                                     {
@@ -6813,7 +6813,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "We should be familiar with <code>Spectre.Console</code> <a href='https://www.nuget.org/packages/spectre.console' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>, let's add it to our application."
+                                        Body = "We should be familiar with <code class='inline-code'>Spectre.Console</code> <a href='https://www.nuget.org/packages/spectre.console' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>, let's add it to our application."
                                     },
                                     new Paragraph
                                     {
@@ -6822,11 +6822,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create a folder <b>Helpers</b> and inside it add a <code>TableVisualization</code> class."
+                                        Body = "Create a folder <b>Helpers</b> and inside it add a <code class='inline-code'>TableVisualization</code> class."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "We can mark <code>DisplayEmployeesTable</code> method as static as it doesn't access instance data:"
+                                        Body = "We can mark <code class='inline-code'>DisplayEmployeesTable</code> method as static as it doesn't access instance data:"
                                     },
                                     new Paragraph
                                     {
@@ -6835,7 +6835,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next, create a <b>Views</b> folder with <code>IEmployeeView</code> interface and <code>EmployeeView</code> class."
+                                        Body = "Next, create a <b>Views</b> folder with <code class='inline-code'>IEmployeeView</code> interface and <code class='inline-code'>EmployeeView</code> class."
                                     },
                                     new Paragraph
                                     {
@@ -6844,11 +6844,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<code>EmployeeView</code> class will display data based on some logic."
+                                        Body = "<code class='inline-code'>EmployeeView</code> class will display data based on some logic."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Make it inherit the <code>IEmployeeView</code> interface and inject <code>IEmployeeService</code> through the constructor:"
+                                        Body = "Make it inherit the <code class='inline-code'>IEmployeeView</code> interface and inject <code class='inline-code'>IEmployeeService</code> through the constructor:"
                                     },
                                     new Paragraph
                                     {
@@ -6857,7 +6857,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create a <b>Menus</b> folder with <code>IMainMenu</code> interface and <code>MainMenu</code> class."
+                                        Body = "Create a <b>Menus</b> folder with <code class='inline-code'>IMainMenu</code> interface and <code class='inline-code'>MainMenu</code> class."
                                     },
                                     new Paragraph
                                     {
@@ -6866,11 +6866,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "<code>MainMenu</code> will display a simple menu and call the methods from <code>EmployeeView</code>"
+                                        Body = "<code class='inline-code'>MainMenu</code> will display a simple menu and call the methods from <code class='inline-code'>EmployeeView</code>"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Make it inherit the <code>IMainMenu</code> interface and inject <code>IEmployeeView</code> through the constructor:"
+                                        Body = "Make it inherit the <code class='inline-code'>IMainMenu</code> interface and inject <code class='inline-code'>IEmployeeView</code> through the constructor:"
                                     },
                                     new Paragraph
                                     {
@@ -6890,7 +6890,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "There are two ways to implement dependency injection in console applications:<ol style='padding-left: 1.5rem;'><li>Using <code>Microsoft.Extensions.DependencyInjection</code> NuGet package directly</li><li>Using <code>Host.CreateApplicationBuilder()</code> from <code>Microsoft.Extensions.Hosting</code> NuGet package</li></ol>"
+                                        Body = "There are two ways to implement dependency injection in console applications:<ol style='padding-left: 1.5rem;'><li>Using <code class='inline-code'>Microsoft.Extensions.DependencyInjection</code> NuGet package directly</li><li>Using <code class='inline-code'>Host.CreateApplicationBuilder()</code> from <code class='inline-code'>Microsoft.Extensions.Hosting</code> NuGet package</li></ol>"
                                     }
                                 }
                             },
@@ -6910,7 +6910,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This package allows us to instantiate our own service collection and then build the DI container with registered services. Let's have a look at <code>program.cs</code>:"
+                                        Body = "This package allows us to instantiate our own service collection and then build the DI container with registered services. Let's have a look at <code class='inline-code'>program.cs</code>:"
                                     },
                                     new Paragraph
                                     {
@@ -6926,7 +6926,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "<code>Host.CreateApplicationBuilder()</code> is a simplified, modern approach introduced in <b>.NET 7</b> to set up a host for console applications. It's very similar to <code>WebApplicationBuilder</code> we have in WebApi projects and offers direct access to:<ul style='padding-left: 1.5rem;'><li>Dependency injection</li><li>Configuration</li><li>Logging</li><li>Environment</li></ul>"
+                                        Body = "<code class='inline-code'>Host.CreateApplicationBuilder()</code> is a simplified, modern approach introduced in <b>.NET 7</b> to set up a host for console applications. It's very similar to <code class='inline-code'>WebApplicationBuilder</code> we have in WebApi projects and offers direct access to:<ul style='padding-left: 1.5rem;'><li>Dependency injection</li><li>Configuration</li><li>Logging</li><li>Environment</li></ul>"
                                     },
                                     new Paragraph
                                     {
@@ -6934,11 +6934,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Before proceeding, remove the <code>Microsoft.Extensions.DependencyInjection</code> package from your project."
+                                        Body = "Before proceeding, remove the <code class='inline-code'>Microsoft.Extensions.DependencyInjection</code> package from your project."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "To use <code>Host.CreateApplicationBuilder()</code> you only need to install <code>Microsoft.Extensions.Hosting</code> <a href='https://www.nuget.org/packages/microsoft.extensions.hosting' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>."
+                                        Body = "To use <code class='inline-code'>Host.CreateApplicationBuilder()</code> you only need to install <code class='inline-code'>Microsoft.Extensions.Hosting</code> <a href='https://www.nuget.org/packages/microsoft.extensions.hosting' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>NuGet package</a>."
                                     },
                                     new Paragraph
                                     {
@@ -6947,15 +6947,15 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This package <b>already includes</b>:<ul style='padding-left: 1.5rem;'><li><code>Microsoft.Extensions.DependencyInjection</code></li><li><code>Microsoft.Extensions.Configuration</code></li><li><code>Microsoft.Extensions.Logging</code></li></ul>"
+                                        Body = "This package <b>already includes</b>:<ul style='padding-left: 1.5rem;'><li><code class='inline-code'>Microsoft.Extensions.DependencyInjection</code></li><li><code class='inline-code'>Microsoft.Extensions.Configuration</code></li><li><code class='inline-code'>Microsoft.Extensions.Logging</code></li></ul>"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "You can find out more about <code>.NET Generic Host</code> on the <a href='https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>link</a>"
+                                        Body = "You can find out more about <code class='inline-code'>.NET Generic Host</code> on the <a href='https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>link</a>"
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Next, modify <code>program.cs</code> with the following code:"
+                                        Body = "Next, modify <code class='inline-code'>program.cs</code> with the following code:"
                                     },
                                     new Paragraph
                                     {
@@ -6964,7 +6964,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "You can now see why it's said ASP.NET comes with built-in Dependency Injection functionality. After creating a new <b>WebApi</b> project, <code>program.cs</code> already has the <code>WebApplicationBuilder</code> created. Console applications are not a part of ASP.NET framework so we have to manually introduce DI support."
+                                        Body = "You can now see why it's said ASP.NET comes with built-in Dependency Injection functionality. After creating a new <b>WebApi</b> project, <code class='inline-code'>program.cs</code> already has the <code class='inline-code'>WebApplicationBuilder</code> created. Console applications are not a part of ASP.NET framework so we have to manually introduce DI support."
                                     }
                                 }
                             },
@@ -6983,7 +6983,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Only use <b>singleton</b> when registering <code>HttpClient</code>, configuration, logging or caching services."
+                                        Body = "Only use <b>singleton</b> when registering <code class='inline-code'>HttpClient</code>, configuration, logging or caching services."
                                     },
                                     new Paragraph
                                     {
@@ -7012,7 +7012,7 @@ public class CourseHelper
                                 {
                                     new Paragraph
                                     {
-                                        Body = "As your application <b>grows in complexity</b>, you have to register more and more services in <code>program.cs</code> which can make it bloated and unreadable."
+                                        Body = "As your application <b>grows in complexity</b>, you have to register more and more services in <code class='inline-code'>program.cs</code> which can make it bloated and unreadable."
                                     },
                                     new Paragraph
                                     {
@@ -7020,11 +7020,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Create an <b>Extensions</b> folder with a static class <code>ServiceCollectionExtensions</code>."
+                                        Body = "Create an <b>Extensions</b> folder with a static class <code class='inline-code'>ServiceCollectionExtensions</code>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Then create an extension method on the <code>IServiceCollection</code> interface and move all service registrations from <code>program.cs</code> to it:"
+                                        Body = "Then create an extension method on the <code class='inline-code'>IServiceCollection</code> interface and move all service registrations from <code class='inline-code'>program.cs</code> to it:"
                                     },
                                     new Paragraph
                                     {
@@ -7033,7 +7033,7 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Afterwards, in <code>program.cs</code> simply call the method on the <code>builder.Services</code> property:"
+                                        Body = "Afterwards, in <code class='inline-code'>program.cs</code> simply call the method on the <code class='inline-code'>builder.Services</code> property:"
                                     },
                                     new Paragraph
                                     {
@@ -7046,11 +7046,11 @@ public class CourseHelper
                                     },
                                     new Paragraph
                                     {
-                                        Body = "This pattern can be utilized with various service registrations making <code>program.cs</code> clean and tidy and it allows us to organize services into <b>logical groups of related functionality</b>."
+                                        Body = "This pattern can be utilized with various service registrations making <code class='inline-code'>program.cs</code> clean and tidy and it allows us to organize services into <b>logical groups of related functionality</b>."
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Additional example with <code>DbContext</code> registration:"
+                                        Body = "Additional example with <code class='inline-code'>DbContext</code> registration:"
                                     },
                                     new Paragraph
                                     {

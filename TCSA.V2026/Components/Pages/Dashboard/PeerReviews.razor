@@ -27,7 +27,7 @@
     {
         if(User != null && (int)User.Level >= (int)Level.Yellow) 
         {
-        <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText>
+        @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
         if (AvailableProjects != null && AvailableProjects.Count > 0)
         {
             @foreach (var project in AvailableProjects)
@@ -50,7 +50,15 @@
                                         @TimeSpanFormatter.FormatDurationOpen(project.DurationOpen)
                                     </MudText>
                                 </MudItem>
-                                <MudItem xs="2">
+                                <MudItem xs="3">
+                                        <MudButton Size="@Size.Small"
+                                                   Class="mr-1"
+                                                   Variant="@Variant.Filled"
+                                                   Color="@Color.Warning"
+                                                   OnClick="@(() => JS.InvokeVoidAsync("window.open", project.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                                   StartIcon="fas fa-eye">
+                                            View
+                                        </MudButton>
                                     @if (!project.IsAssigned)
                                     {
                                         <MudButton Size="@Size.Small"
@@ -78,15 +86,6 @@
                                             Tick
                                         </MudButton>
                                     }
-                                </MudItem>
-                                <MudItem xs="1">
-                                    <MudButton Size="@Size.Small"
-                                               Variant="@Variant.Filled"
-                                               Color="@Color.Warning"
-                                               OnClick="@(() => JS.InvokeVoidAsync("window.open", project.GithubUrl, "_blank", "noopener,noreferrer"))"
-                                               StartIcon="fas fa-eye">
-                                        View
-                                    </MudButton>
                                 </MudItem>
                             </MudGrid>
                         </CardHeaderContent>

@@ -1135,6 +1135,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                 CardImgUrl = "code-reviews.png",
                 Slug="code-reviews",
                 BannerUrl = "code-review-banner.png",
+                Description = "In this article you’ll find out how to submit code to The C# Academy for review. The objective is to make it easy for reviewers to clone and test code and submit comments directly on code.",
                 Blocks = new List<Block>
                 {
                     new Block
@@ -1356,6 +1357,7 @@ git push</code>"
                 Title = "Code Review Guidelines",
                 Area = Area.StandAlone,
                 ExperiencePoints = 5,
+                Description = "In this article you’ll find out how to review code in The C# Academy. By reviewing other student's projects, not only you're helping them and helping our community grow, but you are becoming a better developer",
                 CardImgUrl = "review-guidelines.png",
                 BannerUrl = "code-review-banner.png",
                 Slug="review-guidelines",
@@ -1540,6 +1542,7 @@ git push</code>"
                 Area = Area.StandAlone,
                 Slug="code-conventions",
                 CardImgUrl = "guidelines.png",
+                Description = "Coding conventions are a set of guidelines for a specific programming language that recommend programming style, practices, and methods for each aspect of a program written in that language",
                 ExperiencePoints = 5,
                 BannerUrl = "code-review-banner.png",
                 Blocks = new List<Block>
@@ -2473,7 +2476,7 @@ git push</code>"
                 Slug="separation-of-concerns-csharp",
                 BannerUrl = "",
                 CardImgUrl = "separation-of-concerns.png",
-                Description = "",
+                Description = "Separation of concerns (SoC) is a fundamental software design principle aimed at dividing a program into distinct sections, each responsible for a specific functionality",
                 ExperiencePoints = 1,
                 Area = Area.Principles,
                 Blocks = new List<Block>
@@ -2563,7 +2566,7 @@ git push</code>"
                 Slug="dry-principle-csharp",
                 BannerUrl = "",
                 CardImgUrl = "dry.png",
-                Description = "",
+                Description = "The Don't Repeat Yourself (DRY) principle is a fundamental programming concept aimed at reducing redundancy in code",
                 ExperiencePoints = 1,
                 Area = Area.Principles,
                 Blocks = new List<Block>
@@ -2655,7 +2658,7 @@ git push</code>"
                 Slug="difference-net-core-asp-net",
                 BannerUrl = "",
                 CardImgUrl = "net-core-difference.png",
-                Description = "",
+                Description = "When I started learning .NET/C# I got lost pretty quickly in the notorious word salad Microsoft produced since 2002 when .NET was first released. .NET Framework, .NET Core, ASP.NET Core, ASP.NET. It's a lot. But is it really?",
                 ExperiencePoints = 1,
                 Area = Area.Principles,
                 Blocks = new List<Block>
@@ -2804,7 +2807,7 @@ git push</code>"
                 Slug="contributing-csharp-academy",
                 BannerUrl = "",
                 CardImgUrl = "open-source.jpg",
-                Description = "",
+                Description = "In this article you'll learn how to contribute to The C# Academy's project. This not only helps maintain the website, but it gives you experience collaborating in open-source projects.",
                 ExperiencePoints = 1,
                 Area = Area.Principles,
                 Blocks = new List<Block>

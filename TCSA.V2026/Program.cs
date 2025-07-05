@@ -75,7 +75,6 @@ ServiceProviderAccessor.ServiceProvider = app.Services;
     SeedData.Seed(app.Services);
 }*/
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

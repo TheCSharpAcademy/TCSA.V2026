@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using TCSA.V2026.Data.Curriculum;
+﻿using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 
@@ -110,6 +109,62 @@ public static class RoadmapHelper
         level = (level >= Level.Green && OliveGreenRequirements.All(completedProjects.Contains)) ? Level.OliveGreen : level;
         level = (level >= Level.OliveGreen && YellowRequirements.All(completedProjects.Contains)) ? Level.Yellow : level;
         level = (level >= Level.Yellow && OrangeRequirements.All(completedProjects.Contains)) ? Level.Orange : level;
+
+        if (level >= Level.Orange 
+            && RedRequirements.All(completedProjects.Contains)
+            && issues >= 1
+            && reviews >= 2)
+        {
+            level = Level.Red;
+        }
+
+        int fullStackAreas = 0;
+        if (BlazorRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        if (AspNetRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        if (ReactRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        if (AngularRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        if (MauiRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+
+        if (level >= Level.Red
+            && fullStackAreas >= 1
+            && issues >= 2
+            && reviews >= 4)
+        {
+            level = Level.Purple;
+        }
+
+        if (level >= Level.Purple
+            && AuthRequirements.All(completedProjects.Contains)
+            && issues >= 4
+            && reviews >= 7)
+        {
+            level = Level.Brown;
+        }
+
+        if (level >= Level.Brown
+            && SqlRequirements.All(completedProjects.Contains)
+            && completedProjects.Contains(139)
+            && issues >= 7
+            && reviews >= 12)
+        {
+            level = Level.Grey;
+        }
+
+        if (level >= Level.Grey
+            && AzureRequirements.All(completedProjects.Contains)
+            && issues >= 10
+            && reviews >= 17)
+        {
+            level = Level.Blue;
+        }
+
+        if (level >= Level.Blue
+            && fullStackAreas >= 2
+            && issues >= 15
+            && reviews >= 25)
+        {
+            level = Level.Black;
+        }
 
         return level.ToString();
     }

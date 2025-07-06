@@ -75,7 +75,8 @@ public class BeltTests
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
             5, 6, 7, 8, 
-            11, 12, 13, 14, // calculator, habit, coding, flashcards
+            11, 12, 13, // calculator, habit, coding
+            14, // flashcards
             53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
@@ -83,49 +84,81 @@ public class BeltTests
     [Test]
     public void DrinksCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, // calculator, habit, coding
+            14, 15, // flashcards, drinks
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void PhonebookCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, // flashcards, drinks, phonebook
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void ShiftsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, // flashcards, drinks, phonebook, shifts
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExerciseCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, // exercise
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void SportsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, // exercise, sports 
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExcelCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, // exercise, sports, excel
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void TestingCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, // exercise, sports, excel, unit tests
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 

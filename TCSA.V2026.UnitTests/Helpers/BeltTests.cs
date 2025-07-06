@@ -165,77 +165,147 @@ public class BeltTests
     [Test]
     public void PortfolioCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, // portfolio
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void ResumeCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, // portfolio, resume
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneReviewShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 0, 1);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            53, 75 }, 0, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 1, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            53, 75 }, 1, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueAndReviewShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 1, 1);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            53, 75 }, 1, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueAndTwoReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 1, 2);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            53, 75 }, 1, 2);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void TwoIssuesAndFourReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void AspNetCoreCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            24, 25, 26, 27, // aspnetcore
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void AspNetCoreCompleteButNotEnoughReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 53, 75 }, 2, 3);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            24, 25, 26, 27, // aspnetcore
+            53, 75 }, 2, 3);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void AspNetCoreCompleteButNotEnoughIssuesShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 53, 75 }, 1, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            24, 25, 26, 27, // aspnetcore
+            53, 75 }, 1, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void ReactCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 35, 36, 37, 38, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            35, 36, 37, 38, // react
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 

@@ -312,64 +312,259 @@ public class BeltTests
     [Test]
     public void AngularCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 31, 32, 33, 34, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            31, 32, 33, 34,  // angular
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void BlazorCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 39, 40, 41, 42, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            39, 40, 41, 42, // blazor
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void MauiCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 43, 44, 45, 46, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            43, 44, 45, 46, // maui
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void JumpingAroundShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 35, 36, 37, 43, 39, 40, 41, 44, 45, 53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            24, 25, 26, // aspnetcore
+            31, 32, 33, // angular
+            35, 36, 37, // react
+            43, 44, 45, // maui
+            39, 40, 41, // blazor
+            53, 75 }, 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void FCCMissingShouldReturnWhite()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 35, 36, 37, 43, 39, 40, 41, 44, 45, 53 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            24, 25, 26, 
+            31, 32, 33, 
+            35, 36, 37, 
+            43, 44, 45, 46, // maui
+            39, 40, 
+            53 }, 2, 4); // missing FCC
         Assert.That(result, Is.EqualTo("White"));
     }
 
     [Test]
     public void MathMissingShouldReturnWhite()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 35, 36, 37, 43, 39, 40, 41, 44, 45, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            24, 25, 26,
+            31, 32, 33,
+            35, 36, 37,
+            43, 44, 45, 46, // maui
+            39, 40,
+            53 }, 2, 4); // missing math
         Assert.That(result, Is.EqualTo("White"));
     }
 
     [Test]
-    public void SQLCompleteShouldReturnPurple()
+    public void AuthCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 43, 44, 45, 46, 53, 75, 76, 77, 78 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74 // Auth
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
-    public void NoFlagshipShouldReturnPurple()
+    public void AuthCompleteShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 43, 44, 45, 46, 53, 75, 76, 77, 78 }, 5, 7);
-        Assert.That(result, Is.EqualTo("Purple"));
-    }
-
-    [Test]
-    public void FlagshipShouldReturnBrown()
-    {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 43, 44, 45, 46, 53, 75, 76, 77, 78, 139}, 7, 12);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74 // Auth
+        }, 5, 7);
         Assert.That(result, Is.EqualTo("Brown"));
+    }
+
+    [Test]
+    public void SQLCompleteShouldReturnBrown()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            43, 44, 45, 46, 
+            53, 75,
+            28, 72, 74,
+            76, 77, 78 // SQL
+        }, 5, 7);
+        Assert.That(result, Is.EqualTo("Brown"));
+    }
+
+    [Test]
+    public void NoFlagshipShouldReturnBrown()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21,
+            22, 23, 
+            43, 44, 45, 46, 
+            53, 75,
+            28, 72, 74,
+            76, 77, 78 
+        }, 7, 12);
+        Assert.That(result, Is.EqualTo("Brown"));
+    }
+
+    [Test]
+    public void FlagshipShouldReturnGrey()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 
+            14, 15, 16, 17, 
+            18, 19, 20, 21, 
+            22, 23, 
+            43, 44, 45, 46, 
+            53, 75,
+            28, 72, 74,
+            76, 77, 78, // SQL
+            139 // flagship
+        }, 7, 12);
+        Assert.That(result, Is.EqualTo("Grey"));
+    }
+
+    [Test]
+    public void AzureShouldReturnGrey()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74,
+            76, 77, 78, // SQL
+            47, 48, 49, 50, // Azure
+            139 // flagship
+        }, 7, 12);
+        Assert.That(result, Is.EqualTo("Grey"));
+    }
+
+    [Test]
+    public void AzureShouldReturnBlue()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74,
+            76, 77, 78, // SQL
+            47, 48, 49, 50, // Azure
+            139 // flagship
+        }, 10, 17);
+        Assert.That(result, Is.EqualTo("Blue"));
+    }
+
+    [Test]
+    public void TwoFullStacksShouldReturnBlue()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            24, 25, 26, 27,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74,
+            76, 77, 78, // SQL
+            47, 48, 49, 50, // Azure
+            139 // flagship
+        }, 10, 17);
+        Assert.That(result, Is.EqualTo("Blue"));
+    }
+
+    [Test]
+    public void TwoFullStacksShouldReturnBlack()
+    {
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            5, 6, 7, 8,
+            11, 12, 13,
+            14, 15, 16, 17,
+            18, 19, 20, 21,
+            22, 23,
+            24, 25, 26, 27,
+            43, 44, 45, 46,
+            53, 75,
+            28, 72, 74,
+            76, 77, 78, // SQL
+            47, 48, 49, 50, // Azure
+            139 // flagship
+        }, 15, 25);
+        Assert.That(result, Is.EqualTo("Black"));
     }
 }
 

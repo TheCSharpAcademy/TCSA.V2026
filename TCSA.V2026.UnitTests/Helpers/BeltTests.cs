@@ -38,22 +38,22 @@ public class BeltTests
     }
 
     [Test]
-    public void PartialOliveGreenShouldStillReturnGreen()
+    public void HabitCompletedShouldStillReturnGreen()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
              5, 6, 7, 8, //articles
-             11,
+             11, //habit
              53, 75 // math, fcc
         }, 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
 
     [Test]
-    public void AlmostAllOliveGreenShouldStillReturnGreen()
+    public void CodingCompletedShouldStillReturnGreen()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
             5, 6, 7, 8, //articles
-            11, 12,
+            11, 12, // habit, coding
             53, 75 // math, fcc
         }, 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
@@ -62,14 +62,21 @@ public class BeltTests
     [Test]
     public void OliveGreenCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8,
+            11, 12, 13, // calculator, habit, coding
+            53, 75 
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void FlashcardsCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 5, 6, 7, 8, 11, 12, 13, 14, 53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
+            5, 6, 7, 8, 
+            11, 12, 13, 14, // calculator, habit, coding, flashcards
+            53, 75 }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 

@@ -152,25 +152,6 @@ internal static class SqlProjectsHelper
                     "<a href='https://www.youtube.com/watch?v=HXV3zeQKqGY' target='_blank'>Free Code Camp SQL Tutorial (Youtube)</a>"
                 },
                 IsClosed = false,
-                Blocks = new List<Block>
-                {
-                    new Block
-                    {
-                        Title = "Linking your Codewars user name with the C# Academy.",
-                        ImgUrl= "icons8-software-installer-96-1.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results."
-                            },
-                            new Paragraph
-                            {
-                                Body = "Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically."
-                            }
-                        }
-                    }
-                },
                 CodeWarsChallenges = new List<CodeWarsChallenge>
                 {
                     new CodeWarsChallenge
@@ -242,25 +223,6 @@ internal static class SqlProjectsHelper
                     "<a href='https://www.youtube.com/watch?v=HXV3zeQKqGY' target='_blank'>Free Code Camp SQL Tutorial (Youtube)</a>"
                 },
                 IsClosed = false,
-                Blocks = new List<Block>
-                {
-                    new Block
-                    {
-                        Title = "Linking your Codewars user name with the C# Academy.",
-                        ImgUrl= "icons8-software-installer-96-1.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results."
-                            },
-                            new Paragraph
-                            {
-                                Body = "Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically."
-                            }
-                        }
-                    }
-                },
                 CodeWarsChallenges = new List<CodeWarsChallenge>
                 {
                     new CodeWarsChallenge
@@ -319,25 +281,6 @@ internal static class SqlProjectsHelper
                     "<a target='blank' href='https://www.codewars.com/kata/62b0da0e58e471000f28ce99'>First Normal Form</a>",
                 },
                 IsClosed = false,
-                Blocks = new List<Block>
-                {
-                    new Block
-                    {
-                        Title = "Linking your Codewars user name with the C# Academy.",
-                        ImgUrl= "icons8-software-installer-96-1.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results."
-                            },
-                            new Paragraph
-                            {
-                                Body = "Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically."
-                            }
-                        }
-                    }
-                },
                 CodeWarsChallenges = new List<CodeWarsChallenge>
                 {
                     new CodeWarsChallenge

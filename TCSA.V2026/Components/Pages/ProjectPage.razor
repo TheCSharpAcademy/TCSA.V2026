@@ -2,6 +2,7 @@
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Services
 @using static TCSA.V2026.Helpers.Enums
 
@@ -176,6 +177,41 @@
                         }
                     }
                 }
+
+                @if (IsLoggedIn && Project.Area == Area.SQL && !IsCompleted)
+                {
+                    @if (CodeWarsNotFoundShowing)
+                    {
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">You haven't integrated Codewars yet.</MudText>
+                        <MudText Class="mt-10 mb-2" Typo="Typo.body1">
+                            In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results.
+
+                            Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically.
+                        </MudText>
+                    }
+                    else
+                    {
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">Your Progress</MudText>
+                        <MudList T="MarkupString" Color="Color.Default">
+                            @foreach (var challenge in Project.CodeWarsChallenges)
+                            {
+                                <MudListItem>
+                                    <div style="display: flex;">
+                                        @if (challenge.IsCompleted)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Outlined.CheckBox" Size="Size.Medium" Color="Color.Success" Class="mr-2" />
+                                        }
+                                        else
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Outlined.CheckBoxOutlineBlank" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
+                                        }
+                                        <MudText>@((MarkupString)(challenge.Name))</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                }
             </MudPaper>
         </MudItem>
     </MudGrid>
@@ -184,6 +220,7 @@
 @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private ICodewarsService CodewarsService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
 
     [Parameter] public string ProjectSlug { get; set; }
@@ -198,10 +235,39 @@
     private ProjectStatus Status { get; set; } = ProjectStatus.None;
 
     private string UserId = string.Empty;
+    private bool CodeWarsNotFoundShowing = false;
 
     protected async override Task OnInitializedAsync()
     {
         await OnParametersSetAsync();
+    }
+
+    private async Task CheckCodeWars()
+    {
+        try
+        {
+            IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
+
+            var challengesResult = await CodewarsService.GetCodeWarsCompletedChallenges(UserId, Project.CodeWarsChallenges);
+
+            Project.CodeWarsChallenges = challengesResult.Challenges;
+
+            if (challengesResult.Status == ResponseStatus.Fail)
+            {
+                CodeWarsNotFoundShowing = true;
+            }
+
+            if (challengesResult.Status == ResponseStatus.Success
+                && !IsCompleted
+                && !Project.CodeWarsChallenges.Any(x => x.IsCompleted == false))
+            {
+                await CodewarsService.MarkCodeWarsAsCompleted(Project.Id, UserId);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private string GetImage(Paragraph paragraph) => $"img/{paragraph.PictureUrl}";
@@ -229,6 +295,11 @@
             UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
+        }
+
+        if (!IsCompleted && Project.Area == Area.SQL)
+        {
+            await CheckCodeWars();
         }
 
         IsLoading = false;

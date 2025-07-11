@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 using TCSA.V2026.Data;
@@ -11,8 +12,9 @@ namespace TCSA.V2026.Services;
 
 public interface ICodewarsService
 {
-    Task<int> MarkCodeWarsAsCompleted(int projectId, string userId, int currentPoints);
+    Task<int> MarkCodeWarsAsCompleted(int projectId, string userId);
     Task<BaseResponse> Sync(string? username, int challengeId, string externalId, string userId);
+    Task<CodeWarsResponse> GetCodeWarsCompletedChallenges(string? username, List<CodeWarsChallenge> challenges);
 }
 
 public class CodewarsService: ICodewarsService
@@ -24,6 +26,58 @@ public class CodewarsService: ICodewarsService
     {
         _factory = factory;
         _httpClient = httpClientFactory.CreateClient();
+    }
+
+    public async Task<CodeWarsResponse> GetCodeWarsCompletedChallenges(string userId, List<CodeWarsChallenge> challenges)
+    {
+        var codeWarsResponse = new CodeWarsResponse();
+        var alias = string.Empty;
+
+        using (var context = _factory.CreateDbContext())
+        {
+            alias = await context.AspNetUsers
+                .Where(x => x.Id == userId)
+                .Select(x => x.CodeWarsUsername)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(alias))
+            {
+                codeWarsResponse.Status = ResponseStatus.Fail;
+                codeWarsResponse.Message = "You haven't integrated your Codewars account yet. Complete your profile with your Codewars username.";
+                codeWarsResponse.Challenges = new List<CodeWarsChallenge>();
+                return codeWarsResponse;
+            }
+        }
+
+        string apiUrl = $"https://www.codewars.com/api/v1/users/{alias}/code-challenges/completed?";
+
+        HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            codeWarsResponse.Status = ResponseStatus.Fail;
+            codeWarsResponse.Message = "Username not found. Go to the dashboard and click on 'Codewars Integration' to update your username.";
+            codeWarsResponse.Challenges = new List<CodeWarsChallenge>();
+            return codeWarsResponse;
+        }
+
+        string jsonResponse = await response.Content.ReadAsStringAsync();
+        CodeWarsApiResponse apiResponse = JsonSerializer.Deserialize<CodeWarsApiResponse>(jsonResponse);
+
+        var completedChallenges = apiResponse.data.Select(x => x.id).ToList();
+
+        foreach (var challenge in challenges)
+        {
+            challenge.IsCompleted = completedChallenges.Contains(challenge.Id);
+        }
+
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            codeWarsResponse.Status = ResponseStatus.Success;
+            codeWarsResponse.Challenges = challenges;
+        }
+
+        return codeWarsResponse;
     }
 
     public async Task<BaseResponse> Sync(string? username, int challengeId, string externalId, string userId)
@@ -83,12 +137,18 @@ public class CodewarsService: ICodewarsService
         }
     }
 
-    public async Task<int> MarkCodeWarsAsCompleted(int projectId, string userId, int currentPoints)
+    public async Task<int> MarkCodeWarsAsCompleted(int projectId, string userId)
     {
         var project = SqlProjectsHelper.GetProjects().FirstOrDefault(x => x.Id == projectId);
 
         using (var context = _factory.CreateDbContext())
         {
+            var user = await context.AspNetUsers
+                .Include(u => u.DashboardProjects)
+                .Include(u => u.UserActivity)
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
             var dashboardProject = new DashboardProject
             {
                 ProjectId = projectId,
@@ -101,10 +161,10 @@ public class CodewarsService: ICodewarsService
                 GithubUrl = "Not applicable"
             };
 
-            context.DashboardProjects
+            user.DashboardProjects
                 .Add(dashboardProject);
 
-            context.UserActivity.Add(new AppUserActivity
+            user.UserActivity.Add(new AppUserActivity
             {
                 ProjectId = projectId,
                 AppUserId = userId,
@@ -112,9 +172,7 @@ public class CodewarsService: ICodewarsService
                 ActivityType = ActivityType.ProjectCompleted
             });
 
-            context.Users
-                .Where(x => x.Id == userId)
-                .ExecuteUpdate(y => y.SetProperty(u => u.ExperiencePoints, project.ExperiencePoints + currentPoints));
+            user.ExperiencePoints += project.ExperiencePoints;
 
             return await context.SaveChangesAsync();
         }

@@ -69,8 +69,8 @@
             <MudStack Spacing="4">
                 @foreach (var challenge in FilteredChallenges)
                 {
-                    <MudPaper Elevation="3" Outlined="false" Class="py-3 px-4 px-md-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
-                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">
+                    <MudPaper Elevation="3" Outlined="false" Class="py-2 px-2 px-sm-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
+                        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                             <MudStack Row Spacing="5">
                                 <MudImage ObjectFit="ObjectFit.Contain" Width="60" Src="@($"img/belts/{challenge.Level}-belt.png")" />
                                 <MudStack Spacing="1">
@@ -82,7 +82,7 @@
                                     </MudStack>
                                 </MudStack>
                             </MudStack>
-                            <MudStack Row Spacing="2">
+                            <MudStack Row Spacing="2" Breakpoint="Breakpoint.Xs">
                                 <MudButton Size="@Size.Small"
                                 Variant="@Variant.Filled"
                                 Color="@Color.Warning"

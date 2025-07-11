@@ -19,7 +19,7 @@
                     {
                         var article = Course.Articles[i];
                         <MudListItem Text=@($"{i + 1}. {article.Title}")
-                        Style=@(CompletedProjects.Contains(article.Id) ? "background-color: #e0ffe0;" : null)
+                        Style=@(CompletedProjects.Contains(article.Id) ? "background-color: var(--mud-palette-success-lighten);" : null)
                         OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
                     }
                 </MudList>

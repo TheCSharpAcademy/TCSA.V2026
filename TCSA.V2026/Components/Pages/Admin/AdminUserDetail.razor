@@ -288,7 +288,7 @@
                 ProjectId = i.ProjectId,
                 ProjectType = ProjectType.Issue,
                 Title = i.Title,
-                IsCompleted = i.IsClosed,
+                IsCompleted = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).IsCompleted,
                 GithubUrl = i.GithubUrl,
                 DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id
             }).ToList() ?? new();

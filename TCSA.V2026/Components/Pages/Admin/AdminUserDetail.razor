@@ -450,6 +450,7 @@
 
         var body = EmailHelper.GetProjectCompletedBody(firstName, projectTitle, projectExperiencePoints, rankingWithSuffix.ToString());
 
+        var result = await ProjectService.MarkAsCompleted(adminActivity.DashboardProjectId.Value);
 
         if (result.Status == ResponseStatus.Success)
         {

@@ -5578,6 +5578,140 @@ public class CourseHelper
                                 }
                             }
                         }
+                    },
+                    new Article
+                    {
+                        Id = 500104,
+                        CourseDisplayId = 5,
+                        Title = "Visual Studio Components",
+                        Slug = "intro-to-wpf-vs-components",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Title = "Live Visual Tree",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "A powerful debugging tool in Visual Studio that allows you to see the entire hierarchy of elements currently in the visual tree of your application while it's running. It dynamically updates as you interact with your application, showing you a tree-like structure of all the UI elements, such as buttons, grids, and text blocks. This tool helps you visualize how the elements are nested and allows you to inspect their properties in real-time, making it easier to understand the layout and troubleshoot issues related to element visibility or arrangement."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "XAML Live Preview",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Another debugging feature that enables you to preview your XAML UI code live as you make changes. With this tool, you can see the updated interface without needing to manually recompile or restart the application. It provides a real-time preview of your XAML layout, which is especially helpful for adjusting design elements like colors, alignment, or control sizes. This preview can also reflect changes made to the XAML code in the editor, allowing you to immediately see how the interface will look in the app, streamlining the development process."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "XAML Binding Failures",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "A diagnostic tool that helps you track issues related to data binding in your WPF application. In WPF, data binding is a key feature that connects the UI to the underlying data, but if there are errors or mismatches in the bindings, the UI may not update as expected. The XAML Binding Failures tool shows you any failed bindings in real time, displaying the details of the error, such as the source of the data, the target property, and the error message. This makes it easier to identify and fix binding issues, ensuring that the UI reflects the data properly."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Live Property Explorer",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "A tool that allows you to inspect and modify the properties of the UI elements in your running application. By selecting an element in the Live Visual Tree or XAML, you can view its current properties such as size, color, margin, and font. The Live Property Explorer allows you to tweak these properties interactively, providing immediate feedback on how changes affect the UI. This tool is invaluable for debugging and adjusting styles, as it enables you to see exactly how different properties impact the appearance and behavior of the UI without having to go back to the XAML code."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500105,
+                        CourseDisplayId = 6,
+                        Title = "Main Window",
+                        Slug = "intro-to-wpf-main-window",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "In the `Window` tag, most of the attributes are either necessary for the functionality of the WPF window or are part of good development practices, but some of them can be safely removed depending on your project needs. Here's a breakdown of what can be removed or modified without affecting the basic functionality of your application:"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "What You Can Safely Remove",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "xmlns:d=\"http://schemas.microsoft.com/expression/blend/2008\" : This namespace is used for design-time data and features in tools like Expression Blend. If you're not using Expression Blend or any design-time data features, you can safely remove this. It’s not needed for runtime functionality, and removing it won't affect the application."
+                                    },
+                                    new Paragraph {
+                                       Body = "xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" : The `mc` namespace is related to markup compatibility and is typically used for handling different versions of XAML and ignoring certain design-time attributes. For most simple WPF applications, this namespace isn’t strictly necessary unless you need to handle backward compatibility or complex scenarios. It can be removed safely."
+                                    },
+                                    new Paragraph {
+                                       Body = "mc:Ignorable=\"d\" : This attribute works in conjunction with the `d` namespace and tells the XAML parser to ignore any design-time data. If you're not using design-time tools or data, this attribute can also be removed.."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "What We Should Keep",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "x:Class=\"TCSA.WPF.Recipes.MainWindow\" : This is essential because it links the XAML to the C# code-behind class. You cannot remove this, as it tells the application which class is associated with this XAML file."
+                                    },
+                                    new Paragraph {
+                                       Body = "xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" : This is the default namespace for WPF elements and controls. It's necessary for all WPF controls to work, so this cannot be removed."
+                                    },
+                                    new Paragraph {
+                                       Body = "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" : This is the XAML namespace used for defining XAML-specific features, such as `x:Name`, `x:Class`, and others. It’s required and cannot be removed."
+                                    },
+                                    new Paragraph {
+                                       Body = "xmlns:local=\"clr-namespace:TCSA.WPF.Recipes\" : This is used to reference classes within your own project (like custom controls, resources, or user controls). If you’re not using any custom controls or project-specific resources, you can remove it, but it’s often useful for adding references to your project's C# classes. If you plan to use custom elements, keep it."
+                                    },
+                                    new Paragraph {
+                                       Body = "Title=\"MainWindow\" : The `Title` attribute is used to set the window's title. You can change it to something else, but it's often useful to provide a meaningful title for your window."
+                                    },
+                                    new Paragraph {
+                                       Body = "Height=\"450\" Width=\"800\" : These define the initial size of the window. While you can remove them, the window will default to a small size, and you might not want that. Adjusting the size is generally useful to fit your UI design."
+                                    }
+                                }
+                            },
+                             new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "We end up with the cleaned up version:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "while (true)\r\n{\r\n    Console.WriteLine(\"What would you like to do?\");\r\n    //collect input\r\n    var menuChoices = MenuChoices.ViewRecords;\r\n\r\n    switch (menuChoices)\r\n    {\r\n        case MenuChoices.ViewRecords:\r\n            {\r\n                ViewRecords();\r\n                break;\r\n            }\r\n        case MenuChoices.AddRecord:\r\n            {\r\n                AddRecord();\r\n                break;\r\n            }\r\n        case MenuChoices.DeleteRecord:\r\n            {\r\n                DeleteRecord();\r\n                break;\r\n            }\r\n        case MenuChoices.CreateReport:\r\n            {\r\n                Report();\r\n                break;\r\n            }\r\n    }\r\n\r\n    Console.WriteLine(\"Waiting for Input\");\r\n}\r\n\r\nvoid ViewRecords()\r\n{\r\n\r\n}\r\n\r\nvoid AddRecord()\r\n{\r\n\r\n}\r\n\r\nvoid DeleteRecord()\r\n{\r\n\r\n}\r\n\r\nvoid Report()\r\n{\r\n\r\n}\r\n\r\npublic enum MenuChoices\r\n{\r\n    ViewRecords,\r\n    AddRecord,\r\n    DeleteRecord,\r\n    CreateReport\r\n}"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;Window x:Class=&quot;TCSA.WPF.Recipes.MainWindow&quot;<br>\r\n&nbsp;&nbsp;xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;<br>\r\n&nbsp;&nbsp;xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;<br>\r\n&nbsp;&nbsp;Title=&quot;MainWindow&quot; Height=&quot;450&quot; Width=&quot;800&quot;&gt;<br>\r\n&lt;/Window&gt;\r\n"
+                                    }
+                                }
+                            },
+
+                        }
                     }
                 }
             },

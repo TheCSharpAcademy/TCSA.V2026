@@ -567,15 +567,3 @@ public class BeltTests
         Assert.That(result, Is.EqualTo("Black"));
     }
 }
-
-//// public static string GetExpectedBelt(List<int> completedProjects, int issues, int reviews)
-//    {
-//        var level = Level.White;
-
-//level = GreenRequirements.All(completedProjects.Contains)? Level.Green : level;
-//level = (level >= Level.Green && OliveGreenRequirements.All(completedProjects.Contains)) ? Level.OliveGreen : level;
-//level = (level >= Level.OliveGreen && YellowRequirements.All(completedProjects.Contains)) ? Level.Yellow : level;
-//level = (level >= Level.Yellow && OrangeRequirements.All(completedProjects.Contains)) ? Level.Orange : level;
-
-//        return level.ToString();
-//    }

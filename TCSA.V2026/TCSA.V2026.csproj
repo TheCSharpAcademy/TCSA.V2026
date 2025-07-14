@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-TCSA.V2026-ca5312ba-27c1-412c-8fc3-cee77abbe36d</UserSecretsId>
+	<Features>$(Features);experimental-data-section-string-literals</Features>
   </PropertyGroup>
 
 

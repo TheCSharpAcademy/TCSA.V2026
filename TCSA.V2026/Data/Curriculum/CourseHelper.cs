@@ -5592,11 +5592,34 @@ public class CourseHelper
                         {
                             new Block
                             {
+                                Title = "Running the App",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "Click on the green arrow to start the app and you'll the current state of your application: A blank UI: "
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch5-wpf-blank-ui.png"
+                                    },
+                                    new Paragraph {
+                                        Body = "With the application running you can also see the following Visual Studio tools: "
+                                    },
+                                }
+                            },
+                            new Block
+                            {
                                 Title = "Live Visual Tree",
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
                                         Body = "A powerful debugging tool in Visual Studio that allows you to see the entire hierarchy of elements currently in the visual tree of your application while it's running. It dynamically updates as you interact with your application, showing you a tree-like structure of all the UI elements, such as buttons, grids, and text blocks. This tool helps you visualize how the elements are nested and allows you to inspect their properties in real-time, making it easier to understand the layout and troubleshoot issues related to element visibility or arrangement."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch5-wpf-live-visual-tree.png"
                                     }
                                 }
                             },
@@ -5607,6 +5630,11 @@ public class CourseHelper
                                 {
                                     new Paragraph {
                                        Body = "Another debugging feature that enables you to preview your XAML UI code live as you make changes. With this tool, you can see the updated interface without needing to manually recompile or restart the application. It provides a real-time preview of your XAML layout, which is especially helpful for adjusting design elements like colors, alignment, or control sizes. This preview can also reflect changes made to the XAML code in the editor, allowing you to immediately see how the interface will look in the app, streamlining the development process."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch5-wpf-xaml-live-preview.png"
                                     }
                                 }
                             },
@@ -5618,6 +5646,11 @@ public class CourseHelper
                                     new Paragraph {
                                        Body = "A diagnostic tool that helps you track issues related to data binding in your WPF application. In WPF, data binding is a key feature that connects the UI to the underlying data, but if there are errors or mismatches in the bindings, the UI may not update as expected. The XAML Binding Failures tool shows you any failed bindings in real time, displaying the details of the error, such as the source of the data, the target property, and the error message. This makes it easier to identify and fix binding issues, ensuring that the UI reflects the data properly."
                                     },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch5-wpf-binding-failures.png"
+                                    }
                                 }
                             },
                             new Block
@@ -5627,6 +5660,11 @@ public class CourseHelper
                                 {
                                     new Paragraph {
                                        Body = "A tool that allows you to inspect and modify the properties of the UI elements in your running application. By selecting an element in the Live Visual Tree or XAML, you can view its current properties such as size, color, margin, and font. The Live Property Explorer allows you to tweak these properties interactively, providing immediate feedback on how changes affect the UI. This tool is invaluable for debugging and adjusting styles, as it enables you to see exactly how different properties impact the appearance and behavior of the UI without having to go back to the XAML code."
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch5-wpf-property-explorer.png"
                                     }
                                 }
                             }
@@ -5693,7 +5731,7 @@ public class CourseHelper
                                     }
                                 }
                             },
-                             new Block
+                            new Block
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
@@ -5702,15 +5740,603 @@ public class CourseHelper
                                     },
                                     new Paragraph {
                                         IsCode = true,
-                                       Body = "while (true)\r\n{\r\n    Console.WriteLine(\"What would you like to do?\");\r\n    //collect input\r\n    var menuChoices = MenuChoices.ViewRecords;\r\n\r\n    switch (menuChoices)\r\n    {\r\n        case MenuChoices.ViewRecords:\r\n            {\r\n                ViewRecords();\r\n                break;\r\n            }\r\n        case MenuChoices.AddRecord:\r\n            {\r\n                AddRecord();\r\n                break;\r\n            }\r\n        case MenuChoices.DeleteRecord:\r\n            {\r\n                DeleteRecord();\r\n                break;\r\n            }\r\n        case MenuChoices.CreateReport:\r\n            {\r\n                Report();\r\n                break;\r\n            }\r\n    }\r\n\r\n    Console.WriteLine(\"Waiting for Input\");\r\n}\r\n\r\nvoid ViewRecords()\r\n{\r\n\r\n}\r\n\r\nvoid AddRecord()\r\n{\r\n\r\n}\r\n\r\nvoid DeleteRecord()\r\n{\r\n\r\n}\r\n\r\nvoid Report()\r\n{\r\n\r\n}\r\n\r\npublic enum MenuChoices\r\n{\r\n    ViewRecords,\r\n    AddRecord,\r\n    DeleteRecord,\r\n    CreateReport\r\n}"
-                                    },
-                                    new Paragraph {
-                                        IsCode = true,
                                        Body = "&lt;Window x:Class=&quot;TCSA.WPF.Recipes.MainWindow&quot;<br>\r\n&nbsp;&nbsp;xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;<br>\r\n&nbsp;&nbsp;xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;<br>\r\n&nbsp;&nbsp;Title=&quot;MainWindow&quot; Height=&quot;450&quot; Width=&quot;800&quot;&gt;<br>\r\n&lt;/Window&gt;\r\n"
                                     }
                                 }
                             },
 
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500106,
+                        CourseDisplayId = 7,
+                        Title = "Adding Some Text",
+                        Slug = "intro-to-wpf-adding-some-text",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In MainWindow.xaml, add the following code into the Grid tag:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;Grid&gt;\r\n    &lt;TextBlock \r\n        Text=&quot;Welcome to the Interactive Recipe Manager!&quot; \r\n        HorizontalAlignment=&quot;Center&quot; \r\n        VerticalAlignment=&quot;Center&quot; \r\n        FontSize=&quot;20&quot; \r\n        FontWeight=&quot;Bold&quot; /&gt;\r\n&lt;/Grid&gt;\r\n"
+                                    },
+                                    new Paragraph {
+                                       Body = "You should see the change straight away in the UI:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch7-wpf-adding-text.png"
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The Grid Element",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "The `Grid` element is a container control that is used to arrange its child elements in a flexible grid of rows and columns. In this example, the `Grid` doesn't have any rows or columns defined, so it will automatically stretch to take up the available space within its parent container (in this case, the `Window`)."
+                                    },
+                                     new Paragraph {
+                                        Body = "The `Grid` is one of the most commonly used layout containers in WPF, as it provides a powerful and flexible way to align and arrange elements. It allows you to define a structure with rows and columns to place your UI elements exactly where you want them. In this case, it serves as the container for the `TextBlock`, but it's empty apart from that."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The TextBlock Element",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "The `TextBlock` element is used to display a block of text in your UI. It is a lightweight control specifically designed for text output, offering a high level of performance. Unlike a `Label`, which can be used for both text and other types of content, a `TextBlock` is optimized purely for displaying text, making it a good choice when you just need to show a string."
+                                    },
+                                    new Paragraph {
+                                       Body = "Here are the important attributes we use in this `TextBlock`: "
+                                    },
+                                    new Paragraph {
+                                       Body = "➡️ <b>Text=\"Welcome to the Interactive Recipe Manager!\"</b> : This is the text that will be displayed inside the `TextBlock`. You can customize the content to whatever you want to display to the user. In this case, it’s a welcoming message for the recipe manager."
+                                    },
+                                    new Paragraph {
+                                       Body = "➡️ <b>HorizontalAlignment and VerticalAlignment</b> : These property control the alignment of the `TextBlock` within its container (the `Grid`). Setting them to Center means the text will appear in the middle of the window horizontally and vertically."
+                                    },
+                                    new Paragraph {
+                                       Body = "➡️ <b>FontSize and FontWeight</b> work similarly to CSS properties, the first setting the size of the characters and the second their boldness."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "How It All Fits Together",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "When the `Grid` and `TextBlock` are rendered, the `TextBlock` is centered both horizontally and vertically in the window. The text will be large (with a font size of 20) and bold, making it easily visible and standing out. Since the `Grid` doesn't define specific rows or columns, it automatically stretches to fit the available space, and the `TextBlock` is centered within it."
+                                    },
+                                    new Paragraph {
+                                       Body = "This layout is simple but effective for displaying welcoming text or titles at the center of the window. The use of the `Grid` container, even without explicitly defined rows or columns, gives flexibility to the design and allows for easy expansion in case you want to add more UI elements later, such as buttons, images, or other controls."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/tree/2.Adding-Text' target='_blank'>in this link</a>." }
+                                }
+                            }
+
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500107,
+                        CourseDisplayId = 8,
+                        Title = "Using Grids",
+                        Slug = "intro-to-wpf-using-grids",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Still in MainWindow.xaml, add the following code into the Grid tag:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;Grid&gt;\r\n    &lt;Grid.ColumnDefinitions&gt;\r\n        &lt;ColumnDefinition Width=&quot;2*&quot; /&gt;\r\n        &lt;ColumnDefinition Width=&quot;3*&quot; /&gt;\r\n    &lt;/Grid.ColumnDefinitions&gt;\r\n\r\n    &lt;StackPanel Grid.Column=&quot;0&quot; Margin=&quot;10&quot;&gt;\r\n        &lt;TextBlock Text=&quot;Recipes&quot; \r\n                   FontSize=&quot;16&quot; FontWeight=&quot;Bold&quot; \r\n                   Margin=&quot;0 0 0 10&quot; /&gt;\r\n    &lt;/StackPanel&gt;\r\n\r\n    &lt;StackPanel Grid.Column=&quot;1&quot; Margin=&quot;10&quot;&gt;\r\n        &lt;TextBlock Text=&quot;Recipe Details&quot; \r\n                   FontSize=&quot;16&quot; FontWeight=&quot;Bold&quot; \r\n                   Margin=&quot;0 0 0 10&quot; /&gt;\r\n        &lt;TextBlock Name=&quot;RecipeDetails&quot; \r\n                   Text=&quot;Select a recipe to view details&quot; \r\n                   TextWrapping=&quot;Wrap&quot; /&gt;\r\n    &lt;/StackPanel&gt;\r\n&lt;/Grid&gt;\r\n"
+                                    },
+                                    new Paragraph {
+                                       Body = "The modified UI should look like this:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch8-wpf-grid-modified-ui.png"
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Column Definitions",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "The code above defines the grid's columns. In this case, two columns are defined. The first column (`ColumnDefinition`) has a width of `2*`, meaning it will take up two parts of available space. The second column has a width of `3*`, meaning it will take up three parts of available space. The `*` is a star sizing, where the space is divided proportionally based on the weight of the numbers. So, the second column will take up more space than the first."
+                                    },
+                                     new Paragraph {
+                                        Body = "The `StackPanel` element is placed in the each grid column(`Grid.Column=\"0\"`). Note that the index of the column is zero-based. Inside each StackPanel we have TextBlocks."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Why Use Stack Panel?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "A StackPanel in WPF is a layout container that arranges its child elements in a single line, either vertically (default) or horizontally, depending on its Orientation property."
+                                    },
+                                    new Paragraph {
+                                       Body = "It’s great for simple layouts where you want elements to flow naturally in one direction. It automatically sizes itself to fit its children. You can nest it inside other containers like Grid or DockPanel for more complex layouts. If you ever want the elements to stack horizontally, just add: Orientation=\"Horizontal\""
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/tree/3.Using-Grids' target='_blank'>in this link</a>." }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500108,
+                        CourseDisplayId = 9,
+                        Title = "List of Recipes",
+                        Slug = "intro-to-wpf-list-of-recipes",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Let's create a model class for our recipes. If you don't know what model classes are, this course is slightly too advanced for you. We recommend you do the first three or four projects in our roadmap, or check out our object oriented programming crash course. In a new file, create a Recipe class:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "public class Recipe\r\n{\r\n    public string Name { get; set; } = string.Empty;\r\n}"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The Code-Behind",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Now let's modify the MainWindow.xaml.cs file."
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "public MainWindow()\r\n    {\r\n        InitializeComponent();\r\n\r\n        Recipes = new ObservableCollection<Recipe>\r\n        {\r\n            new Recipe { Name = \"Spaghetti Bolognese\" },\r\n            new Recipe { Name = \"Chicken Curry\" },\r\n            new Recipe { Name = \"Beef Stroganoff\" }\r\n        };\r\n\r\n        RecipeList.ItemsSource = Recipes;\r\n    }"
+                                    }, 
+                                    new Paragraph
+                                    {
+                                        Body = "The code above defines an ObservableCollection of Recipes. An ObservableCollection<T> is a special type of collection in .NET that notifies the UI when its contents change. It implements the INotifyCollectionChanged interface, which means:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "➡️ When you add, remove, or move items, the UI updates automatically."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "➡️ It’s perfect for data binding in WPF, especially when you want real-time updates without manually refreshing the view."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "In this case we're initializing our Recipes collection with hard-coded values for their names. "
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "➡️ RecipeList.ItemsSource = Recipes: This binds the ListView named RecipeList to the Recipes collection. WPF then iterates over each item in Recipes, applies the defined view or template (like GridViewColumn), Automatically updates the UI when the collection changes. "
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Why This Combo Rocks",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Using ObservableCollection<T> with ItemsSource gives us automatic UI updates when the data changes, clean separation between data and presentation and simplified code — no need to manually refresh or redraw."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The UI",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Now let's go back to MainWindow.xaml. Replace the first Stack Panel with this:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;StackPanel Grid.Column=&quot;0&quot; Margin=&quot;10&quot;&gt;\r\n    &lt;TextBlock Text=&quot;Recipes&quot; \r\n               FontSize=&quot;16&quot; \r\n               FontWeight=&quot;Bold&quot; \r\n               Margin=&quot;0 0 0 10&quot; /&gt;\r\n    &lt;ListView Name=&quot;RecipeList&quot;&gt;\r\n        &lt;ListView.View&gt;\r\n            &lt;GridView&gt;\r\n                &lt;GridViewColumn Header=&quot;Recipe Name&quot; \r\n                                DisplayMemberBinding=&quot;{Binding Name}&quot; /&gt;\r\n            &lt;/GridView&gt;\r\n        &lt;/ListView.View&gt;\r\n    &lt;/ListView&gt;\r\n&lt;/StackPanel&gt;\r\n}"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The List",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "ListView is the main control that displays a list of items. It’s capable of showing complex layouts and multiple columns. Here we're defining the control and names it RecipeList, so it can be referenced in your code-behind or view model."
+                                    },
+                                    new Paragraph {
+                                        Body = "This section specifies how the items inside the ListView should be visually structured. We're overriding the default view to use a GridView."
+                                    },
+                                    new Paragraph {
+                                        Body = "A GridView is one of the layout modes for ListView, allowing data to be displayed in columns—essentially a table. The default view would simply show a list, without the possibility of adding headers or columns."
+                                     },
+                                    new Paragraph {
+                                        Body = "GridViewColumn Header: Defines a single column in your grid. The Header text (\"Recipe Name\") is what the user sees at the top of the column."
+                                    },
+                                    new Paragraph {
+                                        Body = "DisplayMemberBinding=\"{Binding Name}\". This binds the contents of each row under the \"Recipe Name\" column to the Name property of the bound data object. Since our ListView.ItemsSource is bound to a collection of objects like Recipe { string Name }, this column will automatically display each Recipe.Name"
+                                    },
+                                    new Paragraph {
+                                        Body = "With these modifications we now will see this as a result:"
+                                    },
+                                    new Paragraph {
+                                        IsPicture = true, 
+                                        PictureUrl = "c5-ch9-wpf-list-of-recipes.png"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/tree/4.Recipes-List' target='_blank'>in this link</a>." }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500109,
+                        CourseDisplayId = 10,
+                        Title = "Selecting a Recipe",
+                        Slug = "intro-to-wpf-selecting-recipe",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Let's enhance our Recipe model by adding a couple of properties:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "public class Recipe\r\n{\r\n    public int Id { get; set; }\r\n    public string Name { get; set; }\r\n    public string Details { get; set; }\r\n}\r\n"
+                                    },
+                                    new Paragraph {
+                                       Body = "In the MainWindow.xaml.cs, assign values to the new properties: "
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                        Body = "Recipes = new ObservableCollection<Recipe>\r\n{\r\n    new Recipe { Id = 1, Name = \"Spaghetti Bolognese\", Details = \"Classic Italian pasta dish with a rich meat sauce.\" },\r\n    new Recipe { Id = 2, Name = \"Chicken Curry\", Details = \"Spicy Indian-inspired curry made with tender chicken and aromatic spices.\" },\r\n    new Recipe { Id = 3, Name = \"Beef Stroganoff\", Details = \"Creamy Russian-style beef dish served with mushrooms and egg noodles.\" }\r\n};\r\n"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Event Handler",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Still in MainWindow.xaml.cs, add the following method, below the constructor:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "private void RecipeList_SelectionChanged(object sender, SelectionChangedEventArgs e)\r\n    {\r\n        if (RecipeList.SelectedItem is Recipe selectedRecipe)\r\n        {\r\n            RecipeDetails.Text = selectedRecipe.Details;\r\n        }\r\n        else\r\n        {\r\n            RecipeDetails.Text = \"Select a recipe to view details.\";\r\n        }\r\n    }}"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "This method will be responsible for handling clicks on individual list items in the front-end. The first parameter is object sender, which represents the control that will be transmitting this event to the back end. In our case it will be the RecipeList List View. It will be automatically triggered when the selected item in RecipeList change "
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "SelectionChangedEventArgs e gives you data about what changed — specifically the items that were added or removed from selection."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "The code block inside the method controls the text in the Recipe Details block. If any item was selected we will assign the details of a recipe to the text. If not we will display a default text. We can control the text in the front end because we have assigned a name to the TextBlock in the front-end: <TextBlock Name=\"RecipeDetails\">"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Attaching the Handler",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In MainWindow.xaml, add the SelectionChanged property to the ListView, pointing to the handler we created in the back-end:"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The UI",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Now let's go back to MainWindow.xaml. Replace the first Stack Panel with this:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;StackPanel Grid.Column=&quot;0&quot; Margin=&quot;10&quot;&gt;\r\n    &lt;TextBlock Text=&quot;Recipes&quot; \r\n               FontSize=&quot;16&quot; \r\n               FontWeight=&quot;Bold&quot; \r\n               Margin=&quot;0 0 0 10&quot; /&gt;\r\n    &lt;ListView Name=&quot;RecipeList&quot;\r\n              SelectionChanged=&quot;RecipeList_SelectionChanged&quot;&gt; &lt;!-- ADD THIS LINE --&gt;\r\n        &lt;ListView.View&gt;\r\n            &lt;GridView&gt;\r\n                &lt;GridViewColumn Header=&quot;Recipe Name&quot; \r\n                                DisplayMemberBinding=&quot;{Binding Name}&quot; /&gt;\r\n            &lt;/GridView&gt;\r\n        &lt;/ListView.View&gt;\r\n    &lt;/ListView&gt;\r\n&lt;/StackPanel&gt;\r\n}"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Test The Changes",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "Run the app and click on a recipe. You should see it's details changing automatically on the right side:"
+                                    },
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch10-wpf-selecting-recipe.png"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/blob/5.Recipe-Details/TCSA.Recipes/MainWindow.xaml' target='_blank'>in this link</a>." }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500110,
+                        CourseDisplayId = 11,
+                        Title = "Adding a Recipe",
+                        Slug = "intro-to-wpf-adding-recipe",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In this chapter we will collect the input from the user to add a new recipe. For that we'll need a modal. Right click on the project file and choose Add > Window (WPF). Name the new window AddRecipeDialog.xaml and add the following content to the front-end: "
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;Window x:Class=&quot;TCSA.Recipes.AddRecipeDialog&quot;\r\n        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;\r\n        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;\r\n        xmlns:local=&quot;clr-namespace:TCSA.Recipes&quot;\r\n        Title=&quot;AddRecipeDialog&quot; \r\n        Height=&quot;450&quot; \r\n        Width=&quot;800&quot;&gt;\r\n    &lt;Grid&gt;\r\n        &lt;StackPanel Margin=&quot;10&quot;&gt;\r\n            &lt;TextBlock Text=&quot;Recipe Name:&quot; /&gt;\r\n            &lt;TextBox x:Name=&quot;NameInput&quot; Margin=&quot;0 5 0 10&quot; /&gt;\r\n\r\n            &lt;TextBlock Text=&quot;Details:&quot; /&gt;\r\n            &lt;TextBox x:Name=&quot;DetailsInput&quot; Height=&quot;80&quot; AcceptsReturn=&quot;True&quot; TextWrapping=&quot;Wrap&quot; Margin=&quot;0 5 0 10&quot; /&gt;\r\n\r\n            &lt;StackPanel Orientation=&quot;Horizontal&quot; HorizontalAlignment=&quot;Right&quot;&gt;\r\n                &lt;Button Content=&quot;OK&quot; Width=&quot;80&quot; Margin=&quot;5&quot; Click=&quot;Ok_Click&quot; /&gt;\r\n                &lt;Button Content=&quot;Cancel&quot; Width=&quot;80&quot; Margin=&quot;5&quot; Click=&quot;Cancel_Click&quot; /&gt;\r\n            &lt;/StackPanel&gt;\r\n        &lt;/StackPanel&gt;\r\n    &lt;/Grid&gt;\r\n&lt;/Window&gt;\r\n"
+                                    },
+                                    new Paragraph {
+                                       Body = "You should already be familiar with the controls in the code above, except for one property: AcceptsReturn=\"True\". This means the control will accept line breaks when the user presses Enter. This works well when you want a TextBox to behave more like a simple text editor, not a single-line input."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Dialog's Properties",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In AddRecipeDialog.xaml, add the following code:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "public partial class AddRecipeDialog : Window\r\n{\r\n    public string RecipeName => NameInput.Text;\r\n    public string Details => DetailsInput.Text;\r\n\r\n    public AddRecipeDialog()\r\n    {\r\n        InitializeComponent();\r\n    }\r\n\r\n    private void Ok_Click(object sender, RoutedEventArgs e)\r\n    {\r\n        DialogResult = true;\r\n    }\r\n\r\n    private void Cancel_Click(object sender, RoutedEventArgs e)\r\n    {\r\n        DialogResult = false;\r\n    }\r\n}\r\n"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Here we're creating two properties that are assigned to the text property of the NameInput and DetailsInput controls. These properties will be used when the AddRecipeDialog object is insantiated in the MainWindow back-end."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "We also have two methods that handle the Ok and Cancel Buttons. They control the DialogResult boolean, which is part of the Window object. We will use this boolean in the MainWindow back-end."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Using the Modal",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "In MainWindow.xaml.cs, add the method that will handle this modal:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "private void AddRecipe_Click(object sender, RoutedEventArgs e)\r\n    {\r\n        var dialog = new AddRecipeDialog\r\n        {\r\n            Owner = this\r\n        };\r\n\r\n        if (dialog.ShowDialog() == true)\r\n        {\r\n            var newRecipe = new Recipe\r\n            {\r\n                Name = dialog.RecipeName,\r\n                Details = dialog.Details \r\n            };\r\n\r\n            Recipes.Add(newRecipe);\r\n        }\r\n    }"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "In this method we're creating an instance of AddRecipeDialog, which shows the modal. We're defining the Owner of this dialog as the MainWindow, with the keyword this, helping with focus and centering."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "If the user clicks on ok, the result of dialog.ShowDialog() equals true. ShowDialog() returns the DialogResult boolean we set in the dialog's code-behind. If that is the case we will create a new Recipe object with the values from the input taken from the dialog's properties and add it to the Recipes collection."
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "The UI",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "The last step is to add a button that will show the dialog. We will create it inside a new stack panel, since we will be adding more buttons later. Notice that this stack panel is inside the first stack panel, under the list: "
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;StackPanel Grid.Column=&quot;0&quot; Margin=&quot;10&quot;&gt;\r\n    &lt;TextBlock Text=&quot;Recipes&quot; \r\n               FontSize=&quot;16&quot; \r\n               FontWeight=&quot;Bold&quot; \r\n               Margin=&quot;0 0 0 10&quot; /&gt;\r\n    &lt;ListView Name=&quot;RecipeList&quot; \r\n              SelectionChanged=&quot;RecipeList_SelectionChanged&quot;&gt; &lt;!-- ADD THIS LINE --&gt;\r\n        &lt;ListView.View&gt;\r\n            &lt;GridView&gt;\r\n                &lt;GridViewColumn Header=&quot;Recipe Name&quot; \r\n                                DisplayMemberBinding=&quot;{Binding Name}&quot; /&gt;\r\n            &lt;/GridView&gt;\r\n        &lt;/ListView.View&gt;\r\n    &lt;/ListView&gt;\r\n\r\n    &lt;StackPanel Grid.Column=&quot;1&quot; Margin=&quot;10&quot;&gt;\r\n        &lt;Button Content=&quot;Add Recipe&quot; \r\n                Grid.Column=&quot;0&quot; \r\n                Margin=&quot;10 0 10 10&quot; \r\n                HorizontalAlignment=&quot;Right&quot; \r\n                Click=&quot;AddRecipe_Click&quot; /&gt;\r\n    &lt;/StackPanel&gt;\r\n&lt;/StackPanel&gt;\r\n"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Test The Changes",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "Run the app, add a recipe and try to visualize its details:"
+                                    },
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch11-wpf-add-recipe.png"
+                                    },
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch11-wpf-view-recipe.png"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/tree/6.Add-Recipe-Dialog' target='_blank'>in this link</a>." }
+                                }
+                            }
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500111,
+                        CourseDisplayId = 12,
+                        Title = "Editing a Recipe",
+                        Slug = "intro-to-wpf-editing-recipe",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+                            new Block
+                            {
+
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "To Edit a recipe we will need a button in the StackPanel where recipe details live. In MainWindow.xaml, modify the second StackPanel: "
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "&lt;StackPanel Grid.Column=&quot;1&quot; Margin=&quot;10&quot;&gt;\r\n        &lt;TextBlock Text=&quot;Recipe Details&quot; \r\n                FontSize=&quot;16&quot; FontWeight=&quot;Bold&quot; \r\n                Margin=&quot;0 0 0 10&quot; /&gt;\r\n        &lt;TextBlock Name=&quot;RecipeDetails&quot; \r\n                Text=&quot;Select a recipe to view details&quot; \r\n                TextWrapping=&quot;Wrap&quot; /&gt;\r\n     &lt;Button x:Name=&quot;EditButton&quot; \r\n             Content=&quot;Edit Recipe&quot;\r\n             Margin=&quot;10 10 0 0&quot;\r\n             HorizontalAlignment=&quot;Right&quot;\r\n             Visibility=&quot;Collapsed&quot;\r\n             Click=&quot;EditRecipe_Click&quot; /&gt;\r\n&lt;/StackPanel&gt;\r\n"
+                                    },
+                                    new Paragraph {
+                                       Body = "Notice that this button has a Visibility property set as Collapsed, which means it doesn't show by default. In MainWindow.xaml.cs modify RecipeList_SelectionChanged so it sets EditButton to visible only when a recipe is selected."
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "private void RecipeList_SelectionChanged(object sender, SelectionChangedEventArgs e)\r\n    {\r\n        if (RecipeList.SelectedItem is Recipe selectedRecipe)\r\n        {\r\n            RecipeDetails.Text = selectedRecipe.Details;\r\n            EditButton.Visibility = Visibility.Visible;\r\n        }\r\n        else\r\n        {\r\n            RecipeDetails.Text = \"Select a recipe to view details.\";\r\n            EditButton.Visibility = Visibility.Collapsed;\r\n        }\r\n    }"
+                                    },
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Using the Modal",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "We will use the same AddRecipeDialog for editing. For this we will need to add a method that populates the dialog's fields with data from the selected property. Add this method to MainWindow.xaml.cs:"
+                                    },
+                                    new Paragraph {
+                                        IsCode = true,
+                                       Body = "private void EditRecipe_Click(object sender, RoutedEventArgs e)\r\n    {\r\n        if (RecipeList.SelectedItem is Recipe selectedRecipe)\r\n        {\r\n            var dialog = new AddRecipeDialog\r\n            {\r\n                Owner = this\r\n            };\r\n\r\n            // Populating fields with selected recipe data\r\n            dialog.NameInput.Text = selectedRecipe.Name;\r\n            dialog.DetailsInput.Text = selectedRecipe.Details;\r\n\r\n            if (dialog.ShowDialog() == true)\r\n            {\r\n                // Updating the selected recipe with new data\r\n                selectedRecipe.Name = dialog.RecipeName;\r\n                selectedRecipe.Details = dialog.Details;\r\n\r\n                RecipeDetails.Text = selectedRecipe.Details;\r\n\r\n                var index = Recipes.IndexOf(selectedRecipe);\r\n                Recipes.RemoveAt(index);\r\n                Recipes.Insert(index, selectedRecipe);\r\n            }\r\n        }\r\n        else\r\n        {\r\n            MessageBox.Show(\"Please select a recipe to edit.\");\r\n        }\r\n    }"
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "The structure is similar to AddRecipe_Click, but here we're populating the fields with current data from the recipes, so the user can update them if needed. "
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Within the if (dialog.ShowDialog() = true) block we update the selected recipe with the data from the input so it updates immediately in the UI, and update the collection with the updated recipe."
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Test The Changes",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                        Body = "Run the app and try updating a recipe:"
+                                    },
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch12-wpf-update-modal.png"
+                                    },
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c5-ch12-wpf-updated-recipe.png"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Study.Recipes/tree/7.Update-Recipe' target='_blank'>in this link</a>." }
+                                }
+                            }
                         }
                     }
                 }

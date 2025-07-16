@@ -32,7 +32,7 @@
                                 }
                             </MudItem>
                             <MudItem>
-                                @if (task.Status != Data.DTOs.TaskStatus.Completed && !task.IsReadOnly)
+                                @if (task.Area != Area.SQL && task.Status != Data.DTOs.TaskStatus.Completed && !task.IsReadOnly)
                                 {
                                     var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
                                     var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update" : "Submit";

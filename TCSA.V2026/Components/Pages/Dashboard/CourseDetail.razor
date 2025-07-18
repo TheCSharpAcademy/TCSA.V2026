@@ -21,7 +21,7 @@
                     {
                         var article = Course.Articles[i];
                         <MudListItem Text=@($"{i + 1}. {article.Title}")
-                        Style=@(CompletedProjects.Contains(article.Id) ? "background-color: var(--mud-palette-success-lighten);" : null)
+                        Style=@(GetNavItemStyle(article.Id))
                         OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
                     }
                 </MudList>
@@ -54,7 +54,7 @@
                         else if (paragraph.IsPicture)
                         {
                             var imageSrc = $"img/courseimages/{paragraph.PictureUrl}";
-                            <MudPaper Class="d-flex justify-center photo-paragraph my-2 py-10 px-5 px-sm-20" Elevation="0">
+                            <MudPaper Class="d-flex justify-center photo-paragraph mb-2 mt-5 py-10 px-5 px-sm-20" Elevation="4">
                                 <MudImage Src="@imageSrc" Alt="Course image" Fluid="true" />
                             </MudPaper>
                         }
@@ -121,6 +121,14 @@
     private string UserId;
     private string _lastRenderedCode = string.Empty;
 
+    private string GetNavItemStyle(int articleId)
+    {
+        if (articleId == ArticleId)
+        {
+            return "background-color: var(--mud-palette-primary-lighten); color: #fff;";
+        }
+        return CompletedProjects.Contains(articleId) ? "background-color: var(--mud-palette-success-lighten);" : string.Empty;
+    }
     private async Task MarkAsRead()
     {
         IsSubmitting = true;

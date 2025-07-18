@@ -105,7 +105,6 @@
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);
 
-        var user = await UserService.GetDetailedUserById(UserId);
         GetCourseInfo();
 
         LoadTime = DateTime.UtcNow - startTime;
@@ -147,21 +146,21 @@
                 }
         );
 
-        // var wpfCourse = CourseList.FirstOrDefault(x => x.Id == 5);
-        // var wpfCourseIds = wpfCourse.Articles.Select(c => c.Id).ToList();
-        // var completeWpfCourseIds = wpfCourseIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
+        var wpfCourse = CourseList.FirstOrDefault(x => x.Id == 5);
+        var wpfCourseIds = wpfCourse.Articles.Select(c => c.Id).ToList();
+        var completeWpfCourseIds = wpfCourseIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
 
-        // DashboardCourses.Add
-        // (
-        //     new DashboardCourseInfo
-        //         {
-        //             Id = 5,
-        //             Title = wpfCourse.Title,
-        //             Description = $"{completeWpfCourseIds.Count} out of {wpfCourseIds.Count} chapters completed",
-        //             ImgUrl = wpfCourse.ImgUrl,
-        //             Status = GetCourseStatus(completeWpfCourseIds, wpfCourseIds)
-        //         }
-        // );
+        DashboardCourses.Add
+        (
+            new DashboardCourseInfo
+                {
+                    Id = 5,
+                    Title = wpfCourse.Title,
+                    Description = $"{completeWpfCourseIds.Count} out of {wpfCourseIds.Count} chapters completed",
+                    ImgUrl = wpfCourse.ImgUrl,
+                    Status = GetCourseStatus(completeWpfCourseIds, wpfCourseIds)
+                }
+        );
 
         var diCourse = CourseList.FirstOrDefault(x => x.Id == 6);
         var diCourseIds = diCourse.Articles.Select(c => c.Id).ToList();

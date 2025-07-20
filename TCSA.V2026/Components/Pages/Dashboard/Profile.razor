@@ -67,7 +67,7 @@
 
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User = await UserService.GetUserById(UserId);
+        User = await UserService.GetUserProfileById(UserId);
 
         IsLoading = false;
     }

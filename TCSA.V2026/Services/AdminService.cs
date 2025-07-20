@@ -15,6 +15,7 @@ public interface IAdminService
     Task<List<AdminPendingDisplay>> GetAdminPendingProjects();
     Task<List<ApplicationUser>> SearchUser(string email);
     Task<BaseResponse> ChangeBelt(string userId, Level newBelt);
+    Task<BaseResponse> ChangePoints(string userId, int points);
 }
 
 public class AdminService : IAdminService
@@ -24,6 +25,34 @@ public class AdminService : IAdminService
     public AdminService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<BaseResponse> ChangePoints(string userId, int points)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user = await context.AspNetUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+                user.ExperiencePoints = points;
+
+                await context.SaveChangesAsync();
+
+            }
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
     }
 
     public async Task<BaseResponse> ChangeBelt(string userId, Level newBelt)

@@ -5,7 +5,6 @@ namespace TCSA.V2026.Data.DTOs;
 
 public class AdminUserDetailDisplay
 {
-    public int LoadTime { get; set; }
     public DateTimeOffset CreatedDate { get; set; }
     public string UserId { get; set; }
     public string DisplayName { get; set; }

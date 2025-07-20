@@ -42,7 +42,7 @@
         </MudPaper>
 
         <MudPaper Class="mb-5 pa-5" Elevation="4">
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <MudText Typo="Typo.body1" Color="Color.Primary">Change Belt</MudText>
                 <MudSelect T="Level" Label="Select Belt Level" @bind-Value="SelectedLevel" Class="my-2" Dense="true">
                     @foreach (Level lvl in Enum.GetValues(typeof(Level)))
@@ -55,9 +55,12 @@
                     Submit
                 </MudButton>
             </MudItem>
-            <MudItem xs="6">
-
+            <MudItem xs="4">
+                <MudTextField @bind-Value="XPInput" Label="Update XP" />
             </MudItem>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitPoints">
+                Submit
+            </MudButton>
         </MudPaper>
 
         <MudPaper Class="pa-4 mb-5" Elevation="4">
@@ -72,7 +75,7 @@
             CheckedIcon="@Icons.Material.Outlined.CheckBox"
             UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank"
             Value="@_showPending"
-            ValueChanged="@((bool value) => Mama(value))" />
+            ValueChanged="@((bool value) => ShowPending(value))" />
 
         </MudPaper>
 
@@ -166,6 +169,7 @@
     private bool IsLoading = true;
     private int XPSum = 0;
     private int ranking = 0;
+    private int XPInput = 0;
     private TimeSpan loadTime;
 
     protected override async Task OnInitializedAsync()
@@ -198,7 +202,6 @@
 
         loadTime = DateTime.UtcNow - startTime;
 
-        //await GetXPSum();
         await LoadAdminActivity();
         IsLoading = false;
     }
@@ -267,7 +270,26 @@
             var name = string.IsNullOrEmpty(User.FirstName) ? User.GithubUsername : User.FirstName;
             var body = EmailHelper.GetNewBeltBody(User.FirstName, name ?? string.Empty, SelectedLevel);
             await EmailSender.SendEmailAsync(User.Email, "You achieved a new belt!", body);
-            User = await UserService.GetUserById(UserId);
+
+            User = await AdminService.GetUserForAdmin(UserId);
+            await LoadAdminActivity();
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+    }
+
+    private async Task SubmitPoints()
+    {
+        var result = await AdminService.ChangePoints(UserId, XPInput);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            Snackbar.Add("Points Updated!", Severity.Success);
+
+            User = await AdminService.GetUserForAdmin(UserId);
+            await LoadAdminActivity();
         }
         else
         {
@@ -316,7 +338,7 @@
             .ToList();
 
         var articlesForAdmin = User.DashboardProjects
-            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && articlesIds.Contains(dp.ProjectId) && issuesIds.Contains(dp.ProjectId))
+            .Where(dp => !courseArticlesIds.Contains(dp.ProjectId) && articlesIds.Contains(dp.ProjectId) && !issuesIds.Contains(dp.ProjectId))
             .OrderBy(dp => dp.IsCompleted)
             .ThenByDescending(x => x.DateSubmitted)
             .Select(i => new AdminActivity
@@ -467,53 +489,7 @@
         await EmailSender.SendEmailAsync(User.Email, "Your Project Was Marked as Complete", body);
     }
 
-    // private async Task GetXPSum()
-    // {
-    //     var ids = new List<int>();
-
-    //     var projectIds = User.DashboardProjects?
-    //        .Where(x => x.IsCompleted)
-    //        .Select(x => x.ProjectId)
-    //        .ToList();
-
-    //     if (projectIds != null)
-    //     {
-    //         ids.AddRange(projectIds);
-    //     }
-
-    //     // if (User.CodeReviewProjects != null)
-    //     // {
-    //     //     CodeReviews = await PeerReviewService.GetCodeReviewDetails(UserId);
-    //     // }
-
-    //     // if (CodeReviews != null)
-    //     // {
-    //     //     var reviewIds = CodeReviews
-    //     //   .Where(x => x.IsCompleted)
-    //     //   .Select(x => x.ProjectId)
-    //     //   .ToList();
-
-    //     //     ids.AddRange(reviewIds);
-    //     // }
-
-    //     foreach (int id in ids)
-    //     {
-    //         if (Projects.Any(x => x.Id == id))
-    //         {
-    //             XPSum = Projects.Single(x => x.Id == id).ExperiencePoints + XPSum;
-    //         }
-    //         else if (Articles.Any(x => x.Id == id))
-    //         {
-    //             XPSum = Articles.Single(x => x.Id == id).ExperiencePoints + XPSum;
-    //         }
-    //         else
-    //         {
-    //             XPSum = User.Issues.Single(x => x.ProjectId == id).ExperiencePoints + XPSum;
-    //         }
-    //     }
-    // }
-
-    private async Task Mama(bool value)
+    private async Task ShowPending(bool value)
     {
         if (value is bool boolValue)
         {

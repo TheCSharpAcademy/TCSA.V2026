@@ -5,6 +5,7 @@ namespace TCSA.V2026.Data.Models;
 public class Article
 {
     public int Id { get; set; }
+    public ArticleReference Reference { get; set; }
     public int ExperiencePoints { get; set; }
     public int? CourseDisplayId { get; set; }
     public string Title { get; set; }
@@ -69,6 +70,27 @@ public enum Area
     FreestyleProject,
     Blog, 
     Principles, 
-    Course
+    Course,
+    Docker
 }
 
+public enum ArticleReference
+{
+    StartFromScratch = 1,
+    LearnByDoing = 2,
+    CommunityBased = 3,
+    GetJobReady = 4,
+    StartHere = 5,
+    GettingHelp = 6,
+    SettingUp = 7,
+    Foundations = 8,
+    ImportanceOfConsole = 9,
+    ConsoleGraduation = 10,
+    Roadmap = 51,
+    SubmitCodeReviews = 52,
+    PeerReviews = 57,
+    CodeConventions = 58,
+    IntroGuide = 20000,
+    SeparationOfConcerns = 30005,
+
+}

@@ -117,7 +117,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area,
-                    IsReadOnly = true
+                    IsReadOnly = a.Id != 75
                 }).ToList(),
                 Description = GetNotCompletedMessage(Area.StartHere, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartHere, null),
@@ -386,7 +386,7 @@ public static class DashboardProjectsHelpers
 
     public static string GetUrl(Area area, int taskId, string taskSlug)
     {
-        var firstPart = area == Area.StartHere ? "article" : "project";
+        var firstPart = area == Area.StartHere && taskId != 75 ? "article" : "project";
         return $"{firstPart}/{taskId}/{taskSlug}";
     }
 

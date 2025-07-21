@@ -223,6 +223,7 @@ public class PeerReviewService : IPeerReviewService
                 dashboardProject.IsPendingReview = false;
                 dashboardProject.IsPendingNotification = true;
                 dashboardProject.IsCompleted = true;
+                dashboardProject.DateCompleted = DateTime.UtcNow;
 
                 context.DashboardProjects
                     .Update(dashboardProject);

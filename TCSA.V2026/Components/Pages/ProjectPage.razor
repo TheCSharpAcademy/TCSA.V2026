@@ -274,7 +274,7 @@
 
     private string GetBanner()
     {
-        var banner = string.IsNullOrEmpty(Project.BannerUrl) ? "article.banner.jpg" : Project.BannerUrl;
+        var banner = string.IsNullOrEmpty(Project.BannerUrl) ? "article-banner.jpg" : Project.BannerUrl;
         return $"position: relative; height: 250px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 

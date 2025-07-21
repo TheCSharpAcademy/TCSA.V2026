@@ -9,7 +9,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField @bind-Value="GithubUrl" Label="Github Url" />
+        <MudTextField @bind-Value="GithubUrl" Label=@(ProjectId == 75 ? "Freecodecamp URL" : "GithubUrl") />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

@@ -10,8 +10,6 @@
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 
-<MudDialogProvider />
-<MudSnackbarProvider />
 @inject IDialogService DialogService
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
@@ -414,6 +412,7 @@
             {
                 Snackbar.Add("Project deleted  successfully!", Severity.Success);
                 User = await AdminService.GetUserForAdmin(UserId);
+                await LoadAdminActivity();
             }
             else
             {
@@ -437,6 +436,7 @@
             {
                 Snackbar.Add("Project archived  successfully!", Severity.Success);
                 User = await AdminService.GetUserForAdmin(UserId);
+                await LoadAdminActivity();
             }
             else
             {

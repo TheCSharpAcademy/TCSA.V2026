@@ -45,16 +45,24 @@
     {
         var projects = ProjectHelper.GetProjects();
 
-        Notifications = User.DashboardProjects
-        .Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7))
-        .Select(
-            dp => new TCSANotificationItem
-                {
-                    IconUrl = projects.FirstOrDefault(p => p.Id == dp.ProjectId).IconUrl,
-                    Description = GetDescription(dp.ProjectId),
-                    IsActive = dp.IsPendingNotification
-                }
-        ).ToList();
+        var dbProjects = User.DashboardProjects.Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
+
+        // TODO: Include Issues in notifications
+        foreach(var project in dbProjects)
+        {
+            var curriculumProject = projects.FirstOrDefault(p => p.Id == project.ProjectId);
+            if (curriculumProject != null)
+            {
+                Notifications.Add(
+                    new TCSANotificationItem
+                    {
+                        IconUrl = curriculumProject.IconUrl,
+                        Description = GetDescription(project.ProjectId),
+                        IsActive = project.IsPendingNotification
+                    }
+                );
+            }
+        }
 
         if (User.UserActivity.Any(x => x.ActivityType == ActivityType.NewBelt && x.DateSubmitted >= DateTime.UtcNow.AddDays(-7)))
         {

@@ -44,6 +44,7 @@ public class UserService : IUserService
             using (var context = _factory.CreateDbContext())
             {
                 return await context.AspNetUsers
+                .Include(x => x.Issues)
                 .Include(x => x.DashboardProjects)
                 .Include(x => x.UserActivity)
                     .AsSplitQuery()

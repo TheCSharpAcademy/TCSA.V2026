@@ -1145,11 +1145,11 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                         {
                             new Paragraph
                             {
-                                Body = @"In this article you’ll find out how to submit code to The C# Academy for review. The objective is to make it easy for reviewers to clone and test code and submit comments directly on code. It’s also similar to the work flow used in real life production applications and will force you to get familiar with how to submit pull requests on Github. Here’s a step by step list with the process. You’ll probably need it for the first few projects and then it will become second nature."
+                                Body = @"In this article you’ll find out how to submit code to The C# Academy for review. The objective is to make it easy for reviewers to clone and test code and submit comments directly on code. It’s also similar to the work flow used in real life production applications and will force you to get familiar with how to submit pull requests on Github. Here’s a step by step list with the process. You’ll probably only need it for the first few projects and then it will become second nature. 😎"
                             },
                             new Paragraph
                             {
-                                Body = @"Once your pull request is approved, your repository will be part of the C# Academy archive. The reviewers will be relatively strict with coding standards, so you'll have a good taste of the demands of the software engineering industry. Below is a video tutorial plus a list of steps on how to create a pull-request for your code to be reviewed."
+                                Body = @"Once your pull request is reviewed, the pull request will be closed but it can still be assessed on Github in case you want to revisit later. The reviewers will be relatively strict with coding standards, so you'll have a good taste of the demands of the software engineering industry. Below is a video tutorial plus a list of steps on how to create a pull-request for your code to be reviewed."
                             },
                             new Paragraph
                             {
@@ -1165,7 +1165,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                         {
                             new Paragraph
                             {
-                                Body = $"Log into Github and create a fork of our review repository. Each project in the academy has a different review repository .They can be found <a href='https://github.com/stars/TheCSharpAcademy/lists/code-reviews' target='_blank'>here</a>. If you can't find a repository for a project, let us know by reaching out via our <a  target='_blank' href='{discordLink}'>Discord community</a>. "
+                                Body = $"Log into Github and create a fork of our review repository. Each project in the academy has a different review repository. They can be found <a href='https://github.com/stars/TheCSharpAcademy/lists/code-reviews' target='_blank'>here</a>. If you can't find a repository for a project, let us know by reaching out via our <a  target='_blank' href='{discordLink}'>Discord community</a>. "
                             },
                             new Paragraph
                             {
@@ -1191,7 +1191,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                             new Paragraph
                             {
                                 Body = @"Using the command line, navigate to a folder of your choice and use the following command:<br><br>
-<code>git clone your-repository-name</code>. The repository consists of a list of folders, one for each project from other students, that has been submitted, approved and merged."
+<code>git clone your-repository-name</code>. The repository consists of an empty folder with a .gitignore file. When submitting your code, don't remove this file. This assure you only submit relevant files and remove any unnecessary junk."
                             }
                         }
                     },
@@ -1202,7 +1202,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                         {
                             new Paragraph
                             {
-                                Body = @"Using visual studio, create a new project with the following name: 'projectName.yourGithubName' and when prompted for its location, choose the folder that was created when cloned the repository. It will inside the folder you used in step 2."
+                                Body = @"Using your IDE of choice, create a new project with the following name: 'projectName.yourGithubName' and when prompted for its location, choose the folder that was created when cloned the repository. It will be inside the folder you used in step 2. If you already have a folder with your own project, simply move it to inside the cloned repository."
                             }
                         }
                     },
@@ -1289,7 +1289,11 @@ git push</code>"
                             {
                                 IsPicture = true,
                                 PictureUrl = "code-review-10.png"
-                            }
+                            },
+                            new Paragraph
+                            {
+                                Body = "Important: If codacy is demanding you make changes that break your code, <b>feel free to ignore</b>. Also, ignore changes to the README file."
+                            },
                         }
                     },
                     new Block
@@ -1299,8 +1303,13 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "Git pull requests aren't yet integrated to our dashboard. Because of this you'll have to <a href='https://www.thecsharpacademy.com/dashboard/submit-project' target='_blank'>submit your project into our platform here.</a> Choose the correct project from the dropdown and paste the link to your Pull Request."
-                            }
+                                Body = "Git pull requests aren't yet integrated to our dashboard. Because of this you'll have to submit your project into our platform as per the picture below:"
+                            },
+                            new Paragraph
+                            {
+                                IsPicture = true,
+                                PictureUrl = "code-review-submit-project.png"
+                            },
                         }
                     },
                     new Block
@@ -1310,7 +1319,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "If your project is missing any requirements, you'll receive feedback with changes requested. Once you change your project based on the comments, all you need to do is repeat step 4 (stage, commit, push) and the pull request will be updated. You don’t need to submit another Pull request. Once your project is accepted, go to the Academy's repository where you'll see your project included."
+                                Body = "If your project is missing any requirements, you'll receive feedback with changes requested. Check your e-mails, as github warns you once the status of your pull request changes. Once you change your project based on the comments, all you need to do is repeat step 4 (stage, commit, push) and the pull request will be updated. You don’t need to submit another Pull request. Once your project is accepted, go to the Academy's repository where you'll see your project included."
                             },
                             new Paragraph
                             {
@@ -1321,12 +1330,23 @@ git push</code>"
                     },
                     new Block
                     {
+                        Title = "9. Project Archived",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "If we request changes and you don't act in two weeks, we remove it from the dashboard. You can submit reopen the pull request or submit another one whenever you want. You'll just have to resubmit in the Dashboard."
+                            }
+                        }
+                    },
+                    new Block
+                    {
                         Title = "Ask Questions",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
                             {
-                                Body = $"Dealing with source control can be cumbersome and there's a bit to learn. But it's a vital aspect of a developer's knowledge and it's important you get used to troubleshooting it, since you'll inevitably need it when working in any organization. Feel free to get help on our <a target='_blank' href='{discordLink}'>Discord community</a> if you get stuck."
+                                Body = $"Dealing with source control can be cumbersome and there's quite a bit to learn. But it's a vital aspect of a developer's knowledge and it's important you get used to troubleshooting it, since you'll inevitably need it as a professional dev. Feel free to get help on our <a target='_blank' href='{discordLink}'>Discord community</a> if you get stuck."
                             }
                         }
                     },

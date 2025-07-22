@@ -56,7 +56,7 @@ public class LeaderboardService : ILeaderboardService
 
                 result = result
                     .OrderByDescending(x => x.TotalXp)
-                    .Take(PagingConstants.PageSize)
+                    .Take(PagingConstants.LeaderboardPageSize)
                     .ToList();
 
                 foreach (var user in result)
@@ -77,7 +77,7 @@ public class LeaderboardService : ILeaderboardService
     {
         var users = new List<ApplicationUser>();
         var result = new List<UserLeaderboardDisplay>();
-        var index = (pageNumber - 1) * PagingConstants.PageSize;
+        var index = (pageNumber - 1) * PagingConstants.LeaderboardPageSize;
 
         try
         {
@@ -88,8 +88,8 @@ public class LeaderboardService : ILeaderboardService
                 .OrderByDescending(x => x.ExperiencePoints)
                 .ThenBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
-                .Skip((pageNumber - 1) * PagingConstants.PageSize)
-                .Take(PagingConstants.PageSize)
+                .Skip((pageNumber - 1) * PagingConstants.LeaderboardPageSize)
+                .Take(PagingConstants.LeaderboardPageSize)
                 .ToListAsync();
             }
         }
@@ -162,7 +162,7 @@ public class LeaderboardService : ILeaderboardService
                 var count = await context.Users
                     .CountAsync(x => x.ExperiencePoints > 0);
 
-                return (int)Math.Ceiling((double)count / PagingConstants.PageSize);
+                return (int)Math.Ceiling((double)count / PagingConstants.LeaderboardPageSize);
             }
         }
         catch (Exception ex)

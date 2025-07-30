@@ -23,11 +23,17 @@
     }
     else
     {
+        <MudButton Class="mt-3 ml-5 mr-5"
+                   Size="@Size.Medium"
+                   Variant="@Variant.Filled" Color="@Color.Success"
+                   OnClick="@(() => SubmitIssueDialog())">
+            Create Issue
+        </MudButton>
         <MudDataGrid Class="mt-2" Items="@IssuesToShow.OrderByDescending(i => i.Id)" Dense="true" RowStyle="GetRowStyle">
             <Columns>
                 <PropertyColumn Property="i => i.Title" Title="Title" />
                 <PropertyColumn Property="i => i.ExperiencePoints" Title="XPs" />
-                <PropertyColumn Property="i => GetProjectName(i.CommunityProjectId)" Title="XPs" />
+                <PropertyColumn Property="i => GetProjectName(i.CommunityProjectId)" Title="Project" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
@@ -126,7 +132,23 @@
         if (!result.Canceled)
         {
             Snackbar.Add("Issue submitted successfully", Severity.Success);
-            User = await UserService.GetUserById(UserId);
+            IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
+        }
+    }
+
+    private async Task SubmitIssueDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<TCSASubmitIssueDialog>{ { x => x.UserId, UserId } };
+
+
+        var dialog = await DialogService.ShowAsync<TCSASubmitIssueDialog>("Submit Issue", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            Snackbar.Add("Issue created successfully", Severity.Success);
+            IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
         }
     }
 
@@ -137,14 +159,13 @@
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Assignment Successful", Severity.Success);
-            User = await UserService.GetUserById(UserId);
         }
         else
         {
             Snackbar.Add($"Error: {result.Message}", Severity.Error);
         }
 
-        User = await UserService.GetUserById(UserId);
+        IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
     }
 
     private string GetProjectName(int commProjectId) 

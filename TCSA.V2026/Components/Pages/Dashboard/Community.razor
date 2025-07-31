@@ -125,7 +125,7 @@
     private async Task SubmitToReviewDialog(int projectId)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<TCSASubmitProjectDialog> { { x => x.ProjectId, projectId } };
+        var parameters = new DialogParameters<TCSASubmitProjectDialog> { { x => x.ProjectId, projectId }, { x => x.IsIssue, true } };
         var dialog = await DialogService.ShowAsync<TCSASubmitProjectDialog>("Submit Issue", parameters, options);
         var result = await dialog.Result;
 

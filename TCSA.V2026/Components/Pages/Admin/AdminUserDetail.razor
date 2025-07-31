@@ -179,29 +179,36 @@
 
         var startTime = DateTime.UtcNow;
 
-        User = await AdminService.GetUserForAdmin(UserId);
-        UserDisplay = new AdminUserDetailDisplay
-            {
-                UserId = User.Id,
-                CreatedDate = User.CreatedDate,
-                DisplayName = User.DisplayName ?? string.Empty,
-                Name = User.FirstName + User.LastName,
-                Email = User.Email ?? string.Empty,
-                Country = User.Country,
-                ExperiencePoints = User.ExperiencePoints,
-                ExpectedLevel = GetExpectedLevel(),
-                ExpectedPoints = GetExpectedPoints(),
-                Level = (User.Level).ToString(),
-                GithubUsername = User.GithubUsername ?? string.Empty,
-                DiscordAlias = User.DiscordAlias ?? string.Empty,
-                IssuesCompleted = User.Issues?.Count(x => x.IsClosed) ?? 0,
-                ProjectsReviewed = User.ReviewedProjects,
-            };
+        UserDisplay = await GetUserDisplay();
 
         loadTime = DateTime.UtcNow - startTime;
 
-        await LoadAdminActivity();
         IsLoading = false;
+    }
+
+    private async Task<AdminUserDetailDisplay> GetUserDisplay()
+    {
+        User = await AdminService.GetUserForAdmin(UserId);
+
+        await LoadAdminActivity();
+
+        return new AdminUserDetailDisplay
+        {
+            UserId = User.Id,
+            CreatedDate = User.CreatedDate,
+            DisplayName = User.DisplayName ?? string.Empty,
+            Name = $"{User.FirstName} {User.LastName}",
+            Email = User.Email ?? string.Empty,
+            Country = User.Country,
+            ExperiencePoints = User.ExperiencePoints,
+            ExpectedLevel = GetExpectedLevel(),
+            ExpectedPoints = GetExpectedPoints(),
+            Level = User.Level.ToString(),
+            GithubUsername = User.GithubUsername ?? string.Empty,
+            DiscordAlias = User.DiscordAlias ?? string.Empty,
+            IssuesCompleted = User.Issues?.Count(x => x.IsClosed) ?? 0,
+            ProjectsReviewed = User.ReviewedProjects
+        };
     }
 
     private string GetExpectedLevel()
@@ -269,8 +276,7 @@
             var body = EmailHelper.GetNewBeltBody(User.FirstName, name ?? string.Empty, SelectedLevel);
             await EmailSender.SendEmailAsync(User.Email, "You achieved a new belt!", body);
 
-            User = await AdminService.GetUserForAdmin(UserId);
-            await LoadAdminActivity();
+            UserDisplay = await GetUserDisplay();
         }
         else
         {
@@ -286,8 +292,7 @@
         {
             Snackbar.Add("Points Updated!", Severity.Success);
 
-            User = await AdminService.GetUserForAdmin(UserId);
-            await LoadAdminActivity();
+            UserDisplay = await GetUserDisplay();
         }
         else
         {
@@ -297,6 +302,8 @@
 
     private async Task LoadAdminActivity()
     {
+        User = await AdminService.GetUserForAdmin(UserId);
+
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
         var articlesIds = Articles.Select(x => x.Id).ToList();
@@ -411,8 +418,7 @@
             if (apiResult.Status == ResponseStatus.Success)
             {
                 Snackbar.Add("Project deleted  successfully!", Severity.Success);
-                User = await AdminService.GetUserForAdmin(UserId);
-                await LoadAdminActivity();
+                UserDisplay = await GetUserDisplay();
             }
             else
             {
@@ -435,8 +441,7 @@
             if (apiResult.Status == ResponseStatus.Success)
             {
                 Snackbar.Add("Project archived  successfully!", Severity.Success);
-                User = await AdminService.GetUserForAdmin(UserId);
-                await LoadAdminActivity();
+                UserDisplay = await GetUserDisplay();
             }
             else
             {
@@ -477,14 +482,12 @@
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Project marked!", Severity.Success);
-            User = await UserService.GetUserById(UserId);
+            UserDisplay = await GetUserDisplay();
         }
         else
         {
             Snackbar.Add($"Error: {result.Message}", Severity.Error);
         }
-
-        User = await UserService.GetUserById(UserId);
 
         await EmailSender.SendEmailAsync(User.Email, "Your Project Was Marked as Complete", body);
     }

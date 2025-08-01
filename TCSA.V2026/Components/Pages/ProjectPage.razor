@@ -18,7 +18,7 @@
     else
     {
         <MudPaper Class="jumbotron d-flex align-center justify-center mt-3"
-                  Style=@GetBanner()>
+        Style=@GetBanner()>
             <div class="jumbotron-overlay">
                 <MudText Typo="Typo.h3" Class="text-white text-center">@Project.Title</MudText>
             </div>
@@ -183,6 +183,31 @@
                                     }
                                 }
                             }
+                        }
+                    }
+
+                    @if (Project.Screenshots != null)
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-10 mb-2">
+                            Example Screenshots
+                        </MudText>
+                        @if (Project.Screenshots.Count == 1)
+                        {
+                            <MudPaper Class="d-flex justify-center mx-20" Elevation="0">
+                                <MudImage Src="@($"img/{Project.Screenshots[0]}")" Fluid="true" Class="rounded-lg" />
+                            </MudPaper>
+                        }
+                        else if (Project.Screenshots.Count > 1)
+                        {
+                            <MudCarousel Style="height: 350px;" ShowArrows EnableSwipeGesture ItemsSource="Project.Screenshots" AutoCycle="false">
+                                <ItemTemplate>
+                                    <div class="d-flex justify-center" style="height: 100%;">
+                                        <MudImage Src="@($"img/{context}")"
+                                                  Class="rounded-lg"
+                                                  Style="max-height: 300px; max-width: 100%;" />
+                                    </div>
+                                </ItemTemplate>
+                            </MudCarousel>
                         }
                     }
 

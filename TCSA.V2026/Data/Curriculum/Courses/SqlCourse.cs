@@ -43,9 +43,9 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "This course is designed for <b>absolute beginners</b>, so no prior experience with SQL or databases is required. You don’t need to have any SQL knowledge to get started. All concepts will be introduced step-by-step, with clear explanations and practical examples to help you understand and apply what you learn. Whether you’re completely new to SQL or looking to expand your skills into database management, this course will guide you from the very basics to confidently working with SQL." },
+                                       Body = "This course is designed for <b>absolute beginners</b>, so you don’t need to have any SQL knowledge to get started. All concepts will be introduced step-by-step, with clear explanations and practical examples to help you understand and apply what you learn. Whether you’re completely new to SQL or looking to expand your skills into database management, this course will guide you from the very basics to confidently working with SQL." },
                                     new Paragraph {
-                                       Body = "This course is part of The C# Academy's curriculum. While we won’t be using C# in this project, learning SQL in isolation will give you the essential skills needed to interact with databases effectively when you use it with C# in future projects. By focusing on SQL in this course, you’ll gain a clear understanding of how databases work, preparing you to integrate these concepts with C# later in the curriculum. <b>We'll have a separate course on SQL for C# developers.</b>" }
+                                       Body = "This course is part of The C# Academy's curriculum. While we won’t be using C# in this project, learning SQL in isolation will give you the essential skills needed to interact with databases effectively when you use it with C# in future projects. By focusing on SQL in this course, you’ll gain a clear understanding of how databases work, preparing you to integrate these concepts with C# in other areas of the curriculum." }
                                 }
                             },
                             new Block
@@ -54,7 +54,7 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "This is a beginner-friendly course, so advanced concepts like database management and administration will not be included. Instead, we’ll focus on <b>foundational SQL skills</b> and learn in the context of an e-commerce business case scenario. This practical approach will help you understand how SQL can be applied to real-world problems while keeping the learning process straightforward and accessible." }
+                                       Body = "This is a beginner-friendly course, so advanced concepts like database management and administration will not be included. Instead, we’ll focus on <b>foundational SQL skills</b> and learn in the context of an <b>e-commerce business case scenario</b>. This practical approach will help you understand how SQL can be applied to real-world problems while keeping the learning process straightforward and accessible." }
                                 }
                             },
                             new Block
@@ -96,7 +96,16 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "SQLite is perfect for beginners because of its simplicity and accessibility. There’s no need for complicated installations or configurations; you can start working with a database almost immediately. Its self-contained nature ensures you can focus on learning SQL concepts without being distracted by the complexities of setting up a database server. Additionally, <b>SQLite adheres to standard SQL syntax</b>, which means the skills you develop here will translate directly to other database systems in the future." }
+                                       Body = "SQLite is perfect for beginners because of its simplicity. There’s no need for complicated installations or configurations; you can start working with a database almost immediately. Its self-contained nature ensures you can focus on learning SQL concepts without being distracted by the complexities of setting up a database server. Additionally, <b>SQLite adheres to standard SQL syntax</b>, which means the skills you develop here will translate directly to other database systems in the future." }
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Can you use SQL Server?",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       Body = "Absolutely. All tutorials in this course can be followed with both with Sqlite and SQL Server. Keep in mind there will be small differences in syntax, particularly in regards to <b>data types</b> but most of the queries in this course will be identical for both. We do suggest you use Sqlite, as it will make it slightly easier to follow this tutorial." }
                                 }
                             },
                             new Block
@@ -141,7 +150,9 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Data types <b>define the kind of data that can be stored in a column</b>, such as text, numbers, or dates. They play a critical role in ensuring data consistency and optimizing database performance. While SQL as a language supports a wide variety of data types, each database system implements them differently. SQLite uses a more flexible and <b>simplified approach</b> to data types, while SQL Server adheres to strict typing with an extensive set of predefined types.\r\n" }
+                                    new Paragraph { 
+                                        Body = "Data types <b>define the kind of data that can be stored in database table</b>, such as text, numbers, or dates. They play a critical role in ensuring data consistency and optimizing database performance. While SQL as a language supports a wide variety of data types, each database system implements them differently. SQLite uses a more flexible and <b>simplified approach</b> to data types, while SQL Server adheres to strict typing with an extensive set of predefined types.\r\n" 
+                                    }
                                 }
                             },
                             new Block
@@ -149,7 +160,9 @@ public class SqlCourse
                                 Title = "Data Types in SQLite",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "SQLite employs dynamic typing, meaning it doesn’t strictly enforce column data types. Instead, it uses type affinities, which are broad categories for data: <b>TEXT, INTEGER, REAL, BLOB, and NULL</b>. For example, a column defined as TEXT can store numbers, text, or even date strings, though SQLite will attempt to interpret and store values in the most appropriate format. This flexibility can simplify development but requires careful handling to avoid inconsistent data."}
+                                    new Paragraph { 
+                                        Body = "SQLite employs dynamic typing, meaning it doesn’t strictly enforce column data types. Instead, it uses type affinities, which are broad categories for data: <b>TEXT, INTEGER, REAL, BLOB, and NULL</b>. For example, a column defined as TEXT can store numbers, text, or even date strings, though SQLite will attempt to interpret and store values in the most appropriate format. This flexibility can simplify development but requires careful handling to avoid inconsistent data."
+                                    }
                                 }
                             },
                             new Block
@@ -157,7 +170,9 @@ public class SqlCourse
                                 Title = "Data Types in SQL Server",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                      new Paragraph { Body = "The widely used SQL Server, in contrast, enforces strict data typing. Columns are explicitly defined with specific types like <b>INT, VARCHAR, DECIMAL, or DATETIME</b>, and only data matching the defined type can be stored. This ensures data integrity and allows for advanced optimizations, especially in large-scale applications. SQL Server also offers a much larger variety of types, including specialized ones like <b>UNIQUEIDENTIFIER</b> for globally unique identifiers or XML for storing structured data." }
+                                      new Paragraph { 
+                                          Body = "The widely used SQL Server, in contrast, enforces strict data typing. Columns are explicitly defined with specific types like <b>INT, VARCHAR, DECIMAL, or DATETIME</b>, and only data matching the defined type can be stored. This ensures data integrity and allows for advanced optimizations, especially in large-scale applications. SQL Server also offers a much larger variety of types, including specialized ones like <b>UNIQUEIDENTIFIER</b> for globally unique identifiers or XML for storing structured data." 
+                                      }
                                 }
                             },
                             new Block
@@ -166,9 +181,7 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "The key difference between SQLite and SQL Server lies in their approach to typing. SQLite’s dynamic typing makes it easy to work with data without worrying about strict rules, which is helpful for learning and prototyping. However, <b>it sacrifices some data integrity and precision</b>. SQL Server’s strict typing demands more upfront planning when designing a database, but it ensures that the data remains consistent and predictable, which is crucial for complex systems." },
-                                    new Paragraph {
-                                       Body = "As we move forward, understanding these differences will help you choose the right database for your projects and prepare you to adapt your SQL knowledge to different systems. For now, we will focus on SQLite's simpler type system, keeping things accessible and beginner-friendly." },
+                                       Body = "As we move forward, understanding the differences between SQL Server and Sqlite will help you choose the right database for your projects and prepare you to adapt your SQL knowledge to different systems. For now, we will focus on SQLite's simpler type system, keeping things accessible and beginner-friendly." },
                                      new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch3-sql-sqlite-vs-sqlserver.png"}
@@ -202,7 +215,9 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "It's time to start writing SQL! In this chapter, we will focus on creating a table for managing products in an e-commerce store. This is one of the core aspects of building a database, as tables store the data for the system. We will explore how to define the table structure, choose appropriate data types for each column, and understand the relationships between the fields." },
+                                    new Paragraph { 
+                                        Body = "It's time to start writing SQL! In this chapter, we will focus on creating a table for managing products in an e-commerce store. This is one of the core aspects of building a database, as tables store the data for the system. We will explore how to define the table structure, choose appropriate data types for each column, and understand the relationships between the fields." 
+                                    },
                                      new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch4-sql-ecommerce.jpg"}
@@ -214,14 +229,21 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph { Body = "A table in SQL consists of <b>rows and columns</b>, where each column holds a specific type of data. To create a table, we use the <b>CREATE TABLE</b> statement, followed by the table name and column definitions. Each column is defined with a name and a corresponding data type. You can also set constraints on the columns to ensure data integrity."},
-                                    new Paragraph { Body = "Let’s start by creating a simple Products table for an e-commerce store. This table will store basic information about each product available for sale."},
+                                    new Paragraph { Body = "Let’s start by creating a simple <b>Products</b> table for an e-commerce store. This table will store basic information about each product available for sale."},
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "CREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Description TEXT,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    DateAdded DATE\r\n);"},
                                     new Paragraph { Body = "Now, let’s break down each part of this table creation in detail:"},
-                                    new Paragraph { Body = "<b>Line 1: CREATE TABLE</b>: This SQL command is used to define a new table in the database. Products: This is the name of the table being created. You can give the table any name you want. The name should be descriptive of the data it will contain. In this case, the table will hold product-related information. "},
-                                    new Paragraph { Body = "<b>Line 2: ProductID INTEGER PRIMARY KEY AUTOINCREMENT</b>. ProductID: This is the name of the column. It serves as a <b>unique identifier</b> for each row in the table. INTEGER: The data type of the column. It specifies that ProductID will store whole numbers. PRIMARY KEY: This keyword designates ProductID as the primary key of the table. A primary key uniquely identifies each row in the table and ensures that no two rows have the same value for this column. AUTOINCREMENT: This ensures that the value of ProductID is automatically incremented by the database each time a new row is added. It starts at 1 and increases sequentially."},
-                                    new Paragraph { Body = "<b>Line 3: ProductName TEXT NOT NULL</b>. ProductName: The name of the column, which will store the name of the product. TEXT: The data type for the column. It specifies that ProductName will store string values (e.g., product names). NOT NULL: This constraint ensures that the ProductName column cannot contain NULL values. A value must be provided for every row."},
+                                    new Paragraph { Body = "<b>Line 1: CREATE TABLE</b>: This SQL command is used to define a new table in the database. <b>Products</b>: This is the name of the table being created. You can give the table any name you want. The name should be descriptive of the data it will contain. In this case, the table will hold product-related information. "},
+                                    new Paragraph { Body = "<b>Line 2: ProductID INTEGER PRIMARY KEY AUTOINCREMENT</b>." +
+                                    "<br>🔹 <b>ProductID</b>: This is the name of the column. It serves as a <b>unique identifier</b> for each row in the table." +
+                                    "<br>🔹 <b>INTEGER</b>: The data type of the column. It specifies that ProductID will store whole numbers. " +
+                                    "<br>🔹 <b>PRIMARY KEY</b>: This keyword designates ProductID as the primary key of the table. A primary key uniquely identifies each row in the table and ensures that no two rows have the same value for this column. " +
+                                    "<br>🔹 <b>AUTOINCREMENT</b>: This ensures that the value of ProductID is automatically incremented by the database each time a new row is added. It starts at 1 and increases sequentially."},
+                                    new Paragraph { Body = "<b>Line 3: ProductName TEXT NOT NULL</b>. " +
+                                    "<br>🔹 <b>ProductName</b>: The name of the column, which will store the name of the product. " +
+                                    "<br>🔹 <b>TEXT</b>: The data type for the column. It specifies that ProductName will store string values (e.g., product names). " +
+                                    "<br>🔹 <b>NOT NULL</b>: This constraint ensures that the ProductName column cannot contain NULL values. A value must be provided for every row."},
                                     new Paragraph { Body = "<b>Line 4: Description TEXT</b>. Description: The name of the column, which will store additional details about the product. It also has TEXT as its data type."},
                                     new Paragraph { Body = "<b>Line 5: Price REAL NOT NULL</b>. Price: The name of the column, which will store the product's price. REAL: The data type for the column. It is used to store floating-point numbers (decimal values). A valid price must always be provided."},
                                     new Paragraph { Body = "<b>Line 6: StockQuantity INTEGER NOT NULL</b>. StockQuantity: The name of the column, which will store the number of products available in stock. The data type is integer and cannot contain null values."},
@@ -274,7 +296,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In DB Browser Menu, click on the first item: <b>New Database</b>. Choose a location in your file system, a name and save. We're naming our file ecommerce, but you can choose any name you prefer. Navigate to the folder where you created the table and if everything worked correctly, you'll see your database file:" },
+                                    new Paragraph { Body = "In DB Browser Menu, click on the first item: <b>New Database</b>. Choose a location in your file system, a name and save. We're naming our file ecommerce, but you can choose any name you prefer. Navigate to the folder where you created the file and if everything worked correctly, you'll see this:" },
                                     new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch5-sql-db-file.png"},
@@ -285,7 +307,7 @@ public class SqlCourse
                                 Title = "Applying Your First Script",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Just below the Top Menu, you'll see a few tabs. In the <b>Execute SQL</b> tab, paste the script to create the table and click on the <b>Play button</b>, which executes the script:"},
+                                    new Paragraph { Body = "Just below the Top Menu, you'll see a few tabs. In the <b>Execute SQL</b> tab, paste the script from the previous chapter to  and click on the <b>Play button</b>, which executes the script:"},
                                     new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch5-sql-sqlite-practice-create.png"}

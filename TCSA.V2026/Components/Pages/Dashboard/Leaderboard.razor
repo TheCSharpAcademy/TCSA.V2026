@@ -19,8 +19,8 @@
         Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
     </MudButton>
 
-    @if (Ranking > PagingConstants.PageSize && !IsReviews) {
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => LoadPagination(((Ranking - 1) / PagingConstants.PageSize) + 1)">
+    @if (Ranking > PagingConstants.LeaderboardPageSize && !IsReviews) {
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => LoadPagination(((Ranking - 1) / PagingConstants.LeaderboardPageSize) + 1)">
             Click to See Your Ranking
         </MudButton>
     }
@@ -154,7 +154,7 @@
         {
             Ranking = await LeaderboardService.GetUserRanking(UserId);
 
-            CurrentPage = ((Ranking - 1) / PagingConstants.PageSize) + 1;
+            CurrentPage = ((Ranking - 1) / PagingConstants.LeaderboardPageSize) + 1;
             await LoadPagination(CurrentPage);
         }
 

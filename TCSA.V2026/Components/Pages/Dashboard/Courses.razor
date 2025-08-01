@@ -27,7 +27,7 @@
         foreach (var course in DashboardCourses)
         {
             <MudCard Class="mt-1" Style="@(course.Status == DashBoardCourseStatus.Completed ? "border: 2px solid green;" : null)">
-                <MudCardHeader Class="d-flex align-items-center">
+                <MudCardHeader Class="d-flex align-items-center flex-wrap">
                     <CardHeaderAvatar>
                         <MudImage Width="40" Src="@($"img/icons/{course.ImgUrl}")" />
                     </CardHeaderAvatar>
@@ -36,41 +36,43 @@
                         <MudText Typo="Typo.body2">@course.Description</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        @if (course.Status == DashBoardCourseStatus.Completed)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Success">
-                                Completed
-                            </MudChip>
-                        }
-                        else if (course.Status == DashBoardCourseStatus.InProgress)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Primary">
-                                In Progress
-                            </MudChip>
-                        }
-                        else if (course.Status == DashBoardCourseStatus.NotStarted)
-                        {
-                            <MudChip Class="mt-3 ml-5"
-                            T="string"
-                            Size="@Size.Large"
-                            Color="Color.Info">
-                                Not Started
-                            </MudChip>
-                        }
-                        <MudButton Class="mt-2 ml-5 mr-5"
-                        Size="@Size.Medium"
-                        Variant="@Variant.Filled"
-                        OnClick="@(() => NavigateToCourse(course.Id))"
-                        Color="Color.Primary"
-                        StartIcon="fas fa-eye">
-                            Go To Course
-                        </MudButton>
+                        <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                            @if (course.Status == DashBoardCourseStatus.Completed)
+                            {
+                                <MudChip Class="ml-5 mt-5"
+                                         T="string"
+                                         Size="@_chipSize"
+                                         Color="Color.Success">
+                                    Completed
+                                </MudChip>
+                            }
+                            else if (course.Status == DashBoardCourseStatus.InProgress)
+                            {
+                                <MudChip Class="ml-5 mt-5"
+                                         T="string"
+                                         Size="@_chipSize"
+                                         Color="Color.Primary">
+                                    In Progress
+                                </MudChip>
+                            }
+                            else if (course.Status == DashBoardCourseStatus.NotStarted)
+                            {
+                                <MudChip Class="ml-5 mt-5"
+                                         T="string"
+                                         Size="@_chipSize"
+                                         Color="Color.Info">
+                                    Not Started
+                                </MudChip>
+                            }
+                            <MudButton Class="ml-5 mr-5 mt-5"
+                                       Size="@_buttonSize"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => NavigateToCourse(course.Id))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+                                Go To Course
+                            </MudButton>
+                        </MudBreakpointProvider>
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
@@ -90,6 +92,8 @@
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
+    private Size _chipSize = Size.Large;
+    private Size _buttonSize = Size.Medium;
 
     protected override async Task OnInitializedAsync()
     {
@@ -201,6 +205,21 @@
         var firstArticle = course.Articles.First();
         var isCode = false;
         Navigation.NavigateTo($"/course/{courseId}/article/{firstArticle.CourseDisplayId}/{firstArticle.Id}/{isCode}");
+    }
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _chipSize = Size.Small;
+            _buttonSize = Size.Small;
+        } else
+        {
+            _chipSize = Size.Large;
+            _buttonSize = Size.Medium;
+        }
+
+        StateHasChanged();
     }
 
     private DashBoardCourseStatus GetCourseStatus(List<int> completedIds, List<int> allIds)

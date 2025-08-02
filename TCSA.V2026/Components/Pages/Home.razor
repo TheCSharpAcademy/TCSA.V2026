@@ -22,12 +22,15 @@ else
                         <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
                     </MudText>
 
-                    <MudStack Row="true" Spacing="2" Class="mt-6">
-                        <MudButton OnClick="@(() => NavigateToRegistration())"
-                                   Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   Size="Size.Large">Sign up for free</MudButton>
-                    </MudStack>
+                    @if (!IsLoggedIn)
+                    {
+                        <MudStack Row="true" Spacing="2" Class="mt-6">
+                            <MudButton OnClick="@(() => NavigateToRegistration())"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Size="Size.Large">Sign up for free</MudButton>
+                        </MudStack>
+                    }
                 </MudItem>
 
                 <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
@@ -174,6 +177,7 @@ else
 }
 
 @code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
 
     protected List<Project> Projects = new();
@@ -185,10 +189,11 @@ else
 
     private TimeSpan LoadTime = TimeSpan.Zero;
     private bool IsLoading = true;
+    private bool IsLoggedIn = false;
 
     protected override async Task OnInitializedAsync()
     {
-         var startTime = DateTime.UtcNow;
+        var startTime = DateTime.UtcNow;
 
         Articles = ArticleHelper.GetArticles();
         Projects = ProjectHelper.GetProjects();
@@ -199,6 +204,14 @@ else
         GetAreas();
 
         LoadTime = DateTime.UtcNow - startTime;
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+        IsLoading = false;
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+        }
 
         IsLoading = false;
     }

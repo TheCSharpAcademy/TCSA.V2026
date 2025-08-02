@@ -59,7 +59,10 @@ public class OopCourse
                                 Title = "Video Course",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "We also have a paid video version of this tutorial. You have three options to access this course:<br><br>\r\n<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=cshasp-object-oriented-programming-crash-course' target='_blank'>individually for $4.99</a>.<br>\r\n<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'>all our courses for $4.99/month</a><br>\r\n<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'>all courses and 1-on-1 mentorship for 39.99/month</a>" },
+                                    new Paragraph { Body = "We also have a paid video version of this tutorial. You have three options to access this course:<br><br>\r\n" +
+                                    "🔹<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=cshasp-object-oriented-programming-crash-course' target='_blank'><b><u>individually for $4.99</u></b></a>.<br>\r\n" +
+                                    "🔹<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'><b><u>all our courses for $4.99/month</b></u></a><br>\r\n" +
+                                    "🔹<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'><b><u>all courses and 1-on-1 mentorship for 39.99/month</b></u></a>" },
                                 }
                             },
                             new Block
@@ -2464,9 +2467,9 @@ public class OopCourse
                                 Title = "What To Do Now",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "The first step I recommend is to write down a reflection upon what you've just learned. What did you think of the course? What are sub-topics you still feel you don't understand well? What feels more clear to you now?" },
+                                    new Paragraph { Body = "The first step we recommend is to <b>write down a reflection</b> upon what you've just learned. What did you think of the course? What are sub-topics you still feel you don't understand well? What feels more clear to you now? It's ok to feel like there are things you still don't know, but it's good to be specific about what these things are so you can tackle them in a focused way." },
                                     new Paragraph {
-                                       Body = "Right now we recommend you jump back into our projects and apply the knowledge from this course wherever you can. You can revisit this course at any time. Each time you repeat a course, you'll find that you'll learn something new or see the same topic from a new perspective, no matter how many times you do it." },
+                                       Body = "If you feel confident you've learned a thing or two, we recommend you jump back into our projects and apply the knowledge from this course wherever you can. You can revisit this course at any time. Each time you repeat a course, you'll find that you'll learn something new or see the same topic from a new perspective, <b>no matter how many times you do it</b>." },
                                     new Paragraph { Body = "Remember that this is an intro course covering the most used aspects of Object Oriented Programming. We're working on an advanced course, covering topics for students that are already very comfortable the material in this course. Stay tuned! And once again! Congratulations!" }
                                 }
                             },
@@ -2475,7 +2478,10 @@ public class OopCourse
                                 Title = "Video Course",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "We also have a paid video version of this tutorial. You have three options to access this course:<br><br>\r\n<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=cshasp-object-oriented-programming-crash-course' target='_blank'>individually for $4.99</a>.<br>\r\n<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'>all our courses for $4.99/month</a><br>\r\n<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'>all courses and 1-on-1 mentorship for 39.99/month</a>" },
+                                    new Paragraph { Body = "We also have a paid video version of this tutorial. You have three options to access this course:<br><br>\r\n" +
+                                    "🔹<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=cshasp-object-oriented-programming-crash-course' target='_blank'><b><u>individually for $4.99</u></b></a>.<br>\r\n" +
+                                    "🔹<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'><b><u>all our courses for $4.99/month</b></u></a><br>\r\n" +
+                                    "🔹<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'><b><u>all courses and 1-on-1 mentorship for 39.99/month</b></u></a>" },
                                 }
                             },
                         }

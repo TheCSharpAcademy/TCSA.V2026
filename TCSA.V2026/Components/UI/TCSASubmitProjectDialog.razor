@@ -1,7 +1,7 @@
 ﻿@using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Services
-<MudDialog>
+<MudDialog Style="min-width: 400px;">
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
@@ -22,7 +22,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Error" OnClick="Submit">Submit</MudButton>
+        <MudButton Disabled="HasError" Color="Color.Error" OnClick="Submit">Submit</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -67,6 +67,10 @@
 
     private async Task Submit() 
     {
+        ValidateUrl(); 
+        if (HasError)
+            return;
+
         var result = new BaseResponse();
         if (IsIssue)
         {

@@ -88,7 +88,7 @@
         {
             { p => p.Notifications, Notifications }
         };
-        var dialog = await DialogService.ShowAsync<TCSANotificationDialog>(null, parameters, options);
+        var dialog = await DialogService.ShowAsync<TCSANotificationDialog>("Your notifications for the past 7 days", parameters, options);
 
         var result = await dialog.Result;
 

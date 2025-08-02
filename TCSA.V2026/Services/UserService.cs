@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -12,6 +13,8 @@ public interface IUserService
     Task<ApplicationUser> GetDetailedUserById(string userId);
     Task<ApplicationUser> GetUserProfileById(string userId);
     Task<BaseResponse> SaveProfile(ApplicationUser user);
+    Task<BaseResponse> ResetAccount(ApplicationUser user);
+    Task<BaseResponse> DeleteAccount(ApplicationUser user);
 }
 
 public class UserService : IUserService
@@ -99,6 +102,77 @@ public class UserService : IUserService
                 {
                     Status = ResponseStatus.Success,
                     Message = "Profile updated successfully."
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+    }
+
+    public async Task<BaseResponse> DeleteAccount(ApplicationUser user)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var dbUser = await context.AspNetUsers.FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
+                context.AspNetUsers.Remove(dbUser);
+
+                await context.SaveChangesAsync();
+
+                return new BaseResponse
+                {
+                    Status = ResponseStatus.Success,
+                    Message = "Account deleted successfully."
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+    }
+
+    public async Task<BaseResponse> ResetAccount(ApplicationUser user)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var dbUser = await context.AspNetUsers
+                    .FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
+
+                if (dbUser == null)
+                    return new BaseResponse { Status = ResponseStatus.Fail, Message = "User not found." };
+
+                dbUser.ExperiencePoints = 0;
+                dbUser.ReviewedProjects = 0;
+                dbUser.Level = Level.White;
+
+                context.DailyStreaks.RemoveRange(context.DailyStreaks.Where(ua => ua.AppUserId == user.Id));
+                context.UserChallenges.RemoveRange(context.UserChallenges.Where(ua => ua.UserId == user.Id));
+                context.ShowcaseItems.RemoveRange(context.ShowcaseItems.Where(ua => ua.AppUserId == user.Id));
+                context.UserReviews.RemoveRange(context.UserReviews.Where(ua => ua.AppUserId == user.Id));
+                context.UserActivity.RemoveRange(context.UserActivity.Where(ua => ua.AppUserId == user.Id));
+                context.Issues.RemoveRange(context.Issues.Where(ua => ua.AppUserId == user.Id));
+                context.DashboardProjects.RemoveRange(context.DashboardProjects.Where(ua => ua.AppUserId == user.Id));
+
+                await context.SaveChangesAsync();
+
+                return new BaseResponse
+                {
+                    Status = ResponseStatus.Success,
+                    Message = "User data reset successfully."
                 };
             }
         }

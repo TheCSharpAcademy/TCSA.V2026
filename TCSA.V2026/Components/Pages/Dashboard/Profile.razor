@@ -1,10 +1,15 @@
 ﻿@page "/dashboard/profile"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
+
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+
 @attribute [Authorize]
 
 <PageTitle>Profile</PageTitle>
@@ -33,13 +38,19 @@
                     }
                 </MudSelect>
 
-                <MudButton Color="Color.Primary" OnClick="Save" Class="mt-4">Save</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Save" Class="mt-4">Save</MudButton>
             </MudForm>
+        </MudPaper>
+
+        <MudPaper Class="pa-4 mt-5" Elevation="4">
+            <MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="Reset" Class="mt-4">Reset Account</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Delete" Class="mt-4">Delete Account</MudButton>
         </MudPaper>
     }
 </MudContainer>
 
 @code {
+    [Inject] public HttpClient HttpClient { get; set; } = default!;
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IUserService UserService { get; set; }
 
@@ -85,7 +96,54 @@
         {
             SnackbarService.Add($"Error: {result.Message}", Severity.Error);
         }
+    }
 
-        User = await UserService.GetUserById(UserId);
+    private async Task Reset()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        var dialog = await DialogService.ShowAsync<TCSADialog>("This will reset your progress permanently. Are you Sure?", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var apiResult = await UserService.ResetAccount(User);
+
+            if (apiResult.Status == ResponseStatus.Success)
+            {
+                SnackbarService.Add("Account Deleted Successfuly", Severity.Success);
+                User = await UserService.GetUserById(UserId);
+            }
+            else
+            {
+                SnackbarService.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
+    }
+
+    private async Task Delete()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        var dialog = await DialogService.ShowAsync<TCSADialog>("This will remove your account permanently. Are you Sure?", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var apiResult = await UserService.DeleteAccount(User);
+
+            if (apiResult.Status == ResponseStatus.Success)
+            {
+                var loadingDialog = await DialogService.ShowAsync<TCSADeleteAccountDialog>("", new DialogOptions { CloseButton = false });
+                await Task.Delay(2000); // simulate loading time
+
+                // Clear cookies and reload
+                NavigationManager.NavigateTo("/logout", forceLoad: true);
+            }
+            else
+            {
+                SnackbarService.Add($"Error: {apiResult.Message}", Severity.Error);
+            }
+        }
     }
 }

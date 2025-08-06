@@ -12,7 +12,7 @@
 
 <PageTitle>@Article.Title</PageTitle>
 
-<MudContainer MaxWidth="MaxWidth.Medium">
+<MudContainer MaxWidth="MaxWidth.Large">
     <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style=@GetBanner()>
         <div class="jumbotron-overlay">
             <MudText Typo="Typo.h3" Class="text-white text-center">@Article.Title</MudText>
@@ -105,9 +105,9 @@
     [Inject] private IProjectService ProjectService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
     [Inject] private ISnackbar SnackbarService { get; set; }
+    [Inject] private ILogger<ArticlePage> appLogger { get; set; }
 
     [Parameter] public string ArticleSlug { get; set; }
-    [Parameter] public int ArticleId { get; set; }
 
     private Article Article { get; set; }
 
@@ -127,6 +127,8 @@
     private string GetBanner()
     {
         var banner = string.IsNullOrEmpty(Article.BannerUrl) ? "article-banner.jpg" : Article.BannerUrl;
+
+
         return $"position: relative; height: 250px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 
@@ -145,6 +147,8 @@
     protected async override Task OnParametersSetAsync()
     {
         Article = ArticleHelper.GetArticles().Single(x => x.Id == ArticleId);
+
+
 
         var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
 
@@ -179,6 +183,35 @@
 
         IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
     }
+
+
+
+    private async Task DebugPositioning(string callPoint)
+    {
+        try
+        {
+            var debugData = await JS.InvokeAsync<object>("debugArticlePositioning");
+
+   
+            var logMessage = $"[{callPoint}] Article {ArticleId} positioning debug:";
+            appLogger.LogInformation($"{logMessage} {System.Text.Json.JsonSerializer.Serialize(debugData)}");
+
+  
+            await JS.InvokeVoidAsync("console.log", $"{logMessage}", debugData);
+
+
+            if (Article.Id == 30006)
+            {
+                appLogger.LogWarning($"PROBLEM ARTICLE - {callPoint}: {System.Text.Json.JsonSerializer.Serialize(debugData)}");
+            }
+        }
+        catch (Exception ex)
+        {
+            appLogger.LogError($"Debug positioning error: {ex.Message}");
+        }
+    }
+
+
 }
 
 <style>

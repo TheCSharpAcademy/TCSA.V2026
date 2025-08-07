@@ -773,11 +773,11 @@ public class ConsoleProjectsHelper
              new Project
              {
                 Id = 18,
-                Title = "Exercise Tracker",
-                IconUrl = "icons8-bench-press-96.png",
-                BannerUrl = "",
+                Title = "Ecommerce API",
+                IconUrl = "icons8-shop-94.png",
+                BannerUrl = "pexels-olly-3769747.jpg",
                 LanguageHeadings = new EnglishHeadings(),
-                Slug="exercise-tracker",
+                Slug="ecommerce-api",
                 Description = "Reinforce your knowledge of Web APIs with intermediate level features.",
                 Area = Area.Console,
                 Level = Level.Orange,

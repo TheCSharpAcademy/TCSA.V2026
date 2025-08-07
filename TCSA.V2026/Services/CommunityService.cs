@@ -79,7 +79,7 @@ public class CommunityService : ICommunityService
                 {
                     GithubUrl = string.Empty,
                     AppUserId = appUserId,
-                    ProjectId = issue.ProjectId
+                    ProjectId = issue.ProjectId,
                 });
 
                 var dbIssue = await context.Issues.FirstOrDefaultAsync(x => x.ProjectId == issue.ProjectId);
@@ -108,7 +108,7 @@ public class CommunityService : ICommunityService
 
                 project.GithubUrl = githubUrl;
                 project.IsPendingReview = true;
-
+                project.DateSubmitted = DateTime.UtcNow;    
                 await context.SaveChangesAsync();
             }
 

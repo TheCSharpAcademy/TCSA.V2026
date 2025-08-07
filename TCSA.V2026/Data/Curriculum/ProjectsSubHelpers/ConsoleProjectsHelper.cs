@@ -778,7 +778,7 @@ public class ConsoleProjectsHelper
                 BannerUrl = "",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug="exercise-tracker",
-                Description = "Learn the repository pattern, the most common design pattern for interaction with databases",
+                Description = "Reinforce your knowledge of Web APIs with intermediate level features.",
                 Area = Area.Console,
                 Level = Level.Orange,
                 ExperiencePoints = 30,
@@ -788,43 +788,46 @@ public class ConsoleProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="So far we have been developing our applications without thinking too much about their design. In software development, we’ll often use “general repeatable solutions to commonly occurring problems”, <a href='https://en.wikipedia.org/wiki/Software_design_pattern'>the so called design patterns</a>."
+                        Body="In your first ASP.NET Core Web API project you had a first taste of creating, configuring and exposing endpoints and creating a client to consume them. We will now expand on this knowledge with requirements that are aligned with the demands of enterprise development. So far we have worked predominantly in personal apps. This time we will dive into a common business case in enterprise: an ecommerce API that supports a retail business.</a>."
                     },
                     new Paragraph
                     {
-                        Body="We will build an exercise tracker using the “Repository Pattern”, an almost universally used solution for data persistence. It creates a layer between business logic and data access, which helps us create more loosely-coupled, testable and maintainable applications. <b>You’ll be dealing with repositories on a daily-basis when you get your C# job!</b>"
+                        Body="The business case itself will be fairly loose, you can create an ecommerce for whatever type of product you want, which will help you exercise your creativity and focus on the technical specifications.</b>"
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "This is an application where you should record exercise data.",
-                    "You should choose one type of exercise only. We want to keep the app simple so you focus on the subject you're learning and not on the business complexities.",
-                    "You can choose raw SQL or Entity Framework for your data-persistence.",
-                    "The model for your exercise class should have at least the following properties: {Id INT, DateStart DateTime, DateEnd DateTime, Duration TimeSpan, Comments string}",
-                    "Your application should have the following classes: UserInput, ExerciseController, ExerciseService (where business logic will be handled) and ExerciseRepository. These classes might feel empty at first but they'll be needed in most applications as they grow.",
-                    "You can choose between SQLite or SQLServer.",
-                    "You need to use dependency injection to access the repository from the controller."
+                    "Your project needs to be an ASP.NET Core Web API, with Entity Framework and your choice between SQL Server and Sqlite.",
+                    "Your api needs to use Dependency Injection.",
+                    "You should have at least three tables: Products, Categories and Sales.",
+                    "Products and Sales need to have a many-to-many relationship, meaning products can have multiple sales, and sales can have multiple products.",
+                    "Products need to have a price. Multiple products can be sold in the same sale.",
+                    "You need to provide a Postman Collection with all possible requests for your API. It's a json file that needs to be included in your PR.",
+                    "You don't need to create an UI to consume your API.",
+                    "Your GetProducts and GetSales endpoints need to have pagination capabilities.",
+                    "You don't need delete end-points. Feel free to add soft-deletes.",
+                    "You shouldn't update products prices. What would happen if you made a sale and later updated the price of that product?"
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
-                    "<a target='blank' href='https://medium.com/@kerimkkara/implementing-the-repository-pattern-in-c-and-net-5fdd91950485'>Repository Pattern Docs</a>",
-                    "<a target='blank' href='https://www.programmingwithwolfgang.com/repository-pattern-net-core/'>Repository Pattern Tutorial</a>",
-                    "<a target='blank' href='https://www.youtube.com/watch?v=Jnv7hNNuTqs'>Repository Pattern with EF on Youtube</a>",
-                    "<a target='blank' href='https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage'>Dependency Injection Tutorial</a>"
+                    "<a target='blank' href='https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many'>Many to Many tutorial Microsoft</a>",
+                    "<a target='blank' href='https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage'>Dependency Injection Tutorial The C# Academy</a>",
+                    "<a target='blank' href='https://thecsharpacademy.com/course/6/article/1/500150/False'>Dependency Injection Tutorial Microsoft</a>",
+                    "<a target='blank' href='https://www.c-sharpcorner.com/article/implementing-pagination-and-filtering-in-asp-net-core-8-0-api/'>Pagination Tutorial C# Corner</a>",
+                    "<a target='blank' href='https://medium.com/@bpst.blog/understanding-rest-and-restful-apis-constraints-methods-and-examples-76b2d1b63003'>Rest APIs Article</a>"
                 },
-                ResourcesConclusion = "There are many other Youtube videos and blog articles about the Repository Pattern. Google and ChatGPT are your best friends!",
                 Tips = new List<string>
                 {
-                    "Don't forget to add validation to your app. ",
-                    "Don't forget to create a Github repository for your project from the beginning.",
-                    "You might come across the concept of Unit of Work in some tutorials. I suggest you don't use it, so you focus on learning how a single repository works.",
-                    "Keep your application simple (only one table). Complexity is your enemy at the moment, since you want to focus solely on learning the pattern."
+                    "Seed data from the beginning so you don't need to create records manually.",
+                    "This project can get overwhelming very quickly. Use a step-by-step approach, creating one end-point at a time and making sure everything works before moving to the next one.",
+                    "Start using Postman from the start to tests your requests. It will save you a lot of time.",
                 },
                 Challenges = new List<string>
                 {
-                    "To illustrate the <a href='article/30005/separation-of-concerns-csharp' target='_blank'>Separation of Concerns</a> by the repository pattern, create a different branch of your project where you'll replace Entity Framework by Dapper or ADO.NET in your repository. You'll notice that you won't need to touch your controller.",
-                    "Create an application with two types of exercises (ex. weights and cardio), using EF for one and Raw SQL for the other"
+                    "Add filtering and searching capabilities to your endpoints",
+                    "Create a Console UI to consume your Web API.",
+                    "After completing the project, read the <b>Rest APIs Article</b> listed in the resources and check what could be missing. Pay particular attention to status codes and endpoints signatures."
                 }
             },
              new Project

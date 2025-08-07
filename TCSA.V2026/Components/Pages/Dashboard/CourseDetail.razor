@@ -22,7 +22,7 @@
                         var article = Course.Articles[i];
                         <MudListItem Text=@($"{i + 1}. {article.Title}")
                         Style=@(GetNavItemStyle(article.Id))
-                        OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id))" />
+                        OnClick="@(() => NavigateToArticle(article.CourseDisplayId.Value, article.Id, false))" />
                     }
                 </MudList>
             </MudPaper>
@@ -80,21 +80,38 @@
                         }
                     }
                 }
-                @if (IsLoggedIn && !IsCompleted)
-                {
-                    <div class="d-flex justify-center my-5 mt-5">
-                        <MudButton Variant="Variant.Filled"
-                        class="mt-5"
-                        Color="Color.Primary"
-                        OnClick="MarkAsRead"
-                        Disabled="IsSubmitting">
-                            Mark as Read
-                        </MudButton>
-                    </div>
-                }
+                <MudGrid>
+                    @if (!IsCode && IsLoggedIn && !IsCompleted)
+                    {
+                        <MudItem xs="6">
+                            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                                <MudButton Variant="Variant.Filled"
+                                           class="mt-5"
+                                           Color="Color.Dark"
+                                           OnClick="MarkAsRead"
+                                           Disabled="IsSubmitting">
+                                    Mark as Completed
+                                </MudButton>
+                            </div>
+                        </MudItem>
+                    }
+                    @if (!IsCode && Article.Blocks.Any(x => x.IsCourseCodePage))
+                    {
+                        <MudItem xs="6">
+                            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Dark"
+                                           class="mt-5"
+                                           OnClick=@(() => NavigateToArticle(Article.CourseDisplayId.Value, Article.Id, true))
+                                           Disabled="IsSubmitting">
+                                    View Source Code
+                                </MudButton>
+                            </div>
+                        </MudItem>
+                    }
+                </MudGrid>
             </MudPaper>
         </MudItem>
-
     }
 </MudGrid>
 
@@ -184,9 +201,9 @@
         await JSRuntime.InvokeVoidAsync("highlightCode");
     }
 
-    private void NavigateToArticle(int articleDisplayId, int articleId)
+    private void NavigateToArticle(int articleDisplayId, int articleId, bool isCode)
     {
-        NavigationManager.NavigateTo($"/course/{CourseId}/article/{articleDisplayId}/{articleId}/false", forceLoad: true);
+        NavigationManager.NavigateTo($"/course/{CourseId}/article/{articleDisplayId}/{articleId}/{isCode}", forceLoad: true);
     }
 }
 

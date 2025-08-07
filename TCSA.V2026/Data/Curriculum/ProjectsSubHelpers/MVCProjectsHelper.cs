@@ -68,7 +68,8 @@ internal static class MVCProjectsHelper
                 {
                     "What if you want to allow split numbers? I.e. 2.25 cups of water, how would you change your data types?",
                     "How about letting the user decide between standard measures (big bottle, bottle, glass)",
-                    "What if you want to have another habit being tracked in the same project? The limit to what you can create is the limit of your imagination."
+                    "What if you want to have another habit being tracked in the same project? The limit to what you can create is the limit of your imagination.",
+                    "Let's say your team decided to implement Entity Framework in all apps that currently use ADO.NET. This is a common scenario in enterprise environments. Try implementing this change. You can choose either a database-first or a code-first approach."
                 },
                 Blocks = new List<Block>
                 {

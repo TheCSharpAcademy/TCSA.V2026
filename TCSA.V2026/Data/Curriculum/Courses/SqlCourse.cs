@@ -114,7 +114,7 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph {
-                                       Body = "Setting up Sqlite is very easy. <a href='https://sqlitebrowser.org/' target='_blank'>All you need to do is download DB Browser</a>, a popular cross-platform graphical interface tool that provides a user-friendly way to create and manage your databases. When installing, <b>choose the option to create shortcuts</b> to save you some time. You'll be using the application frequently."
+                                       Body = "Setting up Sqlite is very easy. <a href='https://sqlitebrowser.org/' target='_blank'><b><u>All you need to do is download DB Browser</u><b></a>, a popular cross-platform graphical interface tool that provides a user-friendly way to create and manage your databases. When installing, <b>choose the option to create shortcuts</b> to save you some time. You'll be using the application frequently."
                                     },
                                      new Paragraph {
                                        Body = "Once you click on the shorcut, if the installation was successful, you'll see the following interface:" },
@@ -233,21 +233,20 @@ public class SqlCourse
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "CREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Description TEXT,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    DateAdded DATE\r\n);"},
-                                    new Paragraph { Body = "Now, let’s break down each part of this table creation in detail:"},
-                                    new Paragraph { Body = "<b>Line 1: CREATE TABLE</b>: This SQL command is used to define a new table in the database. <b>Products</b>: This is the name of the table being created. You can give the table any name you want. The name should be descriptive of the data it will contain. In this case, the table will hold product-related information. "},
-                                    new Paragraph { Body = "<b>Line 2: ProductID INTEGER PRIMARY KEY AUTOINCREMENT</b>." +
+                                    new Paragraph { Body = "Now Line 1: CREATE TABLE</b>: This SQL command is used to define a new table in the database. <b>Products</b>: This is the name of the table being created. You can give the table any name you want. The name should be descriptive of the data it will contain. In this case, the table will hold product-related information. "},
+                                    new Paragraph { Body = "<b>\U0001f7e2 Line 2: ProductID INTEGER PRIMARY KEY AUTOINCREMENT</b>." +
                                     "<br>🔹 <b>ProductID</b>: This is the name of the column. It serves as a <b>unique identifier</b> for each row in the table." +
                                     "<br>🔹 <b>INTEGER</b>: The data type of the column. It specifies that ProductID will store whole numbers. " +
                                     "<br>🔹 <b>PRIMARY KEY</b>: This keyword designates ProductID as the primary key of the table. A primary key uniquely identifies each row in the table and ensures that no two rows have the same value for this column. " +
                                     "<br>🔹 <b>AUTOINCREMENT</b>: This ensures that the value of ProductID is automatically incremented by the database each time a new row is added. It starts at 1 and increases sequentially."},
-                                    new Paragraph { Body = "<b>Line 3: ProductName TEXT NOT NULL</b>. " +
+                                    new Paragraph { Body = "<b>\U0001f7e2 Line 3: ProductName TEXT NOT NULL</b>. " +
                                     "<br>🔹 <b>ProductName</b>: The name of the column, which will store the name of the product. " +
                                     "<br>🔹 <b>TEXT</b>: The data type for the column. It specifies that ProductName will store string values (e.g., product names). " +
                                     "<br>🔹 <b>NOT NULL</b>: This constraint ensures that the ProductName column cannot contain NULL values. A value must be provided for every row."},
-                                    new Paragraph { Body = "<b>Line 4: Description TEXT</b>. Description: The name of the column, which will store additional details about the product. It also has TEXT as its data type."},
-                                    new Paragraph { Body = "<b>Line 5: Price REAL NOT NULL</b>. Price: The name of the column, which will store the product's price. REAL: The data type for the column. It is used to store floating-point numbers (decimal values). A valid price must always be provided."},
-                                    new Paragraph { Body = "<b>Line 6: StockQuantity INTEGER NOT NULL</b>. StockQuantity: The name of the column, which will store the number of products available in stock. The data type is integer and cannot contain null values."},
-                                     new Paragraph { Body = "<b>Line 7: DateAdded DATE</b>. DateAdded: The name of the column, which will store the date when the product was added to the database. The DATE type It is used to store date values (in the format YYYY-MM-DD in most SQL databases).It doesn't have the NOT NULL , meaning it’s optional."}
+                                    new Paragraph { Body = "<b>\U0001f7e2 Line 4: Description TEXT</b>. Description: The name of the column, which will store additional details about the product. It also has TEXT as its data type."},
+                                    new Paragraph { Body = "<b>\U0001f7e2 Line 5: Price REAL NOT NULL</b>. Price: The name of the column, which will store the product's price. REAL: The data type for the column. It is used to store floating-point numbers (decimal values). A valid price must always be provided."},
+                                    new Paragraph { Body = "<b>\U0001f7e2 Line 6: StockQuantity INTEGER NOT NULL</b>. StockQuantity: The name of the column, which will store the number of products available in stock. The data type is integer and cannot contain null values."},
+                                     new Paragraph { Body = "<b>\U0001f7e2 Line 7: DateAdded DATE</b>. DateAdded: The name of the column, which will store the date when the product was added to the database. The DATE type It is used to store date values (in the format YYYY-MM-DD in most SQL databases).It doesn't have the NOT NULL , meaning it’s optional."}
                                 }
                             },
                             new Block
@@ -297,6 +296,9 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph { Body = "In DB Browser Menu, click on the first item: <b>New Database</b>. Choose a location in your file system, a name and save. We're naming our file ecommerce, but you can choose any name you prefer. Navigate to the folder where you created the file and if everything worked correctly, you'll see this:" },
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch5-sql-new-db.png"},
                                     new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch5-sql-db-file.png"},
@@ -352,13 +354,20 @@ public class SqlCourse
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph { Body = "In SQL, the <b>INSERT</b> statement is used to add new rows of data into a table. This is a fundamental operation when working with databases because it allows you to populate tables with data and create records. It can be written in different ways, depending on how much information you want to provide and whether or not you want to include columns that allow NULL values." },
-                                    new Paragraph { Body = "Here’s an example of inserting data into our Products table, which includes all columns." },
+                                    new Paragraph { Body = "Here’s an example of inserting data into our Products table, which includes all columns. Execute it in the <b>Execute SQL</b> tab and don't forget to save your changes:" },
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "INSERT INTO Products (ProductID, ProductName, Description, Price, StockQuantity, DateAdded)\r\nVALUES (NULL, 'Wireless Headphones', 'Noise-canceling over-ear headphones', 59.99, 100, '2024-11-24');\r\n"},
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch6-sql-writechanges.png"},
+                                    new Paragraph { Body = "You can then visualise the inserted row inserted by clicking on the <b>Browse Data</b> tab: " },
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch6-sql-browsedata.png"},
                                 }
                             },
-                             new Block
+                            new Block
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
@@ -493,7 +502,10 @@ public class SqlCourse
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "SELECT ProductName, Price FROM Products\r\nWHERE StockQuantity > 100;"},
-                                    new Paragraph { Body = "Running the query above using our dataset <b>should return 21 products</b>. The <b>WHERE StockQuantity > 100</b> condition filters the rows, returning only those where the <b>StockQuantity is greater than 100</b>. You can use various operators in the WHERE clause, such as =, >, <, BETWEEN, IN, LIKE, and more."},
+                                    new Paragraph { Body = "Running the query above using our dataset <b>should return 21 products</b>. The <b>WHERE StockQuantity > 100</b> condition filters the rows, returning only those where the <b>StockQuantity is greater than 100</b>. You can use various operators in the WHERE clause, such as =, >, <, BETWEEN, IN, LIKE, and more. You can see the number of rows returned by scrolling down the rows or amongst the info in the bottom pane."},
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch8-sql-filter.png"},
                                 }
                             },
                             new Block
@@ -549,7 +561,18 @@ public class SqlCourse
                                 Title = "Exercises",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "<ol>\r\n  <li>✔️ Write a query to find all products with a <b>Price</b> greater than 20.</li>\r\n  <li>✔️ Write a query to retrieve products that have a <b>StockQuantity</b> between 50 and 200.</li>\r\n  <li>✔️ Write a query to list all distinct <b>StockQuantity</b> values in the <b>Products</b> table.</li>\r\n  <li>✔️ Write a query to find the top 3 most expensive products using <b>ORDER BY</b> and <b>LIMIT</b>.</li>\r\n  <li>✔️ Write a query to retrieve all products with a <b>Price</b> less than 30 or a <b>StockQuantity</b> greater than 300.</li>\r\n  <li>✔️ Write a query to find all products added to the database after the the 30th of March, 2024, using the <b>DateAdded</b> column.</li>\r\n  <li>✔️ Write a query to count the number of products with <b>StockQuantity</b> equal to 100 and a <b>Price</b> greater than 50.</li>\r\n  <li>✔️ Write a query to list all products with <b>StockQuantity</b> greater than 200 and <b>Price</b> between 20 and 80, sorted by <b>Price</b> in ascending order.</li>\r\n  <li>✔️ Write a query to find all products with <b>StockQuantity</b> less than 150 or a <b>Price</b> greater than 500, and that were added to the database before the the 30th of September, 2024.</li>\r\n  <li>✔️ Combine the use of <b>WHERE</b>, <b>ORDER BY</b>, and <b>LIMIT</b> to find the top 5 cheapest products that have more than 50 units in stock, were added to the database after the the 1st of June, 2024, and have a <b>Price</b> less than 100.</li>\r\n</ol>\r\n"}
+                                    new Paragraph { Body = 
+                                    "<p>✔️ Write a query to find all products with a <b>Price</b> greater than 20.</p>\r\n  " +
+                                    "<p>✔️ Write a query to retrieve products that have a <b>StockQuantity</b> between 50 and 200.</p>\r\n  " +
+                                    "<p>✔️ Write a query to list all distinct <b>StockQuantity</b> values in the <b>Products</b> table.</p>\r\n  " +
+                                    "<p>✔️ Write a query to find the top 3 most expensive products using <b>ORDER BY</b> and <b>LIMIT</b>.</p>\r\n  " +
+                                    "<p>✔️ Write a query to retrieve all products with a <b>Price</b> less than 30 or a <b>StockQuantity</b> greater than 300.</p>\r\n  " +
+                                    "<p>✔️ Write a query to find all products added to the database after the the 30th of March, 2024, using the <b>DateAdded</b> column.</p>\r\n  " +
+                                    "<p>✔️ Write a query to count the number of products with <b>StockQuantity</b> equal to 100 and a <b>Price</b> greater than 50.</p>\r\n  " +
+                                    "<p>✔️ Write a query to list all products with <b>StockQuantity</b> greater than 200 and <b>Price</b> between 20 and 80, sorted by <b>Price</b> in ascending order.</p>\r\n  " +
+                                    "<p>✔️ Write a query to find all products with <b>StockQuantity</b> less than 150 or a <b>Price</b> greater than 500, and that were added to the database before the the 30th of September, 2024.</p>\r\n  " +
+                                    "<p>✔️ Combine the use of <b>WHERE</b>, <b>ORDER BY</b>, and <b>LIMIT</b> to find the top 5 cheapest products that have more than 50 units in stock, were added to the database after the the 1st of June, 2024, and have a <b>Price</b> less than 100.</p>\r\n" 
+                                    }
                                 }
                             },
                         }
@@ -570,8 +593,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Aggregate functions in SQL are essential tools for analyzing and summarizing data. These functions perform calculations on a set of values and return a single result. They are commonly used in combination with the <b>GROUP BY</b> clause but can also work independently. This chapter will introduce key aggregate functions, explain their use cases, and provide examples to help you understand how to use them effectively."},
-                                    new Paragraph { Body = "Aggregate functions operate on multiple rows of data and return a single value that summarizes the data in some way. Examples include calculating sums, averages, counts, and finding the maximum or minimum values in a column."},
+                                    new Paragraph { Body = "Aggregate functions in SQL are essential tools for analyzing and summarizing data. These functions perform calculations on a set of values and return a single result. They are commonly used in combination with the <b>GROUP BY</b> clause but can also work independently. This chapter will introduce key aggregate functions, explain their use cases, and provide examples to help you understand how to use them effectively. Examples include calculating sums, averages, counts, and finding the maximum or minimum values in a column."},
                                 }
                             },
                             new Block
@@ -594,7 +616,7 @@ public class SqlCourse
                                     new Paragraph { Body = "The <b>SUM</b> function adds up all the values in a numeric column."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT SUM(Price * Quantity) AS TotalCatalogValue\r\nFROM Products\r\n"},
+                                        Body = "SELECT SUM(Price * StockQuantity) AS TotalCatalogValue\r\nFROM Products\r\n"},
                                     new Paragraph { Body = "The result of this query should be the sum of all products multiplied by their prices. In our data set, this value would be 578079.59."},
                                 }
                             },
@@ -658,98 +680,6 @@ public class SqlCourse
                     {
                         Id = 500079,
                         CourseDisplayId = 10,
-                        Title = "Aggregate Functions",
-                        Slug = "intro-to-sql-aggregate-functions",
-                        Description = "",
-                        Area = Area.Course,
-                        ExperiencePoints = 1,
-                        Blocks = new List<Block>
-                        {
-
-                            new Block
-                            {
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "Aggregate functions in SQL are essential tools for analyzing and summarizing data. These functions perform calculations on a set of values and return a single result. Aggregate functions are commonly used in combination with the `GROUP BY` clause but can also work independently. This chapter will introduce key aggregate functions, explain their use cases, and provide examples to help you understand how to use them effectively."},
-                                    new Paragraph { Body = "Aggregate functions operate on multiple rows of data and return a single value that summarizes the data in some way. Examples include calculating sums, averages, counts, and finding the maximum or minimum values in a column."},
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Counting Rows with `COUNT`",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "The COUNT function is used to count the number of rows or non-null values in a column."},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT COUNT(*) AS TotalProducts\r\nFROM Products;"},
-                                    new Paragraph { Body = "Output?"},
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Summing Values with `SUM`",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "The `SUM` function adds up all the values in a numeric column."},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT SUM(Price * Quantity) AS TotalRevenue\r\nFROM Orders\r\nJOIN Products ON Orders.ProductID = Products.ProductID;"},
-                                    new Paragraph { Body = "Result"},
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Finding Averages with `AVG`",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "The `AVG` function calculates the average value of a numeric column."},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT AVG(Price) AS AveragePrice\r\nFROM Products;\r\n"},
-                                    new Paragraph { Body = "Result"},
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Finding Minimum and Maximum Values",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "The `MIN` and `MAX` functions identify the smallest and largest values in a column, respectively."},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT MIN(Price) AS CheapestProduct, MAX(Price) AS MostExpensiveProduct\r\nFROM Products;"},
-                                    new Paragraph { Body = "Result"},
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Combining Aggregate Functions",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "You can use multiple aggregate functions in a single query to get a comprehensive summary."},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT COUNT(*) AS TotalProducts,\r\n       SUM(Price) AS TotalPrice,\r\n       AVG(Price) AS AveragePrice,\r\n       MIN(Price) AS CheapestProduct,\r\n       MAX(Price) AS MostExpensiveProduct\r\nFROM Products;\r\n"},
-                                    new Paragraph { Body = "Result"},
-                                }
-                            },
-                            new Block
-                            {
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph {
-                                       BackgroundColor="#1C236D",
-                                       FontColor="#FFF",
-                                       Body = "Unlike SUM or AVG, which require adding up or dividing numbers, MIN and MAX just scan for the smallest or largest value. They're the speediest of aggregate functions and are great for quick stats." }
-                                }
-                            }
-                        }
-                    },
-                    new Article
-                    {
-                        Id = 500080,
-                        CourseDisplayId = 11,
                         Title = "Deleting Data",
                         Slug = "intro-to-sql-deleting",
                         Description = "",
@@ -762,7 +692,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In SQL, the `DELETE` statement is used to remove data from a table. This operation is crucial when you want to clean up or remove obsolete information. While deleting data is straightforward, it’s important to understand how it works, as it can permanently remove data from your database."}
+                                    new Paragraph { Body = "In SQL, the <b>DELETE</b> statement is used to remove data from a table. This operation is crucial when you want to clean up or remove obsolete information. While deleting data is straightforward, it’s important to understand how it works, as it can permanently remove data from your database."}
                                 }
                             },
                             new Block
@@ -770,11 +700,10 @@ public class SqlCourse
                                 Title = "Deleting Filtered Data",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "The most common use of the `DELETE` statement is to remove specific rows from a table based on a condition. The condition is specified using the `WHERE` clause, which ensures that only the rows matching that condition are deleted. Without a `WHERE` clause, all rows in the table will be deleted."},
+                                    new Paragraph { Body = "The most common use of the `DELETE` statement is to remove specific rows from a table based on a condition. The condition is specified using the `WHERE` clause, which ensures that only the rows matching that condition are deleted. Without a `WHERE` clause, all rows in the table will be deleted. In the query below we will delete products with the specified Ids."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "DELETE FROM Products\r\nWHERE StockQuantity = 0;"},
-                                    new Paragraph { Body = "Output?"},
+                                        Body = "DELETE FROM Products\r\nWHERE Id IN (49,59,69,99)"},
                                 }
                             },
                             new Block
@@ -829,7 +758,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "The `UPDATE` statement in SQL allows you to modify existing records in a table. Whether you're correcting data, updating prices, or adjusting stock quantities, the `UPDATE` statement is essential for maintaining and adjusting the information stored in your database. Like the `DELETE` statement, `UPDATE` should be used with caution to avoid unintended changes."}
+                                    new Paragraph { Body = "The <b>UPDATE</b> statement in SQL allows you to modify existing records in a table. Whether you're correcting data, updating prices, or adjusting stock quantities, it's an essential operation for maintaining and adjusting the information stored in your database. Like DELETE, UPDATE should be used with caution to avoid unintended changes."}
                                 }
                             },
                             new Block
@@ -840,8 +769,7 @@ public class SqlCourse
                                     new Paragraph { Body = "To update data in a table, you use the `UPDATE` statement, followed by the table name and the `SET` clause to specify which columns should be modified and the new values they should take. To ensure you only update the intended rows, you should always include a `WHERE` clause. If no `WHERE` clause is provided, all rows in the table will be updated."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "UPDATE Products\r\nSET Price = 19.99WHERE ProductID = 5;"},
-                                    new Paragraph { Body = "Output?"},
+                                        Body = "UPDATE Products\r\nSET Price = 19.99 WHERE ProductID = 5;"}
                                 }
                             },
                             new Block
@@ -852,8 +780,8 @@ public class SqlCourse
                                     new Paragraph { Body = "You can also update multiple columns in a single `UPDATE` statement by separating each column update with a comma."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "UPDATE Products\r\nSET Price = 19.99, StockQuantity = 50WHERE ProductID = 5;"},
-                                    new Paragraph { Body = "This query will change both the price and stock quantity for the product with `ProductID = 5`."},
+                                        Body = "UPDATE Products\r\nSET Price = 29.99, StockQuantity = 50 WHERE ProductID = 5;"},
+                                    new Paragraph { Body = "This query will change both the price and stock quantity for the product with <b>ProductID = 5</b>."},
                                 }
                             },
                             new Block
@@ -861,11 +789,10 @@ public class SqlCourse
                                 Title = "Updating All Rows",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "If you omit the `WHERE` clause, all rows in the table will be updated with the new values specified in the `SET` clause. This can be useful in certain scenarios, but it should be used with caution."},
+                                    new Paragraph { Body = "If you omit the `WHERE` clause, all rows in the table will be updated with the new values specified in the `SET` clause. This can be useful in certain scenarios, but it should be used with caution. Not only it will affect all records, but it could take a long time depending on the number of rows."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "UPDATE Products\r\nSET StockQuantity = 100;"},
-                                    new Paragraph { Body = "This operation is more drastic than a `DELETE` statement, as it completely removes the table from the database. This is typically used when you no longer need the table or when you're restructuring your database. Once a table is dropped, it can’t be recovered unless you have backups."},
+                                        Body = "UPDATE Products\r\nSET StockQuantity = 100;"}
                                 }
                             },
                             new Block
@@ -876,12 +803,12 @@ public class SqlCourse
                                     new Paragraph { Body = "You can use more complex conditions in the `WHERE` clause to perform more refined updates. This allows you to target rows based on multiple criteria or conditions."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "UPDATE Products\r\nSET Price = 9.99WHERE StockQuantity > 100 AND Price > 20;"},
+                                        Body = "UPDATE Products\r\nSET Price = 9.99 WHERE StockQuantity > 100 AND Price > 20;"},
                                     new Paragraph { Body = "This query will only update the products that meet both conditions (stock quantity greater than 100 and price greater than 20)."},
-                                    new Paragraph { Body = "You can also use expressions in the `SET` clause to dynamically calculate the new values based on the existing data in the table."},
+                                    new Paragraph { Body = "You can also use expressions in the SET clause to dynamically calculate the new values based on the existing data in the table."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "UPDATE Products\r\nSET Price = Price * 1.1WHERE StockQuantity > 100;"},
+                                        Body = "UPDATE Products\r\nSET Price = Price * 1.1 WHERE StockQuantity > 100;"},
                                     new Paragraph { Body = "This query will increase the price of all products with more than 100 units in stock by 10%."},
                                 }
                             },
@@ -913,7 +840,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In relational databases, relationships between tables are essential for structuring data efficiently. To establish these relationships, we use **foreign keys**, which link records in one table to those in another. These relationships help maintain data integrity and allow for more efficient queries and operations on the database."}
+                                    new Paragraph { Body = "In relational databases, relationships between tables are essential for structuring data efficiently. To establish these relationships, we use <b>Foreign Keys</b>, which link records in one table to those in another. These relationships help maintain data integrity and allow for more efficient queries and operations on the database."}
                                 }
                             },
                             new Block
@@ -921,13 +848,13 @@ public class SqlCourse
                                 Title = "Creating Two Tables",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Let's extend the `Products` table we created earlier by adding a new table for product categories. Each product will belong to a category, which means we will establish a relationship between the `Products` table and the new `Categories` table."},
+                                    new Paragraph { Body = "Let's extend the database we created earlier by adding a new table for product categories and one for reviews of products. Each product will belong to a category, which means we will establish a relationship between the Products table and the new <b>Categories</b> table. Each review will have a mandatory ProductId."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "CREATE TABLE Categories (\r\n    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    CategoryName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    CategoryID INTEGER NOT NULL,\r\n    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)\r\n    ON DELETE CASCADE\r\n    ON UPDATE CASCADE\r\n);"},
-                                    new Paragraph { Body = "**`FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)`**: This establishes the foreign key relationship. It tells the database that the `CategoryID` in the `Products` table refers to the `CategoryID` in the `Categories` table. This ensures that every product is linked to a valid category."},
-                                    new Paragraph { Body = "**`ON DELETE CASCADE`**: If a category is deleted from the `Categories` table, all products associated with that category (i.e., having the same `CategoryID`) will be automatically deleted from the `Products` table."},
-                                    new Paragraph { Body = "**`ON UPDATE CASCADE`**: If the `CategoryID` in the `Categories` table is updated, the corresponding `CategoryID` in the `Products` table will automatically be updated as well."},
+                                        Body = "DROP TABLE Products;\r\n\r\nCREATE TABLE Categories (\r\n    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    CategoryName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    CategoryID INTEGER NOT NULL,\r\n    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)\r\n    ON DELETE CASCADE\r\n    ON UPDATE CASCADE\r\n);\r\n\r\nCREATE TABLE Reviews (\r\n    ReviewId INT PRIMARY KEY,\r\n    ProductId INT NOT NULL, -- Allows reviews with or without a product\r\n    ReviewText NVARCHAR(500),\r\n    Rating INT,\r\n    FOREIGN KEY (ProductId) REFERENCES Products(ProductId)\r\n);"},
+                                    new Paragraph { Body = "\U0001f7e2 <b>FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)</b>: This establishes the foreign key relationship. It tells the database that the CategoryID in the Products table refers to the CategoryID in the Categories table. This ensures that every product is linked to a valid category."},
+                                    new Paragraph { Body = "\U0001f7e2 <b>ON DELETE CASCADE</b>: If a category is deleted from the Categories table, all products associated with that category (i.e., having the same CategoryID) will be automatically deleted from the Products table."},
+                                    new Paragraph { Body = "\U0001f7e2 <b>ON UPDATE CASCADE</b>: If the CategoryID in the Categories table is updated, the corresponding CategoryID in the Products table will automatically be updated as well."},
                                 }
                             },
                             new Block
@@ -935,7 +862,7 @@ public class SqlCourse
                                 Title = "What is a Foreign Key?",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A **foreign key** is a column or combination of columns in one table that refers to the primary key of another table. In our example, `CategoryID` in the `Products` table is a foreign key that points to `CategoryID` in the `Categories` table. The foreign key enforces referential integrity by ensuring that every `CategoryID` in the `Products` table matches a valid `CategoryID` in the `Categories` table."}
+                                    new Paragraph { Body = "A foreign key is a column or combination of columns in one table that refers to the primary key of another table. In our example, CategoryID in the Products table is a foreign key that points to CategoryID in the Categories table. The foreign key enforces referential integrity by ensuring that every CategoryID in the Products table matches a valid CategoryID in the Categories table."}
                                 }
                             },
                             new Block
@@ -943,14 +870,14 @@ public class SqlCourse
                                 Title = "Cascading behaviors",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Cascading behaviors are rules that determine what happens to the related rows when a change is made to the parent table. For example, if you delete a category, should all the products in that category also be deleted automatically? Or should the foreign key value in the `Products` table just be set to `NULL`? These behaviors are defined when creating or altering a foreign key."},
+                                    new Paragraph { Body = "Cascading behaviors are rules that determine what happens to the related rows when a change is made to the parent table. For example, if you delete a category, should all the products in that category also be deleted automatically? Or should the foreign key value in the Products table just be set to `NULL`? These behaviors are defined when creating or altering a foreign key."},
                                     new Paragraph {
                                         Body = "There are several cascading options in SQL:"},
-                                    new Paragraph { Body = "**CASCADE**: Automatically updates or deletes the dependent rows in the child table when the corresponding row in the parent table is updated or deleted."},
-                                    new Paragraph { Body = "**SET NULL**: Sets the foreign key in the child table to `NULL` when the corresponding row in the parent table is deleted or updated."},
-                                    new Paragraph { Body = "**SET DEFAULT**: Sets the foreign key in the child table to its default value when the corresponding row in the parent table is deleted or updated."},
-                                    new Paragraph { Body = "****NO ACTION**: No action is taken on the dependent rows when the corresponding row in the parent table is deleted or updated. If a dependent row violates referential integrity, an error is thrown."},
-                                    new Paragraph { Body = "**RESTRICT**: Similar to `NO ACTION`, but this ensures that no changes to the parent table will be allowed if there are dependent rows in the child table."},
+                                    new Paragraph { Body = "🔹<b>CASCADE</b>: Automatically updates or deletes the dependent rows in the child table when the corresponding row in the parent table is updated or deleted."},
+                                    new Paragraph { Body = "🔹<b>SET NULL</b>: Sets the foreign key in the child table to `NULL` when the corresponding row in the parent table is deleted or updated."},
+                                    new Paragraph { Body = "🔹<b>SET DEFAULT</b>: Sets the foreign key in the child table to its default value when the corresponding row in the parent table is deleted or updated."},
+                                    new Paragraph { Body = "🔹<b>NO ACTION</b>: No action is taken on the dependent rows when the corresponding row in the parent table is deleted or updated. If a dependent row violates referential integrity, an error is thrown."},
+                                    new Paragraph { Body = "🔹<b>RESTRICT</b>: Similar to `NO ACTION`, but this ensures that no changes to the parent table will be allowed if there are dependent rows in the child table."},
                                 }
                             },
                             new Block
@@ -960,7 +887,24 @@ public class SqlCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "With the schema defined above, a product cannot exist without a category. If you try to delete the Categories table while there’s a foreign key reference from the Products table, the database will prevent you from doing so, as the foreign key constraint ensures referential integrity. You'll see an error such as: Error: Cannot drop table Categories because it is referenced by Products." }
+                                       Body = "With the schema defined above, a product cannot exist without a category. If you try to delete the Categories table while there’s a foreign key reference from the Products table, the database will prevent you from doing so, as the foreign key constraint ensures referential integrity. You'll see an error such as: Error: Cannot drop table Categories because it is referenced by Products. The same will happen if you try to delete the Products table, since the Reviews table is linked to it by the ProductId." },
+                                     new Paragraph { Body = "Click in <b>View Source Code</b> below to see a script to populate the tables with 5 categories, 100 products and 20 reviews."}
+                                }
+                            },
+                            new Block
+                            {
+                                IsCourseCodePage = true,
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       IsCode = true,
+                                       Body = "INSERT INTO Categories (CategoryName)\r\nVALUES \r\n    ('Electronics'),\r\n    ('Apparel'),\r\n    ('Home & Kitchen'),\r\n    ('Health & Beauty'),\r\n    ('Sports & Outdoors');\r\n" },
+                                    new Paragraph {
+                                       IsCode = true,
+                                       Body = "-- Electronics (CategoryID = 1)\r\nINSERT INTO Products (ProductName, Price, StockQuantity, CategoryID) VALUES\r\n('Wireless Earbuds', 59.99, 150, 1),\r\n('Smartphone Case', 14.95, 300, 1),\r\n('Bluetooth Speaker', 39.99, 200, 1),\r\n('4K Monitor', 299.99, 80, 1),\r\n('Gaming Mouse', 49.90, 120, 1),\r\n('Laptop Sleeve', 25.50, 180, 1),\r\n('Noise Cancelling Headphones', 199.99, 70, 1),\r\n('USB-C Charger', 29.99, 250, 1),\r\n('Portable SSD 1TB', 89.95, 60, 1),\r\n('LED Desk Lamp', 23.75, 150, 1),\r\n('Action Camera', 149.99, 50, 1),\r\n('Smartwatch', 129.99, 110, 1),\r\n('VR Headset', 249.99, 40, 1),\r\n('WiFi Router', 99.95, 90, 1),\r\n('Streaming Device', 49.95, 130, 1),\r\n('Keyboard (Mechanical)', 89.99, 100, 1),\r\n('Webcam HD', 39.99, 200, 1),\r\n('Smartphone Tripod', 19.95, 180, 1),\r\n('Fitness Tracker', 74.90, 140, 1),\r\n('Power Bank', 39.50, 160, 1);\r\n\r\n-- Apparel (CategoryID = 2)\r\nINSERT INTO Products (ProductName, Price, StockQuantity, CategoryID) VALUES\r\n('Mens Cotton T-Shirt', 19.99, 220, 2),\r\n('Womens Athletic Leggings', 29.99, 180, 2),\r\n('Unisex Hoodie', 49.95, 150, 2),\r\n('Baseball Cap', 15.99, 250, 2),\r\n('Running Shoes', 89.95, 100, 2),\r\n('Winter Scarf', 25.00, 120, 2),\r\n('Denim Jacket', 79.90, 75, 2),\r\n('Leather Belt', 34.95, 130, 2),\r\n('Sunglasses', 49.99, 200, 2),\r\n('Dress Shirt', 39.95, 90, 2),\r\n('Womens Summer Dress', 44.99, 140, 2),\r\n('Ankle Socks (Pack of 5)', 12.95, 300, 2),\r\n('Mens Shorts', 24.50, 190, 2),\r\n('Raincoat', 59.95, 70, 2),\r\n('Beanie Hat', 17.95, 160, 2),\r\n('Sports Bra', 29.99, 150, 2),\r\n('Flip-Flops', 12.95, 210, 2),\r\n('Casual Pants', 49.99, 120, 2),\r\n('Womens Blouse', 34.99, 140, 2),\r\n('Sleepwear Set', 39.99, 160, 2);\r\n\r\n-- Home & Kitchen (CategoryID = 3)\r\nINSERT INTO Products (ProductName, Price, StockQuantity, CategoryID) VALUES\r\n('Ceramic Dinner Set (16 pcs)', 59.95, 90, 3),\r\n('Non-Stick Frying Pan', 29.95, 120, 3),\r\n('Memory Foam Pillow', 24.95, 140, 3),\r\n('Kitchen Utensil Set', 39.95, 110, 3),\r\n('Electric Kettle', 44.95, 100, 3),\r\n('Bath Towel Set', 49.99, 130, 3),\r\n('Air Fryer', 99.99, 75, 3),\r\n('Wall Clock', 29.95, 150, 3),\r\n('Essential Oil Diffuser', 34.95, 90, 3),\r\n('Indoor Plant Pot Set', 21.99, 200, 3),\r\n('LED String Lights', 18.95, 240, 3),\r\n('Table Lamp', 39.99, 100, 3),\r\n('Toaster Oven', 69.95, 80, 3),\r\n('Laundry Basket', 24.95, 140, 3),\r\n('Throw Blanket', 29.99, 180, 3),\r\n('Reusable Food Containers (Set of 5)', 19.95, 160, 3),\r\n('Pressure Cooker', 89.99, 60, 3),\r\n('Water Filter Pitcher', 34.99, 110, 3),\r\n('Wall Art Canvas', 49.90, 95, 3),\r\n('Ironing Board', 44.99, 85, 3);\r\n\r\n-- Health & Beauty (CategoryID = 4)\r\nINSERT INTO Products (ProductName, Price, StockQuantity, CategoryID) VALUES\r\n('Vitamin C Serum', 29.95, 120, 4),\r\n('Shampoo & Conditioner Set', 25.99, 140, 4),\r\n('Body Lotion', 19.95, 200, 4),\r\n('Electric Toothbrush', 49.95, 90, 4),\r\n('Hair Dryer', 59.90, 80, 4),\r\n('Facial Cleansing Brush', 39.95, 100, 4),\r\n('Eye Cream', 34.95, 110, 4),\r\n('Lip Balm (Pack of 3)', 12.95, 250, 4),\r\n('Yoga Mat', 29.99, 180, 4),\r\n('Protein Powder', 49.95, 100, 4),\r\n('Herbal Tea Sampler', 24.90, 160, 4),\r\n('Essential Oil Kit', 44.90, 80, 4),\r\n('Makeup Organizer', 34.95, 130, 4),\r\n('Massage Roller', 27.95, 150, 4),\r\n('Hand Sanitizer Gel (3 Pack)', 14.95, 220, 4),\r\n('Organic Face Mask', 19.90, 140, 4),\r\n('Travel Toiletry Bag', 24.95, 170, 4),\r\n('Sleep Aid Supplement', 39.99, 90, 4),\r\n('Foot Spa Massager', 69.95, 70, 4),\r\n('Bamboo Toothbrushes (Pack of 4)', 16.99, 190, 4);\r\n\r\n-- Sports & Outdoors (CategoryID = 5)\r\nINSERT INTO Products (ProductName, Price, StockQuantity, CategoryID) VALUES\r\n('Camping Tent (2-person)', 99.95, 60, 5),\r\n('Hiking Backpack', 89.95, 70, 5),\r\n('Stainless Steel Water Bottle', 24.95, 200, 5),\r\n('Cycling Gloves', 19.95, 150, 5),\r\n('Resistance Bands Set', 29.95, 180, 5),\r\n('Portable Hammock', 49.99, 90, 5),\r\n('Fishing Rod Combo', 79.99, 50, 5),\r\n('Binoculars', 59.95, 80, 5),\r\n('Running Belt Pouch', 17.95, 130, 5),\r\n('Jump Rope', 12.95, 240, 5),\r\n('Inflatable Kayak', 199.95, 30, 5),\r\n('Trekking Poles', 39.95, 100, 5),\r\n('Outdoor Lantern', 29.99, 140, 5),\r\n('Golf Balls (Pack of 12)', 34.95, 160, 5),\r\n('Picnic Blanket', 21.95, 200, 5),\r\n('Sports Water Jug', 19.99, 180, 5),\r\n('Sunscreen Spray', 16.95, 170, 5),\r\n('Basketball', 29.99, 120, 5),\r\n('Beach Umbrella', 44.95, 75, 5),\r\n('Camping Cookware Set', 49.90, 85, 5);\r\n" },
+                                    new Paragraph {
+                                       IsCode = true,
+                                       Body = "INSERT INTO Reviews (ReviewId, ProductId, ReviewText, Rating) VALUES\r\n(1, 1, 'Great clarity and comfortable fit for workouts.', 5),\r\n(2, 1, 'Battery lasts long, good value for the price.', 4),\r\n(3, 4, 'Crisp resolution, excellent for editing videos.', 5),\r\n(4, 4, 'Sleek design, but needs better cable management.', 4),\r\n(5, 5, 'Responsive and smooth control for gaming.', 4),\r\n(6, 11, 'Takes stunning action shots during outdoor hikes.', 5),\r\n(7, 13, 'Comfortable headset with amazing immersion.', 5),\r\n(8, 13, 'Slight motion blur on fast scenes but overall solid.', 4),\r\n(9, 15, 'Setup was easy, and performance is reliable.', 4),\r\n(10, 20, 'Compact and fast-charging power bank, travel friendly.', 5),\r\n(11, 23, 'Warm hoodie, perfect for chilly evenings.', 4),\r\n(12, 27, 'Quality leather belt, durable buckle.', 5),\r\n(13, 31, 'Excellent heat distribution, non-stick works well.', 5),\r\n(14, 38, 'Lovely aroma, feels calming after a long day.', 4),\r\n(15, 41, 'Skin feels smoother after daily use.', 5),\r\n(16, 53, 'Comfortable, lots of room for gear.', 5),\r\n(17, 53, 'Weatherproof and sturdy, great for trail hikes.', 4),\r\n(18, 55, 'Keeps my drink cold for hours, lightweight bottle.', 5),\r\n(19, 59, 'Quick to inflate, great quality material.', 4),\r\n(20, 63, 'Easy to clean and ideal for camping meals.', 5);\r\n" }
                                 }
                             }
                         }
@@ -981,8 +925,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "One of the most powerful features of SQL is the ability to combine data from multiple tables using **joins**. In relational databases, data is often spread across different tables, and using joins allows you to retrieve and display this data in a more meaningful way. This chapter will explore the different types of joins, how they work, and when to use them."},
-                                    new Paragraph { Body = "Let's look at the different types of joins, using the Categories and Products tables."}
+                                    new Paragraph { Body = "One of the most powerful features of SQL is the ability to combine data from multiple tables using <b>joins</b>. In relational databases, data is often spread across different tables, and using joins allows you to retrieve and display this data in a more meaningful way. This chapter will explore the different types of joins, how they work, and when to use them."},
                                 }
                             },
                             new Block
@@ -990,14 +933,14 @@ public class SqlCourse
                                 Title = "Inner Join",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "An **inner join** retrieves only the rows where there is a match in both tables. If a record in the first table has no corresponding record in the second table, it is excluded from the results. The **inner join** is the most common type of join and is the default if no join type is specified."},
+                                    new Paragraph { Body = "An <b>inner join</b> retrieves only the rows where there is a match in both tables. If a record in the first table has no corresponding record in the second table, it is excluded from the results. The inner join is the most common type of join and is the default if no join type is specified."},
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nINNER JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;"},
-                                    new Paragraph { Body = "**`INNER JOIN Categories`**: This part tells SQL to join the `Products` table with the `Categories` table."},
-                                    new Paragraph { Body = "**`ON Products.CategoryID = Categories.CategoryID`**: This is the condition that defines how the tables should be joined. The query will match rows in `Products` where the `CategoryID` field matches the `CategoryID` in the `Categories` table."},
-                                    new Paragraph { Body = "The result will only include products that have a valid `CategoryID` matching a `CategoryID` in the `Categories` table."},
-                                    new Paragraph { Body = "Output"}
+                                    new Paragraph { Body = "In our case running this query will return all products, since the CategoryId foreign key is <NOT NULL</b>"},
+                                    new Paragraph { Body = "🔹<b>SELECT</b>: In the SELECT part when using JOIN, since we have multiple tables, we have to specify which table the column belongs to."},
+                                    new Paragraph { Body = "🔹<b>INNER JOIN Categories</b>: This part tells SQL to join the Products table with the Categories table."},
+                                    new Paragraph { Body = "🔹<b>ON Products.CategoryID = Categories.CategoryID🔹</b>: This is the condition that defines how the tables should be joined. The query will match rows in Products where the <b>CategoryID</b> field matches the <b>CategoryID</b> in the Categories table."}
                                 },
                             },
                             new Block
@@ -1005,7 +948,7 @@ public class SqlCourse
                                 Title = "Left Join",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A **left join** (or **left outer join**) retrieves all rows from the **left table** (the table listed first in the query) and the matching rows from the **right table** (the table listed second). If there is no match, the result will still include all rows from the left table, but with `NULL` values for columns from the right table."},
+                                    new Paragraph { Body = "A left join (or <b>left outer join</b>) retrieves all rows from the <b>left table</b> (the table listed first in the query) and the matching rows from the <b>right table</b> (the table listed second). If there is no match, the result will still include all rows from the left table, but with NULL values for columns from the right table."},
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nLEFT JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;\r\n"},

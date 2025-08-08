@@ -205,7 +205,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/1.Creating-Project' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/1.Creating-Project' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -366,7 +366,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/2.Installing-Entity-Framework' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/2.Installing-Entity-Framework' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -435,7 +435,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/3.Code-First-Approach' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/3.Code-First-Approach' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -537,7 +537,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/3.Code-First-Approach' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/3.Code-First-Approach' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -635,7 +635,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/4.Flight-Service' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/4.Flight-Service' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -721,7 +721,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/4.Flight-Service' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/4.Flight-Service' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -861,7 +861,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/5.Flight-Controller' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/5.Flight-Controller' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }
@@ -1012,7 +1012,7 @@ public class WebApiCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/6.Response-Codes' target='_blank'>in this link</a>." }
+                                       Body = "You can find the code for the current state of this project <a href='https://github.com/TheCSharpAcademy/TCSA.Course.WebAPI.FlightData/tree/6.Response-Codes' target='_blank' style='color:white;'>in this link</a>." }
                                 }
                             }
                         }

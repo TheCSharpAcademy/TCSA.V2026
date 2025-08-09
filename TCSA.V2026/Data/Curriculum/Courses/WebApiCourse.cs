@@ -695,9 +695,9 @@ public class WebApiCourse
                                 {
                                      new Paragraph {
                                          IsCode = true,
-                                         Body = "public Flight? GetFlightById(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n        return savedFlight == null ? null : savedFlight;\r\n    }" },
+                                         Body = "public Flight? GetFlightById(int id)\r\n    {\r\n        Flight savedFlight = _dbContext.Flights.Find(id);\r\n        return savedFlight;\r\n    }" },
                                      new Paragraph {
-                                       Body = "Here we're looking for a Flight with the id provided. We use a <b>ternary expression</b> to return null if no flight was found and return the flight object if it was found."
+                                       Body = "Here we're looking for a Flight with the id provided and the entity is returned which can be null if it's not found."
                                     },
                                 },
                             },

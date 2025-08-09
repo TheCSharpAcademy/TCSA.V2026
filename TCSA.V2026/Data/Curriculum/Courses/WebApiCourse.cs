@@ -1061,8 +1061,16 @@ public class WebApiCourse
                                 Title = "Testing With Swagger",
                                 Paragraphs = new List<Paragraph>
                                 {
+                                      new Paragraph {
+                                          Body = "Before you run the app, make sure you've got launchBrowser and launchUrl properties like shown below in your launchSettings.json file."
+                                     },
                                        new Paragraph {
-                                         Body = "Once we run the app, your browser should open with this interface:"
+                                          IsCode = true,
+                                          Body = "{\r\n  \"$schema\": \"https://json.schemastore.org/launchsettings.json\",\r\n  \"profiles\": {\r\n    \"http\": {\r\n      \"commandName\": \"Project\",\r\n      \"dotnetRunMessages\": true,\r\n      \"launchBrowser\": true,\r\n      \"launchUrl\": \"swagger\"\r\n      // Omitted for brevity ...\r\n  }\r\n}"
+                                     },
+
+                                        new Paragraph {
+                                          Body = "Once we run the app, your browser should open with this interface:"
                                      },
                                         new Paragraph {
                                             IsPicture = true,
@@ -1216,7 +1224,7 @@ public class WebApiCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Congratulations! You've completed the Intro to ASP.NET Core Web APIs course! You should know be familiar with one of the most important parts of ASP.NET Core. Understanding Web APIs means knowing how applications reach each other via HTTP requests, which is at the core of how the internet works." },
+                                    new Paragraph { Body = "Congratulations! You've completed the Intro to ASP.NET Core Web APIs course! You should now be familiar with one of the most important parts of ASP.NET Core. Understanding Web APIs means knowing how applications reach each other via HTTP requests, which is at the core of how the internet works." },
                                 }
                             },
                             new Block
@@ -1229,7 +1237,7 @@ public class WebApiCourse
                                        Body = "If you're following our roadmap, there are several projects that have a Web Api as a requirement, starting with the Shifts Logger. Several projects in the Angular and React areas involve building APIs. You can also submit a Freestyle Project, if you have an idea that's not covered in our curriculum. " },
                                     new Paragraph {
                                        Body = "You can also revisit this course at any time. Each time you repeat a course, you'll find that you'll learn something new or see the same topic from a new perspective, no matter how many times you do it." },
-                                    new Paragraph { Body = "Keep in mind that this is an intro course covering the basics of Web APIs. We're working on an intermediate and an advanced course, covering topics for students that are already very comfortable the material in this course. Stay tuned! And once again! Congratulations!" }
+                                    new Paragraph { Body = "Keep in mind that this is an intro course covering the basics of Web APIs. We're working on an intermediate and an advanced course, covering topics for students that are already very comfortable with the material in this course. Stay tuned and once again, Congratulations!" }
                                 }
                             },
                             new Block
@@ -1237,7 +1245,7 @@ public class WebApiCourse
                                 Title = "Video Course",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "We also have a paid video version of this tutorial. The video version already contains a part 2, with the intermediate content.:<br><br>\r\n<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/course/aspnet-core-web-apis' target='_blank'>individually for $4.99</a>.<br>\r\n<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'>all our courses for $4.99/month</a><br>\r\n<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'>all courses and 1-on-1 mentorship for 39.99/month</a>" }
+                                    new Paragraph { Body = "We also have a paid video version of this tutorial. The video version already contains a part 2, with the intermediate content:<br><br>\r\n<b>Option 1</b>: Purchase the course <a href='https://thecsharpschool.getlearnworlds.com/course/aspnet-core-web-apis' target='_blank'>individually for $4.99</a>.<br>\r\n<b>Option 2</b>: Subscribe to the <b>VIP Membership</b> and have access to <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=the-c-academy-membership&type=subscription' target='_blank'>all our courses for $4.99/month</a><br>\r\n<b>Option 3</b>: Subscribe to the <b>VIP Mentorship</b> for <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'>all courses and 1-on-1 mentorship for $39.99/month</a>" }
                                 }
                             },
                         }

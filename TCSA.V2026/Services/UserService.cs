@@ -67,6 +67,9 @@ public class UserService : IUserService
             using (var context = _factory.CreateDbContext())
             {
                 return await context.AspNetUsers
+                .AsNoTracking()
+                .Include(x => x.CodeReviewProjects)
+                   .ThenInclude(x => x.DashboardProject)
                 .Include(x => x.UserActivity)
                 .Include(x => x.DashboardProjects)
                 .Include(x => x.Issues)

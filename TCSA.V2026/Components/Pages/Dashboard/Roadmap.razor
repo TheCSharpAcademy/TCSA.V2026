@@ -67,7 +67,7 @@
         }
 
         var claims = AuthSate.User;
-        UserId = "2bafd46a-3199-4857-8388-00cf0d2af752";
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetDetailedUserById(UserId);
         CompletedProjects = User.DashboardProjects.Where(p => p.IsCompleted).Select(p => p.ProjectId).ToList();
 
@@ -75,7 +75,7 @@
         ? User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted).Count()
         : 0;
 
-        IssuesCount = User.Issues != null ? User.Issues.Count(x => !x.IsClosed) : 0;
+        IssuesCount = User.Issues != null ? User.Issues.Count(x => x.IsClosed) : 0;
 
         RoadmapStages = RoadmapHelper.GetRoadmap(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
 

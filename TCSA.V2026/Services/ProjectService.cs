@@ -281,7 +281,8 @@ public class ProjectService : IProjectService
                 if (dashboardProject == null)
                 {
                     var issue = await context.Issues.FirstOrDefaultAsync(x => x.ProjectId == project.ProjectId);
-                    experiencePoints = issue.ExperiencePoints;     
+                    experiencePoints = issue.ExperiencePoints;   
+                    issue.IsClosed = true;
                 } 
                 else
                 {

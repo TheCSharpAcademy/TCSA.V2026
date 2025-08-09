@@ -783,7 +783,7 @@ public class ConsoleProjectsHelper
                 Level = Level.Orange,
                 ExperiencePoints = 30,
                 Difficulty = Difficulty.Advanced,
-                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Console.ExerciseTracker",
+                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Console.EcommerceApi",
                 Introduction = new List<Paragraph>
                 {
                     new Paragraph
@@ -805,7 +805,7 @@ public class ConsoleProjectsHelper
                     "You need to provide a Postman Collection with all possible requests for your API. It's a json file that needs to be included in your PR.",
                     "You don't need to create an UI to consume your API.",
                     "Your GetProducts and GetSales endpoints need to have pagination capabilities.",
-                    "You don't need delete end-points. Feel free to add soft-deletes.",
+                    "In retail it's good practice to prevent deletion of records. Feel free to add soft-deletes.",
                     "You shouldn't update products prices. What would happen if you made a sale and later updated the price of that product?"
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
@@ -822,10 +822,11 @@ public class ConsoleProjectsHelper
                     "Seed data from the beginning so you don't need to create records manually.",
                     "This project can get overwhelming very quickly. Use a step-by-step approach, creating one end-point at a time and making sure everything works before moving to the next one.",
                     "Start using Postman from the start to tests your requests. It will save you a lot of time.",
+                    "Think about the business case and what endpoints it will actually. Not all tables need all CRUD operations. For example, you might not need to delete or update products, but you will need to create them and read them.",
                 },
                 Challenges = new List<string>
                 {
-                    "Add filtering and searching capabilities to your endpoints",
+                    "Add filtering and sorting  capabilities to your endpoints",
                     "Create a Console UI to consume your Web API.",
                     "After completing the project, read the <b>Rest APIs Article</b> listed in the resources and check what could be missing. Pay particular attention to status codes and endpoints signatures."
                 }

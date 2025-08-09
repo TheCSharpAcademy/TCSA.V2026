@@ -103,9 +103,10 @@
 
     private ApplicationUser User { get; set; }
     private List<ActivityDisplay> AllUserActivity = new();
-    private List<ActivityDisplay> UserActivity => AllUserActivity.Where(
-        x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value
-    ).Skip((CurrentPage - 1) * PagingConstants.ActivityPageSize).Take(PagingConstants.ActivityPageSize).ToList();
+    private List<ActivityDisplay> UserActivity => AllUserActivity
+        .Where(x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value)
+        .Skip((CurrentPage - 1) * PagingConstants.ActivityPageSize)
+        .Take(PagingConstants.ActivityPageSize).ToList();
 
     private ActivityType? _selectedActivityType = null;
     private ActivityType? SelectedActivityType

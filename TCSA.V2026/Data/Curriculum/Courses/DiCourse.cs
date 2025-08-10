@@ -441,7 +441,7 @@ public class DiCourse
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Even though method injection might be a more memory efficient approach, you will most commonly see constructor injection in majority of codebases."
+                                        Body = "Even though method injection might be a more memory efficient approach, you will most commonly see constructor injection in the majority of codebases."
                                     },
                                     new Paragraph
                                     {
@@ -1151,7 +1151,7 @@ public class DiCourse
                                 {
                                     new Paragraph
                                     {
-                                        Body = "You don't have to write this code yourself, i's only for demonstration purposes."
+                                        Body = "You don't have to write this code yourself, it's only for demonstration purposes."
                                     },
                                     new Paragraph
                                     {

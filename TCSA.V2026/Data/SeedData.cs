@@ -22,7 +22,6 @@ public static class SeedData
 
         var user1 = new ApplicationUser
         {
-
             Id = Guid.NewGuid().ToString(),
             UserName = "user1@example.com",
             NormalizedUserName = "user1@example.com",
@@ -47,8 +46,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -59,8 +62,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 2, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 2, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -71,8 +78,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -83,10 +94,14 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
-                }
+                },
             },
             UserActivity = new List<AppUserActivity>
             {
@@ -94,31 +109,39 @@ public static class SeedData
                 {
                     ProjectId = 5,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 6,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 7,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 8,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
-                }
-            }
+                },
+            },
         };
         user1.PasswordHash = hasher.HashPassword(user1, "Password123!");
 
@@ -137,7 +160,7 @@ public static class SeedData
             ReviewedProjects = 8,
             EmailConfirmed = true,
             GithubLogin = false,
-            Level = Level.Green
+            Level = Level.Green,
         };
         user2.PasswordHash = hasher.HashPassword(user2, "Password124!");
 
@@ -156,7 +179,7 @@ public static class SeedData
             ReviewedProjects = 9,
             EmailConfirmed = true,
             GithubLogin = false,
-            Level = Level.OliveGreen,
+            Level = Level.Yellow,
 
             UserActivity = new List<AppUserActivity>
             {
@@ -164,37 +187,47 @@ public static class SeedData
                 {
                     ProjectId = 9,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 10,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 11,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 12,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 13,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
-                }
+                },
             },
 
             DashboardProjects = new List<DashboardProject>
@@ -207,8 +240,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -219,8 +256,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -231,32 +272,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateRequestedChange = DateTimeOffset.MinValue,
-                },
-                new DashboardProject
-                {
-                    ProjectId = 12,
-                    GithubUrl = string.Empty,
-                    IsCompleted = true,
-                    IsArchived = false,
-                    IsPendingNotification = false,
-                    IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateRequestedChange = DateTimeOffset.MinValue,
-                },
-                new DashboardProject
-                {
-                    ProjectId = 13,
-                    GithubUrl = string.Empty,
-                    IsCompleted = true,
-                    IsArchived = false,
-                    IsPendingNotification = false,
-                    IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -267,8 +288,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -279,8 +304,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -291,8 +320,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -303,12 +336,15 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
-            }
-
+            },
         };
         user3.PasswordHash = hasher.HashPassword(user3, "Password123!");
 
@@ -335,37 +371,47 @@ public static class SeedData
                 {
                     ProjectId = 14,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 15,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 2, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 16,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 17,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
                 },
                 new AppUserActivity
                 {
                     ProjectId = 18,
                     ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
                     ActivityType = ActivityType.ArticleRead,
-                }
+                },
             },
 
             DashboardProjects = new List<DashboardProject>
@@ -378,8 +424,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -390,8 +440,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -402,8 +456,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -414,8 +472,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -426,8 +488,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -438,8 +504,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -450,8 +520,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -462,8 +536,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -474,8 +552,12 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = false,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
-                    DateCompleted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
@@ -486,15 +568,133 @@ public static class SeedData
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = true,
-                    DateSubmitted = new DateTimeOffset(new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)),
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
                     DateRequestedChange = DateTimeOffset.MinValue,
-                }
-            }
-
+                },
+            },
         };
         user4.PasswordHash = hasher.HashPassword(user4, "Password123!");
 
-        context.Users.AddRange(user1, user2, user3, user4);
+        var user5 = new ApplicationUser
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = "user5@example.com",
+            NormalizedUserName = "user5@example.com",
+            Email = "user5@example.com",
+            NormalizedEmail = "user5@example.com",
+            FirstName = "Walter",
+            LastName = "White",
+            Country = "Germany",
+            ExperiencePoints = 723,
+            ReviewExperiencePoints = 500,
+            ReviewedProjects = 0,
+            EmailConfirmed = true,
+            GithubLogin = false,
+            Level = Level.Green,
+
+            UserActivity = new List<AppUserActivity>
+            {
+                new AppUserActivity
+                {
+                    ProjectId = 5,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 8, 12, 10, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 6,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 8, 12, 30, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 7,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 8,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ArticleRead,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 11,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 10, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ProjectCompleted,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 12,
+                    ChallengeId = 0,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 11, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ProjectCompleted,
+                },
+                new AppUserActivity
+                {
+                    ProjectId = 13,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 12, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    ActivityType = ActivityType.ProjectSubmitted,
+                },
+            },
+
+            DashboardProjects = new List<DashboardProject>
+            {
+                new DashboardProject
+                {
+                    ProjectId = 12,
+                    GithubUrl = string.Empty,
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = true,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    ),
+                    DateRequestedChange = DateTimeOffset.MinValue,
+                },
+                new DashboardProject
+                {
+                    ProjectId = 13,
+                    GithubUrl = string.Empty,
+                    IsCompleted = false,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = true,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 12, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                },
+            },
+        };
+        user5.PasswordHash = hasher.HashPassword(user5, "Password123!");
+
+        context.Users.AddRange(user1, user2, user3, user4, user5);
         context.SaveChanges();
     }
 }

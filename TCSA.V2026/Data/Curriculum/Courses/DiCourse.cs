@@ -441,7 +441,7 @@ public class DiCourse
                                     },
                                     new Paragraph
                                     {
-                                        Body = "Even though method injection might be a more memory efficient approach, you will most commonly see constructor injection in majority of codebases."
+                                        Body = "Even though method injection might be a more memory efficient approach, you will most commonly see constructor injection in the majority of codebases."
                                     },
                                     new Paragraph
                                     {
@@ -534,7 +534,7 @@ public class DiCourse
                                     new Paragraph
                                     {
                                         IsCode = true,
-                                        Body = "public class EmployeeData\r\n{\r\n    public EmployeeData()\r\n    {\r\n        Employees = GetEmployees();\r\n    }\r\n\r\n    public List&ltEmployee&gt Employees { get; set; }\r\n\r\n    public List&ltEmployee&gt GetEmployees()\r\n    {\r\n        return new List<Employee>\r\n        {\r\n            new Employee\r\n            {\r\n                Id = 1,\r\n                Name = \"John Smith\",\r\n                Email = \"jsmith@gmail.com\",\r\n                Department = \"Accounting\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 2,\r\n                Name = \"Jane Taylor\",\r\n                Email = \"jtaylor@gmail.com\",\r\n                Department = \"Management\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 3,\r\n                Name = \"Mark Wilson\",\r\n                Email = \"mwilson@gmail.com\",\r\n                Department = \"Development\"\r\n            }\r\n        };\r\n    }\r\n}"
+                                        Body = "public class EmployeeData\r\n{\r\n    public EmployeeData()\r\n    {\r\n        Employees = GetEmployees();\r\n    }\r\n\r\n    public List&ltEmployee&gt Employees { get; set; }\r\n\r\n    public List&ltEmployee&gt GetEmployees()\r\n    {\r\n        return new List&ltEmployee&gt\r\n        {\r\n            new Employee\r\n            {\r\n                Id = 1,\r\n                Name = \"John Smith\",\r\n                Email = \"jsmith@gmail.com\",\r\n                Department = \"Accounting\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 2,\r\n                Name = \"Jane Taylor\",\r\n                Email = \"jtaylor@gmail.com\",\r\n                Department = \"Management\"\r\n            },\r\n            new Employee\r\n            {\r\n                Id = 3,\r\n                Name = \"Mark Wilson\",\r\n                Email = \"mwilson@gmail.com\",\r\n                Department = \"Development\"\r\n            }\r\n        };\r\n    }\r\n}"
                                     }
                                 }
                             },
@@ -1151,7 +1151,7 @@ public class DiCourse
                                 {
                                     new Paragraph
                                     {
-                                        Body = "You don't have to write this code yourself, i's only for demonstration purposes."
+                                        Body = "You don't have to write this code yourself, it's only for demonstration purposes."
                                     },
                                     new Paragraph
                                     {

@@ -40,6 +40,7 @@ builder.Services.AddScoped<IPeerReviewService, PeerReviewService>();
 builder.Services.AddScoped<ICommunityService, CommunityService>();
 builder.Services.AddScoped<IChallengeService, ChallengeService>();
 builder.Services.AddScoped<ICodewarsService, CodewarsService>();
+builder.Services.AddScoped<IDiscordService, DiscordService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
 

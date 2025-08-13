@@ -282,6 +282,32 @@ public static class SeedData
                 },
                 new DashboardProject
                 {
+                    ProjectId = 12,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
+                    IsCompleted = false,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = true,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 10, 15, 0, 0, DateTimeKind.Utc)
+                    ),
+                },
+                new DashboardProject
+                {
+                    ProjectId = 13,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
+                    IsCompleted = false,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = true,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 12, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                },
+                new DashboardProject
+                {
                     ProjectId = 14,
                     GithubUrl = string.Empty,
                     IsCompleted = true,
@@ -598,63 +624,28 @@ public static class SeedData
             {
                 new AppUserActivity
                 {
-                    ProjectId = 5,
-                    ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 8, 8, 12, 10, 0, DateTimeKind.Utc)
-                    ),
-                    ActivityType = ActivityType.ArticleRead,
-                },
-                new AppUserActivity
-                {
-                    ProjectId = 6,
-                    ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 8, 8, 12, 30, 0, DateTimeKind.Utc)
-                    ),
-                    ActivityType = ActivityType.ArticleRead,
-                },
-                new AppUserActivity
-                {
-                    ProjectId = 7,
-                    ChallengeId = 0,
-                    DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 1, 3, 0, 1, 0, DateTimeKind.Utc)
-                    ),
-                    ActivityType = ActivityType.ArticleRead,
-                },
-                new AppUserActivity
-                {
-                    ProjectId = 8,
+                    ProjectId = 19,
                     ChallengeId = 0,
                     DateSubmitted = new DateTimeOffset(
                         new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
                     ),
-                    ActivityType = ActivityType.ArticleRead,
+                    ActivityType = ActivityType.ProjectCompleted,
                 },
                 new AppUserActivity
                 {
-                    ProjectId = 11,
+                    ProjectId = 20,
                     ChallengeId = 0,
                     DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 8, 10, 0, 1, 0, DateTimeKind.Utc)
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
                     ),
                     ActivityType = ActivityType.ProjectCompleted,
                 },
                 new AppUserActivity
                 {
-                    ProjectId = 12,
+                    ProjectId = 21,
                     ChallengeId = 0,
                     DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 8, 11, 0, 1, 0, DateTimeKind.Utc)
-                    ),
-                    ActivityType = ActivityType.ProjectCompleted,
-                },
-                new AppUserActivity
-                {
-                    ProjectId = 13,
-                    DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 8, 12, 0, 1, 0, DateTimeKind.Utc)
+                        new DateTime(2025, 1, 4, 0, 1, 0, DateTimeKind.Utc)
                     ),
                     ActivityType = ActivityType.ProjectSubmitted,
                 },
@@ -664,24 +655,57 @@ public static class SeedData
             {
                 new DashboardProject
                 {
-                    ProjectId = 12,
-                    GithubUrl = string.Empty,
+                    ProjectId = 28,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
                     IsCompleted = true,
                     IsArchived = false,
                     IsPendingNotification = false,
-                    IsPendingReview = true,
+                    IsPendingReview = false,
                     DateSubmitted = new DateTimeOffset(
-                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                        new DateTime(2025, 8, 10, 15, 0, 0, DateTimeKind.Utc)
                     ),
                     DateCompleted = new DateTimeOffset(
-                        new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                        new DateTime(2025, 8, 10, 16, 0, 0, DateTimeKind.Utc)
                     ),
-                    DateRequestedChange = DateTimeOffset.MinValue,
                 },
                 new DashboardProject
                 {
-                    ProjectId = 13,
-                    GithubUrl = string.Empty,
+                    ProjectId = 29,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 12, 0, 1, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 8, 10, 15, 0, 0, DateTimeKind.Utc)
+                    ),
+                },
+                new DashboardProject
+                {
+                    ProjectId = 30,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
+                    IsCompleted = true,
+                    IsArchived = false,
+                    IsPendingNotification = false,
+                    IsPendingReview = false,
+                    DateSubmitted = new DateTimeOffset(
+                        new DateTime(2025, 8, 13, 7, 15, 0, DateTimeKind.Utc)
+                    ),
+                    DateCompleted = new DateTimeOffset(
+                        new DateTime(2025, 8, 13, 15, 02, 0, DateTimeKind.Utc)
+                    ),
+                },
+                new DashboardProject
+                {
+                    ProjectId = 31,
+                    GithubUrl =
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
                     IsCompleted = false,
                     IsArchived = false,
                     IsPendingNotification = false,

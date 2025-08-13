@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using MudBlazor.Services;
+using NetCord.Gateway;
+using NetCord.Hosting.Gateway;
 using TCSA.V2026.Components;
 using TCSA.V2026.Components.Account;
 using TCSA.V2026.Data;
@@ -44,6 +46,11 @@ builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ThemeService>();
+
+builder.Services.AddDiscordGateway(options =>
+{
+    options.Intents = GatewayIntents.Guilds | GatewayIntents.GuildUsers | GatewayIntents.GuildPresences | GatewayIntents.GuildMessages;
+});
 
 builder.Services.AddAuthentication(options =>
     {

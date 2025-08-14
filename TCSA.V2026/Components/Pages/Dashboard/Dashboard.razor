@@ -169,6 +169,7 @@
             if (status == ResponseStatus.Success)
             {
                 User = await UserService.GetUserById(UserId);
+                await RebuildDashboardAfterProjectSubmission();
             }
         }
     }
@@ -212,4 +213,28 @@
             }
         );
     }
+
+    private async Task RebuildDashboardAfterProjectSubmission()
+    {
+        CompletedProjects = User?.DashboardProjects?.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
+        PendingProjects = User?.DashboardProjects?.Where(x => x.IsPendingReview).Select(x => x.ProjectId).ToList();
+
+        Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects, PendingProjects);
+
+        var fcc = DashboardProjectsHelpers.Projects.FirstOrDefault(x => x.Id == 75);
+        var cp = DashboardProjectsHelpers.Articles.FirstOrDefault(x => x.Id == 9);
+
+        Areas.FirstOrDefault(x => x.Area == Area.StartHere).Tasks.AddRange(
+            new DashboardTaskDisplay
+                {
+                    Id = 75,
+                    IconUrl = fcc.IconUrl,
+                    Slug = fcc.Slug,
+                    Title = fcc.Title,
+                    Status = DashboardProjectsHelpers.GetTaskStatus(fcc.Id, CompletedProjects, PendingProjects),
+                    Area = fcc.Area
+                }
+        );
+    }
+
 }

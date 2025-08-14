@@ -67,9 +67,9 @@ public class DiscordService : IDiscordService
             Level.Orange => DiscordRoles.Orange,
             Level.Red => DiscordRoles.Red,
             Level.Purple => DiscordRoles.Purple,
-            // Level.Brown => DiscordRoles.Brown
+            Level.Brown => DiscordRoles.Brown,
             Level.Grey => DiscordRoles.Grey,
-            // Level.Blue => DiscordRoles.Blue
+            Level.Blue => DiscordRoles.Blue,
             Level.Black => DiscordRoles.Black,
             _ => 0
         };

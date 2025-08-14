@@ -8,8 +8,8 @@ public class DiscordRoles
     public static readonly ulong Orange = 1142444454674972772;
     public static readonly ulong Red = 1208932705128153118;
     public static readonly ulong Purple = 1142436719497592842;
-    // public static readonly ulong Brown = 
+    public static readonly ulong Brown = 1144859469965185105;
     public static readonly ulong Grey = 1239842389875490858;
-    // public static readonly ulong Blue = 
+    public static readonly ulong Blue = 1292403260388413501;
     public static readonly ulong Black = 1293458727755841607;
 }

@@ -20,17 +20,15 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
 });
 
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 
 builder.Services.AddRazorPages();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<
-    AuthenticationStateProvider,
-    IdentityRevalidatingAuthenticationStateProvider
->();
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -43,11 +41,11 @@ builder.Services.AddScoped<ICodewarsService, CodewarsService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
 
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ThemeService>();
 
-builder
-    .Services.AddAuthentication(options =>
+builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
@@ -57,23 +55,17 @@ builder
         o.ClientId = builder.Configuration["Values:GithubClientId"];
         o.ClientSecret = builder.Configuration["Values:GithubClientSecret"];
         o.CallbackPath = "/signin-github";
-        https: //docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+    https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
         o.Scope.Add("read:user");
     })
     .AddIdentityCookies();
 
-var connectionString =
-    builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString)
-);
+    options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder
-    .Services.AddIdentityCore<ApplicationUser>(options =>
-        options.SignIn.RequireConfirmedAccount = false
-    )
+builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
@@ -104,10 +96,12 @@ else
 
 app.UseHttpsRedirection();
 
+
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 app.MapRazorPages();
 
 // Add additional endpoints required by the Identity /Account Razor components.

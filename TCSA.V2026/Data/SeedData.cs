@@ -179,7 +179,7 @@ public static class SeedData
             ReviewedProjects = 9,
             EmailConfirmed = true,
             GithubLogin = false,
-            Level = Level.Yellow,
+            Level = Level.OliveGreen,
 
             UserActivity = new List<AppUserActivity>
             {
@@ -284,8 +284,8 @@ public static class SeedData
                 {
                     ProjectId = 12,
                     GithubUrl =
-                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
-                    IsCompleted = false,
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.Calculator/pull/385",
+                    IsCompleted = true,
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = true,
@@ -297,8 +297,8 @@ public static class SeedData
                 {
                     ProjectId = 13,
                     GithubUrl =
-                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.ShiftsLogger/pull/106",
-                    IsCompleted = false,
+                        "https://github.com/TheCSharpAcademy/CodeReviews.Console.Calculator/pull/393",
+                    IsCompleted = true,
                     IsArchived = false,
                     IsPendingNotification = false,
                     IsPendingReview = true,

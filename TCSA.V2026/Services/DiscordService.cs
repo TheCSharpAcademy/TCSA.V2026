@@ -11,8 +11,9 @@ public interface IDiscordService
 
 public class DiscordService : IDiscordService
 {
-    private readonly ulong _guildId = 925901888203935744;
-    private readonly ulong _channelId = 925901888203935747;
+    private const ulong _guildId = 925901888203935744;
+    private const ulong _channelId = 925901888203935747;
+    private static readonly Random _random = new();
     private readonly GatewayClient _client;
 
     public DiscordService(GatewayClient client)
@@ -77,21 +78,29 @@ public class DiscordService : IDiscordService
 
     private static string GetRandomGif(Level belt)
     {
-        var random = new Random();
 
-        return belt switch
+        var gifs = belt switch
         {
-            Level.Green => BeltGifs.Green[random.Next(BeltGifs.Green.Count)],
-            Level.OliveGreen => BeltGifs.OliveGreen[random.Next(BeltGifs.OliveGreen.Count)],
-            Level.Yellow => BeltGifs.Yellow[random.Next(BeltGifs.Yellow.Count)],
-            Level.Orange => BeltGifs.Orange[random.Next(BeltGifs.Orange.Count)],
-            Level.Red => BeltGifs.Red[random.Next(BeltGifs.Red.Count)],
-            Level.Purple => BeltGifs.Purple[random.Next(BeltGifs.Purple.Count)],
-            Level.Brown => BeltGifs.Brown[random.Next(BeltGifs.Brown.Count)],
-            Level.Grey => BeltGifs.Grey[random.Next(BeltGifs.Grey.Count)],
-            Level.Blue => BeltGifs.Blue[random.Next(BeltGifs.Blue.Count)],
-            Level.Black => BeltGifs.Black[random.Next(BeltGifs.Black.Count)],
-            _ => string.Empty
+            Level.Green => BeltGifs.Green,
+            Level.OliveGreen => BeltGifs.OliveGreen,
+            Level.Yellow => BeltGifs.Yellow,
+            Level.Orange => BeltGifs.Orange,
+            Level.Red => BeltGifs.Red,
+            Level.Purple => BeltGifs.Purple,
+            Level.Brown => BeltGifs.Brown,
+            Level.Grey => BeltGifs.Grey,
+            Level.Blue => BeltGifs.Blue,
+            Level.Black => BeltGifs.Black,
+            _ => []
         };
+
+        if (gifs.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        var index = _random.Next(gifs.Count);
+
+        return gifs[index];
     }
 }

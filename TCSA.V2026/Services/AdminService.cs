@@ -21,10 +21,12 @@ public interface IAdminService
 public class AdminService : IAdminService
 {
     private readonly IDbContextFactory<ApplicationDbContext> _factory;
+    private readonly IDiscordService _discordService;
 
-    public AdminService(IDbContextFactory<ApplicationDbContext> factory)
+    public AdminService(IDbContextFactory<ApplicationDbContext> factory, IDiscordService discordService)
     {
         _factory = factory;
+        _discordService = discordService;
     }
 
     public async Task<BaseResponse> ChangePoints(string userId, int points)
@@ -77,6 +79,7 @@ public class AdminService : IAdminService
 
                 await context.SaveChangesAsync();
 
+                await _discordService.ChangeDiscordBelt(user.DiscordAlias!, newBelt);
             }
             return new BaseResponse
             {

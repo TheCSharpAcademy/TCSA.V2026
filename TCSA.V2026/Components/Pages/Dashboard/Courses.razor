@@ -138,33 +138,33 @@
         var webApiIds = webApiCourse.Articles.Select(c => c.Id).ToList();
         var completeWebApiIds = webApiIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
 
-        // DashboardCourses.Add
-        // (
-        //     new DashboardCourseInfo
-        //         {
-        //             Id = 3,
-        //             Title = webApiCourse.Title,
-        //             Description = $"{completeWebApiIds.Count} out of {webApiIds.Count} chapters completed",
-        //             ImgUrl = webApiCourse.ImgUrl,
-        //             Status = GetCourseStatus(completeWebApiIds, webApiIds)
-        //         }
-        // );
+        DashboardCourses.Add
+        (
+            new DashboardCourseInfo
+                {
+                    Id = 3,
+                    Title = webApiCourse.Title,
+                    Description = $"{completeWebApiIds.Count} out of {webApiIds.Count} chapters completed",
+                    ImgUrl = webApiCourse.ImgUrl,
+                    Status = GetCourseStatus(completeWebApiIds, webApiIds)
+                }
+        );
 
         var sqlCourse = CourseList.FirstOrDefault(x => x.Id == 4);
         var sqlCourseIds = sqlCourse.Articles.Select(c => c.Id).ToList();
         var completeSqlCourseIds = sqlCourseIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
 
-        DashboardCourses.Add
-        (
-            new DashboardCourseInfo
-            {
-                Id = 4,
-                Title = sqlCourse.Title,
-                Description = $"{completeSqlCourseIds.Count} out of {sqlCourseIds.Count} chapters completed",
-                ImgUrl = sqlCourse.ImgUrl,
-                Status = GetCourseStatus(completeSqlCourseIds, sqlCourseIds)
-            }
-        );
+        // DashboardCourses.Add
+        // (
+        //     new DashboardCourseInfo
+        //     {
+        //         Id = 4,
+        //         Title = sqlCourse.Title,
+        //         Description = $"{completeSqlCourseIds.Count} out of {sqlCourseIds.Count} chapters completed",
+        //         ImgUrl = sqlCourse.ImgUrl,
+        //         Status = GetCourseStatus(completeSqlCourseIds, sqlCourseIds)
+        //     }
+        // );
 
         var wpfCourse = CourseList.FirstOrDefault(x => x.Id == 5);
         var wpfCourseIds = wpfCourse.Articles.Select(c => c.Id).ToList();

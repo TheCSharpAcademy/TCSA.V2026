@@ -16,7 +16,7 @@ public interface IPeerReviewService
     Task<List<PeerReviewDisplay>> GetProjectsForPeerReview(string userId);
     Task<BaseResponse> AssignUserToCodeReview(string userId, int id);
     Task<BaseResponse> ReleaseUserFromCodeReview(string userId, int id);
-    Task<BaseResponse> MarkCodeReviewAsCompleted(string reviewerId, int dashboardProjectId, string userId);
+    Task<BaseResponse> MarkCodeReviewAsCompleted(string reviewerId, int dashboardProjectId);
 }
 public class PeerReviewService : IPeerReviewService
 {
@@ -106,7 +106,7 @@ public class PeerReviewService : IPeerReviewService
     public async Task<List<PeerReviewDisplay>> GetProjectsForPeerReview(string userId)
     {
         var url = "https://github.com/TheCSharpAcademy/CodeReviews";
-        var beginnerProjects = new List<int> { 53, 11, 12, 13 };
+        var beginnerProjects = new List<int> { 11, 12, 13 };
 
         try
         {
@@ -194,7 +194,7 @@ public class PeerReviewService : IPeerReviewService
         }
     }
 
-    public async Task<BaseResponse> MarkCodeReviewAsCompleted(string reviewerId, int dashboardProjectId, string userId)
+    public async Task<BaseResponse> MarkCodeReviewAsCompleted(string reviewerId, int dashboardProjectId)
     {
         var result = new BaseResponse();
 
@@ -202,21 +202,15 @@ public class PeerReviewService : IPeerReviewService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var currentRevieweePoints = context.Users
-                    .Where(x => x.Id == userId)
-                    .Select(x => x.ExperiencePoints)
-                    .FirstOrDefault();
+                var reviewer = context.Users
+                    .Include(x => x.UserActivity.Where(x => x.ActivityType == ActivityType.CodeReviewCompleted))
+                    .FirstOrDefault(x => x.Id == reviewerId);
 
-                var currentReviewerPoints = context.Users
-                   .Where(x => x.Id == reviewerId)
-                   .Select(x => x.ExperiencePoints)
-                   .FirstOrDefault();
+                var reviewedProjects = reviewer.UserActivity;
 
-                var reviewedProjects = await context.UserActivity
-                    .Where(x => x.AppUserId.ToString() == reviewerId && x.ActivityType == ActivityType.CodeReviewCompleted)
-                    .ToListAsync();
-
-                var dashboardProject = await context.DashboardProjects.FirstOrDefaultAsync(x => x.Id == dashboardProjectId);
+                var dashboardProject = await context.DashboardProjects
+                    .Include(dp => dp.AppUser)
+                    .FirstOrDefaultAsync(x => x.Id == dashboardProjectId);
 
                 var academyProject = ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == dashboardProject.ProjectId);
 
@@ -224,9 +218,6 @@ public class PeerReviewService : IPeerReviewService
                 dashboardProject.IsPendingNotification = true;
                 dashboardProject.IsCompleted = true;
                 dashboardProject.DateCompleted = DateTime.UtcNow;
-
-                context.DashboardProjects
-                    .Update(dashboardProject);
 
                 context.UserActivity.AddRange(
                     new AppUserActivity
@@ -245,9 +236,6 @@ public class PeerReviewService : IPeerReviewService
                     }
                 );
 
-                var reviewer = await context.Users
-                    .Where(x => x.Id == reviewerId).FirstAsync();
-
                 if (reviewer != null 
                     && reviewedProjects != null 
                     && reviewer.ReviewExperiencePoints == 0 
@@ -265,21 +253,9 @@ public class PeerReviewService : IPeerReviewService
                     reviewer.ReviewedProjects = reviewedProjects.Count;
                 }
 
-                context.Users
-                    .Where(x => x.Id == dashboardProject.AppUserId)
-                    .ExecuteUpdate(y => y.SetProperty(u => u.ExperiencePoints, academyProject.ExperiencePoints + currentRevieweePoints));
-
-                context.Users
-                    .Where(x => x.Id == reviewerId)
-                    .ExecuteUpdate(y => y.SetProperty(u => u.ExperiencePoints, academyProject.ExperiencePoints + currentReviewerPoints));
-
-                context.Users
-                    .Where(x => x.Id == reviewerId)
-                    .ExecuteUpdate(y => y.SetProperty(u => u.ReviewExperiencePoints, academyProject.ExperiencePoints + reviewer.ReviewExperiencePoints));
-
-                context.Users
-                    .Where(x => x.Id == reviewerId)
-                    .ExecuteUpdate(y => y.SetProperty(u => u.ReviewedProjects, reviewer.ReviewedProjects + 1));
+                dashboardProject.AppUser.ExperiencePoints = dashboardProject.AppUser.ExperiencePoints + academyProject.ExperiencePoints;
+                reviewer.ExperiencePoints = reviewer.ExperiencePoints + academyProject.ExperiencePoints;
+                reviewer.ReviewedProjects = reviewer.ReviewedProjects + 1;
 
                 await context.SaveChangesAsync();
 

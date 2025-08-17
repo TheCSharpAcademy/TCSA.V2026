@@ -744,8 +744,8 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500081,
-                        CourseDisplayId = 12,
+                        Id = 500080,
+                        CourseDisplayId = 11,
                         Title = "Updating Data",
                         Slug = "intro-to-sql-updating",
                         Description = "",
@@ -826,8 +826,8 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500082,
-                        CourseDisplayId = 13,
+                        Id = 500081,
+                        CourseDisplayId = 12,
                         Title = "Relational Data",
                         Slug = "intro-to-sql-relational-data",
                         Description = "",
@@ -851,8 +851,8 @@ public class SqlCourse
                                     new Paragraph { Body = "Let's extend the database we created earlier by adding a new table for product categories and one for reviews of products. Each product will belong to a category, which means we will establish a relationship between the Products table and the new <b>Categories</b> table. Each review will have a mandatory ProductId."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "DROP TABLE Products;\r\n\r\nCREATE TABLE Categories (\r\n    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    CategoryName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    CategoryID INTEGER NOT NULL,\r\n    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)\r\n    ON DELETE CASCADE\r\n    ON UPDATE CASCADE\r\n);\r\n\r\nCREATE TABLE Reviews (\r\n    ReviewId INT PRIMARY KEY,\r\n    ProductId INT NOT NULL, -- Allows reviews with or without a product\r\n    ReviewText NVARCHAR(500),\r\n    Rating INT,\r\n    FOREIGN KEY (ProductId) REFERENCES Products(ProductId)\r\n);"},
-                                    new Paragraph { Body = "\U0001f7e2 <b>FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)</b>: This establishes the foreign key relationship. It tells the database that the CategoryID in the Products table refers to the CategoryID in the Categories table. This ensures that every product is linked to a valid category."},
+                                        Body = "DROP TABLE Products;\r\n\r\nCREATE TABLE Categories (\r\n    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    CategoryName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Price REAL NOT NULL,\r\n    StockQuantity INTEGER NOT NULL,\r\n    CategoryID INTEGER NOT NULL,\r\n    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)\r\n    ON DELETE CASCADE\r\n    ON UPDATE CASCADE\r\n);\r\n\r\nCREATE TABLE Reviews (\r\n    ReviewId INT PRIMARY KEY,\r\n    ProductId INT NOT NULL,\r\n    ReviewText NVARCHAR(500),\r\n    Rating INT,\r\n    FOREIGN KEY (ProductId) REFERENCES Products(ProductId)\r\nON DELETE CASCADE\r\n    ON UPDATE CASCADE\r\n);"},
+                                    new Paragraph { Body = "\U0001f7e2 <b>FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)</b>: This establishes the foreign key relationship. It tells the database that the CategoryID in the Products table refers to the CategoryID in the Categories table. This ensures that every product is linked to a valid category. A similar foreign key is created in the Reviews table, linking it to Products."},
                                     new Paragraph { Body = "\U0001f7e2 <b>ON DELETE CASCADE</b>: If a category is deleted from the Categories table, all products associated with that category (i.e., having the same CategoryID) will be automatically deleted from the Products table."},
                                     new Paragraph { Body = "\U0001f7e2 <b>ON UPDATE CASCADE</b>: If the CategoryID in the Categories table is updated, the corresponding CategoryID in the Products table will automatically be updated as well."},
                                 }
@@ -887,7 +887,7 @@ public class SqlCourse
                                     new Paragraph {
                                        BackgroundColor="#1C236D",
                                        FontColor="#FFF",
-                                       Body = "With the schema defined above, a product cannot exist without a category. If you try to delete the Categories table while there’s a foreign key reference from the Products table, the database will prevent you from doing so, as the foreign key constraint ensures referential integrity. You'll see an error such as: Error: Cannot drop table Categories because it is referenced by Products. The same will happen if you try to delete the Products table, since the Reviews table is linked to it by the ProductId." },
+                                       Body = "With the schema defined above, a product cannot exist without a category. If you try to delete a record in the Categories table, and there's a product associated with it, you'll get an error. The same is true for deleting products that have reviews associated with them." },
                                      new Paragraph { Body = "Click in <b>View Source Code</b> below to see a script to populate the tables with 5 categories, 100 products and 20 reviews."}
                                 }
                             },
@@ -911,8 +911,8 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500083,
-                        CourseDisplayId = 14,
+                        Id = 500082,
+                        CourseDisplayId = 13,
                         Title = "Joins",
                         Slug = "intro-to-sql-joins",
                         Description = "",
@@ -933,14 +933,18 @@ public class SqlCourse
                                 Title = "Inner Join",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "An <b>inner join</b> retrieves only the rows where there is a match in both tables. If a record in the first table has no corresponding record in the second table, it is excluded from the results. The inner join is the most common type of join and is the default if no join type is specified."},
+                                    new Paragraph { Body = "An <b>inner join</b> retrieves only the rows where there is a match in both tables. If a record in the first table has no corresponding record in the second table, it is excluded from the results. The is the default if no join type is specified."},
                                     new Paragraph {
                                         IsCode = true,
                                         Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nINNER JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;"},
                                     new Paragraph { Body = "In our case running this query will return all products, since the CategoryId foreign key is <NOT NULL</b>"},
                                     new Paragraph { Body = "🔹<b>SELECT</b>: In the SELECT part when using JOIN, since we have multiple tables, we have to specify which table the column belongs to."},
                                     new Paragraph { Body = "🔹<b>INNER JOIN Categories</b>: This part tells SQL to join the Products table with the Categories table."},
-                                    new Paragraph { Body = "🔹<b>ON Products.CategoryID = Categories.CategoryID🔹</b>: This is the condition that defines how the tables should be joined. The query will match rows in Products where the <b>CategoryID</b> field matches the <b>CategoryID</b> in the Categories table."}
+                                    new Paragraph { Body = "🔹<b>ON Products.CategoryID = Categories.CategoryID🔹</b>: This is the condition that defines how the tables should be joined. The query will match rows in Products where the <b>CategoryID</b> field matches the <b>CategoryID</b> in the Categories table." },
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch14-sql-inner-join.png"},
+                                    new Paragraph { Body = "Notice only 20 rows were returned. All with products that contained a review. If a product contains more than one review, it will be repeated." },
                                 },
                             },
                             new Block
@@ -951,9 +955,12 @@ public class SqlCourse
                                     new Paragraph { Body = "A left join (or <b>left outer join</b>) retrieves all rows from the <b>left table</b> (the table listed first in the query) and the matching rows from the <b>right table</b> (the table listed second). If there is no match, the result will still include all rows from the left table, but with NULL values for columns from the right table."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nLEFT JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;\r\n"},
-                                    new Paragraph { Body = "**`LEFT JOIN Categories`**: This means that all records from the `Products` table will be returned, even if they don’t have a matching row in the `Categories` table. If there’s no matching `CategoryID`, the `CategoryName` will be `NULL`."},
-                                    new Paragraph { Body = "Output"},
+                                        Body = "SELECT * FROM Products \r\nLEFT JOIN Reviews\r\nOn Products.ProductID = Reviews.ProductId"},
+                                    new Paragraph { Body = "<b>LEFT JOIN Products</b>: This means that all records from the Categories table will be returned, even if they don’t have a matching Product. If there’s no matching ProductId, the ProductName will be NULL."},
+                                    new Paragraph { Body = "Before running the query above, create an insert statement for a new category. Supposing you have added a Books category, the result of the the left join will show this: "},
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch14-sql-left-join.png"}
                                 }
                             },
                             new Block
@@ -961,14 +968,15 @@ public class SqlCourse
                                 Title = "Right Join",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A **right join** (or **right outer join**) works the opposite way to a left join. It retrieves all rows from the **right table** and the matching rows from the **left table**. If there’s no match, the result will still include all rows from the right table with `NULL` values for columns from the left table."},
+                                    new Paragraph { Body = "A right join (or right outer join) works the opposite way to a left join. It retrieves all rows from the right table and the matching rows from the left table. If there’s no match, the result <b>will still include all rows from the right table</b> with NULL values for columns from the left table."},
                                      new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nRIGHT JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;\r\n"},
+                                        Body = "SELECT \r\n    Products.ProductName,\r\n    Reviews.ReviewText\r\nFROM \r\n    Reviews\r\nRIGHT JOIN \r\n    Products\r\nON \r\n    Reviews.ProductId = Products.ProductId;"},
                                     new Paragraph {
-                                        Body = "This means that all records from the `Categories` table will be returned, even if they don’t have a matching row in the `Products` table. If there’s no matching `ProductID`, the `ProductName`, `Price`, and other product details will be `NULL`."},
-                                    new Paragraph {
-                                        Body = "Output"}
+                                        Body = "Here we're joining reviews with products and selecting all reviews. It will show the twenty reviews plus the 80 products without reviews."},
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch14-sql-right-join.png"}
                                 }
                             },
                             new Block
@@ -976,14 +984,15 @@ public class SqlCourse
                                 Title = "Full Join (Full Outer Join)",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A **full join** (or **full outer join**) returns all rows from both the left and right tables. If there’s a match between the tables, the corresponding rows are combined. If there’s no match, the result will include `NULL` values for columns in the table that doesn't have a match."},
+                                    new Paragraph { Body = "A full join (or full outer join) returns <b>all rows from both the left and right tables</b>. If there’s a match between the tables, the corresponding rows are combined. If there’s no match, the result will include NULL values for columns in the table that doesn't have a match."},
                                      new Paragraph {
                                         IsCode = true,
                                         Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nFULL OUTER JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;\r\n"},
                                     new Paragraph {
-                                        Body = "This means that all records from both the `Products` and `Categories` tables will be returned, even if they don’t have a match in the other table. If there’s no match, the corresponding columns from the other table will be `NULL`."},
+                                        Body = "This means that all records from both the `Products` and Categories tables will be returned, even if they don’t have a match in the other table. If there’s no match, the corresponding columns from the other table will be NULL`."},
                                     new Paragraph {
-                                        Body = "Output"}
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch14-sql-full-join.png"}
                                 }
                             },
                             new Block
@@ -991,13 +1000,9 @@ public class SqlCourse
                                 Title = "Summary",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Use **inner joins** when you want only records that have corresponding rows in both tables."},
-                                     new Paragraph {
-                                        Body = "Use **left joins** when you need all records from the left table, whether or not there are matching rows in the right table."},
                                     new Paragraph {
-                                        Body = "Use **right joins** when you need all records from the right table, whether or not there are matching rows in the left table."},
-                                    new Paragraph {
-                                        Body = "Use **full joins** when you need all records from both tables, and you’re okay with missing data in one of the tables."}
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch14-sql-join-summary.png"}
                                 }
                             },
                             new Block
@@ -1014,9 +1019,9 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500084,
-                        CourseDisplayId = 15,
-                        Title = "Joins",
+                        Id = 500083,
+                        CourseDisplayId = 14,
+                        Title = "Relationships",
                         Slug = "intro-to-sql-relationships",
                         Description = "",
                         Area = Area.Course,
@@ -1028,10 +1033,17 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "We will modify the previous structure slightly by keeping the **one-to-many** relationship between **Categories** and **Products**. The **Orders** table and the join table **OrderProducts** will allow us to track products in an order."},
+                                    new Paragraph { Body = "Let's include two more tables. The <b>Orders</b> table will track individual orders and <b>OrderProducts</b> will allow us to track products in an order."},
                                      new Paragraph {
                                         IsCode = true,
-                                        Body = "CREATE TABLE Products (\r\n    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    ProductName TEXT NOT NULL,\r\n    Price REAL NOT NULL,\r\n    CategoryID INTEGER NOT NULL,\r\n    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)\r\n);\r\n\r\nCREATE TABLE Categories (\r\n    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    CategoryName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE Orders (\r\n    OrderID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    OrderDate TEXT NOT NULL,\r\n    CustomerName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE OrderProducts (\r\n    OrderID INTEGER,\r\n    ProductID INTEGER,\r\n    Quantity INTEGER NOT NULL,\r\n    PRIMARY KEY (OrderID, ProductID),\r\n    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,\r\n    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE\r\n);\r\n"},
+                                        Body = "CREATE TABLE Orders (\r\n    OrderID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    OrderDate TEXT NOT NULL,\r\n    CustomerName TEXT NOT NULL\r\n);\r\n\r\nCREATE TABLE OrderProducts (\r\n    OrderID INTEGER,\r\n    ProductID INTEGER,\r\n    Quantity INTEGER NOT NULL,\r\n    PRIMARY KEY (OrderID, ProductID),\r\n    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,\r\n    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE\r\n);\r\n"},
+                                      new Paragraph { Body = "And let's seed data for both tables:"},
+                                     new Paragraph {
+                                        IsCode = true,
+                                        Body = "INSERT INTO Orders (OrderDate, CustomerName) VALUES\r\n('2025-08-01', 'Alice Nguyen'),\r\n('2025-08-02', 'Bruno Silva'),\r\n('2025-08-03', 'Chloe Dubois'),\r\n('2025-08-04', 'Daniel Okafor'),\r\n('2025-08-05', 'Emma Tan');"},
+                                     new Paragraph {
+                                        IsCode = true,
+                                        Body = "INSERT INTO OrderProducts (OrderID, ProductID, Quantity) VALUES\r\n(1, 1, 2),\r\n(1, 2, 1),\r\n(2, 3, 1),\r\n(2, 4, 2),\r\n(3, 5, 1),\r\n(3, 6, 1),\r\n(4, 7, 3),\r\n(4, 8, 1),\r\n(5, 9, 2),\r\n(5, 10, 1);"},
                                 }
                             },
                             new Block
@@ -1039,7 +1051,7 @@ public class SqlCourse
                                 Title = "One-To-Many",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In this case, the **one-to-many** relationship between **Categories** and **Products** means that. Each **Product** belongs to one **Category** (via the `CategoryID` foreign key). Each **Category** can have multiple **Products**."},
+                                    new Paragraph { Body = "In our database, each Product belongs to one Category (via the CategoryID foreign key. Each Category can have multiple Products. This is called a <b>One-To-Many Relationship</b>"},
                                 },
                             },
                             new Block
@@ -1047,9 +1059,9 @@ public class SqlCourse
                                 Title = "Many-to-Many",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "the many-to-many relationship is represented by the OrderProducts table, which connects the Orders and Products tables. Here’s how it works, along with an explanation of composite keys."},
+                                    new Paragraph { Body = "A single order can contain multiple products, and a single product can be ordered in many different orders. This creates a many-to-many relationship between Orders and Products."},
                                     new Paragraph {
-                                        Body = "A single order can contain multiple products, and a single product can be ordered in many different orders. This creates a many-to-many relationship between Orders and Products."}
+                                        Body = "So <b>why do we need a join table</b>? A relational table can only directly represent one-to-many or one-to-one relationships. A many-to-many relationship (e.g., students enrolled in courses) requires a third table to connect the two. Without a join table, you'd have to duplicate rows or embed arrays, which would complicate things a lot. For example, if we put multiple orderIds in a product row (for example with a comma-separated string) it will be much harder to query and to work with, in general."}
                                 },
                             },
                             new Block
@@ -1057,11 +1069,9 @@ public class SqlCourse
                                 Title = "Composite Keys",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In the OrderProducts table, we are using a composite primary key, which means the combination of multiple columns is used as a unique identifier for each row. This ensures that for each combination of OrderID and ProductID, there can only be one row in the OrderProducts table. This prevents multiple entries of the same product in an order."},
+                                    new Paragraph { Body = "In the OrderProducts table, we are using a <b>composite primary key</b>, which means the combination of multiple columns is used as a unique identifier for each row. This ensures that for each combination of OrderID and ProductID, there can only be one row in the OrderProducts table. This prevents multiple entries of the same product in an order."},
                                      new Paragraph {
                                         Body = "For example, if an order has three products, there will be three rows in the OrderProducts table, one for each product in the order."},
-                                    new Paragraph {
-                                        Body = "This means that all records from the `Categories` table will be returned, even if they don’t have a matching row in the `Products` table. If there’s no matching `ProductID`, the `ProductName`, `Price`, and other product details will be `NULL`."},
                                     new Paragraph {
                                         Body = "The combination of OrderID and ProductID ensures that each product in an order is unique (no duplicate entries for the same product within the same order)."}
                                 }
@@ -1076,7 +1086,10 @@ public class SqlCourse
                                         IsCode = true,
                                         Body = "SELECT Products.ProductName, OrderProducts.Quantity\r\nFROM Products\r\nJOIN OrderProducts ON Products.ProductID = OrderProducts.ProductID\r\nWHERE OrderProducts.OrderID = 1;\r\n"},
                                     new Paragraph {
-                                        Body = "This query joins the Products and OrderProducts tables, matching ProductID, and retrieves all products with their quantities for OrderID = 1."}
+                                        Body = "This query joins the Products and OrderProducts tables, matching ProductID, and retrieves all products with their quantities for OrderID = 1."},
+                                    new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch15-sql-many-query.png"},
                                 }
                             },
                             new Block
@@ -1093,9 +1106,9 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500085,
-                        CourseDisplayId = 16,
-                        Title = "Joins",
+                        Id = 500084,
+                        CourseDisplayId = 15,
+                        Title = "Group By",
                         Slug = "intro-to-sql-groupby",
                         Description = "",
                         Area = Area.Course,
@@ -1107,7 +1120,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "The `GROUP BY` clause is a powerful feature in SQL that allows you to aggregate data into groups based on the values in one or more columns. It is commonly used alongside aggregate functions such as `COUNT`, `SUM`, `AVG`, `MAX`, and `MIN` to perform calculations on grouped data. This chapter will explain how to use `GROUP BY`, why it's useful, and provide detailed examples for various use cases."},
+                                    new Paragraph { Body = "The <b>GROUP BY</b> clause is a powerful feature in SQL that allows you to aggregate data into groups based on the values in one or more columns. It is commonly used alongside aggregate functions such as <b>COUNT, SUM, AVG, MAX, and MIN</b> to perform calculations on grouped data. This chapter will explain how to use GROUP BY, why it's useful, and provide detailed examples for various use cases."},
 
                                 }
                             },
@@ -1116,12 +1129,10 @@ public class SqlCourse
                                 Title = "Syntax of Group By",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "To find all the products ordered in a particular order:"},
+                                    new Paragraph { Body = "To find all the products ordered in a particular order we use this structure:"},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT column_name, aggregate_function(column_name)\r\nFROM table_name\r\nGROUP BY column_name;\r\n"},
-                                    new Paragraph {
-                                        Body = "- `column_name`: The column you want to group data by.\r\n- `aggregate_function`: A function like `COUNT`, `SUM`, `AVG`, `MAX`, or `MIN` applied to grouped data.\r\n- `GROUP BY`: Specifies the column(s) to group the rows.\r\n"}
+                                        Body = "SELECT column_name, aggregate_function(column_name)\r\nFROM table_name\r\nGROUP BY column_name;\r\n"}
                                 }
                             },
                             new Block
@@ -1134,12 +1145,14 @@ public class SqlCourse
                                         IsCode = true,
                                         Body = "SELECT CategoryID, COUNT(*) AS ProductCount\r\nFROM Products\r\nGROUP BY CategoryID;\r\n"},
                                     new Paragraph {
-                                        Body = "- `column_name`: The column you want to group data by.\r\n- `aggregate_function`: A function like `COUNT`, `SUM`, `AVG`, `MAX`, or `MIN` applied to grouped data.\r\n- `GROUP BY`: Specifies the column(s) to group the rows.\r\n"}
+                                        Body = "🔹<b>CategoryId</b>: The column we want to group data by.\r\n" +
+                                        "<br><b>🔹Count(*)</b>: The aggregate function applied to the data.\r\n" +
+                                        "<br><b>🔹GROUP BY</b>: Specifies the column(s) to group the rows.\r\n"}
                                 }
                             },
                             new Block
                             {
-                                Title = "Example 2: Calculating the Total Quantity Ordered for Each Product",
+                                Title = "Example 2: Calculating the Total Quantity Ordered for Each Product Id",
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph { Body = "This query calculates the total quantity of each product ordered, grouped by ProductID"},
@@ -1150,35 +1163,35 @@ public class SqlCourse
                             },
                             new Block
                             {
-                                Title = "Example 3: Calculate Total Quantity Ordered Per Product",
+                                Title = "Example 3: Calculating the Total Quantity Ordered for Each Product Name",
                                 Paragraphs = new List<Paragraph>
                                 {
                                     new Paragraph { Body = "In this slightly more advanced query we first join the tables before grouping the products by their names."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT Products.Name AS ProductName, SUM(Orders.Quantity) AS TotalQuantity\r\nFROM Orders\r\nJOIN Products ON Orders.ProductID = Products.ProductID\r\nGROUP BY Products.Name;\r\n"}
+                                        Body = "SELECT Products.ProductName AS Name, SUM(op.Quantity) AS TotalQuantity\r\nFROM OrderProducts op\r\nJOIN Products ON op.ProductID = Products.ProductID\r\nGROUP BY Products.ProductName;"}
                                 }
                             },
                             new Block
                             {
-                                Title = "Example 4: Count of Orders Per Product",
+                                Title = "Example 4: Count of Total Money Spent Per Category",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "To find out how many orders each product has, we first need to combine Products and Orders:"},
+                                    new Paragraph { Body = "Here we are joining both the Products and Categories to OrderProducts and displaying the Category name along with the Sum of all product prices multiplied by quantity sold. We're also using aliases (OP, C, P) to save some typing"},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT Products.Name AS ProductName, COUNT(Orders.OrderID) AS OrderCount\r\nFROM Orders\r\nJOIN Products ON Orders.ProductID = Products.ProductID\r\nGROUP BY Products.Name;\r\n"}
+                                        Body = "SELECT \r\n    C.CategoryName,\r\n    SUM(OP.Quantity * P.Price) AS TotalMoneySpent\r\nFROM OrderProducts OP\r\nJOIN Products P ON OP.ProductID = P.ProductID\r\nJOIN Categories C ON P.CategoryID = C.CategoryID\r\nGROUP BY C.CategoryName;\r\n"}
                                 }
                             },
                             new Block
                             {
-                                Title = "Example 5: Grouping by CategoryID and ProductName",
+                                Title = "Example 5: Grouping by Price Range",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "This query will group the Products by both CategoryID and ProductName, and count how many times each product appears in the OrderProducts table (i.e., how many orders each product has been a part of)."},
+                                    new Paragraph { Body = "Here it gets even more interesting. We're creating custom rows conditionally. Depending on the price, we count a product as a part of a custom row with the help of the <b>CASE</b> keyword."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT P.CategoryID, P.ProductName, COUNT(OP.ProductID) AS OrderCount\r\nFROM Products P\r\nJOIN OrderProducts OP ON P.ProductID = OP.ProductID\r\nGROUP BY P.CategoryID, P.ProductName;\r\n"}
+                                        Body = "SELECT \r\n    CASE \r\n        WHEN P.Price < 25 THEN 'Under $25'\r\n        WHEN P.Price BETWEEN 10 AND 50 THEN '$25–$50'\r\n        ELSE 'Over $50'\r\n    END AS PriceRange,\r\n    COUNT(*) AS ProductCount\r\nFROM Products P\r\nGROUP BY PriceRange;"}
                                 }
                             },
                         }
@@ -1187,72 +1200,6 @@ public class SqlCourse
                     {
                         Id = 500086,
                         CourseDisplayId = 17,
-                        Title = "Pivots",
-                        Slug = "intro-to-sql-pivots",
-                        Description = "",
-                        Area = Area.Course,
-                        ExperiencePoints = 1,
-                        Blocks = new List<Block>
-                        {
-
-                            new Block
-                            {
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "Pivot tables are a powerful way to transform your data by turning rows into columns. This technique is particularly useful for generating summary reports or reorganizing data for better analysis. In this chapter, we’ll use our existing **Products** and **Categories** tables to explore pivot tables and learn how to use them effectively."},
-                                    new Paragraph { Body = "A pivot table reorganizes data from a relational database into a summary format. In SQL, pivoting involves grouping data and converting values in a column into separate columns. This is often used for summarizing data, such as calculating sales per product or category."},
-
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Syntax of Pivot",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "To facilitate the visualization of the syntax, let's add comments above each line:"},
-                                    new Paragraph {
-                                        IsCode = true,
-                                        Body = "SELECT * \r\nFROM \r\n    (SELECT CategoryID, Name FROM Products) AS SourceTable\r\nPIVOT \r\n    (COUNT(Name) FOR CategoryID IN ([1], [2], [3])) AS PivotTable;"},
-                                    new Paragraph {
-                                        Body = "This part is a subquery that selects two columns from the Products table: CategoryID and Name. The subquery gives you the data that will be used for the pivot operation. Alias (SourceTable): This subquery is given the alias SourceTable, which means the result of this subquery is treated as a temporary table with the name SourceTable for the purpose of the PIVOT operation."},
-                                    new Paragraph {
-                                        Body = "PIVOT: This keyword tells SQL that you want to perform a pivot operation. The idea is to turn rows into columns based on the values in a specific column—in this case, the CategoryID.\r\n\r\n"},
-                                     new Paragraph {
-                                        Body = "This is the aggregate function applied to the data. You want to count how many times each product appears in each category. Instead of just displaying each row, it aggregates the data (using the count in this case)."},
-                                     new Paragraph {
-                                        Body = "FOR CategoryID: This specifies that you want to pivot the CategoryID values, which means the different CategoryID values will become separate columns in the result."},
-                                     new Paragraph {
-                                        Body = "IN ([1], [2], [3]): This specifies which values of CategoryID you want to pivot into separate columns. In this case, you are explicitly choosing CategoryID values 1, 2, and 3. These will become the column headers in the pivoted table. "},
-                                     new Paragraph {
-                                        Body = "AS PivotTable: This gives an alias to the result of the PIVOT operation. The final pivoted table will be called PivotTable."}
-                                }
-                            },
-                            new Block
-                            {
-                                Title = "Final Result",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "The result of this pivot operation will have a row for each ProductName, and columns for each of the selected CategoryID values (in this case 1, 2, and 3). The cell values will be the count of how many products belong to each category."},
-                                    new Paragraph {
-                                        Body = "Outcome"}
-                                }
-                            },
-                            new Block
-                            {
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph {
-                                       BackgroundColor="#1C236D",
-                                       FontColor="#FFF",
-                                       Body = "You probably noticed we're hard coding the category Ids, which means we have to know them in advance. If we want to pivot a table on a property with values that aren't known in advance, we would need to pick those values up dynamically. This would require techniques that haven't been covered yet in this course. We'll be covering dynamic pivots in an advanced SQL course." }
-                                }
-                            }
-                        }
-                    },
-                    new Article
-                    {
-                        Id = 500087,
-                        CourseDisplayId = 18,
                         Title = "Database Design",
                         Slug = "intro-to-sql-design",
                         Description = "",
@@ -1265,7 +1212,7 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Proper database design is the cornerstone of efficient data management and application performance. This chapter explains when to create tables, how to decide relationships between them, and how to structure your database to meet business needs effectively."},
+                                    new Paragraph { Body = "Proper database design is key for efficient data management and application performance. This chapter explains when to create tables, how to decide relationships between them, and how to structure your database to meet business needs effectively."},
                                     new Paragraph { Body = "Keep in mind that database design is a vast topic, with several books written about it. We'll just scratch the surface to give you some tools for designing simple relational databases. "},
 
                                 }
@@ -1275,21 +1222,56 @@ public class SqlCourse
                                 Title = "When to Create Tables",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A table should represent a single, logical entity in your business domain. For example, In an eCommerce system, **Products**, **Categories**, and **Orders** are distinct entities that require separate tables. Avoid combining unrelated data into one table, as this leads to redundancy and difficulties in querying."},
+                                    new Paragraph { Body = "A table should represent a <b>single, logical entity</b> in your business domain. For example, In an eCommerce system, <b>Products, Categories and Orders</b> are distinct entities that require separate tables. Avoid combining unrelated data into one table, as this leads to redundancy and difficulties in querying."},
                                     new Paragraph {
                                         Body = "Ask yourself these questions: Does this data describe a specific entity? If yes, create a table. Will this data need to relate to other entities? If yes, determine relationships (e.g., one-to-many, many-to-many)."}
                                 }
                             },
                             new Block
                             {
-                                Title = "Deciding Relationships Between Tables",
+                                Title = "Fact vs Dimension Tables",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "You should always be asking yourself: Does this entity have one or more of this other entity? The answer is not always clear but it lies at the core of your design decisions: "},
+                                    new Paragraph { Body = "In database design—especially in data warehousing—fact tables and dimension tables serve distinct but complementary roles. Here's a clear breakdown:"},
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch16-sql-fact-dimension.png"},
                                     new Paragraph {
-                                        Body = "**One-to-Many**: The most common relationship, such as a **Category** having multiple **Products**."},
+                                        Body = "Think of a fact table as a spreadsheet of transactions—each row is a sale, a click, or a shipment. The dimension tables are like lookup sheets that explain what each product is, who the customer was, and when it happened."}
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Structuring Tables for Scalability",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "When designing tables, <b>think beyond the immediate data needs</b>. Ask: Will this structure still work if the business grows tenfold? For example, storing customer addresses directly in the Customers table might seem fine at first—but what if customers have multiple shipping addresses? In that case, a separate Addresses table linked by a foreign key to Customers ensures flexibility and avoids duplication."},
                                     new Paragraph {
-                                        Body = "**Many-to-Many**: Use a join table to connect entities. For example, an **Order** can contain multiple **Products**, and a **Product** can belong to multiple **Orders**."}
+                                        Body = "Use primary keys to uniquely identify each row, and foreign keys to enforce relationships between tables. This not only <b>maintains data integrity</b> but also improves query performance by allowing the database engine to optimize joins and lookups."},
+                                }
+                            },
+                             new Block
+                            {
+                                Title = "Normalization vs. Practicality",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "<b>1NF</b>: <i>Eliminate repeating groups—each field should contain atomic values</i>. <b>Example</b>: A Customers table originally has columns like Phone1, Phone2, Phone3. <b>Fix</b>: Create a separate CustomerPhones table with one row per phone number, linked by CustomerID. <b>Why</b>: This makes phone numbers atomic and allows unlimited numbers per customer."},
+                                    new Paragraph { Body = "<b>2NF</b>: <i>Ensure that all non-key attributes are fully dependent on the primary key</i>.  <b>Example</b>: A CourseEnrollments table has StudentID, CourseID, and StudentName. <b>Fix</b>: Move StudentName to the Students table, since it depends only on StudentID, not the full composite key. <b>Why</b>: Ensures that all non-key attributes depend on the whole primary key."},
+                                    new Paragraph { Body = "<b>3NF</b>: <i>Remove transitive dependencies—non-key attributes should not depend on other non-key attributes</i>.  <b>Example</b>: A Products table includes CategoryID and CategoryName. <b>Fix</b>: Move CategoryName to a separate Categories table. <b>Why</b>: CategoryName depends on CategoryID, not directly on ProductID."},
+                                    new Paragraph { Body = "However, over-normalization can lead to excessive joins and complexity. In reporting-heavy systems, it's sometimes better to denormalize selectively for performance. For example, storing a CategoryName directly in the Products table might be acceptable if categories rarely change and you need fast access."},
+                                }
+                            },
+                              new Block
+                            {
+                                Title = "Exercises",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "📚 <b>Design a Library Database</b>. Create tables for Books, Authors, and Genres. Decide how to model the many-to-many relationship between books and authors."},
+                                    new Paragraph { Body = "🏫 <b>Build a Student Enrollment System</b>. Design tables for Students, Courses, and Enrollments. Include fields like enrollment date and grade."},
+                                    new Paragraph { Body = "🏢<b>Create a Real Estate Schema. Model Homes, Customers, and Sales and Rentals</b>. Include rental dates and return status. Think about how to track overdue rentals."},
+                                    new Paragraph { Body = "🍽️<b>Design a Restaurant Ordering System</b>. Create tables for MenuItems, Orders, and OrderItems. Use a join table to link orders to multiple menu items."},
+                                    new Paragraph { Body = "🗨️<b>Model a Chat App Database</b>. Design tables for Users, Workouts, and Exercises. Each workout can include multiple exercises, and each user can log multiple workouts."},
+                                    new Paragraph { Body = "📉Choose one or more of the systems above and draw a <a href='https://www.youtube.com/watch?v=JYZPdU5F2iM' target='_blank'> <b><u>Entity Relationship Diagram</u></b></a>"},
                                 }
                             },
                             new Block

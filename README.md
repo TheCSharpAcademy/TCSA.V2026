@@ -10,22 +10,21 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 ### Community Issues
 
-1. **GitHub**: Browse the **Community Issues** / Create a new **Community Issue** at
+1. Request to be added as a contributor in [Community Project](https://discord.com/channels/925901888203935744/1045222886375444520) discord channel
 
-   https://github.com/users/TheCSharpAcademy/projects/23
+2. Read [Contributing to The C# Academy](https://thecsharpacademy.com/article/30008/contributing-csharp-academy) article
+
+3. Browse the **Community Issues** or create a new **Community Issue** in [The C# Academy's Github Project](https://github.com/users/TheCSharpAcademy/projects/23)
 
    - Assign yourself to the issue
    - Create a new branch for your issue
-   - You may require permissions on the repository to perform these steps - reach out on Discord.
 
-2. **The C# Academy**: Create a new **Issue** (if one doesn't already exists) at
-
-   https://www.thecsharpacademy.com/dashboard/community
+4. Submit a new **Issue** (if one doesn't already exist) in **Community** section of [The C# Academy's Website](https://www.thecsharpacademy.com/dashboard/community)
 
    - Select the project.
    - Select the issue type.
-   - Enter the issue title from step 1.
-   - Enter the issue url from step 1.
+   - Enter the issue Title from previous step.
+   - Enter the issue URL from previous step.
    - Submit.
 
 ### Installation Prerequisites
@@ -56,18 +55,11 @@ The C# Academy website is more than just a learning platform - it's a living pro
 
 4. Paste the following, adjust any values specific to your environment. Save and close.
 
-> [!Tip]
-> Replace `DefaultConnection` with your own connection string.
->
-> If you want to login via GitHub, replace `GithubClientId` and `GithubClientSecret` with your own values.
->
-> https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
-
-```
+```json
 {
     "AllowedHosts": "*",
     "ConnectionStrings": {
-        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=TCSA_V2026; Integrated Security=true;"
+        "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB; Initial Catalog=TCSA_V2026; Integrated Security=true;"
     },
     "Logging": {
         "LogLevel": {
@@ -78,9 +70,19 @@ The C# Academy website is more than just a learning platform - it's a living pro
     "Values": {
         "GithubClientId": "abc123",
         "GithubClientSecret": "abc123"
-    }
+    },
+    "Discord": {
+        "Token": "ODAzMzc3MjcwODc4MTA5NzI2.tHis.IS.not.A.ReAl.tOkeN"
+  }
 }
 ```
+
+> [!Tip]
+> Replace `DefaultConnection` with your own connection string.
+>
+> If you want to login via GitHub, replace `GithubClientId` and `GithubClientSecret` with your own values.
+>
+> **Github Docs**: [Creating an OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
 
 5. Open the solution `TCSA.V2026.sln`.
 
@@ -99,6 +101,18 @@ if (app.Environment.IsDevelopment())
 > Make sure to repeat this step when database schema changes or new seeding data is added.
 
 7. Run the project.
+
+    - `dotnet run`
+
+8. Login as fake user
+
+   - You can find several fake users in `Data/SeedData.cs`
+   - Below is login info from a seeded user with Orange belt and 1000 XP points:
+
+```plaintext
+Username: user1@example.com
+Password: Password123!
+```
 
 #### GetRanking Store Procedure
 

@@ -2,5 +2,7 @@
 
 public static class PagingConstants
 {
-    public const int PageSize = 50;
+    public const int LeaderboardPageSize = 50;
+    public const int ActivityPageSize = 50;
+    public const int ChallengesPageSize = 10;
 }

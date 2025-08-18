@@ -1,19 +1,19 @@
 ﻿@using TCSA.V2026.Data.DTOs
-<MudDialog>
+<MudDialog Style="max-height: 300px">
     <TitleContent>
         <MudText Typo="Typo.h6">@MudDialog.Title</MudText>
     </TitleContent>
     <DialogContent>
         @if (Notifications != null && Notifications.Any())
         {
-                @foreach (var n in Notifications)
-                {
+            @foreach (var n in Notifications)
+            {
                 <div class="d-flex px-4 py-3 align-center gap-2">
-                            <MudImage Src="@GetIcon(n.Description, n.IconUrl)" Width="30" Class="mr-3" />
-                            <MudText>@n.Description</MudText>
-                        </div>
+                    <MudImage Src="@GetIcon(n.Description, n.IconUrl)" Width="30" Class="mr-3" />
+                    <MudText>@n.Description</MudText>
+                </div>
                 <MudDivider />
-                }
+            }
         } else
         {
             <MudText Typo="Typo.body1">

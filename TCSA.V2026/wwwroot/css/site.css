@@ -6,6 +6,34 @@
     .mud-typography.mud-typography-body1.mud-switch.mud-switch-label-medium.mud-input-content-placement-end {
         display: none;
     }
+
+    .mud-card-header-avatar {
+        margin-right: 0;
+        margin-inline-end: 0;
+
+        & img {
+            justify-content: center;
+            align-items: center;
+            width: 70px;
+            margin: 8px;
+        }
+    }
+
+    .mud-card-header-content {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .mud-grid {
+        margin-top: -8px;
+    }
+
+    .mud-grid-item {
+        padding: 0 0 4px 8px !important;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 @media (min-width: 601px) {

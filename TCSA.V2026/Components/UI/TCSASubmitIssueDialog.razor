@@ -1,0 +1,54 @@
+﻿@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Services
+<MudDialog Style="min-width: 400px;">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
+            @MudDialog.Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudSelect T="IssueType" Label="Select Issue Type" @bind-Value="IssueType" Class="my-2" Dense="true">
+            @foreach (IssueType it in Enum.GetValues(typeof(IssueType)))
+            {
+                <MudSelectItem T="IssueType" Value="@it">@it </MudSelectItem>
+            }
+
+        </MudSelect>
+        <MudTextField @bind-Value="IssueUrl"
+                      Required="true"
+                      Label="Issue Url" />
+        <MudTextField @bind-Value="IssueTitle"
+                      Required="true"
+                      Label="Issue Title" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Inject] protected ICommunityService CommunityService { get; set; }
+    [Inject] protected IProjectService ProjectService { get; set; }
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public int ProjectId { get; set; }
+    [Parameter] public bool IsIssue { get; set; }
+    [Parameter] public string UserId { get; set; }
+
+    public string IssueUrl = string.Empty;
+    public string IssueTitle = string.Empty;
+    public IssueType IssueType = IssueType.Bugfix;
+    private string ErrorText;
+    private bool HasError;
+
+    private async Task Submit() 
+    {
+        var result = await CommunityService.CreateIssue(IssueType, IssueUrl, IssueTitle, UserId);
+
+        MudDialog.Close(DialogResult.Ok(result.Status));
+    }
+    
+    private void Cancel() => MudDialog.Cancel();
+}

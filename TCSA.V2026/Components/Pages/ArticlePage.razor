@@ -13,7 +13,7 @@
 <PageTitle>@Article.Title</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium">
-    <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style="position: relative; height: 250px; background-image: url('/img/banners/article-banner.jpg'); background-size: cover; background-position: center;">
+    <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style=@GetBanner()>
         <div class="jumbotron-overlay">
             <MudText Typo="Typo.h3" Class="text-white text-center">@Article.Title</MudText>
         </div>
@@ -122,6 +122,12 @@
     protected async override Task OnInitializedAsync()
     {
         await OnParametersSetAsync();
+    }
+
+    private string GetBanner()
+    {
+        var banner = string.IsNullOrEmpty(Article.BannerUrl) ? "article-banner.jpg" : Article.BannerUrl;
+        return $"position: relative; height: 250px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 
     private string GetImage(Paragraph paragraph) => $"img/{paragraph.PictureUrl}";

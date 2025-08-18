@@ -6,12 +6,12 @@
 
 @inject IDialogService DialogService
 
-<MudDialog Style="min-width: 800px;">
+<MudDialog Style="max-width: 800px;">
     <DialogContent>
         @foreach (var task in Tasks)
         {
             <MudCard Class="mt-1 mb-1" Style="@GetStyle(task.Status)">
-                <MudCardHeader>
+                <MudCardHeader Class="d-flex align-items-center flex-wrap">
                     <CardHeaderAvatar>
                         <MudImage Width="40" Src="@($"img/icons/{task.IconUrl}")" />
                     </CardHeaderAvatar>
@@ -19,44 +19,38 @@
                         <MudText Color="Color.Primary" Typo="Typo.h6" NoWrap="true">@task.Title</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>
-                        <MudGrid>
-                            <MudItem>
-                                @if (task.Status == Data.DTOs.TaskStatus.Completed)
-                                {
-                                    <MudChip Class="mt-3 ml-5"
-                                    T="string"
-                                    Size="@Size.Large"
-                                    Color="Color.Success">
-                                        Completed
-                                    </MudChip>
-                                }
-                            </MudItem>
-                            <MudItem>
-                                @if (task.Status != Data.DTOs.TaskStatus.Completed && !task.IsReadOnly)
-                                {
-                                    var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
-                                    var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update" : "Submit";
-                                    var icon = task.Status == Data.DTOs.TaskStatus.PendingReview ? Icons.Material.Filled.Edit : Icons.Material.Filled.Send;
-                                    <MudButton Class="mt-3 ml-5 mr-5"
-                                    Size="@Size.Medium"
-                                    Variant="@Variant.Filled" Color="@color"
-                                    OnClick="@(() => SubmitToReviewDialog(task.Id))"
-                                    StartIcon="@icon">
-                                        @text
-                                    </MudButton>
-                                }
-                            </MudItem>
-                            <MudItem>
-                                <MudButton Class="mt-3 ml-5 mr-5"
-                                Size="@Size.Medium"
-                                Variant="@Variant.Filled"
-                                OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
-                                Color="Color.Primary"
-                                StartIcon="fas fa-eye">
-                                    View
+                        <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                            @if (task.Status == Data.DTOs.TaskStatus.Completed)
+                            {
+                                <MudChip Class="ml-5 mt-5"
+                                         T="string"
+                                         Size="@_chipSize"
+                                         Color="Color.Success">
+                                    Completed
+                                </MudChip>
+                            }
+                            @if (task.Area != Area.SQL && task.Status != Data.DTOs.TaskStatus.Completed && !task.IsReadOnly)
+                            {
+                                var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
+                                var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update" : "Submit";
+                                var icon = task.Status == Data.DTOs.TaskStatus.PendingReview ? Icons.Material.Filled.Edit : Icons.Material.Filled.Send;
+                                <MudButton Class="ml-5 mt-5"
+                                           Size="@_buttonSize"
+                                           Variant="@Variant.Filled" Color="@color"
+                                           OnClick="@(() => SubmitToReviewDialog(task.Id))"
+                                           StartIcon="@icon">
+                                    @text
                                 </MudButton>
-                            </MudItem>
-                        </MudGrid>
+                            }
+                            <MudButton Class="ml-5 mr-5 mt-5"
+                                       Size="@_buttonSize"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => JS.InvokeVoidAsync("window.open", DashboardProjectsHelpers.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer"))"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+                                View
+                            </MudButton>
+                        </MudBreakpointProvider>
                     </CardHeaderActions>
                 </MudCardHeader>
             </MudCard>
@@ -74,6 +68,8 @@
     [Parameter] public ApplicationUser User { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
 
+    private Size _chipSize = Size.Large;
+    private Size _buttonSize = Size.Medium;
     private void Cancel() => MudDialog.Cancel();
 
     private async Task SubmitToReviewDialog(int projectId)
@@ -97,7 +93,7 @@
 
     private string GetStyle(Data.DTOs.TaskStatus status)
     {
-        var style = "min-width: 600px;"; // or "width: 500px;" if you want fixed width
+        var style = "";
         if (status == Data.DTOs.TaskStatus.Completed)
         {
             style += "border: 2px solid green;";
@@ -107,5 +103,21 @@
             style += "border: 2px solid orange;";
         }
         return style;
+    }
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _chipSize = Size.Small;
+            _buttonSize = Size.Small;
+        }
+        else
+        {
+            _chipSize = Size.Medium;
+            _buttonSize = Size.Medium;
+        }
+
+        StateHasChanged();
     }
 }

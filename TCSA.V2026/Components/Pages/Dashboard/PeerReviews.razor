@@ -81,7 +81,7 @@
                                         <MudButton Size="@Size.Small"
                                                    Variant="@Variant.Filled"
                                                    Color="@Color.Success"
-                                                   OnClick="@(() => MarkAsComplete(project.DashboardProjectId, project.AppUserId))"
+                                                   OnClick="@(() => MarkAsComplete(project.DashboardProjectId))"
                                                    StartIcon="@Icons.Material.Filled.ThumbUp">
                                             Tick
                                         </MudButton>
@@ -174,9 +174,9 @@
         AvailableProjects = await PeerReviewService.GetProjectsForPeerReview(UserId);
     }
 
-    private async Task MarkAsComplete(int dashboardProjectId, string reviewerId)
+    private async Task MarkAsComplete(int dashboardProjectId)
     {
-        var result = await PeerReviewService.MarkCodeReviewAsCompleted(UserId, dashboardProjectId, reviewerId);
+        var result = await PeerReviewService.MarkCodeReviewAsCompleted(UserId, dashboardProjectId);
 
         // TODO SEND EMAILS
 

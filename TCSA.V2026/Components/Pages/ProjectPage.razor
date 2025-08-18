@@ -11,210 +11,265 @@
 <PageTitle>@Project.Title</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Medium">
-    <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style="position: relative; height: 250px; background-image: url('/img/banners/article-banner.jpg'); background-size: cover; background-position: center;">
-        <div class="jumbotron-overlay">
-            <MudText Typo="Typo.h3" Class="text-white text-center">@Project.Title</MudText>
-        </div>
-    </MudPaper>
     @if (IsLoading)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-    }
-
-    @if (IsLoggedIn && IsCompleted)
+    } 
+    else
     {
-        <MudAlert Class="mt-5" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
-    }
+        <MudPaper Class="jumbotron d-flex align-center justify-center mt-3"
+        Style=@GetBanner()>
+            <div class="jumbotron-overlay">
+                <MudText Typo="Typo.h3" Class="text-white text-center">@Project.Title</MudText>
+            </div>
+        </MudPaper>
 
-    <MudGrid Class="mt-1">
-        <MudItem>
-            <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-10">
-                @if (Project.Introduction != null)
-                {
-                    foreach (var paragraph in Project.Introduction)
+        @if (IsLoggedIn && IsCompleted)
+        {
+            <MudAlert Class="mt-5" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
+        }
+
+        <MudGrid Class="mt-1">
+            <MudItem>
+                <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-10">
+                    @if (Project.Introduction != null)
                     {
-                        <MudText Class="mt-2">@((MarkupString)(paragraph.Body))</MudText>
+                        foreach (var paragraph in Project.Introduction)
+                        {
+                            <MudText Class="mt-2">@((MarkupString)(paragraph.Body))</MudText>
+                        }
                     }
-                }
-                @if (Project.Id != 86)
-                {
-                    <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Requirements</MudText>
-                    @if (!string.IsNullOrEmpty(Project.RequirementsIntro))
+                    @if (Project.Id != 86)
                     {
-                        <MudText Class="mt-2">@((MarkupString)(Project.RequirementsIntro))</MudText>
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Requirements</MudText>
+                        @if (!string.IsNullOrEmpty(Project.RequirementsIntro))
+                        {
+                            <MudText Class="mt-2">@((MarkupString)(Project.RequirementsIntro))</MudText>
+                        }
+                        @if (Project.Requirements != null)
+                        {
+                            <MudList ReadOnly="true" T="MarkupString" Color="Color.Default">
+                                @foreach (var req in Project.Requirements)
+                                {
+                                    <MudListItem>
+                                        <div style="display: flex;">
+                                            <MudIcon Icon="@Icons.Material.Filled.CheckBox" Color="Color.Success" Class="mr-2" />
+                                            <MudText>@((MarkupString)(req))</MudText>
+                                        </div>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        }
+                        @if (!string.IsNullOrEmpty(Project.RequirementsConclusion))
+                        {
+                            <MudText Class="mt-2">@((MarkupString)(Project.RequirementsConclusion))</MudText>
+                        }
                     }
-                    @if (Project.Requirements != null)
+                    @if (Project.LearningItems != null)
                     {
-                        <MudList ReadOnly="true" T="MarkupString" Color="Color.Default">
-                            @foreach (var req in Project.Requirements)
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Learn</MudText>
+                        @if (!string.IsNullOrEmpty(Project.LearningIntro))
+                        {
+                            <MudText Class="mt-2 mb-2">@((MarkupString)(Project.LearningIntro))</MudText>
+                        }
+                        <MudList Class="mt-2" T="MarkupString" Color="Color.Default">
+                            @foreach (var item in Project.LearningItems)
                             {
                                 <MudListItem>
-                                    <div style="display: flex;">
-                                        <MudIcon Icon="@Icons.Material.Filled.CheckBox" Color="Color.Success" Class="mr-2" />
-                                        <MudText>@((MarkupString)(req))</MudText>
-                                    </div>
+                                    <MudText Class="mt-2">@((MarkupString)(item))</MudText>
                                 </MudListItem>
                             }
                         </MudList>
                     }
-                }
-                @if (Project.LearningItems != null)
-                {
-                    <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Learn</MudText>
-                    @if (!string.IsNullOrEmpty(Project.LearningIntro))
+                    @if (Project.Resources != null)
                     {
-                        <MudText Class="mt-2 mb-2">@((MarkupString)(Project.LearningIntro))</MudText>
-                    }
-                    <MudList Class="mt-2" T="MarkupString" Color="Color.Default">
-                        @foreach (var item in Project.LearningItems)
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Resources</MudText>
+                        @if (!string.IsNullOrEmpty(Project.ResourcesIntro))
                         {
-                            <MudListItem>
-                                <MudText Class="mt-2">@((MarkupString)(item))</MudText>
-                            </MudListItem>
+                            <MudText Class="mt-2 mb-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
                         }
-                    </MudList>
-                }
-                @if (Project.Resources != null)
-                {
-                    <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Resources</MudText>
-                    @if (!string.IsNullOrEmpty(Project.ResourcesIntro))
-                    {
-                        <MudText Class="mt-2 mb-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
-                    }
-                    <MudList T="MarkupString" Color="Color.Default">
-                        @foreach (var item in Project.Resources)
-                        {
-                            <MudListItem>
-                                <div style="display: flex;">
-                                    <MudIcon Icon="@Icons.Material.Filled.ArrowCircleRight" Color="Color.Primary" Class="mr-2" />
-                                    <MudText>@((MarkupString)(item))</MudText>
-                                </div>
-                            </MudListItem>
-                        }
-                    </MudList>
-                    @if (!string.IsNullOrEmpty(Project.ResourcesConclusion))
-                    {
-                        <MudText Class="mt-2">@((MarkupString)(Project.ResourcesConclusion))</MudText>
-                    }
-                }
-                @if (Project.Tips != null)
-                {
-                    <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Tips</MudText>
-                    <MudList T="MarkupString" Color="Color.Default">
-                        @foreach (var tip in Project.Tips)
-                        {
-                            <MudListItem>
-                                <div style="display: flex;">
-                                    <MudIcon Icon="@Icons.Material.Filled.CheckBox" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
-                                    <MudText>@((MarkupString)(tip))</MudText>
-                                </div>
-                            </MudListItem>
-                        }
-                    </MudList>
-                }
-                @if (Project.Challenges != null)
-                {
-                    <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Challenges</MudText>
-                    <MudList T="MarkupString" Color="Color.Default">
-                        @foreach (var challenge in Project.Challenges)
-                        {
-                            <MudListItem>
-                                <div style="display: flex;">
-                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Medium" Color="Color.Error" Class="mr-2" />
-                                    <MudText>@((MarkupString)(challenge))</MudText>
-                                </div>
-                            </MudListItem>
-                        }
-                    </MudList>
-                }
-                @if (Project.Blocks != null)
-                {
-                    @foreach (var block in Project.Blocks)
-                    {
-                        @if (!string.IsNullOrWhiteSpace(block.Title))
-                        {
-                            <MudText Typo="Typo.h6" Class="mt-10 mb-2">@block.Title</MudText>
-                        }
-
-                        @foreach (var paragraph in block.Paragraphs)
-                        {
-                            if (paragraph.IsPicture)
-                            {
-                                <MudPaper Class="d-flex justify-center mx-20 mt-10" Elevation="0">
-                                    <MudImage Src="@GetImage(paragraph)" Alt="Image paragraph" Fluid="true" Class="rounded-lg" />
-                                </MudPaper>
-                            }
-
-                            else if (paragraph.IsVideo)
-                            {
-                                <div class="video-wrapper mt-5 mb-4">
-                                    <iframe class="video-iframe" src="@paragraph.VideoUrl" allowfullscreen></iframe>
-                                </div>
-                            }
-
-                            else if (paragraph.IsCode)
-                            {
-                                <pre class="line-numbers"><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
-                            }
-
-                            else if (!string.IsNullOrEmpty(paragraph.Body))
-                            {
-                                if (!string.IsNullOrWhiteSpace(paragraph.BackgroundColor))
-                                {
-                                    var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
-                                    var textStyle = $"color: {paragraph.FontColor};";
-                                    <MudText Class="mb-1" Style="@textStyle" Typo="Typo.body1">
-                                        @((MarkupString)paragraph.Body)
-                                    </MudText>
-                                }
-                                else
-                                {
-                                    <MudText Class="mt-2" Typo="Typo.body1">
-                                        @((MarkupString)paragraph.Body)
-                                    </MudText>
-                                }
-                            }
-                        }
-                    }
-                }
-
-                @if (IsLoggedIn && Project.Area == Area.SQL && !IsCompleted)
-                {
-                    @if (CodeWarsNotFoundShowing)
-                    {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">You haven't integrated Codewars yet.</MudText>
-                        <MudText Class="mt-10 mb-2" Typo="Typo.body1">
-                            In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results.
-
-                            Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically.
-                        </MudText>
-                    }
-                    else
-                    {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">Your Progress</MudText>
                         <MudList T="MarkupString" Color="Color.Default">
-                            @foreach (var challenge in Project.CodeWarsChallenges)
+                            @foreach (var item in Project.Resources)
                             {
                                 <MudListItem>
                                     <div style="display: flex;">
-                                        @if (challenge.IsCompleted)
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Outlined.CheckBox" Size="Size.Medium" Color="Color.Success" Class="mr-2" />
-                                        }
-                                        else
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Outlined.CheckBoxOutlineBlank" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
-                                        }
-                                        <MudText>@((MarkupString)(challenge.Name))</MudText>
+                                        <MudIcon Icon="@Icons.Material.Filled.ArrowCircleRight" Color="Color.Primary" Class="mr-2" />
+                                        <MudText>@((MarkupString)(item))</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
+                        @if (!string.IsNullOrEmpty(Project.ResourcesConclusion))
+                        {
+                            <MudText Class="mt-2">@((MarkupString)(Project.ResourcesConclusion))</MudText>
+                        }
+                    }
+                    @if (Project.Tips != null)
+                    {
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Tips</MudText>
+                        <MudList T="MarkupString" Color="Color.Default">
+                            @foreach (var tip in Project.Tips)
+                            {
+                                <MudListItem>
+                                    <div style="display: flex;">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckBox" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
+                                        <MudText>@((MarkupString)(tip))</MudText>
                                     </div>
                                 </MudListItem>
                             }
                         </MudList>
                     }
-                }
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
+
+                    @if (Project.Challenges != null)
+                    {
+                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Challenges</MudText>
+                        <MudList T="MarkupString" Color="Color.Default">
+                            @foreach (var challenge in Project.Challenges)
+                            {
+                                <MudListItem>
+                                    <div style="display: flex;">
+                                        <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Medium" Color="Color.Error" Class="mr-2" />
+                                        <MudText>@((MarkupString)(challenge))</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                    @if (Project.Blocks != null)
+                    {
+                        @foreach (var block in Project.Blocks)
+                        {
+                            @if (!string.IsNullOrWhiteSpace(block.Title))
+                            {
+                                <MudText Typo="Typo.h6" Class="mt-10 mb-2">@block.Title</MudText>
+                            }
+
+                            @foreach (var paragraph in block.Paragraphs)
+                            {
+                                if (paragraph.IsPicture)
+                                {
+                                    <MudPaper Class="d-flex justify-center mx-20 mt-10" Elevation="0">
+                                        <MudImage Src="@GetImage(paragraph)" Alt="Image paragraph" Fluid="true" Class="rounded-lg" />
+                                    </MudPaper>
+                                }
+
+                                else if (paragraph.IsVideo)
+                                {
+                                    <div class="video-wrapper mt-5 mb-4">
+                                        <iframe class="video-iframe" src="@paragraph.VideoUrl" allowfullscreen></iframe>
+                                    </div>
+                                }
+
+                                else if (paragraph.IsCode)
+                                {
+                                    <pre class="line-numbers"><code class="language-csharp">@((MarkupString)paragraph.Body)</code></pre>
+                                }
+
+                                else if (!string.IsNullOrEmpty(paragraph.Body))
+                                {
+                                    if (!string.IsNullOrWhiteSpace(paragraph.BackgroundColor))
+                                    {
+                                        var bgStyle = $"background-color: {paragraph.BackgroundColor}; padding: 1rem;";
+                                        var textStyle = $"color: {paragraph.FontColor};";
+                                        <MudText Class="mb-1" Style="@textStyle" Typo="Typo.body1">
+                                            @((MarkupString)paragraph.Body)
+                                        </MudText>
+                                    }
+                                    else
+                                    {
+                                        <MudText Class="mt-2" Typo="Typo.body1">
+                                            @((MarkupString)paragraph.Body)
+                                        </MudText>
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @if (Project.Screenshots != null)
+                    {
+                        <MudText Typo="Typo.h6" Class="mt-10 mb-2">
+                            Example Screenshots
+                        </MudText>
+                        @if (Project.Screenshots.Count == 1)
+                        {
+                            <MudPaper Class="d-flex justify-center mx-20" Elevation="0">
+                                <MudImage Src="@($"img/{Project.Screenshots[0]}")" Fluid="true" Class="rounded-lg" />
+                            </MudPaper>
+                        }
+                        else if (Project.Screenshots.Count > 1)
+                        {
+                            <MudCarousel Style="height: 350px;" ShowArrows EnableSwipeGesture ItemsSource="Project.Screenshots" AutoCycle="false">
+                                <ItemTemplate>
+                                    <div class="d-flex justify-center" style="height: 100%;">
+                                        <MudImage Src="@($"img/{context}")"
+                                                  Class="rounded-lg"
+                                                  Style="max-height: 300px; max-width: 100%;" />
+                                    </div>
+                                </ItemTemplate>
+                            </MudCarousel>
+                        }
+                    }
+
+                    @if (!string.IsNullOrEmpty(Project.RepositoryLink))
+                    {
+                        <MudGrid Class="pb-5 mt-5">
+                            <MudItem xs="12" sm="2" Class="d-flex align-items-center justify-center">
+                                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                                    <MudImage Src="img/github.png" Width="70" Alt="GitHub logo" Class="align-middle" />
+                                </MudHidden>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="10">
+                                <MudText Typo="Typo.h5" Class="mb-2">
+                                    @Project.LanguageHeadings.ReviewRepository
+                                </MudText>
+
+                                <MudLink Href="@Project.RepositoryLink" Target="_blank">
+                                    @Project.RepositoryLink
+                                </MudLink>
+                            </MudItem>
+                        </MudGrid>
+                    }
+
+                    @if (IsLoggedIn && Project.Area == Area.SQL && !IsCompleted)
+                    {
+                        @if (CodeWarsNotFoundShowing)
+                        {
+                            <MudText Class="mt-10 mb-2" Typo="Typo.h6">You haven't integrated Codewars yet.</MudText>
+                            <MudText Class="mt-10 mb-2" Typo="Typo.body1">
+                                In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results.
+
+                                Once you have completed a challenge, refresh this page and you'll be able to see your progress so far at the bottom of the page. Once all challenges are finished, the project will be marked as completed automatically.
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudText Class="mt-10 mb-2" Typo="Typo.h6">Your Progress</MudText>
+                            <MudList T="MarkupString" Color="Color.Default">
+                                @foreach (var challenge in Project.CodeWarsChallenges)
+                                {
+                                    <MudListItem>
+                                        <div style="display: flex;">
+                                            @if (challenge.IsCompleted)
+                                            {
+                                                <MudIcon Icon="@Icons.Material.Outlined.CheckBox" Size="Size.Medium" Color="Color.Success" Class="mr-2" />
+                                            }
+                                            else
+                                            {
+                                                <MudIcon Icon="@Icons.Material.Outlined.CheckBoxOutlineBlank" Size="Size.Medium" Color="Color.Warning" Class="mr-2" />
+                                            }
+                                            <MudText>@((MarkupString)(challenge.Name))</MudText>
+                                        </div>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        }
+                    }
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    }
 </MudContainer>
 
 @code {
@@ -240,6 +295,12 @@
     protected async override Task OnInitializedAsync()
     {
         await OnParametersSetAsync();
+    }
+
+    private string GetBanner()
+    {
+        var banner = string.IsNullOrEmpty(Project.BannerUrl) ? "article-banner.jpg" : Project.BannerUrl;
+        return $"position: relative; height: 350px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 
     private async Task CheckCodeWars()

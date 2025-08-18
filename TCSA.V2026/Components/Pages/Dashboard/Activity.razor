@@ -8,6 +8,7 @@
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Helpers
+@using TCSA.V2026.Helpers.Constants
 @using TCSA.V2026.Services
 @attribute [Authorize]
 
@@ -39,6 +40,10 @@
 
         if (UserActivity != null && UserActivity.Count > 0)
         {
+            if (Pages > 1)
+            {
+                <MudPagination Count="Pages" Selected="CurrentPage" SelectedChanged="OnPageChanged" />
+            }
             <MudHidden Breakpoint="Breakpoint.LgAndUp">
                 @foreach(var a in UserActivity)
                 {
@@ -97,8 +102,11 @@
     [Inject] protected ICommunityService CommunityService { get; set; }
 
     private ApplicationUser User { get; set; }
-    private List<ActivityDisplay>? AllUserActivity = new();
-    private List<ActivityDisplay>? UserActivity = new();
+    private List<ActivityDisplay> AllUserActivity = new();
+    private List<ActivityDisplay> UserActivity => AllUserActivity
+        .Where(x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value)
+        .Skip((CurrentPage - 1) * PagingConstants.ActivityPageSize)
+        .Take(PagingConstants.ActivityPageSize).ToList();
 
     private ActivityType? _selectedActivityType = null;
     private ActivityType? SelectedActivityType
@@ -109,12 +117,15 @@
             if (_selectedActivityType != value)
             {
                 _selectedActivityType = value;
-                FilterUserActivity();
+                CurrentPage = 1; // Reset to first page when filter changes
             }
         }
     }
 
     private bool IsLoading = true;
+    private int CurrentPage = 1;
+    private int TotalFilteredActivities => AllUserActivity.Count(x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value);
+    private int Pages => (int)Math.Ceiling((double)TotalFilteredActivities / PagingConstants.ActivityPageSize);
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
 
@@ -135,24 +146,9 @@
         var user = await UserService.GetDetailedUserById(UserId);
         AllUserActivity = ActivityHelper.GetActivityDisplay(user);
 
-        FilterUserActivity();
         LoadTime = DateTime.UtcNow - startTime;
 
         IsLoading = false;
-    }
-
-    private void FilterUserActivity()
-    {
-        if (SelectedActivityType is null)
-        {
-            UserActivity = AllUserActivity;
-        }
-        else
-        {
-            UserActivity = AllUserActivity?.Where(x => x.ActivityType == SelectedActivityType.Value).ToList();
-        }
-
-        StateHasChanged();
     }
 
     private string GetDateCellStyle(ActivityDisplay activity)
@@ -193,6 +189,11 @@
         return attributes?.FirstOrDefault() is DisplayAttribute displayAttribute
             ? displayAttribute.Name
             : type.ToString(); // Fall back to raw enum name if no attribute is found
+    }
+
+    private void OnPageChanged(int page)
+    {
+        CurrentPage = page;
     }
 
 }

@@ -2,7 +2,7 @@
 
 @inject NavigationManager NavigationManager
 
-<MudNavMenu>
+<MudNavMenu Dense="true">
     <MudNavLink Href="" IconColor="Color.Primary" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <AuthorizeView>
         <Authorized>
@@ -13,13 +13,25 @@
                 IconColor="Color.Primary">
                 Dashboard
             </MudNavLink>
-            <MudNavLink Href="Dashboard/Challenges"
+            <MudNavLink Href="Dashboard/profile"
                         Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.Celebration"
+                        Icon="@Icons.Material.Filled.VerifiedUser"
                         IconColor="Color.Primary">
-                Challenges
+                Profile
             </MudNavLink>
-             <MudNavLink 
+            <MudNavLink Href="Dashboard/Roadmap"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Map"
+                        IconColor="Color.Primary">
+                Roadmap
+            </MudNavLink>
+            <MudNavLink Href="Dashboard/Leaderboard"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Leaderboard"
+                        IconColor="Color.Primary">
+                Leaderboard
+            </MudNavLink>
+            <MudNavLink 
                 Href="Dashboard/Activity" 
                 Match="NavLinkMatch.Prefix" 
                 Icon="@Icons.Material.Filled.Hiking"
@@ -39,20 +51,6 @@
                 Icon="@Icons.Material.Filled.RateReview"
                 IconColor="Color.Primary">
                 Peer Reviews
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Leaderboard" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.Leaderboard"
-                IconColor="Color.Primary">
-                Leaderboard
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Roadmap" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.Map"
-                IconColor="Color.Primary">
-                Roadmap
             </MudNavLink>
             <MudNavLink 
                 Href="Dashboard/Courses" 
@@ -75,11 +73,18 @@
                 IconColor="Color.Primary">
                 Blog
             </MudNavLink>
-            <MudNavLink Href="Dashboard/profile"
+            <MudNavLink Href="Dashboard/Challenges"
                         Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.VerifiedUser"
+                        Icon="@Icons.Material.Filled.Sports"
                         IconColor="Color.Primary">
-                Profile
+                Challenges
+            </MudNavLink>
+            <MudNavLink Href="https://thecsharpschool.getlearnworlds.com/subscription/the-c-academy-membership"
+                        Match="NavLinkMatch.Prefix"
+                        Target="_blank"
+                        Icon="@Icons.Material.Filled.School"
+                        IconColor="Color.Primary">
+                VIP Membership
             </MudNavLink>
             @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
             <form action="Account/Logout" method="post">

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -11,6 +12,7 @@ public interface ICommunityService
     Task<List<CommunityIssue>> GetAvailableIssuesForCommunityPage(string appUserId);
     Task<BaseResponse> AssignUserToIssue(string appUserId, CommunityIssue issue);
     Task<BaseResponse> SubmitIssueToReview(int issueId, string githubUrl);
+    Task<BaseResponse> CreateIssue(IssueType type, string issueUrl, string Title, string userId);
 }
 
 public class CommunityService : ICommunityService
@@ -20,6 +22,50 @@ public class CommunityService : ICommunityService
     public CommunityService(IDbContextFactory<ApplicationDbContext> factory)
     {
         _factory = factory;
+    }
+
+    public async Task<BaseResponse> CreateIssue(IssueType type, string issueUrl, string title, string userId)
+    {
+        string iconUrl = type switch
+        {
+            IssueType.Translation => "icons8-foreign-language-66.png",
+            IssueType.Bugfix => "icons8-insect-64.png",
+            IssueType.Feature => "icons8-feature-64.png",
+            IssueType.Infrastructure => "icons8-infrastructure-55.png"
+        };
+
+        var result = new BaseResponse();
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var lastIssue = await context.Issues.OrderBy(x => x.ProjectId).LastAsync();
+
+                var issue = new CommunityIssue
+                {
+                    GithubUrl = issueUrl,
+                    Title = title,
+                    Type = type,
+                    IsClosed = false,
+                    CommunityProjectId = 207,
+                    ExperiencePoints = 20,
+                    IconUrl = iconUrl,
+                    ProjectId = lastIssue.ProjectId + 1
+                };
+
+                context.Issues.Add(issue);
+
+                await context.SaveChangesAsync();
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            result.Message = ex.Message;
+            result.Status = ResponseStatus.Fail;
+            return result;
+        }
     }
 
     public async Task<BaseResponse> AssignUserToIssue(string appUserId, CommunityIssue issue)
@@ -34,11 +80,10 @@ public class CommunityService : ICommunityService
                     GithubUrl = string.Empty,
                     AppUserId = appUserId,
                     ProjectId = issue.ProjectId,
-                    DateSubmitted = DateTime.UtcNow,
                 });
 
-                await context.Issues.Where(x => x.ProjectId == issue.ProjectId)
-                     .ExecuteUpdateAsync(y => y.SetProperty(u => u.AppUserId, appUserId));
+                var dbIssue = await context.Issues.FirstOrDefaultAsync(x => x.ProjectId == issue.ProjectId);
+                dbIssue.AppUserId = appUserId;
 
                 await context.SaveChangesAsync();
             }
@@ -63,7 +108,7 @@ public class CommunityService : ICommunityService
 
                 project.GithubUrl = githubUrl;
                 project.IsPendingReview = true;
-
+                project.DateSubmitted = DateTime.UtcNow;    
                 await context.SaveChangesAsync();
             }
 

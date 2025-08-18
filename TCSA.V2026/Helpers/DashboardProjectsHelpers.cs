@@ -117,7 +117,7 @@ public static class DashboardProjectsHelpers
                     Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
                     Slug = a.Slug,
                     Area = a.Area,
-                    IsReadOnly = true
+                    IsReadOnly = a.Id != 75
                 }).ToList(),
                 Description = GetNotCompletedMessage(Area.StartHere, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles, completedProjects, Area.StartHere, null),
@@ -346,6 +346,25 @@ public static class DashboardProjectsHelpers
             },
             new DashboardAreaInfo
             {
+                CardName = "Docker",
+                ImgUrl = "icons8-docker-logo-96.png",
+                Tasks = Projects
+                .Where(x => x.Area == Area.Docker)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = a.Slug,
+                    Area = a.Area
+                }).ToList(),
+                Description = GetNotCompletedMessage(Area.Docker, null, completedProjects),
+                IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
+                        completedProjects, Area.Docker, null)
+            },
+            new DashboardAreaInfo
+            {
                 CardName = "Challenge Projects",
                 ImgUrl = "icons8-challenge-64.png",
                 Tasks = Projects
@@ -362,6 +381,24 @@ public static class DashboardProjectsHelpers
                 Description = GetNotCompletedMessage(Area.MonthlyChallenge, null, completedProjects),
                 IsCompleted = CheckIfAreaIsCompleted(Projects, Articles,
                     completedProjects, Area.MonthlyChallenge, null)
+            },
+            new DashboardAreaInfo
+            {
+                CardName = "FreeStyle Project",
+                ImgUrl = "icons8-creativity-512.png",
+                Tasks = Projects
+                .Where(x => x.Area == Area.FreestyleProject)
+                .Select(a => new DashboardTaskDisplay
+                {
+                    Id = a.Id,
+                    IconUrl = a.IconUrl,
+                    Title = a.Title,
+                    Status = GetTaskStatus(a.Id, completedProjects, pendingProjects),
+                    Slug = a.Slug,
+                    Area = a.Area
+                }).ToList(),
+                Description = "You can submit as many freestyle projects as you want.",
+                IsCompleted = false
             },
             new DashboardAreaInfo
             {
@@ -386,7 +423,7 @@ public static class DashboardProjectsHelpers
 
     public static string GetUrl(Area area, int taskId, string taskSlug)
     {
-        var firstPart = area == Area.StartHere ? "article" : "project";
+        var firstPart = area == Area.StartHere && taskId != 75 ? "article" : "project";
         return $"{firstPart}/{taskId}/{taskSlug}";
     }
 

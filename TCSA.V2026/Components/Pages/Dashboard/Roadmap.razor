@@ -75,7 +75,7 @@
         ? User.CodeReviewProjects.Where(x => x.DashboardProject.IsCompleted).Count()
         : 0;
 
-        IssuesCount = User.Issues != null ? User.Issues.Count(x => !x.IsClosed) : 0;
+        IssuesCount = User.Issues != null ? User.Issues.Count(x => x.IsClosed) : 0;
 
         RoadmapStages = RoadmapHelper.GetRoadmap(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
 

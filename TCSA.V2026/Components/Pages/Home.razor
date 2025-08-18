@@ -22,12 +22,15 @@ else
                         <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
                     </MudText>
 
-                    <MudStack Row="true" Spacing="2" Class="mt-6">
-                        <MudButton OnClick="@(() => NavigateToRegistration())"
-                                   Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   Size="Size.Large">Sign up for free</MudButton>
-                    </MudStack>
+                    @if (!IsLoggedIn)
+                    {
+                        <MudStack Row="true" Spacing="2" Class="mt-6">
+                            <MudButton OnClick="@(() => NavigateToRegistration())"
+                                       Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Size="Size.Large">Sign up for free</MudButton>
+                        </MudStack>
+                    }
                 </MudItem>
 
                 <MudItem xs="12" md="6" Class="d-flex justify-center align-center">
@@ -174,6 +177,7 @@ else
 }
 
 @code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
 
     protected List<Project> Projects = new();
@@ -185,10 +189,11 @@ else
 
     private TimeSpan LoadTime = TimeSpan.Zero;
     private bool IsLoading = true;
+    private bool IsLoggedIn = false;
 
     protected override async Task OnInitializedAsync()
     {
-         var startTime = DateTime.UtcNow;
+        var startTime = DateTime.UtcNow;
 
         Articles = ArticleHelper.GetArticles();
         Projects = ProjectHelper.GetProjects();
@@ -200,12 +205,33 @@ else
 
         LoadTime = DateTime.UtcNow - startTime;
 
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+        IsLoading = false;
+
+        if (AuthSate.User.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+        }
+
         IsLoading = false;
     }
 
     private void GetAreas()
     {
-        var areas = new List<Area> { Area.StartApplying, Area.MVC, Area.Angular, Area.React, Area.Blazor, Area.MAUI, Area.Auth, Area.Azure, Area.SQL, Area.GraduationProject, Area.MonthlyChallenge, Area.FreestyleProject };
+        var areas = new List<Area> { 
+            Area.StartApplying, 
+            Area.MVC, 
+            Area.Angular, 
+            Area.React, 
+            Area.Blazor, 
+            Area.MAUI, 
+            Area.Auth, 
+            Area.Azure, 
+            Area.SQL, 
+            Area.Docker,
+            Area.GraduationProject, 
+            Area.MonthlyChallenge, 
+            Area.FreestyleProject };
 
         var titlePics = new List<string>
         {
@@ -218,6 +244,7 @@ else
             "aa-title.png",
             "azure-title.png",
             "sql-title.png",
+            string.Empty,
             string.Empty,
             string.Empty,
             string.Empty
@@ -233,6 +260,7 @@ else
             "Authorization and Authentication",
             "Azure",
             "SQL",
+            "Docker",
             "Graduation Projects",
             "Challenge Projects",
             "Freestyle Projects"
@@ -249,6 +277,7 @@ else
             "Learn to secure applications using .NET/C#",
             "Get started in cloud computing deploying applications to Microsoft's state-of-the-art cloud solution.",
             "Learn the language used to communicate with databases.",
+            "Learn to package your app into a portable container that runs anywhere",
             "Transfer all your acquired knowledge to build and showcase an impressive application.",
             "Test your knowledge with a challenge provided by a real-world company given to job candidates.",
             "Bring your amazing idea to life with a professional standard project."
@@ -265,6 +294,7 @@ else
             "auth-area",
             "cloud-area",
             "sql-area",
+            "docker-area",
             "flagship-area",
             "challenges-area",
             "freestyle"

@@ -24,6 +24,7 @@ public static class ProjectHelper
             .Concat(MauiProjectsHelper.GetProjects())
             .Concat(ChallengeProjectsHelper.GetProjects())
             .Concat(OpenSourceProjectsHelper.GetProjects())
+            .Concat(DockerProjectsHelper.GetProjects())
             .ToList();
     }
 

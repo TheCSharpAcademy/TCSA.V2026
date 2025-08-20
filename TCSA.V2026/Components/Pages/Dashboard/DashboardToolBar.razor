@@ -47,17 +47,19 @@
 
         var dbProjects = User.DashboardProjects.Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
 
-        // TODO: Include Issues in notifications
         foreach(var project in dbProjects)
         {
             var curriculumProject = projects.FirstOrDefault(p => p.Id == project.ProjectId);
-            if (curriculumProject != null)
+            var description = GetDescription(project.ProjectId);
+            var isDupe = Notifications.Any(x => description.Equals(x.Description));
+
+            if (curriculumProject != null & !isDupe)
             {
                 Notifications.Add(
                     new TCSANotificationItem
                     {
                         IconUrl = curriculumProject.IconUrl,
-                        Description = GetDescription(project.ProjectId),
+                        Description = description,
                         IsActive = project.IsPendingNotification
                     }
                 );
@@ -66,12 +68,18 @@
 
         if (User.UserActivity.Any(x => x.ActivityType == ActivityType.NewBelt && x.DateSubmitted >= DateTime.UtcNow.AddDays(-7)))
         {
-            Notifications.Add(new TCSANotificationItem
+            var description = $"You achieved {User.Level} belt!";
+            var isDupe = Notifications.Any(x => description.Equals(x.Description));
+
+            if (!isDupe)
+            {
+                Notifications.Add(new TCSANotificationItem
                 {
                     IconUrl = $"{(Level)User.Level}-belt.png",
                     Description = $"You achieved {User.Level} belt!",
                     IsActive = User.HasPendingBeltNotification
                 });
+            }
         }
     }
 

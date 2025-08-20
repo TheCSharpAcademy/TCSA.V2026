@@ -936,7 +936,7 @@ public class SqlCourse
                                     new Paragraph { Body = "An <b>inner join</b> retrieves only the rows where there is a match in both tables. If a record in the first table has no corresponding record in the second table, it is excluded from the results. The is the default if no join type is specified."},
                                     new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nINNER JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;"},
+                                        Body = "SELECT * FROM Products\r\nINNER JOIN Reviews\r\nON Products.CategoryID = Reviews.ProductId;"},
                                     new Paragraph { Body = "In our case running this query will return all products, since the CategoryId foreign key is <NOT NULL</b>"},
                                     new Paragraph { Body = "🔹<b>SELECT</b>: In the SELECT part when using JOIN, since we have multiple tables, we have to specify which table the column belongs to."},
                                     new Paragraph { Body = "🔹<b>INNER JOIN Categories</b>: This part tells SQL to join the Products table with the Categories table."},
@@ -987,9 +987,9 @@ public class SqlCourse
                                     new Paragraph { Body = "A full join (or full outer join) returns <b>all rows from both the left and right tables</b>. If there’s a match between the tables, the corresponding rows are combined. If there’s no match, the result will include NULL values for columns in the table that doesn't have a match."},
                                      new Paragraph {
                                         IsCode = true,
-                                        Body = "SELECT \r\n    Products.ProductID,\r\n    Products.ProductName,\r\n    Products.Price,\r\n    Categories.CategoryName\r\nFROM \r\n    Products\r\nFULL OUTER JOIN \r\n    Categories\r\nON \r\n    Products.CategoryID = Categories.CategoryID;\r\n"},
+                                        Body = "SELECT * FROM Products\r\nFULL OUTER JOIN Categories\r\nON Products.CategoryID = Categories.CategoryID;\r\n"},
                                     new Paragraph {
-                                        Body = "This means that all records from both the `Products` and Categories tables will be returned, even if they don’t have a match in the other table. If there’s no match, the corresponding columns from the other table will be NULL`."},
+                                        Body = "This means that all records from <b>both the Products and Categories tables</b> will be returned, even if they don’t have a match in the other table. If there’s no match, the corresponding columns from the other table will be NULL."},
                                     new Paragraph {
                                         IsPicture = true,
                                         PictureUrl = "c4-ch14-sql-full-join.png"}
@@ -1048,10 +1048,18 @@ public class SqlCourse
                             },
                             new Block
                             {
+                                Title = "One-To-One",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "Let's say we had a table called ProductDetails, which linked back to the product table and would prevent the product table from being bloated. A product can only have one 'Product Detail'. And a 'Product Detail' in its turn can only have one product. We call this a <b>One-To-One Relationship</b>"},
+                                },
+                            },
+                            new Block
+                            {
                                 Title = "One-To-Many",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In our database, each Product belongs to one Category (via the CategoryID foreign key. Each Category can have multiple Products. This is called a <b>One-To-Many Relationship</b>"},
+                                    new Paragraph { Body = "In our database, each Product belongs to one Category (via the CategoryID foreign key). <b>Each Category can have multiple products</b>. This is called a <b>One-To-Many Relationship</b> and it's the most common type of relationship."},
                                 },
                             },
                             new Block
@@ -1059,9 +1067,9 @@ public class SqlCourse
                                 Title = "Many-to-Many",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A single order can contain multiple products, and a single product can be ordered in many different orders. This creates a many-to-many relationship between Orders and Products."},
+                                    new Paragraph { Body = "A single order can contain multiple products, and a single product can be part of many different orders. This creates a <b>many-to-many relationship</b> between Orders and Products."},
                                     new Paragraph {
-                                        Body = "So <b>why do we need a join table</b>? A relational table can only directly represent one-to-many or one-to-one relationships. A many-to-many relationship (e.g., students enrolled in courses) requires a third table to connect the two. Without a join table, you'd have to duplicate rows or embed arrays, which would complicate things a lot. For example, if we put multiple orderIds in a product row (for example with a comma-separated string) it will be much harder to query and to work with, in general."}
+                                        Body = "So <b>why do we need a join table</b> for this type of relationship? A relational table can only directly represent one-to-many or one-to-one relationships. A many-to-many relationship (e.g., students enrolled in courses) requires a third table to connect the two. Without a join table, you'd have to duplicate rows or embed arrays, which would complicate things a lot. For example, if we put multiple orderIds in a product row (for example with a comma-separated string) it will be much harder to query and to work with, in general."}
                                 },
                             },
                             new Block
@@ -1069,11 +1077,9 @@ public class SqlCourse
                                 Title = "Composite Keys",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In the OrderProducts table, we are using a <b>composite primary key</b>, which means the combination of multiple columns is used as a unique identifier for each row. This ensures that for each combination of OrderID and ProductID, there can only be one row in the OrderProducts table. This prevents multiple entries of the same product in an order."},
-                                     new Paragraph {
-                                        Body = "For example, if an order has three products, there will be three rows in the OrderProducts table, one for each product in the order."},
+                                    new Paragraph { Body = "In the OrderProducts table, we are using a <b>composite primary key</b>, which means the combination of multiple columns is used as a unique identifier for each row. For each combination of OrderID and ProductID, there can only be one row in the OrderProducts table. This prevents multiple entries of the same product in an order. For example, if an order has three products, there will be three rows in the OrderProducts table, one for each product in the order."},
                                     new Paragraph {
-                                        Body = "The combination of OrderID and ProductID ensures that each product in an order is unique (no duplicate entries for the same product within the same order)."}
+                                        Body = "The combination of OrderID and ProductID <b>ensures that each product in an order is unique</b> (no duplicate entries for the same product within the same order)."}
                                 }
                             },
                             new Block
@@ -1194,6 +1200,96 @@ public class SqlCourse
                                         Body = "SELECT \r\n    CASE \r\n        WHEN P.Price < 25 THEN 'Under $25'\r\n        WHEN P.Price BETWEEN 10 AND 50 THEN '$25–$50'\r\n        ELSE 'Over $50'\r\n    END AS PriceRange,\r\n    COUNT(*) AS ProductCount\r\nFROM Products P\r\nGROUP BY PriceRange;"}
                                 }
                             },
+                        }
+                    },
+                    new Article
+                    {
+                        Id = 500086,
+                        CourseDisplayId = 17,
+                        Title = "Database Design",
+                        Slug = "intro-to-sql-design",
+                        Description = "",
+                        Area = Area.Course,
+                        ExperiencePoints = 1,
+                        Blocks = new List<Block>
+                        {
+
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "Proper database design is key for efficient data management and application performance. This chapter explains when to create tables, how to decide relationships between them, and how to structure your database to meet business needs effectively."},
+                                    new Paragraph { Body = "Keep in mind that database design is a vast topic, with several books written about it. We'll just scratch the surface to give you some tools for designing simple relational databases. "},
+
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "When to Create Tables",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "A table should represent a <b>single, logical entity</b> in your business domain. For example, In an eCommerce system, <b>Products, Categories and Orders</b> are distinct entities that require separate tables. Avoid combining unrelated data into one table, as this leads to redundancy and difficulties in querying."},
+                                    new Paragraph {
+                                        Body = "Ask yourself these questions: Does this data describe a specific entity? If yes, create a table. Will this data need to relate to other entities? If yes, determine relationships (e.g., one-to-many, many-to-many)."}
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Fact vs Dimension Tables",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "In database design—especially in data warehousing—fact tables and dimension tables serve distinct but complementary roles. Here's a clear breakdown:"},
+                                     new Paragraph {
+                                        IsPicture = true,
+                                        PictureUrl = "c4-ch16-sql-fact-dimension.png"},
+                                    new Paragraph {
+                                        Body = "Think of a fact table as a spreadsheet of transactions—each row is a sale, a click, or a shipment. The dimension tables are like lookup sheets that explain what each product is, who the customer was, and when it happened."}
+                                }
+                            },
+                            new Block
+                            {
+                                Title = "Structuring Tables for Scalability",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "When designing tables, <b>think beyond the immediate data needs</b>. Ask: Will this structure still work if the business grows tenfold? For example, storing customer addresses directly in the Customers table might seem fine at first—but what if customers have multiple shipping addresses? In that case, a separate Addresses table linked by a foreign key to Customers ensures flexibility and avoids duplication."},
+                                    new Paragraph {
+                                        Body = "Use primary keys to uniquely identify each row, and foreign keys to enforce relationships between tables. This not only <b>maintains data integrity</b> but also improves query performance by allowing the database engine to optimize joins and lookups."},
+                                }
+                            },
+                             new Block
+                            {
+                                Title = "Normalization vs. Practicality",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "<b>1NF</b>: <i>Eliminate repeating groups—each field should contain atomic values</i>. <b>Example</b>: A Customers table originally has columns like Phone1, Phone2, Phone3. <b>Fix</b>: Create a separate CustomerPhones table with one row per phone number, linked by CustomerID. <b>Why</b>: This makes phone numbers atomic and allows unlimited numbers per customer."},
+                                    new Paragraph { Body = "<b>2NF</b>: <i>Ensure that all non-key attributes are fully dependent on the primary key</i>.  <b>Example</b>: A CourseEnrollments table has StudentID, CourseID, and StudentName. <b>Fix</b>: Move StudentName to the Students table, since it depends only on StudentID, not the full composite key. <b>Why</b>: Ensures that all non-key attributes depend on the whole primary key."},
+                                    new Paragraph { Body = "<b>3NF</b>: <i>Remove transitive dependencies—non-key attributes should not depend on other non-key attributes</i>.  <b>Example</b>: A Products table includes CategoryID and CategoryName. <b>Fix</b>: Move CategoryName to a separate Categories table. <b>Why</b>: CategoryName depends on CategoryID, not directly on ProductID."},
+                                    new Paragraph { Body = "However, over-normalization can lead to excessive joins and complexity. In reporting-heavy systems, it's sometimes better to denormalize selectively for performance. For example, storing a CategoryName directly in the Products table might be acceptable if categories rarely change and you need fast access."},
+                                }
+                            },
+                              new Block
+                            {
+                                Title = "Exercises",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph { Body = "📚 <b>Design a Library Database</b>. Create tables for Books, Authors, and Genres. Decide how to model the many-to-many relationship between books and authors."},
+                                    new Paragraph { Body = "🏫 <b>Build a Student Enrollment System</b>. Design tables for Students, Courses, and Enrollments. Include fields like enrollment date and grade."},
+                                    new Paragraph { Body = "🏢<b>Create a Real Estate Schema. Model Homes, Customers, and Sales and Rentals</b>. Include rental dates and return status. Think about how to track overdue rentals."},
+                                    new Paragraph { Body = "🍽️<b>Design a Restaurant Ordering System</b>. Create tables for MenuItems, Orders, and OrderItems. Use a join table to link orders to multiple menu items."},
+                                    new Paragraph { Body = "🗨️<b>Model a Chat App Database</b>. Design tables for Users, Workouts, and Exercises. Each workout can include multiple exercises, and each user can log multiple workouts."},
+                                    new Paragraph { Body = "📉Choose one or more of the systems above and draw a <a href='https://www.youtube.com/watch?v=JYZPdU5F2iM' target='_blank'> <b><u>Entity Relationship Diagram</u></b></a>"},
+                                }
+                            },
+                            new Block
+                            {
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph {
+                                       BackgroundColor="#1C236D",
+                                       FontColor="#FFF",
+                                       Body = "Instead of creating a Status or Type table for simple, finite options (like Pending, Completed, Cancelled), use enums or a predefined column with constraints. Reserve a separate table only if these values are dynamic or need additional attributes." }
+                                }
+                            }
                         }
                     },
                     new Article

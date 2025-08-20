@@ -50,19 +50,23 @@
         foreach(var project in dbProjects)
         {
             var curriculumProject = projects.FirstOrDefault(p => p.Id == project.ProjectId);
-            var description = GetDescription(project.ProjectId);
-            var isDupe = Notifications.Any(x => description.Equals(x.Description));
 
-            if (curriculumProject != null & !isDupe)
+            if (curriculumProject != null)
             {
-                Notifications.Add(
-                    new TCSANotificationItem
-                    {
-                        IconUrl = curriculumProject.IconUrl,
-                        Description = description,
-                        IsActive = project.IsPendingNotification
-                    }
-                );
+                var description = GetDescription(project.ProjectId);
+                var isDupe = Notifications.Any(x => description.Equals(x.Description));
+
+                if (!isDupe)
+                {
+                    Notifications.Add(
+                        new TCSANotificationItem
+                        {
+                            IconUrl = curriculumProject.IconUrl,
+                            Description = description,
+                            IsActive = project.IsPendingNotification
+                        }
+                    );   
+                };
             }
         }
 

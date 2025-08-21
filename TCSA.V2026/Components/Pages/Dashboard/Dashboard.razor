@@ -169,6 +169,7 @@
             if (status == ResponseStatus.Success)
             {
                 User = await UserService.GetUserById(UserId);
+                await BuildAreasWithProjects();
             }
         }
     }
@@ -189,11 +190,15 @@
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);
+
+        await BuildAreasWithProjects();
+
+    }
+
+    private async Task BuildAreasWithProjects()
+    {
         CompletedProjects = User?.DashboardProjects?.Where(x => x.IsCompleted).Select(x => x.ProjectId).ToList();
         PendingProjects = User?.DashboardProjects?.Where(x => x.IsPendingReview).Select(x => x.ProjectId).ToList();
-
-        IsFccCompleted = CompletedProjects.Contains(75);
-        IsFccPending = PendingProjects.Contains(75);
 
         Areas = DashboardProjectsHelpers.GetAreas(CompletedProjects, PendingProjects);
 
@@ -211,5 +216,7 @@
                 Area = fcc.Area
             }
         );
+
+
     }
 }

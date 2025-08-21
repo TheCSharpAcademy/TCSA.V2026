@@ -3,6 +3,7 @@
 @using System.Security.Claims
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Helpers.Constants
 @using TCSA.V2026.Services
 @attribute [Authorize]
 
@@ -41,15 +42,20 @@
     }
     else
     {
-       @*  <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
+        @*  <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
         if (ChallengesList != null && ChallengesList.Count > 0)
         {
             <MudStack Row Class="mt-6 mb-4" Spacing="4" AlignItems="AlignItems.Center">
-                <MudCheckBox @bind-Value="@_showCompleted"
+                <MudCheckBox @bind-Value="@ShowCompleted"
                 Label="Show Completed"
                 CheckedIcon="@Icons.Material.Outlined.CheckBox"
                 UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
-                <MudSelect T="Level" Label="Filter by Level" Placeholder="Level" Class="flex-grow-0" MultiSelection="true" @bind-SelectedValues="_selectedLevels">
+                <MudSelect T="Level"
+                    Label="Filter by Level"
+                    Placeholder="Level"
+                    Class="flex-grow-0"
+                    MultiSelection="true"
+                    @bind-SelectedValues="SelectedLevels">
                     @foreach (Level item in Enum.GetValues(typeof(Level)))
                     {
                         <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
@@ -57,7 +63,7 @@
                 </MudSelect>
             </MudStack>
             <MudStack Spacing="4">
-                @foreach (var challenge in FilteredChallenges)
+                @foreach (var challenge in PaginatedChallenges)
                 {
                     <MudPaper Elevation="3" Outlined="false" Class="py-2 px-2 px-sm-5" Style="@(CompletedChallenges.Contains(challenge.Id) ? "border: 2px solid green;" : "")">
                         <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
@@ -95,20 +101,22 @@
                     </MudPaper>
                 }
             </MudStack>
-            <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="FilteredChallenges.Count" />
+            @if (Pages > 1) {
+                <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="Pages" Selected="CurrentPage" SelectedChanged="OnPageChanged" />
+            }
         }
     }
 </MudContainer>
 
 @code {
-        [Inject] private NavigationManager Navigation { get; set; }
-        [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
-        [Inject] private IChallengeService ChallengeService { get; set; }
-        [Inject] private ICodewarsService CodewarsService { get; set; }
-        [Inject] private IUserService UserService { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IChallengeService ChallengeService { get; set; }
+    [Inject] private ICodewarsService CodewarsService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
 
-        [Inject] private IJSRuntime JS { get; set; }
-        [Inject] private ISnackbar Snackbar { get; set; }
+    [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
 
     private List<Challenge> ChallengesList = new();
     private List<int> CompletedChallenges = new();
@@ -117,10 +125,38 @@
         ChallengesList.Where(c =>
             (!_showCompleted || IsCompleted(c.Id)) &&
             (!_selectedLevels.Any() || _selectedLevels.Contains(c.Level))
-        ).ToList();
+        )
+        .ToList();
+
+    private List<Challenge> PaginatedChallenges => FilteredChallenges
+        .Skip((CurrentPage - 1) * PagingConstants.ChallengesPageSize)
+        .Take(PagingConstants.ChallengesPageSize)
+        .ToList();
+
+    private int Pages => (int)Math.Ceiling((double)TotalFilteredChallenges / PagingConstants.ChallengesPageSize);
+    private int CurrentPage = 1;
+    private int TotalFilteredChallenges => FilteredChallenges.Count;
 
     private IEnumerable<Level> _selectedLevels = new HashSet<Level>();
+    private IEnumerable<Level> SelectedLevels
+    {
+        get => _selectedLevels;
+        set
+        {
+            _selectedLevels = value;
+            CurrentPage = 1;
+        }
+    }
     private bool _showCompleted = false;
+    private bool ShowCompleted
+    {
+        get => _showCompleted;
+        set
+        {
+            _showCompleted = value;
+            CurrentPage = 1;
+        }
+    }
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
@@ -165,5 +201,10 @@
         }
 
         User = await UserService.GetUserById(UserId);
+    }
+
+    private void OnPageChanged(int page)
+    {
+        CurrentPage = page;
     }
 }

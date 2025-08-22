@@ -1204,8 +1204,8 @@ public class SqlCourse
                     },
                     new Article
                     {
-                        Id = 500086,
-                        CourseDisplayId = 17,
+                        Id = 500085,
+                        CourseDisplayId = 16,
                         Title = "Database Design",
                         Slug = "intro-to-sql-design",
                         Description = "",
@@ -1296,8 +1296,8 @@ public class SqlCourse
                     {
                         Id = 500086,
                         CourseDisplayId = 17,
-                        Title = "Database Design",
-                        Slug = "intro-to-sql-design",
+                        Title = "Conclusion",
+                        Slug = "intro-to-sql-conclusion",
                         Description = "",
                         Area = Area.Course,
                         ExperiencePoints = 1,
@@ -1308,78 +1308,45 @@ public class SqlCourse
                             {
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "Proper database design is key for efficient data management and application performance. This chapter explains when to create tables, how to decide relationships between them, and how to structure your database to meet business needs effectively."},
-                                    new Paragraph { Body = "Keep in mind that database design is a vast topic, with several books written about it. We'll just scratch the surface to give you some tools for designing simple relational databases. "},
+                                    new Paragraph { Body = "Congratulations! You've complete the Intro To SQL course and should now be able to create your own databases and query and modify them. You've also learned what to think about when designing a database schema. What relationships should you use? Which entities need to be represented for your business case?"},
+                                    new Paragraph { Body = "As .NET/C# developers it's often the case that we jump straight into Entity Framework without understanding what's happening behind the scenes. This course should provide a good foundation to understand the queries that EF is generating. "},
+                                    new Paragraph { Body = "Needless to say, you'll be better equipped to work in companies that don't use Entity Framework, but instead opted for ADO.NET or Dapper, which gives you more control of your queries. Now you can definitely add SQL to your CV!"},
 
                                 }
                             },
                             new Block
                             {
-                                Title = "When to Create Tables",
+                                Title = "What to do from here?",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "A table should represent a <b>single, logical entity</b> in your business domain. For example, In an eCommerce system, <b>Products, Categories and Orders</b> are distinct entities that require separate tables. Avoid combining unrelated data into one table, as this leads to redundancy and difficulties in querying."},
-                                    new Paragraph {
-                                        Body = "Ask yourself these questions: Does this data describe a specific entity? If yes, create a table. Will this data need to relate to other entities? If yes, determine relationships (e.g., one-to-many, many-to-many)."}
+                                    new Paragraph { Body = "We can't stress enough the importance of getting comfortable with SQL. That will only come with a lot of practice. We recommend you get into the habit of completing SQL Challenges. We have a <a href='dashboard/challenges' target='_blank'><b><u>challenges section</b></u></a> in our platform, powered by <a href='http://' target='_blank'><b><u>Code Wars</b></u></a>. Other strong platforms for SQL are <a href='https://leetcode.com/' target='_blank'><b><u>Leet Code</b></u></a> and <a href='https://www.sql-practice.com/' target='_blank'><b><u>SQL Practice</b></u></a>." }
                                 }
                             },
                             new Block
                             {
-                                Title = "Fact vs Dimension Tables",
+                                Title = "Advanced Topics",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "In database design—especially in data warehousing—fact tables and dimension tables serve distinct but complementary roles. Here's a clear breakdown:"},
-                                     new Paragraph {
-                                        IsPicture = true,
-                                        PictureUrl = "c4-ch16-sql-fact-dimension.png"},
-                                    new Paragraph {
-                                        Body = "Think of a fact table as a spreadsheet of transactions—each row is a sale, a click, or a shipment. The dimension tables are like lookup sheets that explain what each product is, who the customer was, and when it happened."}
+                                    new Paragraph { Body = "Here's a list of topics you can use as a reference if you'd like to continue studying SQL while we don't release an advanced course:"},
+                                    new Paragraph { Body = "🔸<b>Common Table Expressions (CTEs)</b>: Temporary named result sets used within a query."},
+                                    new Paragraph { Body = "🔸<b>Recursive Queries</b>: Use CTEs to traverse hierarchical structures (e.g. categories, comments)."},
+                                    new Paragraph { Body = "🔸<b>Set Operations</b>: UNION, INTERSECT, EXCEPT — combine or compare result sets."},
+                                    new Paragraph { Body = "🔸<b>Pivoting and Unpivoting</b>: Transform rows into columns (PIVOT) and vice versa (UNPIVOT)."},
+                                    new Paragraph { Body = "🔸<b>CASE Statements</b>: Conditional logic inside queries."},
+                                    new Paragraph { Body = "🔸<b>Advanced JOIN Techniques</b>: FULL OUTER JOIN, CROSS JOIN, SELF JOIN."},
+                                    new Paragraph { Body = "🔸<b>Subqueries (Correlated and Non-Correlated)</b>: Embed queries inside SELECT, FROM, or WHERE."},
+                                    new Paragraph { Body = "🔸<b>EXISTS vs IN vs JOIN</b>: Different ways to filter based on related data."},
+                                    new Paragraph { Body = "🔸<b>NULL Handling</b>: IS NULL, COALESCE, NULLIF, IFNULL."},
                                 }
                             },
                             new Block
                             {
-                                Title = "Structuring Tables for Scalability",
+                                Title = "Feedback",
                                 Paragraphs = new List<Paragraph>
                                 {
-                                    new Paragraph { Body = "When designing tables, <b>think beyond the immediate data needs</b>. Ask: Will this structure still work if the business grows tenfold? For example, storing customer addresses directly in the Customers table might seem fine at first—but what if customers have multiple shipping addresses? In that case, a separate Addresses table linked by a foreign key to Customers ensures flexibility and avoids duplication."},
-                                    new Paragraph {
-                                        Body = "Use primary keys to uniquely identify each row, and foreign keys to enforce relationships between tables. This not only <b>maintains data integrity</b> but also improves query performance by allowing the database engine to optimize joins and lookups."},
+                                    new Paragraph { Body = "Please let us know how we went! If something doesn't work, or you saw typos, errors or if you found it too easy, too hard, or even if it's perfect for you, drop your opinion on the feedback channel in <a href='https://discord.com/invite/aDMDET8ywB' target='_blank'>our Discord Server</a>.\r\n\r\nThanks for going through the course! We hope you enjoyed it and see you in the next one! 🙏"}
                                 }
                             },
-                             new Block
-                            {
-                                Title = "Normalization vs. Practicality",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "<b>1NF</b>: <i>Eliminate repeating groups—each field should contain atomic values</i>. <b>Example</b>: A Customers table originally has columns like Phone1, Phone2, Phone3. <b>Fix</b>: Create a separate CustomerPhones table with one row per phone number, linked by CustomerID. <b>Why</b>: This makes phone numbers atomic and allows unlimited numbers per customer."},
-                                    new Paragraph { Body = "<b>2NF</b>: <i>Ensure that all non-key attributes are fully dependent on the primary key</i>.  <b>Example</b>: A CourseEnrollments table has StudentID, CourseID, and StudentName. <b>Fix</b>: Move StudentName to the Students table, since it depends only on StudentID, not the full composite key. <b>Why</b>: Ensures that all non-key attributes depend on the whole primary key."},
-                                    new Paragraph { Body = "<b>3NF</b>: <i>Remove transitive dependencies—non-key attributes should not depend on other non-key attributes</i>.  <b>Example</b>: A Products table includes CategoryID and CategoryName. <b>Fix</b>: Move CategoryName to a separate Categories table. <b>Why</b>: CategoryName depends on CategoryID, not directly on ProductID."},
-                                    new Paragraph { Body = "However, over-normalization can lead to excessive joins and complexity. In reporting-heavy systems, it's sometimes better to denormalize selectively for performance. For example, storing a CategoryName directly in the Products table might be acceptable if categories rarely change and you need fast access."},
-                                }
-                            },
-                              new Block
-                            {
-                                Title = "Exercises",
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph { Body = "📚 <b>Design a Library Database</b>. Create tables for Books, Authors, and Genres. Decide how to model the many-to-many relationship between books and authors."},
-                                    new Paragraph { Body = "🏫 <b>Build a Student Enrollment System</b>. Design tables for Students, Courses, and Enrollments. Include fields like enrollment date and grade."},
-                                    new Paragraph { Body = "🏢<b>Create a Real Estate Schema. Model Homes, Customers, and Sales and Rentals</b>. Include rental dates and return status. Think about how to track overdue rentals."},
-                                    new Paragraph { Body = "🍽️<b>Design a Restaurant Ordering System</b>. Create tables for MenuItems, Orders, and OrderItems. Use a join table to link orders to multiple menu items."},
-                                    new Paragraph { Body = "🗨️<b>Model a Chat App Database</b>. Design tables for Users, Workouts, and Exercises. Each workout can include multiple exercises, and each user can log multiple workouts."},
-                                    new Paragraph { Body = "📉Choose one or more of the systems above and draw a <a href='https://www.youtube.com/watch?v=JYZPdU5F2iM' target='_blank'> <b><u>Entity Relationship Diagram</u></b></a>"},
-                                }
-                            },
-                            new Block
-                            {
-                                Paragraphs = new List<Paragraph>
-                                {
-                                    new Paragraph {
-                                       BackgroundColor="#1C236D",
-                                       FontColor="#FFF",
-                                       Body = "Instead of creating a Status or Type table for simple, finite options (like Pending, Completed, Cancelled), use enums or a predefined column with constraints. Reserve a separate table only if these values are dynamic or need additional attributes." }
-                                }
-                            }
                         }
                     }
                 }

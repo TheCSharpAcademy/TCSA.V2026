@@ -32,9 +32,26 @@ public enum Difficulty
     Advanced
 }
 
-public class MockProject
+public enum ArticleName
 {
-    public string Title { get; set; }
-    public string Description { get; set; } // Details shown on hover
-    public bool IsCompleted { get; set; }
+    StartHere = 5,
+    GettingHelp = 6,
+    SettingUp = 7,
+    Foundations = 8,
+
+    MathGame = 53,
+    Calculator = 11,
+    HabitLogger = 12,
+    CodingTracker = 13,
+
+    Flashcards = 14,
+    Drinks = 15,
+    PhoneBook = 16,
+    ShiftsLogger = 17,
+
+    Ecommerce = 18,
+    SportsResults = 19,
+    ExcelReader = 20,
+    UnitTesting = 21,
+
 }

@@ -41,8 +41,11 @@ builder.Services.AddScoped<ICommunityService, CommunityService>();
 builder.Services.AddScoped<IChallengeService, ChallengeService>();
 builder.Services.AddScoped<ICodewarsService, CodewarsService>();
 builder.Services.AddScoped<IDiscordService, DiscordService>();
+builder.Services.AddScoped<IGithubService, GithubService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
+
+builder.Services.AddControllers();
 
 
 builder.Services.AddHttpContextAccessor();
@@ -104,6 +107,7 @@ else
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
 app.UseAntiforgery();
 
 app.MapStaticAssets();

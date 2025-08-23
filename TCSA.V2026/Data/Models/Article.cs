@@ -74,6 +74,44 @@ public enum Area
     Docker
 }
 
+public enum ArticleName
+{
+    StartHere = 5,
+    GettingHelp = 6,
+    SettingUp = 7,
+    Foundations = 8,
+    ImportanceOfConsole = 9,
+
+    FreecodeCamp = 75,
+    MathGame = 53,
+    Calculator = 11,
+    HabitLogger = 12,
+    CodingTracker = 13,
+
+    Flashcards = 14,
+    Drinks = 15,
+    PhoneBook = 16,
+    ShiftsLogger = 17,
+
+    Ecommerce = 18,
+    SportsResults = 19,
+    ExcelReader = 20,
+    UnitTesting = 21,
+
+    Portfolio = 22,
+    Resume = 23,
+
+    ConsoleGraduation = 10,
+    Roadmap = 51,
+    SubmitCodeReviews = 52,
+    PeerReviews = 57,
+    CodeConventions = 58,
+    IntroGuide = 20000,
+
+    SeparationOfConcerns = 30005,
+
+}
+
 public enum ArticleReference
 {
     StartFromScratch = 1,

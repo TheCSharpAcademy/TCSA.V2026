@@ -38,14 +38,19 @@
     private string ErrorText;
     private bool HasError;
 
-    private const string RequiredPrefix = "https://github.com/TheCSharpAcademy/CodeReviews";
+    private string RequiredPrefix = "https://github.com/TheCSharpAcademy/CodeReviews";
 
     private void ValidateUrl()
     {
-        if (ProjectId == 75 || ProjectId == 22 || ProjectId == 23)
+        if (ProjectId == (int)ArticleName.Portfolio || ProjectId == (int)ArticleName.Resume)
         {
             HasError = false;
             return;
+        }
+
+        if (ProjectId == (int)ArticleName.FreecodeCamp)
+        {
+            RequiredPrefix = "https://www.freecodecamp.org/certification/";
         }
 
         if (string.IsNullOrWhiteSpace(GithubUrl))
@@ -55,8 +60,10 @@
         }
         else if (!IsIssue && !GithubUrl.StartsWith(RequiredPrefix, StringComparison.OrdinalIgnoreCase))
         {
+            var errorText = ProjectId == 75 ? $"URL must start with '{RequiredPrefix}'. We need to see your certificate." : $"URL must start with '{RequiredPrefix}'. Read the article above to submit a pull request.";
+
             HasError = true;
-            ErrorText = $"URL must start with '{RequiredPrefix}'. Read the article above to submit a pull request.";
+            ErrorText = errorText;
         }
         else
         {

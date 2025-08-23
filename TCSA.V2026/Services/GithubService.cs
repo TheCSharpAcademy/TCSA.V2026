@@ -51,14 +51,17 @@ public class GithubService : IGithubService
                         .ThenInclude(u => u.UserActivity)
                     .FirstOrDefaultAsync(r => r.DashboardProjectId == project.Id);
 
-                review.User.ExperiencePoints = review.User.ExperiencePoints + points;
-                review.User.ReviewedProjects = review.User.ReviewedProjects + 1;
-                review.User.UserActivity.Add(new AppUserActivity
+                if (review != null)
                 {
-                    ActivityType = ActivityType.CodeReviewCompleted,
-                    ProjectId = project.ProjectId,
-                    DateSubmitted = DateTimeOffset.UtcNow
-                });
+                    review.User.ExperiencePoints = review.User.ExperiencePoints + points;
+                    review.User.ReviewedProjects = review.User.ReviewedProjects + 1;
+                    review.User.UserActivity.Add(new AppUserActivity
+                    {
+                        ActivityType = ActivityType.CodeReviewCompleted,
+                        ProjectId = project.ProjectId,
+                        DateSubmitted = DateTimeOffset.UtcNow
+                    });
+                }
 
                 await context.SaveChangesAsync();
             }

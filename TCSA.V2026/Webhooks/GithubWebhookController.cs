@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Services;
@@ -94,27 +92,48 @@ public enum GithubRepository : long
 
 public class GitHubWebhookDto
 {
-    public string Action { get; set; }
+    public string Action
+    {
+        get; set;
+    }
 
-    public Repository Repository { get; set; }
+    public Repository Repository
+    {
+        get; set;
+    }
 
-    public Review Review { get; set; }
+    public Review Review
+    {
+        get; set;
+    }
 
     [JsonPropertyName("pull_request")]
-    public PullRequest PullRequest { get; set; }
+    public PullRequest PullRequest
+    {
+        get; set;
+    }
 }
 
 public class PullRequest
 {
-    public int Number { get; set; }
+    public int Number
+    {
+        get; set;
+    }
 }
 
 public class Repository
 {
-    public long Id { get; set; }
+    public long Id
+    {
+        get; set;
+    }
 }
 
 public class Review
 {
-    public string State { get; set; }
+    public string State
+    {
+        get; set;
+    }
 }

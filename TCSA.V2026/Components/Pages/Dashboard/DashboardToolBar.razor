@@ -1,4 +1,4 @@
-﻿@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
@@ -45,7 +45,7 @@
     {
         var projects = ProjectHelper.GetProjects();
 
-        var dbProjects = User.DashboardProjects.Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
+        var dbProjects = User.DashboardProjects.Where(dp => dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
 
         foreach(var project in dbProjects)
         {

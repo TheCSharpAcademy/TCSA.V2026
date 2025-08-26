@@ -1,7 +1,8 @@
-﻿@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 
@@ -45,7 +46,7 @@
     {
         var projects = ProjectHelper.GetProjects();
 
-        var dbProjects = User.DashboardProjects.Where(dp => dp.IsPendingNotification || dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
+        var dbProjects = User.DashboardProjects.Where(dp => dp.DateCompleted > DateTime.UtcNow.AddDays(-7));
 
         foreach(var project in dbProjects)
         {
@@ -106,7 +107,12 @@
 
         if (!result.Canceled && Notifications.Any(x => x.IsActive))
         {
-            await ProjectService.AcknowledgeNotifications(User.Id);
+            var response = await ProjectService.AcknowledgeNotifications(User.Id);
+            if (response.Status == ResponseStatus.Success)
+            {
+                Notifications.ForEach(x => x.IsActive = false);
+                StateHasChanged();
+            }
         }
     }
 

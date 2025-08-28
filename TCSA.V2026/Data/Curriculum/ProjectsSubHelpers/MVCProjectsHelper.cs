@@ -152,7 +152,7 @@ internal static class MVCProjectsHelper
                 Id = 26,
                 Title = "Todo List",
                 IconUrl = "todo.png",
-                BannerUrl = "",
+                BannerUrl = "todo-banner.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "todo-list",
                 Description = "Build your first MVC application with C#, Razor Syntax, Javascript and Bootstrap",
@@ -168,7 +168,7 @@ internal static class MVCProjectsHelper
                     },
                     new Paragraph
                     {
-                        Body="For this project we will pull from a few different resources. We will be introduced to “minimal APIs” and working with “Fetch API”, which will help us with moving data around asynchronously "
+                        Body="For this project we will pull from a few different resources. You'll will be introduced to “minimal APIs” and working with “Fetch API”, which will help us with moving data around asynchronously. We strongly suggest you push yourself and complete the challenges. In such a competitive market <b>the ability to solve difficult problems</b> will make you stand out. "
                     },
                     new Paragraph
                     {
@@ -183,10 +183,12 @@ internal static class MVCProjectsHelper
                     "You need to use the JS Fetch API from your front-end to call your minimal API in the backend.",
                     "You need to use Entity Framework, raw SQL isn't allowed.",
                     "You don't need a navigation bar. No menu is necessary since you'll only have one page.",
-                    "Once you execute any operation, the todo-list needs to be updated accordingly.",
+                    "Once you execute any operation, the todo-list needs to be automatically updated accordingly.",
                     "Your data model is only one table with to-dos. You. might be tempted to create more complex data-models (categories of todos for example) but avoid that for now. We're focusing on the front-end.",
                     "When deleting, present an 'Are you sure?' confirmation message",
-                    "Upon updating, present a message saying the record hasn't been updated until the user submits the new todo. Then present a success message."
+                    "Upon updating, present a message saying the record hasn't been updated until the user submits the new todo. Then present a success message.",
+                    "You need to add validation. For example, empty input shouldn't be allowed. Feel free to add more validations as you see fit.",
+                    "You need to handle errors gracefully, with a relevant error message presented to the user."
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
@@ -196,6 +198,12 @@ internal static class MVCProjectsHelper
                     "<a target='blank' href='https://www.youtube.com/watch?v=vbbhsGzCyZQ'>MVC + Fetch API + Web API Video Tutorial</a>",
                     "<a target='blank' href='https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch'>Fetch API Docs</a>",
                     "<a target='blank' href='https://www.youtube.com/watch?v=Oive66jrwBs'>Fetch API crash course on Youtube</a>"
+                },
+                Challenges = new List<string>
+                {
+                    "Seed 1000 todos and see what types of challenges it poses to the UX.",
+                    "Add a caching system so that if nothing has changed the database won't be called, saving precious resources.",
+                    "Add a calendar component and show to show the tasks based on their due date."
                 },
                 Tips = new List<string>
                 {

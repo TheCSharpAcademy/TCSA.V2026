@@ -79,7 +79,10 @@ public class AdminService : IAdminService
 
                 await context.SaveChangesAsync();
 
-                await _discordService.ChangeDiscordBelt(user.DiscordAlias!, newBelt);
+                if (user.DiscordAlias != null)
+                {
+                    await _discordService.ChangeDiscordBelt(user.DiscordAlias!, newBelt);
+                }
             }
             return new BaseResponse
             {

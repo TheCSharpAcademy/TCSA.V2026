@@ -217,7 +217,7 @@ internal static class MVCProjectsHelper
                 Id = 27,
                 Title = "Budget",
                 IconUrl = "icons8-budget-512.png",
-                BannerUrl = "",
+                BannerUrl = "budget-banner.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "budget",
                 Description = "Build a personal finance app with multiple related tables in the back-end",
@@ -229,7 +229,7 @@ internal static class MVCProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Personal finances apps are very useful for learning web development. They’ll force you to handle many data types: Dates, strings, decimals, integers, to mention the most basic. They’ll also challenge your front-end skills with heavy user interaction through forms and data-tables."
+                        Body="Personal finances apps are very useful for learning web development. They’ll force you to handle many data types: Dates, strings, decimals, integers, just to mention the most basic. They’ll also challenge your front-end skills with heavy user interaction through forms and data-tables."
                     },
                     new Paragraph
                     {
@@ -239,7 +239,7 @@ internal static class MVCProjectsHelper
                 Requirements = new List<string>
                 {
                     "This is an application where you should record personal finance transactions.",
-                    "You should have two linked tables: Transaction and Category.",
+                    "You should have at least two linked tables: Transaction and Category.",
                     "You need to use Entity Framework, raw SQL isn't allowed.",
                     "Each transaction MUST have a category and if you delete a category all it's transactions should be deleted.",
                     "You should use SQL Server, not SQLite.",
@@ -248,17 +248,25 @@ internal static class MVCProjectsHelper
                     "You need to use modals to insert, delete and update transactions and categories. These operations shouldn't be done in a different page."
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
-
                 Resources = new List<string>
                 {
                     "<a href='https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key'>Relationships in EF Core</a>",
                     "<a href='https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration'>One-To-Many Relationship in EF Core</a>",
                     "<a href='https://www.youtube.com/watch?v=eHT6G912po0'>One-To-Many Relationship in EF Core on Youtube</a>"
                 },
+                Challenges = new List<string>
+                {
+                    "Seed 1000 random records across 10 categories.",
+                    "Include pagination so the users can't see more than 20 items per page.",
+                    "Change the result of the search upon every change of the search input, without the need for the button the be clicked.",
+                    "Add a Recurring Expense functionality. An expense that will automatically add itself at a given time interval.",
+                    "Add caching capabilities to your app so you don't need to query the database if no changes have been detected."
+                },
                 Tips = new List<string>
                 {
                     "Don't forget validation! Your form shouldn't allow the user to input negatives or strings as a transaction value. Data annotations on your model are one way to go.",
-                    "Have separate controllers for Categories and Transactions."
+                    "Have separate controllers for Categories and Transactions.",
+                    "Since this is the last project in this area, try building a beautiful front-end that stands out. If you think you're 'bad at design' Search on the internet for similar good-looking apps and try to mimic them."
                 }
             },
         };

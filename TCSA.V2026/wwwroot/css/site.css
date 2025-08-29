@@ -7,7 +7,7 @@
         display: none;
     }
 
-    .mud-card-header-avatar {
+    .peer-review-card .mud-card-header-avatar{
         margin-right: 0;
         margin-inline-end: 0;
 
@@ -19,20 +19,20 @@
         }
     }
 
-    .mud-card-header-content {
+    .peer-review-card .mud-card-header-content{
         align-items: center;
         text-align: center;
         width: 100%;
-    }
 
-    .mud-grid {
-        margin-top: -8px;
-    }
+        & .mud-grid{
+            margin-top: -8px;
 
-    .mud-grid-item {
-        padding: 0 0 4px 8px !important;
-        flex: 0 0 100%;
-        max-width: 100%;
+            & .mud-grid-item {
+                padding: 0 0 4px 8px !important;
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
     }
 }
 

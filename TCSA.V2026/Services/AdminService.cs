@@ -107,6 +107,9 @@ public class AdminService : IAdminService
             using (var context = _factory.CreateDbContext())
             {
                 var result = await context.AspNetUsers
+               .AsNoTracking()
+               .Include(u => u.UserChallenges)
+                   .ThenInclude(x => x.Challenge)
                .Include(u => u.DashboardProjects)
                .Include(u => u.CodeReviewProjects)
                    .ThenInclude(cr => cr.DashboardProject)

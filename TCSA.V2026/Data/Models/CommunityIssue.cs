@@ -15,3 +15,11 @@ public class CommunityIssue
     public bool IsClosed { get; set; }
     public string? Reference { get; set; }
 }
+
+public enum IssueType
+{
+    Bugfix,
+    Feature,
+    Infrastructure,
+    Translation
+}

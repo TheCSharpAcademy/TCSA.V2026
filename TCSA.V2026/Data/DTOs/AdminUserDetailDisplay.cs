@@ -20,5 +20,5 @@ public class AdminUserDetailDisplay
     public int IssuesCompleted { get; set; }
     public int ExperiencePoints { get; set; }
     public int ExpectedPoints { get; set; }
+    public PointsBreakdown PointsBreakDown { get; set; }
 }
-

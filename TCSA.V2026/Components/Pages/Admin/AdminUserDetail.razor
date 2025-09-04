@@ -29,6 +29,10 @@
             <MudGrid>
                 @foreach (var prop in typeof(AdminUserDetailDisplay).GetProperties())
                 {
+                    if (prop.Name == "PointsBreakDown")
+                    {
+                        continue;
+                    }
                     <MudItem xs="6">
                         <MudText Typo="Typo.body1" Color="Color.Primary">@prop.Name</MudText>
                     </MudItem>
@@ -36,6 +40,48 @@
                         <MudText Typo="Typo.body1">@prop.GetValue(UserDisplay)?.ToString()</MudText>
                     </MudItem>
                 }
+            </MudGrid>
+        </MudPaper>
+
+        <MudPaper Class="mb-5 pa-5" Elevation="4">
+            <MudGrid>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Article Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Articles</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Projects Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Projects</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Issues Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Issues</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Review Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Reviews</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Course Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Courses</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1" Color="Color.Primary">Challenge Points</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText Typo="Typo.body1">@UserDisplay.PointsBreakDown.Challenges</MudText>
+                </MudItem>
+
             </MudGrid>
         </MudPaper>
 
@@ -83,6 +129,7 @@
                 <PropertyColumn Property="fa => fa.DashboardProjectId" Title="Db Id" />
                 <PropertyColumn Property="fa => fa.Title" Title="Name" />
                 <PropertyColumn Property="fa => fa.IsCompleted" Title="Status" />
+                <PropertyColumn Property="fa => fa.ChangesRequested" Title="Status" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
@@ -163,6 +210,7 @@
     private List<Article>? Articles;
     private List<AdminActivity> FilteredActivity = new();
     private List<AdminActivity> AllAdminActivity = new();
+    private List<int>? IssuesIds;
 
     private bool IsLoading = true;
     private int XPSum = 0;
@@ -180,6 +228,7 @@
         var startTime = DateTime.UtcNow;
 
         UserDisplay = await GetUserDisplay();
+        IssuesIds = User.Issues?.Where(x => x.IsClosed).Select(x => x.ProjectId).ToList() ?? new List<int>();
 
         loadTime = DateTime.UtcNow - startTime;
 
@@ -189,8 +238,8 @@
     private async Task<AdminUserDetailDisplay> GetUserDisplay()
     {
         User = await AdminService.GetUserForAdmin(UserId);
-
         await LoadAdminActivity();
+        var pointsBreakdown = PointsHelper.GetPointBreakdown(User);
 
         return new AdminUserDetailDisplay
         {
@@ -202,12 +251,13 @@
             Country = User.Country,
             ExperiencePoints = User.ExperiencePoints,
             ExpectedLevel = GetExpectedLevel(),
-            ExpectedPoints = GetExpectedPoints(),
+            ExpectedPoints = pointsBreakdown.Total,
             Level = User.Level.ToString(),
             GithubUsername = User.GithubUsername ?? string.Empty,
             DiscordAlias = User.DiscordAlias ?? string.Empty,
             IssuesCompleted = User.Issues?.Count(x => x.IsClosed) ?? 0,
-            ProjectsReviewed = User.ReviewedProjects
+            ProjectsReviewed = User.ReviewedProjects,
+            PointsBreakDown = pointsBreakdown
         };
     }
 
@@ -218,50 +268,6 @@
         var issues = User.Issues.Count();
 
         return RoadmapHelper.GetExpectedBelt(completedProjects, reviews, issues);
-    }
-
-    private int GetExpectedPoints()
-    {
-        var issuesIds = User.Issues?.Select(i => i.ProjectId).ToList() ?? new List<int>();
-
-        var result = 0;
-        foreach (var p in User.DashboardProjects.Where(x => !issuesIds.Contains(x.ProjectId) && x.IsCompleted))
-        {
-            var check = p.Id;
-            var check2 = p.ProjectId;
-            var project = Projects.FirstOrDefault(x => x.Id == p.ProjectId)
-            ?? Articles.FirstOrDefault(x => x.Id == p.ProjectId); 
-            result += project.ExperiencePoints;
-        }
-
-        foreach (var i in User.Issues)
-        {
-            result += i.ExperiencePoints;
-        }
-
-        foreach (var cr in User.CodeReviewProjects)
-        {
-            if (cr.DashboardProject == null)
-            {
-                Console.WriteLine($"Review project with dashboard id = {cr.DashboardProjectId} is null");
-            }
-
-            if (!cr.DashboardProject.IsCompleted || !cr.DashboardProject.IsArchived)
-            {
-                var project = Projects.FirstOrDefault(x => x.Id == cr.DashboardProject.ProjectId);
-                result += project.ExperiencePoints;
-            }
-        }
-
-        if (User.UserChallenges != null)
-        {
-            foreach (var c in User.UserChallenges)
-            {
-                result += c.Challenge.ExperiencePoints;
-            }
-        }
-
-        return result;
     }
 
     private async Task SubmitLevel()
@@ -302,8 +308,6 @@
 
     private async Task LoadAdminActivity()
     {
-        User = await AdminService.GetUserForAdmin(UserId);
-
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
         var articlesIds = Articles.Select(x => x.Id).ToList();
@@ -338,7 +342,7 @@
                     ProjectId = i.ProjectId,
                     ProjectType = ProjectType.CourseArticle,
                     Title = courseArticles.FirstOrDefault(x => x.Id == i.ProjectId).Title,
-                    IsCompleted = i.IsCompleted
+                    IsCompleted = i.IsCompleted,
                 })
             .ToList();
 
@@ -366,7 +370,8 @@
                 Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId)?.Title ?? "Dunno",
                 IsCompleted = i.IsCompleted,
                 DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id,
-                GithubUrl = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).GithubUrl
+                GithubUrl = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).GithubUrl,
+                ChangesRequested = i.IsCompleted ? "" : i.DateRequestedChange.ToString("G")
             })
             .ToList();
 
@@ -508,7 +513,6 @@
         _showPending = !_showPending;
     }
 
-
     private void FilterProjectType()
     {
         if (SelectedProjectType is null)
@@ -519,7 +523,6 @@
         {
             FilteredActivity = AllAdminActivity?.Where(x => x.ProjectType == SelectedProjectType.Value).ToList();
         }
-
 
         StateHasChanged();
     }

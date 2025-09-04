@@ -101,6 +101,46 @@ public enum ArticleName
     Portfolio = 22,
     Resume = 23,
 
+    WaterLogger = 24,
+    Movies = 25,
+    TodoList = 26,
+    Budget = 27,
+
+    TourOfHeroes = 31,
+    CoffeeTracker = 32,
+    SleepTracker = 33,
+    Quizgame = 34,
+
+    TicTacToe = 35,
+    ExternalApi = 36, 
+    ShoppingList = 37, 
+    FriendsManager = 38,
+
+    WardrobeInventory = 39,
+    MemoryGame = 40, 
+    FoodJournal = 41, 
+    SportsStatistics = 42, 
+
+    MauiMath = 43,
+    Books = 44,
+    Monkeys = 45, 
+    Warehouse = 46,
+
+    Auth = 28,
+    ProductManagement = 72,
+    ExternalAuth = 74,
+
+    Sql1 = 76, 
+    Sql2 = 77, 
+    Sql3 = 78,
+
+    DeploySimpleApp = 47,
+    DeployFullStack = 48,
+    DeployFramework = 49,
+    AzureFunctions = 1000,
+
+    Flagship = 139, 
+
     ConsoleGraduation = 10,
     Roadmap = 51,
     SubmitCodeReviews = 52,
@@ -109,6 +149,8 @@ public enum ArticleName
     IntroGuide = 20000,
 
     SeparationOfConcerns = 30005,
+
+    CoursesOopIntro = 500025
 
 }
 

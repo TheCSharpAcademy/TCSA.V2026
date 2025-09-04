@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using TCSA.V2026.Data.Helpers;
+using TCSA.V2026.Data.Models;
 using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.UnitTests.Helpers;
@@ -31,8 +32,8 @@ public class BeltTests
     public void GreenCompleteShouldReturnGreen()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, //articles
-            53, 75 // math, fcc
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations, 
+            (int) ArticleName.MathGame, (int)ArticleName.FreecodeCamp 
         }, 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
@@ -41,9 +42,9 @@ public class BeltTests
     public void HabitCompletedShouldStillReturnGreen()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-             5, 6, 7, 8, //articles
-             11, //habit
-             53, 75 // math, fcc
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.HabitLogger,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
         }, 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
@@ -52,9 +53,9 @@ public class BeltTests
     public void CodingCompletedShouldStillReturnGreen()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8, //articles
-            11, 12, // habit, coding
-            53, 75 // math, fcc
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
         }, 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
@@ -62,10 +63,10 @@ public class BeltTests
     [Test]
     public void OliveGreenCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8,
-            11, 12, 13, // calculator, habit, coding
-            53, 75 
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
         }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
@@ -73,131 +74,142 @@ public class BeltTests
     [Test]
     public void FlashcardsCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, // calculator, habit, coding
-            14, // flashcards
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void DrinksCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, // calculator, habit, coding
-            14, 15, // flashcards, drinks
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void PhonebookCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, // flashcards, drinks, phonebook
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void ShiftsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, // flashcards, drinks, phonebook, shifts
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExerciseCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, // exercise
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, 
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void SportsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, // exercise, sports 
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExcelCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, // exercise, sports, excel
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void TestingCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, // exercise, sports, excel, unit tests
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void PortfolioCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, // portfolio
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void ResumeCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, // portfolio, resume
-            53, 75 }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume, 
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneReviewShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            53, 75 }, 0, 1);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 0, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
@@ -205,12 +217,13 @@ public class BeltTests
     public void OneIssueShouldReturnOrange()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            53, 75 }, 1, 0);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 1, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
@@ -218,12 +231,13 @@ public class BeltTests
     public void OneIssueAndReviewShouldReturnOrange()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            53, 75 }, 1, 1);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 1, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
@@ -231,12 +245,13 @@ public class BeltTests
     public void OneIssueAndTwoReviewsShouldReturnRed()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            53, 75 }, 1, 2);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 1, 2);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
@@ -244,26 +259,28 @@ public class BeltTests
     public void TwoIssuesAndFourReviewsShouldReturnRed()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            53, 75 }, 2, 4);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void AspNetCoreCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            24, 25, 26, 27, // aspnetcore
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList, (int) ArticleName.Budget,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
@@ -271,13 +288,14 @@ public class BeltTests
     public void AspNetCoreCompleteButNotEnoughReviewsShouldReturnRed()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            24, 25, 26, 27, // aspnetcore
-            53, 75 }, 2, 3);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,  (int) ArticleName.Budget,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 3);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
@@ -285,105 +303,112 @@ public class BeltTests
     public void AspNetCoreCompleteButNotEnoughIssuesShouldReturnRed()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            24, 25, 26, 27, // aspnetcore
-            53, 75 }, 1, 4);
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList, (int) ArticleName.Budget,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        },1, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void ReactCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            35, 36, 37, 38, // react
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList, (int) ArticleName.FriendsManager,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void AngularCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            31, 32, 33, 34,  // angular
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void BlazorCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            39, 40, 41, 42, // blazor
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal, (int) ArticleName.SportsStatistics,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void MauiCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            43, 44, 45, 46, // maui
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void JumpingAroundShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            24, 25, 26, // aspnetcore
-            31, 32, 33, // angular
-            35, 36, 37, // react
-            43, 44, 45, // maui
-            39, 40, 41, // blazor
-            53, 75 }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys,
+            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
+            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
+            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void FCCMissingShouldReturnWhite()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            24, 25, 26, 
-            31, 32, 33, 
-            35, 36, 37, 
-            43, 44, 45, 46, // maui
-            39, 40, 
-            53 }, 2, 4); // missing FCC
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse, 
+            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
+            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
+            (int) ArticleName.MathGame
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("White"));
     }
 
@@ -391,17 +416,18 @@ public class BeltTests
     public void MathMissingShouldReturnWhite()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            24, 25, 26,
-            31, 32, 33,
-            35, 36, 37,
-            43, 44, 45, 46, // maui
-            39, 40,
-            53 }, 2, 4); // missing math
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
+            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
+            (int) ArticleName.FreecodeCamp, 
+        }, 2, 4);
         Assert.That(result, Is.EqualTo("White"));
     }
 
@@ -409,14 +435,14 @@ public class BeltTests
     public void AuthCompleteShouldReturnPurple()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74 // Auth
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
         }, 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
@@ -425,14 +451,14 @@ public class BeltTests
     public void AuthCompleteShouldReturnBrown()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74 // Auth
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
         }, 5, 7);
         Assert.That(result, Is.EqualTo("Brown"));
     }
@@ -440,16 +466,16 @@ public class BeltTests
     [Test]
     public void SQLCompleteShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            43, 44, 45, 46, 
-            53, 75,
-            28, 72, 74,
-            76, 77, 78 // SQL
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
         }, 5, 7);
         Assert.That(result, Is.EqualTo("Brown"));
     }
@@ -457,16 +483,16 @@ public class BeltTests
     [Test]
     public void NoFlagshipShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21,
-            22, 23, 
-            43, 44, 45, 46, 
-            53, 75,
-            28, 72, 74,
-            76, 77, 78 
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
         }, 7, 12);
         Assert.That(result, Is.EqualTo("Brown"));
     }
@@ -474,17 +500,17 @@ public class BeltTests
     [Test]
     public void FlagshipShouldReturnGrey()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            5, 6, 7, 8, 
-            11, 12, 13, 
-            14, 15, 16, 17, 
-            18, 19, 20, 21, 
-            22, 23, 
-            43, 44, 45, 46, 
-            53, 75,
-            28, 72, 74,
-            76, 77, 78, // SQL
-            139 // flagship
+        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
+            (int) ArticleName.Flagship,
         }, 7, 12);
         Assert.That(result, Is.EqualTo("Grey"));
     }

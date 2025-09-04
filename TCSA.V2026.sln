@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCSA.V2026", "TCSA.V2026\TC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCSA.V2026.UnitTests", "TCSA.V2026.UnitTests\TCSA.V2026.UnitTests.csproj", "{5369024E-AC90-4B46-B8E0-E3363913B04A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCSA.V2026.IntegrationTests", "TCSA.2026.IntegrationTests\TCSA.V2026.IntegrationTests.csproj", "{6511BBE2-CC16-41BD-B405-827C14DF2E45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5369024E-AC90-4B46-B8E0-E3363913B04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5369024E-AC90-4B46-B8E0-E3363913B04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5369024E-AC90-4B46-B8E0-E3363913B04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6511BBE2-CC16-41BD-B405-827C14DF2E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6511BBE2-CC16-41BD-B405-827C14DF2E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6511BBE2-CC16-41BD-B405-827C14DF2E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6511BBE2-CC16-41BD-B405-827C14DF2E45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

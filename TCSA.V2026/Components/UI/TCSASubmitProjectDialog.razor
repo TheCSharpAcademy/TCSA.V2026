@@ -1,4 +1,4 @@
-﻿@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Services
 <MudDialog Style="min-width: 400px;">
@@ -13,12 +13,12 @@
             Don't submit your own repository, <a href="https://thecsharpacademy.com/article/52/code-reviews" target="_blank"><span style="color:red; !important">read this article</span></a> to find out how to create a pull request.
         </MudText>
         <MudTextField 
-            @bind-Value="GithubUrl"
-            Error="@HasError"
-            ErrorText="@ErrorText"
-            Immediate="true"
-            OnBlur="ValidateUrl"
-            Label=@(ProjectId == 75 ? "Freecodecamp URL" : "GithubUrl") />
+        @bind-Value="GithubUrl"
+        Error="@HasError"
+        ErrorText="@ErrorText"
+        Immediate="true"
+        OnBlur="ValidateUrl"
+        Label=@(ProjectId == 75 ? "Freecodecamp URL" : "GithubUrl") />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -39,6 +39,11 @@
     private bool HasError;
 
     private string RequiredPrefix = "https://github.com/TheCSharpAcademy/CodeReviews";
+
+    protected override void OnParametersSet()
+    {
+        GithubUrl = User.DashboardProjects.FirstOrDefault(p => p.ProjectId == ProjectId)?.GithubUrl ?? string.Empty;
+    }
 
     private void ValidateUrl()
     {

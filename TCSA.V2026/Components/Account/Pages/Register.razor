@@ -102,6 +102,7 @@
         user.LastName = string.Empty;
         user.DisplayName = Input.DisplayName;
         user.Level = Level.White;
+        user.CreatedDate = DateTime.UtcNow;
 
         var result = await UserManager.CreateAsync(user, Input.Password);
 

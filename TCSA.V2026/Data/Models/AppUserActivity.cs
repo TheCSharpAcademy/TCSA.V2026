@@ -10,6 +10,7 @@ public class AppUserActivity
     public string AppUserId { get; set; }
     public DateTimeOffset DateSubmitted { get; set; }
     public ActivityType ActivityType { get; set; }
+    public Level? Level { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
     public DashboardProject? DashboardProject { get; set; }
 }

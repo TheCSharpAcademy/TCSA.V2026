@@ -16,6 +16,7 @@ public interface IAdminService
     Task<List<ApplicationUser>> SearchUser(string email);
     Task<BaseResponse> ChangeBelt(string userId, Level newBelt);
     Task<BaseResponse> ChangePoints(string userId, int points);
+    Task<BaseResponse> RequestChanges(int dashboardProjectId);
 }
 
 public class AdminService : IAdminService
@@ -74,7 +75,8 @@ public class AdminService : IAdminService
                     ProjectId = 0,
                     ChallengeId = 0,
                     DateSubmitted = DateTimeOffset.UtcNow,
-                    ActivityType = ActivityType.NewBelt
+                    ActivityType = ActivityType.NewBelt,
+                    Level = newBelt
                 });
 
                 await context.SaveChangesAsync();
@@ -182,6 +184,43 @@ public class AdminService : IAdminService
         }
 
         return null;
+    }
+
+    public async Task<BaseResponse> RequestChanges(int dashboardProjectId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var project = context.DashboardProjects.FirstOrDefault(p => p.Id == dashboardProjectId);
+
+                if (project == null)
+                {
+                    return new BaseResponse
+                    {
+                        Status = ResponseStatus.Fail,
+                        Message = "Project Not Found"
+                    };
+                }
+
+                project.DateRequestedChange = DateTime.UtcNow;
+
+                await context.SaveChangesAsync();
+            }
+
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Success,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse
+            {
+                Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
     }
 
     public async Task<List<ApplicationUser>> SearchUser(string email)

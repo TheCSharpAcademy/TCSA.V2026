@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using TCSA.V2026.Data.Curriculum;
+﻿using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 
@@ -11,115 +10,86 @@ public static class ActivityHelper
     {
         var activityDisplay = new List<ActivityDisplay>();
         var currentXP = user.ExperiencePoints;
-        var issuesIds = user.Issues.Select(user => user.Id).ToList();
 
-        foreach (var item in user.UserActivity.OrderByDescending(x => x.DateSubmitted))
+        List<Article> articles = ArticleHelper.GetArticles();
+        List<Project> projects = ProjectHelper.GetProjects();
+        List<Course> courses = CourseHelper.GetCourses();
+        int currentPoints = user.ExperiencePoints;
+
+        var activity = user.UserActivity.OrderByDescending(x => x.DateSubmitted).ToList();
+        for (int i = 0; i < activity.Count(); i++)
         {
-            try
-            {
-                Console.WriteLine("ProjectId = " + item.ProjectId);
-                Console.WriteLine(item.ActivityType);
-                var communityIssue = new CommunityIssue();
-                var challenge = new Challenge();
+            AppUserActivity item = activity[i];
 
-                if (issuesIds.Contains(item.ProjectId))
+            var activityToAdd = new ActivityDisplay();
+            activityToAdd.ActivityType = item.ActivityType;
+            activityToAdd.Date = item.DateSubmitted;
+
+            if(item.ActivityType == ActivityType.ArticleRead)
+            {
+                var article = articles.FirstOrDefault(a => a.Id == item.ProjectId);
+
+                if (article != null)
                 {
-                    communityIssue = user.Issues.FirstOrDefault(x => x.Id == item.ProjectId);
+                    activityToAdd.Description = $"You read the article <b>{article.Title}</b>";
+                    activityToAdd.ExperiencePoints = article.ExperiencePoints;
                 }
 
-                if (item.ActivityType == ActivityType.ChallengeCompleted)
+                var course = courses.FirstOrDefault(c => c.Articles.Any(a => a.Id == item.ProjectId));
+
+                if (course != null)
                 {
-                    challenge = user.UserChallenges.FirstOrDefault(c => c.ChallengeId == item.ChallengeId).Challenge;
+                    article = course.Articles.FirstOrDefault(a => a.Id == item.ProjectId);
+                    activityToAdd.Description = $"You read the article <b>{article.Title} from the {course.Title} course</b>";
+                    activityToAdd.ExperiencePoints = article.ExperiencePoints;
                 }
 
-                var experiencePoints = GetXPs(issuesIds, item, communityIssue, challenge);
-
-                activityDisplay.Add(new ActivityDisplay
-
+                if (article == null && course == null)
                 {
-                    Date = item.DateSubmitted,
-                    Description = GetDescription(issuesIds, item, communityIssue, challenge, user.Level),
-                    ExperiencePoints = GetXPs(issuesIds, item, communityIssue, challenge),
-                    CurrentExperiencePoints = currentXP,
-                    AppUserId = item.AppUserId,
-                    ActivityType = item.ActivityType
-                });
+                    throw new InvalidDataException("Article can't be found");
+                }
+            }
 
-                currentXP -= experiencePoints;
-            }
-            catch (Exception ex)
+            if (item.ActivityType == ActivityType.ProjectSubmitted)
             {
-                Console.WriteLine($"ProjectId error = {item.ProjectId}" + ex.Message + ex.StackTrace);
+                activityToAdd.Description = $"You submitted the project <b>{projects.FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b> for review.";
             }
+
+            if (item.ActivityType == ActivityType.ProjectCompleted)
+            {
+                var project = projects.FirstOrDefault(x => x.Id == item.ProjectId); 
+                activityToAdd.Description = project == null 
+                    ? $"You completed the issue <b>{user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId)?.Title}</b>."
+                    : $"You completed the project <b>{projects.FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b>.";
+
+                activityToAdd.ExperiencePoints = project == null ? user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId).ExperiencePoints : project.ExperiencePoints;
+            }
+
+            if (item.ActivityType == ActivityType.IssueSubmitted)
+            {
+                activityToAdd.Description = $"You submitted the issue <b>{user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId)?.Title}</b>.";
+            }
+
+            if (item.ActivityType == ActivityType.ChallengeCompleted)
+            {
+                var challenge = user.UserChallenges.FirstOrDefault(x => x.ChallengeId == item.ChallengeId).Challenge;
+                activityToAdd.Description = $"You completed the challenge <b>{challenge.Name}</b>.";
+                activityToAdd.ExperiencePoints = challenge.ExperiencePoints;
+                
+            }
+
+            if (item.ActivityType == ActivityType.CodeReviewCompleted) 
+            {
+                var project = projects.FirstOrDefault(x => x.Id == item.ProjectId);
+                activityToAdd.Description = $"You completed a <b>{project.Title} review.</b>";
+                activityToAdd.ExperiencePoints = project.ExperiencePoints;
+            }
+
+            currentPoints = i == 0 ? currentPoints : currentPoints - activityDisplay[i - 1].ExperiencePoints;
+            activityToAdd.CurrentExperiencePoints = currentPoints;
+            activityDisplay.Add(activityToAdd);
         }
 
         return activityDisplay;
-    }
-
-    public static int GetXPs(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null)
-    {
-        if (item.ActivityType == ActivityType.ProjectSubmitted || item.ActivityType == ActivityType.IssueSubmitted)
-        {
-            return 0;
-        }
-
-        if (item.ActivityType == ActivityType.ChallengeCompleted)
-        {
-            return challenge.ExperiencePoints;
-        }
-
-        if (issuesIds.Contains(item.ProjectId))
-        {
-            return issue.ExperiencePoints;
-        }
-
-        else if (item.ActivityType == ActivityType.ArticleRead)
-        {
-            var articles = ArticleHelper.GetArticles().ToList();
-            var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
-            articles.AddRange(courseArticles);
-
-            return articles.FirstOrDefault(x => x.Id == item.ProjectId)?.ExperiencePoints ?? 0;
-        }
-
-        return ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.ExperiencePoints ?? 0;
-    }
-
-    public static string GetDescription(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null, Challenge? challenge = null, Level? level = null)
-    {
-        var articles = ArticleHelper.GetArticles().ToList();
-        var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
-        articles.AddRange(courseArticles);
-
-        switch (item.ActivityType)
-        {
-            case ActivityType.ArticleRead:
-                return $"You read the article <b>{articles.Single(x => x.Id == item.ProjectId).Title}</b>";
-            case ActivityType.ProjectSubmitted:
-                return $"You submitted the project <b>{ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b> for review.";
-            case ActivityType.IssueSubmitted:
-                return $"You submitted the issue <b>{issue.Title}</b> for review.";
-            case ActivityType.ProjectCompleted:
-                return GetTitle(issuesIds, item, issue);
-            case ActivityType.CodeReviewCompleted:
-                return $"You've finished a code review for a <b>{ProjectHelper.GetProjects().FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b> project.";
-            case ActivityType.ChallengeCompleted:
-                return $"You've completed the challenge <b>{challenge.Name}</b>.";
-            case ActivityType.NewBelt:
-                return $"You've achieved {level} belt";
-            default:
-                return "";
-        }
-    }
-
-    public static string GetTitle(List<int> issuesIds, AppUserActivity item, CommunityIssue? issue = null)
-    {
-        if (issuesIds.Contains(item.ProjectId))
-        {
-            return $"The open source ticket <b>{issue.Title}</b> was marked as complete.";
-        }
-
-        Console.WriteLine("ProjectId = " + item.ProjectId);
-        return $"The project <b>{ProjectHelper.GetProjects().Single(x => x.Id == item.ProjectId).Title}</b> was marked as complete.";
     }
 }

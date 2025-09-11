@@ -24,6 +24,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Date" Title="DateTime" />
                 <PropertyColumn Property="x => x.ActivityType" Title="Activity" CellStyleFunc="@_cellStyleFunc" />
+                <PropertyColumn Property="x => x.DateRequestedChanges" Title="Changes Requested" />
                 <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>

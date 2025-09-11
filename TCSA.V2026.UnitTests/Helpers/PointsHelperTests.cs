@@ -37,9 +37,9 @@ public class PointsHelperTests
             }
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);   
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(5));
+        Assert.That(breakdown.Total.Equals(5));
     }
 
     [Test]
@@ -63,9 +63,9 @@ public class PointsHelperTests
             }
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(15));
+        Assert.That(breakdown.Total.Equals(15));
     }
 
     [Test]  
@@ -109,9 +109,9 @@ public class PointsHelperTests
             },
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(35));
+        Assert.That(breakdown.Total.Equals(35));
     }
 
     [Test]
@@ -161,9 +161,9 @@ public class PointsHelperTests
             }
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(36));
+        Assert.That(breakdown.Total.Equals(36));
     }
 
     [Test]
@@ -218,9 +218,9 @@ public class PointsHelperTests
             }
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(37));
+        Assert.That(breakdown.Total.Equals(37));
     }
 
     [Test]
@@ -283,8 +283,8 @@ public class PointsHelperTests
             }
         };
 
-        int points = PointsHelper.GetExpectedPoints(user);
+        var breakdown = PointsHelper.GetPointBreakdown(user);
 
-        Assert.That(points.Equals(57));
+        Assert.That(breakdown.Total.Equals(57));
     }
 }

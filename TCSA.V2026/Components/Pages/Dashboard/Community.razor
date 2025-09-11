@@ -1,4 +1,4 @@
-﻿@page "/dashboard/community"
+@page "/dashboard/community"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
@@ -132,6 +132,7 @@
         if (!result.Canceled)
         {
             Snackbar.Add("Issue submitted successfully", Severity.Success);
+            User = await UserService.GetUserById(UserId);
             IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
         }
     }
@@ -148,6 +149,7 @@
         if (!result.Canceled)
         {
             Snackbar.Add("Issue created successfully", Severity.Success);
+            User = await UserService.GetUserById(UserId);
             IssuesToShow = await CommunityService.GetAvailableIssuesForCommunityPage(UserId);
         }
     }
@@ -159,6 +161,7 @@
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Assignment Successful", Severity.Success);
+            User = await UserService.GetUserById(UserId);
         }
         else
         {

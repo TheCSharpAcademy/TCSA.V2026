@@ -1,4 +1,4 @@
-﻿@page "/dashboard/challenges"
+@page "/dashboard/challenges"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Data.Models
@@ -102,7 +102,15 @@
                 }
             </MudStack>
             @if (Pages > 1) {
-                <MudPagination Class="mt-3 justify-center" Style="width: 100%;" Count="Pages" Selected="CurrentPage" SelectedChanged="OnPageChanged" />
+                <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                    <MudPagination Class="mt-3 justify-center"
+                                   Style="width: 100%;"
+                                   Count="Pages"
+                                   Selected="CurrentPage"
+                                   SelectedChanged="OnPageChanged"
+                                   BoundaryCount="_boundaryCount"
+                                   Size="_paginationSize" />
+                </MudBreakpointProvider>
             }
         }
     }
@@ -160,6 +168,8 @@
     private bool IsLoading = true;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
+    private int _boundaryCount = 1;
+    private Size _paginationSize = Size.Medium;
 
     protected override async Task OnInitializedAsync()
     {
@@ -206,5 +216,19 @@
     private void OnPageChanged(int page)
     {
         CurrentPage = page;
+    }
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _paginationSize = Size.Small;
+            _boundaryCount = 1;
+        }
+        else
+        {
+            _paginationSize = Size.Medium;
+            _boundaryCount = 2;
+        }
     }
 }

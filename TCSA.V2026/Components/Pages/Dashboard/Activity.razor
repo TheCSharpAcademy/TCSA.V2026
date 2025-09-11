@@ -1,4 +1,4 @@
-﻿@page "/dashboard/activity"
+@page "/dashboard/activity"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using System.ComponentModel.DataAnnotations
@@ -42,7 +42,13 @@
         {
             if (Pages > 1)
             {
-                <MudPagination Count="Pages" Selected="CurrentPage" SelectedChanged="OnPageChanged" />
+                <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                    <MudPagination Count="Pages"
+                                   Selected="CurrentPage"
+                                   SelectedChanged="OnPageChanged"
+                                   BoundaryCount="_boundaryCount"
+                                   Size="_paginationSize" />
+                </MudBreakpointProvider>
             }
             <MudHidden Breakpoint="Breakpoint.LgAndUp">
                 @foreach(var a in UserActivity)
@@ -128,6 +134,8 @@
     private int Pages => (int)Math.Ceiling((double)TotalFilteredActivities / PagingConstants.ActivityPageSize);
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
+    private int _boundaryCount = 1;
+    private Size _paginationSize = Size.Medium;
 
     protected override async Task OnInitializedAsync()
     {
@@ -194,4 +202,17 @@
         CurrentPage = page;
     }
 
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _paginationSize = Size.Small;
+            _boundaryCount = 1;
+        }
+        else
+        {
+            _paginationSize = Size.Medium;
+            _boundaryCount = 2;
+        }
+    }
 }

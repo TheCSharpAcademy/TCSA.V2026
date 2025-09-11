@@ -1,4 +1,4 @@
-﻿@page "/dashboard/leaderboard"
+@page "/dashboard/leaderboard"
 @using Microsoft.AspNetCore.Authorization
 
 @using System.Security.Claims;
@@ -37,7 +37,14 @@
             if (!IsReviews)
             {
                 if (Pages > 1) {
-                <MudPagination SelectedChanged="LoadPagination" Count="Pages" Selected="CurrentPage" />
+                    <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                        <MudPagination
+                            SelectedChanged="LoadPagination"
+                            Count="Pages"
+                            Selected="CurrentPage"
+                            BoundaryCount="_boundaryCount"
+                            Size="_paginationSize" />
+                    </MudBreakpointProvider>
                 }
                 <MudDataGrid Class="mt-2" Dense="true" Items="@Users" Breakpoint="Breakpoint.None">
                     <Columns>
@@ -131,6 +138,8 @@
     private bool IsReviews = false;
     private string UserId = string.Empty;
     private TimeSpan LoadTime = TimeSpan.Zero;
+    private int _boundaryCount = 1;
+    private Size _paginationSize = Size.Medium;
 
     protected override async Task OnInitializedAsync()
     {
@@ -202,4 +211,18 @@
         string classNames = "pa-2 pa-md-3";
         return user.Id == UserId ? $"{classNames} mud-theme-primary" : classNames;
     };
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _paginationSize = Size.Small;
+            _boundaryCount = 1;
+        }
+        else
+        {
+            _paginationSize = Size.Medium;
+            _boundaryCount = 2;
+        }
+    }
 }

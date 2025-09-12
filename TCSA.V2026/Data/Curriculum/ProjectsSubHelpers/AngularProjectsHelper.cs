@@ -1,5 +1,6 @@
 ﻿using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.LanguageModels;
+using static System.Net.WebRequestMethods;
 
 namespace TCSA.V2026.Data.Helpers.ProjectsSubHelpers;
 
@@ -21,16 +22,16 @@ internal static class AngularProjectsHelper
             new Project
             {
                 Id = 31,
-                Title = "Tour of Heroes",
-                IconUrl = "icons8-superwoman-480.png",
+                Title = "Real Estate App",
+                IconUrl = "icons8-real-estate-100.png",
                 BannerUrl = "",
                 LanguageHeadings = new EnglishHeadings(),
-                Slug = "tour-of-heroes",
+                Slug = "Real Estate App",
                 Description = "Learn the basics of Angular by building a purely front-end app using the documentation",
                 Area = Area.Angular,
                 ExperiencePoints = 50,
                 Difficulty = Difficulty.Beginner,
-                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Angular.TourOfHeroes",
+                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Angular.HomesApp",
                 Introduction = new List<Paragraph>
                 {
                     new Paragraph
@@ -39,29 +40,36 @@ internal static class AngularProjectsHelper
                     },
                     new Paragraph
                     {
-                        Body="The good news is that if you’ve been through the MVC area, learning the basics of Angular will be a breeze. It does most of the heavy lifting that Javascript does in MVC, so you’ll be building sooner than you imagine. "
+                        Body="Ideally, prior to learning a complex front-end framework, you'd have basic knowledge of HTML, CSS and Javascript. We are providing resources for these in the resources area. If, however, you decide to jump straight into Angular, no big deal. It's still possible, since this is an <b>'opinionated'</b> framework, meaning it offers straight-out-of-the-box solutions for common web-development problems. Just keep in mind that to get to a truly advanced level in Angular, you'll have to close knowledge gaps later in your journey."
                     },
                     new Paragraph
                     {
-                        Body="Make no mistake, Angular and React are massive. There’s a fair amount of complexity and the learning curve is definitely steep. So be patient, you won’t become an expert overnight. However, these frameworks are very welcoming to beginners. Building simple apps with them is somewhat straightforward, so be careful not to get caught into unnecessary complexities early on. Let’s build a few simple apps first. And what better way to start than building a Coffee app? ☕🤩"
+                        Body="When learning JS Frameworks, be it Angular, React, Vue, Svelte, there’s a fair amount of complexity and the learning curve is definitely steep. So be patient, you won’t become an expert overnight. However, these frameworks are very welcoming to beginners. Building simple apps with them is somewhat straightforward, so be careful not to get caught into unnecessary complexities early on. We'll start by building a simple app without a back end, and progressively increase the difficulty up to a comprehensive full-stack app. 🤩"
                     }
                 },
-                RequirementsIntro="From Angular’s documentation page: 'The <b>Tour of Heroes</b> application that you build helps a staffing agency manage its stable of heroes. The application has many of the features you’d expect to find in any data-driven application. The finished application acquires and displays a list of heroes, edits a selected hero’s detail, and navigates among different views of heroic data.'",
+                RequirementsIntro="From Angular’s documentation page: 'The lessons in this tutorial create an Angular app that lists houses for rent and shows the details of individual houses. This app uses features that are common to many Angular apps.'",
                 Requirements = new List<string>
                 {
-                    "This project has only one requirement: You should complete the \"Tour of Heroes\" app in Angular's documentation page."
+                    "This project has only one requirement: You should complete the \"Home's\" app in Angular's documentation page."
                 },
-                ResourcesIntro = "All you need for this project is the beginners tutorial provided by the Angular team:",
+                ResourcesIntro = "Angular uses Typescript TODO TO DOTODO. If you decide you want to jump straight onto Angular, but don't have Typescript experience, we recommend you go to the third  last link, which gives you a quick intro to this flavour of Javascript. Once that is finished you can do the tutorial in the two last links, which are a quick intro to Angular, followed by the Home's App mentioned in the requirements above. ",
 
                 Resources = new List<string>
                 {
-                    "<a target='_blank' href='https://angular.io/tutorial/tour-of-heroes'>Angular Docs: Tour of Heroes Beginner’s Tutorial</a>"
+                    "<a target='_blank' href='https://www.youtube.com/watch?v=p0bGHP-PXD4'>HTML + CSS Crash Course.</a>",
+                    "<a target='_blank' href='https://www.youtube.com/watch?v=hdI2bqOjy3c&t=5493s'>Javascript Crash Course</a>",
+                    "<a target='_blank' href='https://www.youtube.com/watch?v=0ik6X4DJKCc'>Javascript DOM Manipulation - Part 1</a>",
+                    "<a target='_blank' href='https://www.youtube.com/watch?v=mPd2aJXCZ2g'>Javascript DOM Manipulation - Part 2</a>",
+                    "<a target='_blank' href='https://www.youtube.com/watch?v=BCg4U1FzODs'>Typescript crash course</a>",
+                    "<a target='_blank' href='https://angular.dev/tutorials/learn-angular'>Learn Angular in Your Browser</a>",
+                    "<a target='_blank' href='https://angular.dev/tutorials/first-app'>Angular Docs: Tour of Heroes Beginner’s Tutorial</a>"
                 },
-                ResourcesConclusion = "Since this is your first Angular project, we will keep it very simple. There won’t be any .NET or C# this time, you’ll focus on Angular only. And the documentation will provide everything you need for your first app.",
+                ResourcesConclusion = "Since this is your first Angular project, we will keep it very simple. There won’t be any .NET or C# this time, you’ll focus on Angular only. And the documentation will provide everything you need for your first application.",
                 Tips = new List<string>
                 {
+                    "If you haven't seen any HTML before we highly recommend you go through the HTML + CSS crash course first, or you'll end up getting lost.",
                     "Don't rush, everything here will be new, so take your time to understand each line of code.",
-                    "Make notes. Here are three types of notes you can take: 1. Lists of steps to build things; 2. Concepts you're first learning about; 3. Things you find interesting and likely to use in the future. Keep your notes short.",
+                    "Make notes. There are three major types of notes you can take: 1. Lists of steps to build things; 2. Concepts you're first learning about; 3. Things you find interesting and likely to use in the future. Keep your notes short.",
                     "If you feel you didn't retain much, you could redo the app and/or modify it and/or create a different app based on the gained knowledge. Tweaking projects goes a long way for content retention."
                 }
             },

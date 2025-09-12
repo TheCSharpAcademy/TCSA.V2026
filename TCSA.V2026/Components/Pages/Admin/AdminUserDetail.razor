@@ -337,27 +337,33 @@
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
         var articlesIds = Articles.Select(x => x.Id).ToList();
-        var issuesIds = User.Issues.Select(i => i.ProjectId).ToList();    
+        var issuesIds = User.Issues.Select(i => i.ProjectId).ToList();
         var reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
 
-        var issues = User.Issues?.Select(i => new AdminActivity
+        var issues = User.Issues?.Select(i =>
             {
-                ProjectId = i.ProjectId,
-                ProjectType = ProjectType.Issue,
-                Title = i.Title,
-                IsCompleted = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).IsCompleted,
-                GithubUrl = i.GithubUrl,
-                DashboardProjectId = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId).Id
-            }).ToList() ?? new();
+                var dashboardProject = User.DashboardProjects.FirstOrDefault(dp => dp.ProjectId == i.ProjectId);
+                Console.WriteLine(i.ProjectId);
+
+                return new AdminActivity
+                {
+                    ProjectId = i.ProjectId,
+                    ProjectType = ProjectType.Issue,
+                    Title = i.Title,
+                    IsCompleted = dashboardProject?.IsCompleted ?? false, // default to false if null
+                    GithubUrl = i.GithubUrl,
+                    DashboardProjectId = dashboardProject?.Id ?? 0 // or any default Guid
+                };
+            }).ToList() ?? new List<AdminActivity>();
 
         var reviewsForAdmin = reviews.Select(i => new AdminActivity
-            {
-                ProjectId = i.ProjectId,
-                ProjectType = ProjectType.CodeReview,
-                Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId).Title,
-                IsCompleted = i.IsCompleted,
-                GithubUrl = i.GithubUrl
-            }).ToList() ?? new();
+        {
+            ProjectId = i.ProjectId,
+            ProjectType = ProjectType.CodeReview,
+            Title = Projects.FirstOrDefault(x => x.Id == i.ProjectId).Title,
+            IsCompleted = i.IsCompleted,
+            GithubUrl = i.GithubUrl
+        }).ToList() ?? new();
 
         var courseArticlesForAdmin = User.DashboardProjects
             .Where(dp => courseArticlesIds.Contains(dp.ProjectId))

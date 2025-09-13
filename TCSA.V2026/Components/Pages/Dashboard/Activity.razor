@@ -149,7 +149,7 @@
 
         var claims = authSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User =  await UserService.GetDetailedUserById(UserId);
+        User = await UserService.GetDetailedUserById("c8c28b61-6776-4fb0-8df5-3f9bd6797777");
         AllUserActivity = ActivityHelper.GetActivityDisplay(User);
 
         LoadTime = DateTime.UtcNow - startTime;
@@ -166,6 +166,7 @@
             ActivityType.ProjectSubmitted => $"background-color: orange; color: black; {commonStyles}",
             ActivityType.ProjectCompleted => $"background-color: lightgreen; color: black; {commonStyles}",
             ActivityType.ArticleRead => $"background-color: lightblue; color: black; {commonStyles}",
+            ActivityType.ChallengeCompleted => $"background-color: brown; color: white; {commonStyles}",
             ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
             ActivityType.IssueSubmitted => $"background-color: salmon; color: black; {commonStyles}",
             _ => ""

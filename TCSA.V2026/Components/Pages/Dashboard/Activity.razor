@@ -149,7 +149,7 @@
 
         var claims = authSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User = await UserService.GetDetailedUserById("c8c28b61-6776-4fb0-8df5-3f9bd6797777");
+        User = await UserService.GetDetailedUserById(UserId);
         AllUserActivity = ActivityHelper.GetActivityDisplay(User);
 
         LoadTime = DateTime.UtcNow - startTime;

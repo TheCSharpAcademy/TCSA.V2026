@@ -337,7 +337,7 @@
         var courseArticles = CourseHelper.GetCourses().SelectMany(x => x.Articles).ToList();
         var courseArticlesIds = courseArticles.Select(x => x.Id).ToList();
         var articlesIds = Articles.Select(x => x.Id).ToList();
-        var issuesIds = User.Issues.Select(i => i.ProjectId).ToList();
+        var issuesIds = User.Issues?.Select(i => i.ProjectId).ToList();
         var reviews = await PeerReviewService.GetCodeReviewDetails(UserId);
 
         var issues = User.Issues?.Select(i =>
@@ -425,6 +425,7 @@
         AllAdminActivity.AddRange(issues);
         AllAdminActivity.AddRange(reviewsForAdmin);
         AllAdminActivity.AddRange(courseArticlesForAdmin);
+        AllAdminActivity.AddRange(challengesForAdmin);
 
         FilteredActivity = AllAdminActivity;
 

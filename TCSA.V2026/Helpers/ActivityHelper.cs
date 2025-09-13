@@ -15,6 +15,7 @@ public static class ActivityHelper
         List<Project> projects = ProjectHelper.GetProjects();
         List<Course> courses = CourseHelper.GetCourses();
         int currentPoints = user.ExperiencePoints;
+        var currentBelt = user.Level;
 
         var activity = user.UserActivity.OrderByDescending(x => x.DateSubmitted).ToList();
         for (int i = 0; i < activity.Count(); i++)
@@ -83,6 +84,12 @@ public static class ActivityHelper
                 var project = projects.FirstOrDefault(x => x.Id == item.ProjectId);
                 activityToAdd.Description = $"You completed a <b>{project.Title} review.</b>";
                 activityToAdd.ExperiencePoints = project.ExperiencePoints;
+            }
+
+            if (item.ActivityType == ActivityType.NewBelt)
+            {
+                activityToAdd.Description = $"You achieved {currentBelt} belt!";
+                currentBelt = currentBelt - 1;
             }
 
             currentPoints = i == 0 ? currentPoints : currentPoints - activityDisplay[i - 1].ExperiencePoints;

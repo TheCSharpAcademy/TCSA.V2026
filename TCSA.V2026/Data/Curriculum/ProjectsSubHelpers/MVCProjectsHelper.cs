@@ -203,7 +203,7 @@ internal static class MVCProjectsHelper
                 {
                     "Seed 1000 todos and see what types of challenges it poses to the UX.",
                     "Add a caching system so that if nothing has changed the database won't be called, saving precious resources.",
-                    "Add a calendar component and show to show the tasks based on their due date."
+                    "Add a calendar component to show the tasks based on their due date."
                 },
                 Tips = new List<string>
                 {

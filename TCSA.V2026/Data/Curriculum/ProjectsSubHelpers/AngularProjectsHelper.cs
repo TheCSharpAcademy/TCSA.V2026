@@ -24,7 +24,7 @@ internal static class AngularProjectsHelper
                 Id = 31,
                 Title = "Real Estate App",
                 IconUrl = "icons8-real-estate-100.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-binyaminmellish-1396132.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "Real Estate App",
                 Description = "Learn the basics of Angular by building a purely front-end app using the documentation",

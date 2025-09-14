@@ -41,7 +41,7 @@ public static class ActivityHelper
                 if (course != null)
                 {
                     article = course.Articles.FirstOrDefault(a => a.Id == item.ProjectId);
-                    activityToAdd.Description = $"You read the article <b>{article.Title} from the {course.Title} course</b>";
+                    activityToAdd.Description = $"You read the article <b>{article.Title}</b>";
                     activityToAdd.ExperiencePoints = article.ExperiencePoints;
                 }
 
@@ -63,7 +63,9 @@ public static class ActivityHelper
                     ? $"You completed the issue <b>{user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId)?.Title}</b>."
                     : $"You completed the project <b>{projects.FirstOrDefault(x => x.Id == item.ProjectId)?.Title}</b>.";
 
-                activityToAdd.ExperiencePoints = project == null ? user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId).ExperiencePoints : project.ExperiencePoints;
+                activityToAdd.ExperiencePoints = project == null 
+                    ? user.Issues.FirstOrDefault(x => x.ProjectId == item.ProjectId).ExperiencePoints 
+                    : project.ExperiencePoints;
             }
 
             if (item.ActivityType == ActivityType.IssueSubmitted)

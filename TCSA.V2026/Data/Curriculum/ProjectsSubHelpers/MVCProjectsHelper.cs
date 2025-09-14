@@ -93,7 +93,7 @@ internal static class MVCProjectsHelper
                 Id = 25,
                 Title = "Movies",
                 IconUrl = "icons8-movie-512.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-tima-miroshnichenko-7991238.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "movies",
                 Description = "Build your first full-stack app with ASP.NET C# MVC and Entity Framework",
@@ -105,15 +105,15 @@ internal static class MVCProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Welcome to the wonderful world of MVC.  You should be excited! Model-View-Controller is one of the most widely used design patterns in web development. The concepts you’ll learn apply to any language or framework, not just C#. You’ll be thinking MVC on a daily basis when you get a job."
+                        Body="Welcome to the wonderful world of ASP.NET CoreMVC. You should be excited! Model-View-Controller is one of the most widely used design patterns in web development. The concepts you’ll learn apply to any language or framework, not just C#. You’ll be thinking MVC on a daily basis when you get a job."
                     },
                     new Paragraph
                     {
-                        Body=".NET provides three solutions for full-stack development: Razor Pages, Blazor and MVC. MVC is by far the most popular and it’s widely used in enterprise. While Blazor is gaining ground and more .NET teams are starting to use it, chances are you’ll have to write and/or maintain MVC code at some stage in your career."
+                        Body=".NET provides three solutions for full-stack development: Razor Pages, Blazor and MVC. MVC the most popular and it’s widely used in enterprise. While Blazor is gaining ground and more .NET teams are starting to use it, chances are you’ll have to write and/or maintain MVC code at some stage in your career."
                     },
                     new Paragraph
                     {
-                        Body="For this initial tutorial we’ll be using the official documentation. Its MVC tutorial does a very good job at explaining the basic concepts. There will be a bit of hand-holding at first. You’ll be using .NET’s “scaffolding” <b>(Scaffolding in ASP.NET Core is a technique used to generate code at design time to support a number of common application scenarios when working with Entity Framework Core)</b>, which is necessary given the slight complexity of the project, but if you pay attention to each line of code, by the end of this project you’ll have a good grasp of MVC basics."
+                        Body="For this initial tutorial we’ll be using Microsoft's official documentation. Its MVC tutorial does a very good job at explaining the basic concepts. There will be a bit of hand-holding at first. You’ll be using .NET’s “scaffolding”, a technique used to generate code at design time to support a number of common application scenarios when working with Entity Framework Core. This is necessary given MVC can feel complex when at first, but if you pay attention to each line of code, by the end of this project you’ll have a good grasp of MVC basics."
                     }
                 },
                 Requirements = new List<string>
@@ -122,7 +122,9 @@ internal static class MVCProjectsHelper
                     "Users should be able to Add, Delete, Update and Read from a database, using website as the front-end.",
                     "You need to use Entity Framework, raw SQL isn't allowed.",
                     "There needs to be a search functionality where I can search movies by name.",
-                    "You should use SQL Server, not SQLite"
+                    "You should use SQL Server, not SQLite.",
+                    "Once you finish the tutorial, you'll need to improve the UI. Add your personal touch with different colors, buttons, etc. The more the better.",
+                    "You can't leave any unused code from the tutorials. Make sure you remove any unused controllers, unnecessary comments and whatever else you find that doesn't abide to professional standards."
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
@@ -130,12 +132,13 @@ internal static class MVCProjectsHelper
                     "<a href='https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc'>Microsoft Docs MVC Tutorial</a>",
                     "<a href='https://docs.microsoft.com/en-us/dotnet/architecture/porting-existing-aspnet-apps/comparing-razor-pages-aspnet-mvc'>Microsoft Docs MVC vs Razor Pages</a>",
                     "<a href='https://stackoverflow.com/questions/48121928/asp-net-core-razor-pages-vs-full-mvc-core'>Stack Overflow: MVC vs Razor Pages</a>",
-                     "<a href='https://www.guru99.com/mvc-vs-mvvm.html'>MVC vs MVVM Article</a>"
+                    "<a href='https://www.guru99.com/mvc-vs-mvvm.html'>MVC vs MVVM Article</a>",
+                    "<a href='https://www.youtube.com/watch?v=4sosXZsdy-s&t=57s'>Bootstrap 5 Crash Course</a>"
                 },
-                ResourcesConclusion = $"Notice that there’s a lot of talk about Razor Pages, MVVM, MVC. Those topics can be confusing. Give these texts a good read and reach out on our <a  target='_blank' href='{DiscordLink}'>Discord community</a> if it doesn’t make sense. And remember, Google is your best friend! 😁",
+                ResourcesConclusion = $"Notice that there’s a lot of talk about Razor Pages, MVVM, MVC. Those topics can be confusing. Give these texts a good read and reach out on our <a target='_blank' href='{DiscordLink}'>Discord community</a> if it doesn’t make sense. Also notice there's a <b>bootstrap tutorial</b>. MVC by default ships with this UI framework. You might want to learn the basics to make the tweaks to the UI required. And remember, AI and Google are your best friends! 😁",
                 Tips = new List<string>
                 {
-                    "In the Microsoft Docs MVC Tutorial, the first three chapters contain a simple controller with a view, for basic understanding of .NET MVC. Don't skip that part. But the actual Movie App code starts on Part 4.",
+                    "In the Microsoft Docs MVC Tutorial, the first three chapters contain a simple controller with a view, for basic understanding of .NET MVC. Don't skip that part. But the actual Movie App code starts on Part 4. Remember to get rid of any unused code in the end!",
                     "Read every single line of the tutorial. Don't rush through the steps.",
                     "Once you're finished, push your final version to Github, create a new repository and do it again, step-by-step, there's a lot going on in MVC, and one time isn't enough.",
                     "I strongly recommend you make notes to help you connect the dots in ASP.NET MVC. There are lots of little details to learn and it will serve as a reference for your future MVC projects."

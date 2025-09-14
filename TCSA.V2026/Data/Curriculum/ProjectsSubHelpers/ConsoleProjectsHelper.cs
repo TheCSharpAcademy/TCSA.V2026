@@ -146,7 +146,7 @@ public class ConsoleProjectsHelper
                 Title = "Calculator",
                 IconUrl = "icons8-calculator-512.png",
                 Slug = "calculator",
-                BannerUrl = "",
+                BannerUrl = "pexels-ian-panelo-5491023.jpg",
                 BannerV2 = "calculator",
                 LanguageHeadings = new EnglishHeadings(),
                 Level = Level.OliveGreen,
@@ -202,7 +202,7 @@ public class ConsoleProjectsHelper
                             new Paragraph
                             {
                                 IsVideo = true,
-                                VideoUrl = "https://www.youtube.com/embed/mHb_wSNYZ9I?si=IZjMHd9Tv5duMMr4"
+                                VideoUrl = "https://www.youtube.com/embed/XMJS-eQ4Y48?si=Bwbn0UZUe-thB8md"
                             }
                         }
                     },
@@ -227,7 +227,7 @@ public class ConsoleProjectsHelper
                 Id = 12,
                 Title = "Habit Logger",
                 IconUrl = "icons8-calendar-plus-96.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-polina-kovaleva-5717413.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "habit-logger",
                 Description = "Build a logger for a habit of choice. Learn how to interact with a database using SQLite and to get and validate user input",
@@ -398,7 +398,7 @@ public class ConsoleProjectsHelper
                 Id = 13,
                 Title = "Coding Tracker",
                 IconUrl = "icons8-smart-watch-96.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-divinetechygirl-1181244.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "coding-tracker",
                 Level = Level.OliveGreen,
@@ -474,7 +474,7 @@ public class ConsoleProjectsHelper
                             new Paragraph
                             {
                                 IsVideo = true,
-                                VideoUrl = "https://www.youtube.com/embed/mHb_wSNYZ9I?si=IZjMHd9Tv5duMMr4"
+                                VideoUrl = "https://www.youtube.com/embed/XMJS-eQ4Y48?si=Bwbn0UZUe-thB8md"
                             }
                         }
                     },
@@ -509,7 +509,7 @@ public class ConsoleProjectsHelper
                 Id = 14,
                 Title = "Flashcards",
                 IconUrl = "icons8-quizlet-96.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-ron-lach-8035283.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "flashcards",
                 Level = Level.Yellow,

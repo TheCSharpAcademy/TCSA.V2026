@@ -23,7 +23,7 @@ internal static class BlazorProjectsHelper
                 Id = 39,
                 Title = "Wardrobe Inventory",
                 IconUrl = "icons8-wardrobe-392.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-pixabay-325876.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "wardrobe-inventory",
                 Description = "Get started with Blazor by building an inventory for your clothes. With pictures!",
@@ -35,22 +35,21 @@ internal static class BlazorProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Welcome to Blazor!! The current .NET solution for web-development that Microsoft created to compete with React (Meta) and Angular (Google). You might be thinking, why learn Blazor where most jobs want React/Angular? And that’s a good point. In fact I wouldn’t start with Blazor in the front-end before knowing one of the big JS frameworks. But once you have one of those covered, having Blazor in your resume might give you the edge you need to land that dream-job. And make no mistake! Even though there are LESS Blazor jobs out there, they definitely exist. And not many people are fighting for them."
+                        Body="Welcome to Blazor!! The current .NET solution for web-development that Microsoft created to compete with React (Meta) and Angular (Google). You might be thinking why learn Blazor when most jobs want React/Angular? And that’s a good question. In fact I wouldn’t start with Blazor in the front-end before knowing one of the big JS frameworks. But once you have one of those covered, having Blazor in your resume might give you the edge you need to land that dream-job. And make no mistake! Even though there are less Blazor jobs out there, they definitely exist. And not many people are fighting for them."
                     },
                      new Paragraph
                     {
-                        Body="Blazor lets you build user interfaces without using Javascript. Both client and server code is written in C#, allowing you to share code and libraries. It’s just a joy to work with. Up to 2022, there were two types of Blazor projects: Blazor Web Assembly, and Blazor Server. But recently Microsoft creates Blazor Hybrid, which allows you to use Blazor components to build the UI for apps with WPF and most importantly, MAUI. Wow!! Let’s get started??"
+                        Body="Blazor lets you build user interfaces without using Javascript. Both client and server code is written in C#, allowing you to share code and libraries. It’s just a joy to work with. Up to 2022, there were two types of Blazor projects: Blazor Web Assembly, and Blazor Server. But recently Microsoft changed it <b>so you can choose one or the other per component</b>. That's not even counting Blazor Hybrid, which allows you to use Blazor components to build the UI for apps with WPF and most importantly, MAUI, which is fully cross-platform. Wow!! Let’s get started??"
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "This is an application where you should store and retrieve wardrobe data..",
-                    "You should use a Blazor Webassembly project.",
+                    "This is an application where you should store and retrieve wardrobe data.",
                     "You can choose whatever database solution you want: Sqlite, SQL server or whatever you're comfortable with.",
-                    "Since we'll only have basic CRUD operations, you should use Entity Framework.",
+                    "You should use Entity Framework.",
                     "Your database should have a single table. The objective is to focus on learning Blazor, so we should avoid the complexities of relational data.",
                     "Users of your app need to be able to upload pictures of wardrobe items.",
-                    "You CAN'T USE Javascript interop. The objective is to stay away from JS, even though it's still possible to use it."
+                    "You <b>can't use Javascript Interop</b>. The objective is to stay away from JS, even though it's still possible to use it."
                 },
                 Resources = new List<string>
                 {
@@ -64,6 +63,12 @@ internal static class BlazorProjectsHelper
                 {
                     "You only need a single project. Contrary to using Angular and React, you don't need to create two separate projects, since the front-end end and the back-end will be covered by Blazor.",
                     "In this project, you're not allowed to use Javascript Interop. But a nice challenge after the completion of the project would be to integrate it to your project: <a target='_blank' href='https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0'>Javascript Interop Explained</a>, <a target='_blank' href='https://www.youtube.com/watch?v=p4MD6ycpQpY'>Javascript Interop Youtube Tutorial</a>"
+                },
+                Challenges = new List<string>
+                {
+                    "You love organizing so add a feature to categorize clothes by type.",
+                    "Scratch your creative itch with a feature to create outfits by combining different clothes.",
+                    "You hate repeating outfits, so add a feature that let's you track what you've used per date."
                 }
             },
             new Project

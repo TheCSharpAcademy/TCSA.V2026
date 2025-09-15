@@ -23,7 +23,7 @@ internal static class MVCProjectsHelper
                 Id = 24,
                 Title = "Water Drinking Logger",
                 IconUrl = "icons8-drinking-96.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-igor-starkov-233202-2575440.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "water-drinking-logger",
                 Description = "Build your first full-stack app with ASP.NET C# Razor Pages and ADO.NET",
@@ -35,33 +35,34 @@ internal static class MVCProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Welcome to the world of Razor Pages! Razor pages is a “newer, simplified web application programming model. It removes much of the ceremony of ASP.NET MVC by adopting a file-based routing approach. Each Razor Pages file found under the Pages directory equates to an endpoint.” There’s a lot of discussion in the .NET world about the pros and cons of Razor Pages vs MVC. Here at the C# Academy, we will learn both design patterns, so you’re better prepared to get your first job and excel at it. "
+                        Body="Welcome to the world of Razor Pages, a simplified web application programming model offered by .NET. It removes much of the ceremony of ASP.NET MVC by adopting a file-based routing approach. Each Razor Pages file found under the Pages directory equates to an endpoint. There’s a lot of discussion in the .NET world about the pros and cons of Razor Pages vs MVC. Here at the C# Academy, we will learn both design patterns, so you’re better prepared to get your first job and excel at it. "
                     },
                     new Paragraph
                     {
-                        Body="Another advantage of learning Razor Pages is that it uses Razor syntax, which is the same solution .NET uses for MVC and Blazor. That means that your knowledge will be applied in many different pieces of technology. If you’re hired to work with C#, you’ll most likely work with one of these at some stage. Even companies that use front-end frameworks such as Vue, React or Angular have applications using .NET front-end solutions as part of their domain. Your knowledge will go a long way."
+                        Body="Another advantage of learning Razor Pages is that it uses Razor syntax, which is the same solution .NET uses for MVC and Blazor, the other two full-stack solutions in .NET. That means that your knowledge will be applied in many different pieces of technology. If you’re hired to work with C#, you’ll most likely work with one of these at some stage. Even companies that use front-end frameworks such as Vue, React or Angular have applications using .NET front-end solutions as part of their domain. Your knowledge will go a long way."
                     }
                 },
-                RequirementsIntro = "The requirements for this project are different than the ones in the Console Area. From what I’ve seen, being out in the world trying to figure out, as a beginner in C#, how Razor Pages or MVC work, just using the documentation or free tutorials, is very frustrating. As much as I like Microsoft’s documentation in general, it doesn’t seem to satisfy the needs of many beginners. For that reason, I put together a video tutorial with the basics of Razor Pages. As usual, it’s project-based. The business model should be very similar to our first couple of console Apps, the Habit Tracker, and the Coding Tracker. But in this video I’ll walk you through the project step-by-step. You might consider this “hand-holding”, and it is. But once you learn these basics, we will have project where you’ll have to implement different business cases using Razor Pages and MVC. Don’t worry, I won’t hold your hand for too  long. 😁",
+                RequirementsIntro = "Microsoft’s documentation is very helpful in general, but the sheer amount of content sometimes can be very confusing. For that reason, we put together a video tutorial with the basics of Razor Pages. As usual, it’s project-based. The business model is very similar to our first couple of console apps, the Habit Tracker, and the Coding Tracker. In this video we’ll walk you through the project step-by-step. You might consider this “hand-holding”, and it is. But once you learn these basics, you'll have to implement a different business cases using Razor Pages. Don’t worry, we won’t hold your hand for too  long. 😁",
                 Requirements = new List<string>
                 {
                     "Follow the Razor Project Tutorial in the link provided, creating a list of steps with notes you think are important.",
-                    "Recreate the project, with a different business case. Track something different and use different styling. Time to be creative!!"
+                    "Recreate the project, with a different business case. Track something different and use different styling. Time to be creative!!",
+                    "Add error handling to all your operations. You can test this by deleting the table and trying any of the CRUD operations to see what happens.",
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
+                    "<a href='https://www.youtube.com/watch?v=iIFAKW21d-4'>Razor Pages Youtube Tutorial</a>",
                     "<a href='https://bit.ly/3uVRjfM'>Razor Syntax Docs</a>",
                     "<a href='https://bit.ly/3MeGF9V'>Razor Pages Docs</a>",
                     "<a href='https://bit.ly/36uivZR'>Learn Razor Pages</a>",
-                     "<a href='https://bit.ly/393KNLD'>Javascript Crash Course</a>",
+                    "<a href='https://bit.ly/393KNLD'>Javascript Crash Course</a>",
                     "<a href='https://bit.ly/3rD1Bj7'>Bootstrap Crash Course</a>",
                     "<a href='https://docs.microsoft.com/en-us/dotnet/architecture/porting-existing-aspnet-apps/comparing-razor-pages-aspnet-mvc'>Microsoft: Razor Pages vs MVC</a>",
                     "<a href='https://stackoverflow.com/questions/48121928/asp-net-core-razor-pages-vs-full-mvc-core'>Stack Overflow: Razor Pages vs MVC</a>"
                 },
                 Tips = new List<string>
                 {
-                    "Don't forget to have all of your code on Github, ALWAYS",
                     "You'll come across many different files and pieces of code you've never seen. Study each one carefully, use the links in the resources area. You can find thorough explanations about each little piece of the code searching online."
                 },
                 Challenges = new List<string>
@@ -69,7 +70,8 @@ internal static class MVCProjectsHelper
                     "What if you want to allow split numbers? I.e. 2.25 cups of water, how would you change your data types?",
                     "How about letting the user decide between standard measures (big bottle, bottle, glass)",
                     "What if you want to have another habit being tracked in the same project? The limit to what you can create is the limit of your imagination.",
-                    "Let's say your team decided to implement Entity Framework in all apps that currently use ADO.NET. This is a common scenario in enterprise environments. Try implementing this change. You can choose either a database-first or a code-first approach."
+                    "Let's say your team decided to implement Entity Framework in all apps that currently use ADO.NET. This is a common scenario in enterprise environments. Try implementing this change. You can choose either a database-first or a code-first approach.",
+                    "Use your knowledge from the Excel Reader project and let the users export their data onto a spreadsheet.",
                 },
                 Blocks = new List<Block>
                 {

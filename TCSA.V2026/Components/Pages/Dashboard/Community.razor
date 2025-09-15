@@ -24,9 +24,9 @@
     else
     {
         <MudButton Class="mt-3 ml-5 mr-5"
-                   Size="@Size.Medium"
-                   Variant="@Variant.Filled" Color="@Color.Success"
-                   OnClick="@(() => SubmitIssueDialog())">
+        Size="@Size.Medium"
+        Variant="@Variant.Filled" Color="@Color.Success"
+        OnClick="@(() => SubmitIssueDialog())">
             Create Issue
         </MudButton>
         <MudDataGrid Class="mt-2" Items="@IssuesToShow.OrderByDescending(i => i.Id)" Dense="true" RowStyle="GetRowStyle">
@@ -40,23 +40,23 @@
                             @if (!string.IsNullOrEmpty(context.Item.GithubUrl) && context.Item.GithubUrl.StartsWith("http"))
                             {
                                 <MudButton 
-                                    Size="@Size.Small" 
-                                    Variant="@Variant.Filled" 
-                                    Color="@Color.Warning"
-                                    OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
-                                    StartIcon="fas fa-eye">
+                                Size="@Size.Small" 
+                                Variant="@Variant.Filled" 
+                                Color="@Color.Warning"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", context.Item.GithubUrl, "_blank", "noopener,noreferrer"))"
+                                StartIcon="fas fa-eye">
                                     View
                                 </MudButton>
-                    
+
                             }
                             @if (!User.DashboardProjects.Any(d => d.ProjectId == context.Item.ProjectId))
                             {
                                 <MudButton 
-                                    Size="@Size.Small" 
-                                    Variant="@Variant.Filled" 
-                                    Color="@Color.Success"
-                                    OnClick="@(() => AssignMyself(context.Item))"
-                                    StartIcon="fas fa-hand-point-up">
+                                Size="@Size.Small" 
+                                Variant="@Variant.Filled" 
+                                Color="@Color.Success"
+                                OnClick="@(() => AssignMyself(context.Item))"
+                                StartIcon="fas fa-hand-point-up">
                                     Pick 
                                 </MudButton>
                             } 
@@ -69,10 +69,10 @@
                                 else 
                                 {
                                     <MudButton 
-                                        Size="@Size.Small"
-                                        Variant="@Variant.Filled" Color="@Color.Primary"
-                                        OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))"
-                                        EndIcon="@Icons.Material.Filled.Send">
+                                    Size="@Size.Small"
+                                    Variant="@Variant.Filled" Color="@Color.Primary"
+                                    OnClick="@(() => SubmitToReviewDialog(context.Item.ProjectId))"
+                                    EndIcon="@Icons.Material.Filled.Send">
                                         Submit PR
                                     </MudButton>
                                 }
@@ -125,7 +125,7 @@
     private async Task SubmitToReviewDialog(int projectId)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<TCSASubmitProjectDialog> { { x => x.ProjectId, projectId }, { x => x.IsIssue, true } };
+        var parameters = new DialogParameters<TCSASubmitProjectDialog> { { x => x.ProjectId, projectId }, { x => x.IsIssue, true }, { x => x.User, User} };
         var dialog = await DialogService.ShowAsync<TCSASubmitProjectDialog>("Submit Issue", parameters, options);
         var result = await dialog.Result;
 

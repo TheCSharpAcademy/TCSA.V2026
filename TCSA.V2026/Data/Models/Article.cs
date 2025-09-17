@@ -150,8 +150,17 @@ public enum ArticleName
 
     SeparationOfConcerns = 30005,
 
-    CoursesOopIntro = 500025
-
+    CoursesOopFirst = 500000,
+    CoursesOopLast = 500025,
+    CoursesWebApiFirst = 500050,
+    CoursesWebApiLast = 500063,
+    CoursesSQLFirst = 500070,
+    CoursesSQLLast = 500086,
+    CoursesWpfFirst = 500100, 
+    CoursesWpfLast = 500116,
+    CoursedDIFirst = 500150,
+    CoursesDILast = 500161,
+    CoursesReactFirst = 500200
 }
 
 public enum ArticleReference

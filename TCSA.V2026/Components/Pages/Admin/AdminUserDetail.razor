@@ -87,6 +87,13 @@
 
         <MudPaper Class="mb-5 pa-5" Elevation="4">
             <MudItem xs="4">
+                <MudText Typo="Typo.body1" Color="Color.Primary">View Activity</MudText>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" 
+                OnClick="@(() => JS.InvokeVoidAsync("window.open", $"/adminactivity/{UserId}", "_blank", "noopener,noreferrer"))">
+                    Go
+                </MudButton>
+            </MudItem>
+            <MudItem xs="4">
                 <MudText Typo="Typo.body1" Color="Color.Primary">Change Belt</MudText>
                 <MudSelect T="Level" Label="Select Belt Level" @bind-Value="SelectedLevel" Class="my-2" Dense="true">
                     @foreach (Level lvl in Enum.GetValues(typeof(Level)))

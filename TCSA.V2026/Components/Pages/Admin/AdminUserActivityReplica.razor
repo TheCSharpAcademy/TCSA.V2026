@@ -1,0 +1,220 @@
+﻿@page "/adminactivity/{UserId}"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using System.ComponentModel.DataAnnotations
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Helpers.Constants
+@using TCSA.V2026.Services
+@attribute [Authorize]
+
+<PageTitle>Activity</PageTitle>
+
+5		Start Here	True	
+<MudContainer>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
+        <MudSelect T="ActivityType?"
+        Label="Filter by Activity Type"
+        @bind-Value="SelectedActivityType"
+        Class="my-2" Dense="true" Clearable="true">
+            <MudSelectItem T="ActivityType?" Value="null">All</MudSelectItem>
+            @foreach (var type in Enum.GetValues<ActivityType>())
+            {
+                <MudSelectItem T="ActivityType?" Value="@type">@GetEnumDisplayName(type)</MudSelectItem>
+            }
+        </MudSelect>
+
+        if (UserActivity != null && UserActivity.Count > 0)
+        {
+            if (Pages > 1)
+            {
+                <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+                    <MudPagination Count="Pages"
+                                   Selected="CurrentPage"
+                                   SelectedChanged="OnPageChanged"
+                                   BoundaryCount="_boundaryCount"
+                                   Size="_paginationSize" />
+                </MudBreakpointProvider>
+            }
+            <MudHidden Breakpoint="Breakpoint.LgAndUp">
+                @foreach(var a in UserActivity)
+                {
+                    <MudCard Class="mt-1">
+                        <MudCardHeader Class="d-flex align-items-center flex-wrap justify-space-between ">
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body2">@a.Date.ToString("MMM dd, yyyy, ddd")</MudText>
+                                <MudText Typo="Typo.body1" Style=@GetDateCellStyleMobile(a)> @((MarkupString)a.Description)</MudText>
+                                <MudGrid Class="pt-1">
+                                    <MudItem xs="6" Class="d-flex align-items-center">
+                                        <MudText Typo="Typo.body2" Class="mr-1">XPs Won: </MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Primary" Style="font-weight: bold;"> @a.ExperiencePoints</MudText>
+                                    </MudItem>
+                                    <MudItem xs="6" Class="d-flex align-items-center">
+                                        <MudText Typo="Typo.body2" Class="mr-1">Total XPs:</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Error" Style="font-weight: bold;">  @a.CurrentExperiencePoints</MudText>
+                                    </MudItem>
+                                </MudGrid>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                    </MudCard>
+                }
+            </MudHidden>
+
+            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                <MudDataGrid Class="mt-2" Dense="true" Items="@UserActivity">
+                    <Columns>
+                        <TemplateColumn Title="Date">
+                            <CellTemplate>
+                                <MudText Style="@GetDateCellStyle(context.Item)">
+                                    @context.Item.Date.ToString("MMM dd, yyyy, ddd")
+                                </MudText>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn>
+                            <CellTemplate>
+                                <MudText Style="white-space:nowrap">
+                                    @((MarkupString)context.Item.Description)
+                                </MudText>
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" />
+                        <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
+                    </Columns>
+                </MudDataGrid>
+            </MudHidden>
+        }
+    }
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] protected ICommunityService CommunityService { get; set; }
+    [Parameter] public string UserId { get; set; }
+
+    private ApplicationUser User { get; set; }
+    private List<ActivityDisplay> AllUserActivity = new();
+    private List<ActivityDisplay> UserActivity => AllUserActivity
+        .Where(x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value)
+        .Skip((CurrentPage - 1) * PagingConstants.ActivityPageSize)
+        .Take(PagingConstants.ActivityPageSize).ToList();
+
+    private ActivityType? _selectedActivityType = null;
+    private ActivityType? SelectedActivityType
+    {
+        get => _selectedActivityType;
+        set
+        {
+            if (_selectedActivityType != value)
+            {
+                _selectedActivityType = value;
+                CurrentPage = 1; // Reset to first page when filter changes
+            }
+        }
+    }
+
+    private bool IsLoading = true;
+    private int CurrentPage = 1;
+    private int TotalFilteredActivities => AllUserActivity.Count(x => SelectedActivityType is null || x.ActivityType == SelectedActivityType.Value);
+    private int Pages => (int)Math.Ceiling((double)TotalFilteredActivities / PagingConstants.ActivityPageSize);
+    private TimeSpan LoadTime = TimeSpan.Zero;
+    private int _boundaryCount = 1;
+    private Size _paginationSize = Size.Medium;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        User = await UserService.GetDetailedUserById(UserId);
+        AllUserActivity = ActivityHelper.GetActivityDisplay(User);
+
+        LoadTime = DateTime.UtcNow - startTime;
+
+        IsLoading = false;
+    }
+
+    private string GetDateCellStyle(ActivityDisplay activity)
+    {
+        var commonStyles = "padding: 10px 10px 10px 20px;  border-radius: 4px; white-space: nowrap;";
+        return activity.ActivityType switch
+        {
+            ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange; color: black; {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen; color: black; {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; color: black; {commonStyles}",
+            ActivityType.ChallengeCompleted => $"background-color: brown; color: white; {commonStyles}",
+            ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; color: black; {commonStyles}",
+            _ => ""
+        };
+    }
+
+    private string GetDateCellStyleMobile(ActivityDisplay activity)
+    {
+        var commonStyles = "padding: 10px 10px 10px 20px;  border-radius: 4px;";
+        return activity.ActivityType switch
+        {
+            ActivityType.NewBelt => $"background-color: blue; color: white; {commonStyles}",
+            ActivityType.ProjectSubmitted => $"background-color: orange; color: black; {commonStyles}",
+            ActivityType.ProjectCompleted => $"background-color: lightgreen; color: black; {commonStyles}",
+            ActivityType.ArticleRead => $"background-color: lightblue; color: black; {commonStyles}",
+            ActivityType.ChallengeCompleted => $"background-color: brown; color: white; {commonStyles}",
+            ActivityType.CodeReviewCompleted => $"background-color: purple; color: white; {commonStyles}",
+            ActivityType.IssueSubmitted => $"background-color: salmon; color: black; {commonStyles}",
+            _ => ""
+        };
+    }
+
+    private string GetEnumDisplayName(ActivityType type)
+    {
+        var fieldInfo = type.GetType().GetField(type.ToString());
+        var attributes = fieldInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
+
+        return attributes?.FirstOrDefault() is DisplayAttribute displayAttribute
+            ? displayAttribute.Name
+            : type.ToString(); // Fall back to raw enum name if no attribute is found
+    }
+
+    private void OnPageChanged(int page)
+    {
+        CurrentPage = page;
+    }
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _paginationSize = Size.Small;
+            _boundaryCount = 1;
+        }
+        else
+        {
+            _paginationSize = Size.Medium;
+            _boundaryCount = 2;
+        }
+    }
+}

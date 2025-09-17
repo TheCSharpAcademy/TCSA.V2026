@@ -76,7 +76,7 @@ internal static class BlazorProjectsHelper
                 Id = 40,
                 Title = "Memory Game",
                 IconUrl = "icons8-memory-512.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-mikhail-nilov-8653586.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "memory-game",
                 Description = "Build a simple memory game where users will train their brain and track results",
@@ -99,22 +99,22 @@ internal static class BlazorProjectsHelper
                 {
                     "Your memory game should have a timer.",
                     "Once a game is finished it should record the date it was played and the time it took to finish in a \"games\" table.",
-                    "You should have just one level of difficulty.",
-                    "Your game should have 9 cards.",
-                    "The app should have two main components: the game and the games list.",
-                    "You shouldn't need a database for the game functionality. All the information about the cards can be in lists in the code base.",
-                    "Since it only requires basic operations, use Entity Framework for recording game history."
+                    "You should have at least 3 levels of difficulty.",
+                    "Your game should have at least 10 cards.",
+                    "The app should have two main components: the game and the games history list.",
+                    "You don't need a database for the game functionality. All the information about the cards can be in lists in the code base."
                 },
                 ResourcesConclusion = "You should be able to complete this project with the same resources found in the <a href='article/39/wardrobe-inventory' target='blank'>Blazor Wardrobe Inventory</a> project.",
                 Tips = new List<string>
                 {
                     "Split the development in three phases: game functionality, games history, styling.",
                     "When developing the functionality, have a simple game with 4 or 6 cards for faster testing.",
-                    "During development, use characters on your cards. Bring in icons or images in the styling phase."
+                    "During development, use characters on your cards. Bring in icons or images in the styling phase.",
+                    "It can be tempting to just make something that works.  But remember how competitive the market is these days. Try to make something that looks good and is fun to use. Make sure you always have high standards for your work."
                 },
                 Challenges = new List<string>
                 {
-                    "Add difficulty levels to your game: more cards.",
+                    "Can you come up with another game that helps with memory? It can be a game that you've seen before or something entirely new.",
                     "Add a game against the clock: How many cards can the user match in a minute?",
                     "Add a search functionality to the games list",
                     "Add a reports area where you'll query the database and show: How many games played per week/month/year and average score"

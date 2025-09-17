@@ -13,6 +13,7 @@ public class CourseHelper
             SqlCourse.GetSqlCourse(),
             WpfCourse.GetWpfCourse(),
             DiCourse.GetDiCourse(),
+            ReactCourse.GetReactCourse()
         };
         //return new List<Course>
         //{

@@ -72,7 +72,7 @@ internal static class ReactProjectsHelper
                 Id = 36,
                 Title = "Call an External API",
                 IconUrl = "icons8-baby-app-96.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-minan1398-1006122.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "call-external-api",
                 Description = "Build a simple Get Endpoint with .NET and fetch data from it using React",
@@ -109,6 +109,11 @@ internal static class ReactProjectsHelper
                     "<a target='_blank' href='https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0'>Enabling CORS (Cross Origin Resource Sharing) in .NET Web API</a>",
                     "<a target='_blank' href='https://stackoverflow.com/questions/65082452/cors-is-not-working-with-net-core-api-and-angular-frontend'>Dealing With CORS errors (Stack Overflow)</a>",
                     "<a target='_blank' href='https://www.youtube.com/watch?v=DTBta08fXGU'>Handling Fetch API errors in React</a>",
+                },
+                Challenges = new List<string>
+                {
+                    "If you want to push yourself early on, try adding all CRUD operations to your app.",
+                    "Try to create an app that needs data from two different APIs: The one you created and a public one."
                 },
                 ResourcesConclusion = "Connecting to an API using Fetch JS is incredibly easy. But chances are you’ll find a cross-origin error. Don’t forget to visit these links to solve it. ",
                 Tips = new List<string>

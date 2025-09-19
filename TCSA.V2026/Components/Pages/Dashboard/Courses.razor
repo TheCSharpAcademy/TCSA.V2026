@@ -202,17 +202,17 @@
         var reactCourseIds = reactCourse.Articles.Select(c => c.Id).ToList();
         var completeReactCourseIds = reactCourseIds.Where(id => User.DashboardProjects.Any(dp => dp.IsCompleted && dp.ProjectId == id)).ToList();
 
-        DashboardCourses.Add
-        (
-            new DashboardCourseInfo
-            {
-                Id = 7,
-                Title = reactCourse.Title,
-                Description = $"{completeReactCourseIds.Count} out of {reactCourseIds.Count} chapters completed",
-                ImgUrl = reactCourse.ImgUrl,
-                Status = GetCourseStatus(completeReactCourseIds, diCourseIds)
-            }
-        );
+        // DashboardCourses.Add
+        // (
+        //     new DashboardCourseInfo
+        //     {
+        //         Id = 7,
+        //         Title = reactCourse.Title,
+        //         Description = $"{completeReactCourseIds.Count} out of {reactCourseIds.Count} chapters completed",
+        //         ImgUrl = reactCourse.ImgUrl,
+        //         Status = GetCourseStatus(completeReactCourseIds, diCourseIds)
+        //     }
+        // );
     }
 
     private void NavigateToCourse(int courseId)

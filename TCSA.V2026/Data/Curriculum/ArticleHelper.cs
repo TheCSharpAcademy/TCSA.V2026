@@ -1766,7 +1766,7 @@ git push</code>"
                 Title = "The C# Academy Intro Guide",
                 IconUrl = "icons8-notes-64.png",
                 Slug="user-guide",
-                BannerUrl = "",
+                BannerUrl = "pexels-karolina-grabowska-4959741.jpg",
                 CardImgUrl = "academy-introduction.png",
                 Description = "A quick overview of how to get the most out of the academy.",
                 Area = Area.StandAlone,
@@ -1780,7 +1780,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "There's a lot that can be done in The C# Academy. Our program is designed to let you customize your learning experience, whether you’re a complete beginner looking for a clear roadmap or an experienced developer aiming to fill in knowledge gaps. Let's explore how The C# Academy works!"
+                                Body = "There are many ways to learn in The C# Academy. Our program is designed to let you <b>customize your learning experience</b>, whether you’re a complete beginner looking for a clear roadmap or an experienced developer aiming to fill in knowledge gaps. Let's explore how The C# Academy works!"
                             }
                         }
                     },
@@ -1802,7 +1802,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Belt System</h3><p><p> You'll notice that the roadmap is organized into levels, or belts, similar to martial arts. To advance to the next belt, you need to complete a series of tasks. On the roadmap page, you can see icons for the tasks you need to complete to advance to the next belt. Hovering over the question mark on each belt will display a list of the tasks. At the top of the page, you'll find a list of the missing tasks for the current level. "
+                                Body = "<h3>Belt System</h3><p><p> You'll notice that the roadmap is organized into levels, or belts, similar to martial arts. To advance to the next belt, you need to complete a series of tasks. On the roadmap page, you can see icons for the tasks you need to complete to advance to the next belt."
                             }
                         }
                     },
@@ -1813,7 +1813,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Leaderboard</h3><p><p> We also have a <a href='/leaderboard' target='_blank'>leaderboard</a>. You'll feature on the leaderboard as soon as you gain your first points. It's totally independent of the belt system. You can be at the top of the leaderboard and still be a White Belt. We've designed it this way so that you're not forced to follow the roadmap if you don't want to. We really want you to enjoy yourself! "
+                                Body = "<h3>Leaderboard</h3><p><p> We also have a <a href='/dashboard/leaderboard' target='_blank'>leaderboard</a>. You'll feature on the leaderboard as soon as you gain your first points. It's totally independent of the belt system. You can be at the top of the leaderboard and still be a White Belt. We've designed it this way so that <b>you're not forced to follow the roadmap if you don't want to</b>. We really want you to enjoy yourself! "
                             }
                         }
                     },
@@ -1835,7 +1835,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>First Steps</h3><p><p>You'll start by reading 6 short articles: Start Here, Getting Help, Setting Up, C# Foundations, The Importance of Console Applications and this guide. We don't want to bore you with a lot of reading, so the whole thing will take you less than an hour. This preparation time will increase if you need to install a few programs."
+                                Body = "<h3>First Steps</h3><p><p>You'll start by reading 6 short articles: Start Here, Getting Help, Setting Up, C# Foundations, The Importance of Console Applications and this guide. <b>We don't want to bore you with a lot of reading</b>, so the whole thing will take you less than an hour. But this preparation time will increase if you need to install .NET from scratch."
                             }
                         }
                     },
@@ -1846,7 +1846,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Microsoft Certification</h3><p><p>Then you'll jump onto the <a href='/project/75/freecodecamp-certification' target='_blank'>Freecodecamp Certification</a> (FCC). We warn you that many people say it can get boring. However, it provides important knowledge before you start building. And it gives you a Microsoft Certificate! We recommend you do it. If you find it unbearable, divide and conquer. Do one section a day. In parallel, get started with the Math Game. Reading the articles, completing FCC and finishing the Math Game will earn you a Green Belt."
+                                Body = "<h3>Microsoft Certification</h3><p><p>Then you'll jump onto the <a href='/project/75/freecodecamp-certification' target='_blank'>Freecodecamp Certification</a> (FCC). We warn you that many people say it can get boring. However, it provides important knowledge before you start building. <b>And it gives you a Microsoft Certificate</b>! We recommend you do it. If you find it unbearable, divide and conquer. Do one section a day. In parallel, get started with the Math Game. Reading the articles, completing FCC and finishing the Math Game will earn you a Green Belt."
                             }
                         }
                     },
@@ -1857,7 +1857,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Console Area</h3><p><p>After this first quick win, complete the <a href='/#console-area' target='_blank'>Console Area</a> and build your <a href='/project/23/resume' target='_blank'>Resume</a> and <a href='/project/22/portfolio' target='_blank'>Portfolio</a>. This will take you all the way up to Red Belt. It's not very hard; if you create a solid study routine you can complete it in a couple of months. However, those who complete it very quickly usually have a good amount of previous programming experience. If you're an absolute beginner, give yourself some time and think of it as a marathon!"
+                                Body = "<h3>Console Area</h3><p><p>After this first quick win, complete the <a href='/#console-area' target='_blank'>Console Area</a> and build your <a href='/project/23/resume' target='_blank'>Resume</a> and <a href='/project/22/portfolio' target='_blank'>Portfolio</a>. This will take you all the way up to Red Belt. If you create a solid study routine you can complete it in a couple of months. However, those who complete it very quickly usually have a good amount of previous programming experience. If you're an absolute beginner, give yourself some time and <b>think of it as a marathon!</b>"
                             }
                         }
                     },
@@ -1879,7 +1879,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>More Than Projects</h3><p><p>As you go through the Roadmap, you'll notice that some levels have extra tasks, carefully designed to make you a well-rounded developer: Community Projects, Code Reviews, Code Challenges, Flagship Project. Let's see what these are about."
+                                Body = "<h3>More Than Projects</h3><p><p>As you go through the Roadmap, you'll notice that some levels have extra tasks, carefully designed to make you a well-rounded developer: Courses, Community Projects, Code Reviews, Code Challenges, Flagship Project, Free style projects and VIP Area. Let's see what these are about."
                             }
                         }
                     },
@@ -1890,7 +1890,26 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Community Projects</h3><p><p>As a professional developer, you'll often collaborate in teams, exploring large codebases built and maintained by various hands. We offer this experience through community projects, which you can find here. Currently, you can contribute to The C# Academy itself or to the Point of Sale project. Tasks are available for all skill levels, from fixing typos to creating entire features, so we encourage you to try these sooner rather than later. Contributing to large projects will leave you with a sense of accomplishment! While we don't officially label The C# Academy as open source since registration is required to participate, it's similar in spirit!"
+                                Body = "<h3>Courses</h3><p><p>Learning on your own is great but sometimes we need a more structured approach to learn a single topic. For this we've created the Courses section. Due to popular demand we started our course Library with a single course on Object Oriented programming. Right now we have a total of five courses available with one more on React being prepared right now. Courses are not required to progress through our belt systep, so you can choose to do them"
+                            },
+                            new Paragraph
+                            {
+                                Body = "Tasks are available for all skill levels, from fixing typos to creating entire features, so we encourage you to try these sooner rather than later. Contributing to large projects will leave you with a sense of accomplishment! Plus contributing to our open source projects is a requirement to achieve belts higher than Orange."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        ImgUrl = "icons8-users-100.png",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "<h3>Community Projects</h3><p><p>As a professional developer, you'll often collaborate in teams, exploring large codebases built and maintained by various hands.  We provide this experience by letting you collaborate with our website via our open source repository. If you find a ticket that you want to tackle or if you want to fix a bug or add a new feature, <a href='https://github.com/users/TheCSharpAcademy/projects/23' target='_blank'>you can use this board</a>. You can also tackle existing tickets in the board.  <a href='https://discord.com/invite/aDMDET8ywB' target='_blank'>Reach out on Discord</a> via the #communityproject channel and we'll give you permissions to assign yourself to tickets in the board."
+                            },
+                            new Paragraph
+                            {
+                                Body = "Tasks are available for all skill levels, from fixing typos to creating entire features, so we encourage you to try these sooner rather than later. Contributing to large projects will leave you with a sense of accomplishment! Plus contributing to our open source projects is a requirement to achieve belts higher than Orange."
                             }
                         }
                     },
@@ -1901,7 +1920,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Code Reviews</h3><p><p>Starting from Yellow Belt, you'll also be expected to contribute through code reviews. With hundreds of projects being submitted weekly, ensuring everyone receives a thorough review is only possible with the assistance of advanced students. Not only will you be helping the academy, but you'll also benefit from the reviews, gaining more experience with git workflow and honing your communication skills. "
+                                Body = "<h3>Code Reviews</h3><p><p>Starting from Yellow Belt, <b>you'll also be expected to contribute through code reviews</b>. With hundreds of projects being submitted weekly, ensuring everyone receives a thorough review is only possible with the assistance of advanced students. Not only will you be helping the academy, but you'll also benefit from the reviews, gaining more experience with git workflow and honing your communication skills. "
                             }
                         }
                     },
@@ -1923,7 +1942,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Cloud Development</h3><p><p>To attain a black belt, you'll also need to grasp the basics of <a href='/#cloud-area' target='_blank'>Azure Cloud Services</a>. This section will instruct you on deploying apps and databases to the cloud and constructing serverless systems. While this section might have been optional a few years ago, the current job market demands proficiency in cloud development. It's prominently featured in most job postings and empowers you to built better and more engaging systems."
+                                Body = "<h3>Cloud Development</h3><p><p>To attain a Black Belt, you'll also need to grasp the basics of <a href='/#cloud-area' target='_blank'>Azure Cloud Services</a>. This section will instruct you on deploying apps and databases to the cloud and constructing serverless systems. While this section might have been optional a few years ago, the current job market demands proficiency in cloud development. It's featured in most job postings and empowers you to built better and more engaging systems."
                             }
                         }
                     },
@@ -1934,7 +1953,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Flagship Project</h3><p><p>Last but not least, we have the <a href='/project/139/flagship-project' target='_blank'>Personal Flagship Project</a>, where you get to decide what to build. This project includes a list of features to ensure it's complex enough to be a key feature in your portfolio. However, it's designed to get you even more motivated by allowing you to work on something you're passionate about. There's ample room for creativity! We suggest you start thinking about it early in your journey. If you don't have any interesting ideas, you can use one of our existing projects and add your personal touch. There's nothing wrong with that!"
+                                Body = "<h3>Flagship Project</h3><p><p>Last but not least, we have the <a href='/project/139/flagship-project' target='_blank'>Personal Flagship Project</a>, where you get to decide what to build. This project includes a list of features to ensure it's complex enough to be a key feature in your portfolio. However, it's designed to get you even more motivated by allowing you to work on something you're passionate about. There's plenty of room for creativity! We suggest you start thinking about it early in your journey. If you don't have any interesting ideas, there's nothing wrong in using one of our existing projects and adding your personal touch."
                             }
                         }
                     },
@@ -1943,6 +1962,10 @@ git push</code>"
                         ImgUrl = "icons8-artist-100.png",
                         Paragraphs = new List<Paragraph>
                         {
+                            new Paragraph
+                            {
+                                Body = "<h3>Freestyle Projects</h3><p><p>We also give you the opportunity to submit projects without any specific requirements for review. Had an interesting idea but can't be bother creating a big app for it? Send it our way and we'll review it! We repeat: the best way to learn is enjoying yourself and there's no better way to do that than expressing your creativity. "
+                            },
                             new Paragraph
                             {
                                 Body = "<h3>Express Yourself</h3><p><p>In fact, all our projects have requirements that ensure you're learning the topics you need to become a developer. We're constantly updating them to reflect what's in demand by the industry. But beyond meeting these requirements, we suggest you always try to add your personal touch. When I started, I built several apps for things I deeply cared about: Football, languages, personal finance. I had a great time creating a Fifa World Cup app with Blazor when it was first launched. I suggest you do the same. In all projects, you can use your own business case and ideas. This concept is backed by science. People learn much better when they apply what's being studied to things they relate to and care about. Keep this in mind and you'll always be motivated!"

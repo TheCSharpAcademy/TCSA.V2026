@@ -162,7 +162,7 @@ public class AdminService : IAdminService
         {
             using (var context = _factory.CreateDbContext())
             {
-                return await context.DashboardProjects
+                var projects = await context.DashboardProjects
                     .Include(p => p.AppUser)
                     .Where(p => !p.IsCompleted && !p.IsArchived)
                     .OrderByDescending(x => x.DateSubmitted)
@@ -176,6 +176,27 @@ public class AdminService : IAdminService
                         UserName = ua.AppUser.UserName ?? ua.AppUser.DisplayName ?? ua.AppUser.Email
                     })
                     .ToListAsync();
+
+                var pendingIds = projects.Select(x => x.DashboardProjectId);
+
+                var reviews = await context.UserReviews
+                    .AsSplitQuery()
+                    .AsNoTracking()
+                    .Include(x => x.User)
+                    .Where(ur => pendingIds.Contains(ur.DashboardProjectId))
+                    .ToListAsync();
+
+                foreach (var project in projects)
+                {
+                    var review = reviews.FirstOrDefault(r => r.DashboardProjectId == project.DashboardProjectId);
+                    project.ReviewerName = project.ReviewerName = review?.User?.UserName
+                        ?? review?.User?.DisplayName
+                        ?? review?.User?.Email
+                        ?? "No Reviewer";
+                }
+
+                return projects;
+
             }
         }
         catch (Exception ex)

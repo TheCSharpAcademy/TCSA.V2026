@@ -7,5 +7,6 @@ public class AdminPendingDisplay
     public string AppUserId { get; set; }
     public int DashboardProjectId { get; set; }
     public string UserName { get; set; }
+    public string ReviewerName { get; set; }
     public string ProjectName { get; set; }
 }

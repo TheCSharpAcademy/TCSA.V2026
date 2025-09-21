@@ -52,7 +52,7 @@ internal static class AngularProjectsHelper
                 {
                     "This project has only one requirement: You should complete the \"Home's\" app in Angular's documentation page."
                 },
-                ResourcesIntro = "Angular uses Typescript TODO TO DOTODO. If you decide you want to jump straight onto Angular, but don't have Typescript experience, we recommend you go to the third  last link, which gives you a quick intro to this flavour of Javascript. Once that is finished you can do the tutorial in the two last links, which are a quick intro to Angular, followed by the Home's App mentioned in the requirements above. ",
+                ResourcesIntro = "Angular uses Typescript. If you decide you want to jump straight onto Angular, but don't have Typescript experience, we recommend you go to the third last link, which gives you a quick intro to this flavour of Javascript. Once that is finished you can do the tutorial in the two last links, which are a quick intro to Angular, followed by the Home's App mentioned in the requirements above. ",
 
                 Resources = new List<string>
                 {

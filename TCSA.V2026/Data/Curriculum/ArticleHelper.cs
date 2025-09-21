@@ -1,6 +1,7 @@
 ﻿using MudBlazor;
 using TCSA.V2026.Data.Helpers;
 using TCSA.V2026.Data.Models;
+using static System.Net.WebRequestMethods;
 using Block = TCSA.V2026.Data.Models.Block;
 
 namespace TCSA.V2026.Data.Curriculum;
@@ -1868,7 +1869,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Full Stack</h3><p><p>The next step is to delve into <a href='/project/23/resume' target='_blank'>Resume</a> and <a href='/#mvc-area' target='_blank'>Full Stack Development</a>. While it might seem like we're recommending you to learn ASP.NET Core front-end solutions since it's the first option after the 'Apply for Jobs' area, that's not the case. You can choose any of the following: ASP.NET Core MVC, Angular, React, Blazor, or MAUI. And we'll be including more options soon!"
+                                Body = "<h3>Full Stack</h3><p><p>The next step is to <b>submit your resume and portfolio</b> to achieve your Red Belt and move on to the Full Stack development area of your choice. While it might seem like we're recommending you to learn ASP.NET Core front-end solutions since it's the first option after the <b>Apply for Jobs</b> area, that's not the case. You can choose any of the following: ASP.NET Core MVC, Angular, React, Blazor, or MAUI. And we'll be including more options soon!"
                             }
                         }
                     },
@@ -1879,7 +1880,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>More Than Projects</h3><p><p>As you go through the Roadmap, you'll notice that some levels have extra tasks, carefully designed to make you a well-rounded developer: Courses, Community Projects, Code Reviews, Code Challenges, Flagship Project, Free style projects and VIP Area. Let's see what these are about."
+                                Body = "<h3>More Than Projects</h3><p><p>More than projects, we also offer Code Challenges, Courses and a VIP Membership/MentorshipFree style projects and VIP Area. And as you go through the Roadmap, you'll notice that some levels have extra requirements, carefully designed to make you a well-rounded developer: Open Source Contributions, Code Reviews, Flagship Project. Let's see what these are about."
                             }
                         }
                     },
@@ -1890,7 +1891,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Courses</h3><p><p>Learning on your own is great but sometimes we need a more structured approach to learn a single topic. For this we've created the Courses section. Due to popular demand we started our course Library with a single course on Object Oriented programming. Right now we have a total of five courses available with one more on React being prepared right now. Courses are not required to progress through our belt systep, so you can choose to do them"
+                                Body = "<h3>Courses</h3><p><p>Learning on your own is great but sometimes we need a more structured approach to learn a single topic. For this we created the <a href='https://thecsharpacademy.com/project/100001/free-style' target='_blank'>Courses Area</a>. Due to popular demand we started our course library with a single course on <a>Object Oriented programming</a>. Right now we have a total of five courses available with one more on React being prepared right now. Courses are not required to progress through our belt system, so you can choose to do only the ones you think are necessary and whenever want."
                             },
                             new Paragraph
                             {
@@ -1942,7 +1943,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Cloud Development</h3><p><p>To attain a Black Belt, you'll also need to grasp the basics of <a href='/#cloud-area' target='_blank'>Azure Cloud Services</a>. This section will instruct you on deploying apps and databases to the cloud and constructing serverless systems. While this section might have been optional a few years ago, the current job market demands proficiency in cloud development. It's featured in most job postings and empowers you to built better and more engaging systems."
+                                Body = "<h3>Cloud Development</h3><p><p>To attain a Black Belt, you'll also need to grasp the basics of <b>Azure Cloud Services</b>. This section will instruct you on deploying apps and databases to the cloud and constructing serverless systems. While this section might have been optional a few years ago, the current job market demands proficiency in cloud development. It's featured in most job postings and empowers you to built better and more engaging systems."
                             }
                         }
                     },
@@ -1954,6 +1955,10 @@ git push</code>"
                             new Paragraph
                             {
                                 Body = "<h3>Flagship Project</h3><p><p>Last but not least, we have the <a href='/project/139/flagship-project' target='_blank'>Personal Flagship Project</a>, where you get to decide what to build. This project includes a list of features to ensure it's complex enough to be a key feature in your portfolio. However, it's designed to get you even more motivated by allowing you to work on something you're passionate about. There's plenty of room for creativity! We suggest you start thinking about it early in your journey. If you don't have any interesting ideas, there's nothing wrong in using one of our existing projects and adding your personal touch."
+                            },
+                            new Paragraph
+                            {
+                                Body = "<h3>Express Yourself</h3><p><p>In fact, all our projects have requirements that ensure you're learning the topics you need to become a developer. We're constantly updating them to reflect what's in demand by the industry. But beyond meeting these requirements, we suggest you <b>always try to add your personal touch</b>. When I started, I built several apps for things I deeply cared about: Football, languages, personal finance. I had a great time creating a Fifa World Cup app with Blazor when it was first launched. I suggest you do the same: build things you're passionate about so you have the motivation to make them stand out. In all projects, you can use your own business case and ideas. This concept is backed by science. People learn much better when they apply what's being studied to things they relate to and care about. Keep this in mind and you'll always be motivated!"
                             }
                         }
                     },
@@ -1964,13 +1969,29 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "<h3>Freestyle Projects</h3><p><p>We also give you the opportunity to submit projects without any specific requirements for review. Had an interesting idea but can't be bother creating a big app for it? Send it our way and we'll review it! We repeat: the best way to learn is enjoying yourself and there's no better way to do that than expressing your creativity. "
+                                Body = "<h3>Freestyle Projects</h3><p><p>We also give you the opportunity to submit projects <b>without any specific requirements for review</b>. Had an interesting idea but can't be bother creating a big app for it? <a href='https://thecsharpacademy.com/project/100001/free-style' target='_blank'>Send it our way and we'll review it!</a> We repeat: the best way to learn is enjoying yourself and there's no better way to do that than expressing your creativity. Points will be rewarded based on creativity and complexity."
+                            }
+                          
+                        }
+                    },
+                    new Block
+                    {
+                        ImgUrl = "icons8-artist-100.png",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "<h3>VIP Membership</h3> We offer several extra courses in <a href='https://thecsharpschool.getlearnworlds.com/subscription/the-c-academy-membership' target='_blank'>our paid membership</a> for as little as 4.99 USD/Month. With the membership, not only you get extra video tutorials covering hot topics such as Object Oriented Programming, Web APIs and ASP.NET Core, but you also help support the free content to everyone has the opportunity to learn for free."
                             },
                             new Paragraph
                             {
-                                Body = "<h3>Express Yourself</h3><p><p>In fact, all our projects have requirements that ensure you're learning the topics you need to become a developer. We're constantly updating them to reflect what's in demand by the industry. But beyond meeting these requirements, we suggest you always try to add your personal touch. When I started, I built several apps for things I deeply cared about: Football, languages, personal finance. I had a great time creating a Fifa World Cup app with Blazor when it was first launched. I suggest you do the same. In all projects, you can use your own business case and ideas. This concept is backed by science. People learn much better when they apply what's being studied to things they relate to and care about. Keep this in mind and you'll always be motivated!"
+                                Body = "<h3>VIP Mentorship</h3> We also offer <a href='https://thecsharpschool.getlearnworlds.com/payment?product_id=net-accelerator-mentorship&type=subscription' target='_blank'>1-on-1 mentoring</a> for those who are really serious about learning and want to step up their commitments. The mentorship consists of a weekly meeting where we help you set your goals, review your code closely in pair-programming sections and help you stay accountable."
+                            },
+                            new Paragraph
+                            {
+                                Body = "<h3>Now roll-up your sleeves, pick the path that fits you best and get work! 💪."
                             }
-                        }
+                        },
                     }
                 }
             },

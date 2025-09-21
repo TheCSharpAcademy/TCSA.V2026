@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -39,7 +38,8 @@ public class CommunityService : ICommunityService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var lastIssue = await context.Issues.OrderBy(x => x.ProjectId).LastAsync();
+                var lastIssue = await context.Issues.OrderBy(x => x.ProjectId).LastOrDefaultAsync();
+                int nextProjectId = lastIssue != null ? lastIssue.ProjectId + 1 : 1;
 
                 var issue = new CommunityIssue
                 {
@@ -50,7 +50,7 @@ public class CommunityService : ICommunityService
                     CommunityProjectId = 207,
                     ExperiencePoints = 20,
                     IconUrl = iconUrl,
-                    ProjectId = lastIssue.ProjectId + 1
+                    ProjectId = nextProjectId
                 };
 
                 context.Issues.Add(issue);
@@ -104,11 +104,11 @@ public class CommunityService : ICommunityService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var project = context.DashboardProjects.FirstOrDefault(context => context.ProjectId == issueId);  
+                var project = context.DashboardProjects.FirstOrDefault(context => context.ProjectId == issueId);
 
                 project.GithubUrl = githubUrl;
                 project.IsPendingReview = true;
-                project.DateSubmitted = DateTime.UtcNow;    
+                project.DateSubmitted = DateTime.UtcNow;
                 await context.SaveChangesAsync();
             }
 

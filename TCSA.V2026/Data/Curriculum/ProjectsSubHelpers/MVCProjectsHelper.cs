@@ -107,7 +107,7 @@ internal static class MVCProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Welcome to the wonderful world of ASP.NET CoreMVC. You should be excited! Model-View-Controller is one of the most widely used design patterns in web development. The concepts you’ll learn apply to any language or framework, not just C#. You’ll be thinking MVC on a daily basis when you get a job."
+                        Body="Welcome to the wonderful world of ASP.NET Core MVC. You should be excited! Model-View-Controller is one of the most widely used design patterns in web development. The concepts you’ll learn apply to any language or framework, not just C#. You’ll be thinking MVC on a daily basis when you get a job."
                     },
                     new Paragraph
                     {
@@ -149,7 +149,9 @@ internal static class MVCProjectsHelper
                 {
                     "Scaffolding means you're using .NET's tools to generate code for you. A very nice challenge for better retention would be to recreate the same project without scaffolding. It's ok if you copy and paste chunks of code from the original project. It will still be helpful.",
                     "Once you've done it twice, do it a third time, but with different data. Intead of movies, countries? Cars? Music? Sports? Anything, it will further cement your knowledge.",
-                    "\r\nAdd one or more separate areas to the app. TV Series, for example. Or music. You'd have to create different pages for each, and a link in the nav bar."
+                    "\r\nAdd one or more separate areas to the app. TV Series, for example. Or music. You'd have to create different pages for each, and a link in the nav bar.",
+                    "Can you pull movie ratings from an external API? (OMDB has a free one).",
+                    "Add a functionality to export data to an Excel or Pdf file. "
                 }
             },
             new Project

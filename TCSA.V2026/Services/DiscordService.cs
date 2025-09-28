@@ -23,39 +23,47 @@ public class DiscordService : IDiscordService
 
     public async Task<bool> ChangeDiscordBelt(string discordAlias, Level newBelt)
     {
-        var user = _client.Cache.Guilds[_guildId].Users.Values.FirstOrDefault(u => u.Nickname == discordAlias || u.Username == discordAlias);
-
-        if (user is null)
+        try
         {
+            var user = _client.Cache.Guilds[_guildId].Users.Values.FirstOrDefault(u => u.Nickname == discordAlias || u.Username == discordAlias);
+
+            if (user is null)
+            {
+                return false;
+            }
+
+            foreach (var role in user.RoleIds)
+            {
+                await user.RemoveRoleAsync(role);
+            }
+
+            var newRole = GetNewRoleId(newBelt);
+
+            if (newRole == 0)
+            {
+                return false;
+            }
+
+            await user.AddRoleAsync(newRole);
+
+            await _client.Rest.SendMessageAsync(_channelId, $"<@{user.Id}> congratulations! You got your {(newBelt == Level.OliveGreen ? "Olive Green" : newBelt)} belt!  :tada:");
+
+            var gif = GetRandomGif(newBelt);
+
+            if (string.IsNullOrWhiteSpace(gif))
+            {
+                return false;
+            }
+
+            await _client.Rest.SendMessageAsync(_channelId, $"{gif}");
+
+            return true;
+        } catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
             return false;
         }
-
-        foreach (var role in user.RoleIds)
-        {
-            await user.RemoveRoleAsync(role);
-        }
-
-        var newRole = GetNewRoleId(newBelt);
-
-        if (newRole == 0)
-        {
-            return false;
-        }
-
-        await user.AddRoleAsync(newRole);
-
-        await _client.Rest.SendMessageAsync(_channelId, $"<@{user.Id}> congratulations! You got your {(newBelt == Level.OliveGreen ? "Olive Green" : newBelt)} belt!  :tada:");
-
-        var gif = GetRandomGif(newBelt);
-
-        if (string.IsNullOrWhiteSpace(gif))
-        {
-            return false;
-        }
-
-        await _client.Rest.SendMessageAsync(_channelId, $"{gif}");
-
-        return true;
+       
     }
 
     private static ulong GetNewRoleId(Level belt)

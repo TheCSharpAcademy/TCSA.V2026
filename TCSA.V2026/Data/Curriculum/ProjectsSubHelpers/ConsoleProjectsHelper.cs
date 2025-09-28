@@ -611,7 +611,7 @@ public class ConsoleProjectsHelper
                 Id = 15,
                 Title = "Drinks Info",
                 IconUrl = "drinks.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-energepic-com-27411-110472.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "drinks",
                 Description = "Build a console app to consume an external API with HTTP Requests with C#",
@@ -624,7 +624,7 @@ public class ConsoleProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Software developers frequently build systems that rely on third-party data. A common method for accessing this data is by making requests to external vendors' APIs (Application Programming Interfaces). Once the data is retrieved, it can be processed and integrated into the application to meet specific requirements. Another typical scenario involves organizations with multiple independent applications that need to communicate with each other, <a href='https://en.wikipedia.org/wiki/Microservices'>often using a technique known as microservices</a>."
+                        Body="Software developers frequently build systems that rely on third-party data. A common method for accessing this data is by making requests to external vendors <b>Web APIs (Application Programming Interfaces)</b>. Once the data is retrieved, it can be processed and integrated into the application to meet specific requirements. Another typical scenario involves organizations with multiple independent applications that need to communicate with each other, <a href='https://en.wikipedia.org/wiki/Microservices'>often using a technique known as microservices</a>. Later we will build our own APIs and Microservices, but first we need to learn how to <b>consume a Web Api</b>."
                     },
                     new Paragraph
                     {
@@ -638,7 +638,8 @@ public class ConsoleProjectsHelper
                     "Your job is to create a system that allows the restaurant employee to pull data from any drink in the database.",
                     "You don't need SQL here, as you won't be operating the database. All you need is to create an user-friendly way to present the data to the users (the restaurant employees)",
                     "When the users open the application, they should be presented with the Drinks Category Menu and invited to choose a category. Then they'll have the chance to choose a drink and see information about it.",
-                    "When the users visualise the drink detail, there shouldn't be any properties with empty values"
+                    "When the users visualise the drink detail, there shouldn't be any properties with empty values.",
+                    "You should handle errors so that if the API is down, the application doesn't crash."
                 },
                 RequirementsConclusion = "Don't panic! We'll help! 😁",
                 ResourcesIntro = "Here are the links for using HTTP calls with C# and to the Drinks API documentation:",
@@ -647,6 +648,18 @@ public class ConsoleProjectsHelper
                     "<a href='https://www.thecocktaildb.com/api.php' target='_blank'>Cocktail Database</a>",
                     "<a href='https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/console-webapiclient' target='_blank'>Microsoft Docs: Http Requests</a>",
                     "<a href='https://www.youtube.com/watch?v=fc7peZ-FHs4' target='_blank'>Video: Drinks Info App (FULL PROJECT)</a>"
+                },
+                Tips = new List<string>
+                {
+                    "Try calling the API using Postman or your browser before starting to code.",
+                    "The UI in the youtube tutorial above is a bit ugly. We suggest you use Spectre Console for a better UX/UI."
+                },
+                Challenges = new List<string>
+                {
+                    "Add a 'Favorite Drinks' functionality",
+                    "Find a way to show a picture of the drinks",
+                    "Add a view count functionality so the users know which drinks have been visualized the most.",
+                    "If you followed the tutorial in the resources, you noticed we used Rest Client for the handling of the HTTP requests. Try using .NET's HTTP client instead, as it's more commonly used in the industry."
                 },
                 Screenshots = new List<string>
                 {
@@ -658,7 +671,7 @@ public class ConsoleProjectsHelper
                 Id = 16,
                 Title = "Phone Book",
                 IconUrl = "icons8-contact-book-512-150x150.png",
-                BannerUrl = "",
+                BannerUrl = "phonebook.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "phonebook",
                 Description = "Now you have basic understanding of SQL, it’s time to learn the basics of Entity Framework with a CRUD Phone Book Console App",
@@ -682,11 +695,13 @@ public class ConsoleProjectsHelper
                 {
                     "This is an application where you should record contacts with their phone numbers.",
                     "Users should be able to Add, Delete, Update and Read from a database, using the console.",
-                    "You need to use Entity Framework, raw SQL isn't allowed.",
-                    "Your code should contain a base Contact class with AT LEAST {Id INT, Name STRING, Email STRING and Phone Number(STRING)}",
-                    "You should validate e-mails and phone numbers and let the user know what formats are expected",
+                    "You need to use Entity Framework. ADO.NET, Dapper and any other ORM aren't allowed.",
+                    "Your code should contain a base Contact class with AT LEAST name, email and phone number properties.",
+                    "You should validate e-mails and phone numbers and let the user know what formats are expected.",
+                    "Make sure you handle errors so the app doesn't crash unexpectedly in case EF or the database have problems.",
                     "You should use Code-First Approach, which means EF will create the database schema for you.",
-                    "You should use SQL Server, not SQLite"
+                    "You should use SQL Server, not SQLite",
+                    "You should seed data using Entity Framework so the user has some contacts to start with.",
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
@@ -694,7 +709,7 @@ public class ConsoleProjectsHelper
                     "<a href='https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli'>Entity Framework Docs</a>",
                     "<a href='https://www.youtube.com/watch?v=tDiJdthMs1Q&list=PL4G0MUH8YWiDcv8EUWTbDxDlkSndfh-T0'>CRUD Console APP with EF on Youtube</a>"
                 },
-                ResourcesConclusion = "There are many other Youtube videos and blog articles about Entity Framework everything else you need. Don’t be ashamed to use Google!",
+                ResourcesConclusion = "There are many other Youtube videos and blog articles about Entity Framework everything else you need. Don’t be ashamed to use Google! If you use AI, make sure you understand each line that's being suggested 🤓",
                 Tips = new List<string>
                 {
                     "Before starting the phone book app, finish the program in the Microsoft Documentation article without any changes and store in your Github repository for reference. Make sure you understand most of the code before you get started.",
@@ -702,6 +717,7 @@ public class ConsoleProjectsHelper
                 },
                 Challenges = new List<string>
                 {
+                    "For each interaction with the DB with Entity Framework, print the correspondent SQL queries so you learn what your EF queries are translated into.",
                     "Create a functionality that allows users to add the contact's e-mail address and send an e-mail message from the app.",
                     "Expand the app by creating categories of contacts (i.e. Family, Friends, Work, etc).",
                     "What if you want to send not only e-mails but SMS?"
@@ -881,55 +897,43 @@ public class ConsoleProjectsHelper
              new Project
              {
                 Id = 20,
-                Title = "Excel Reader",
+                Title = "Document Processor",
                 IconUrl = "excel.png",
-                Slug="excel-reader",
-                BannerUrl = "",
+                Slug="document-processor",
+                BannerUrl = "pngtree-magnified-finance-documents-and-charts-on-black-background-picture-image_2730841.jpg",
                 LanguageHeadings = new EnglishHeadings(),
-                Description = "Learn how to read data from an Excel Sheet into a real database using SQL",
+                Description = "Learn how to work with documents using C#.",
                 Area = Area.Console,
                 Level = Level.Orange,
                 ExperiencePoints = 30,
                 Difficulty = Difficulty.Advanced,
-                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Console.ExcelReader",
+                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.Console.DocumentProcessor",
                 Introduction = new List<Paragraph>
                 {
                     new Paragraph
                     {
-                        Body="Now  that you have an initial foundation of C#, it’s time to tackle a very important task in programming. The ability to work with files.When working in a company, all sorts of documents will be generated using a variety of file types: .doc, .xls, .pdf, .csv, just to name a few of the most commonly used. "
+                        Body="Now  that you have an initial foundation of C#, it’s time to tackle a very important task in programming: The ability to work with files. When working in a company, all sorts of documents will be generated using a variety of file types: .doc, .xls, .pdf, .csv, just to name a few of the most commonly used. "
                     },
                     new Paragraph
                     {
-                        Body="Your job as a programmer is to create applications that will manipulate data “to and from” these files. In this project, we will transpose an excel table into an SQL database using a C# library."
+                        Body="Your job as a programmer is to create applications that will manipulate data “to and from” these files. In this project, we seed data from one of our previous applications from a spreadsheet and generate reports to a pdf file."
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "This is an application that will read data from an Excel spreadsheet into a database",
-                    "When the application starts, it should delete the database if it exists, create a new one, create all tables, read from Excel, seed into the database.",
-                    "You need to use EPPlus package",
-                    "You shouldn't read into Json first.",
-                    "You can use SQLite or SQL Server (or MySQL if you're using a Mac)",
+                    "In this project you'll seed data either into the Phone Book app or the Ecommerce app you've created before as part of the roadmap. The spreadsheet can have .xls, xlsx or csv formats.",
+                    "You can use any package or library you need, just make sure you provide enough information on how to set it up in your readme.",
+                    "When the application starts, if there's no data it should populate the database with data from the spreadsheet. ",
                     "Once the database is populated, you'll fetch data from it and show it in the console.",
-                    "You don't need any user input",
-                    "You should print messages to the console letting the user know what the app is doing at that moment (i.e. reading from excel; creating tables, etc)",
-                    "The application will be written for a known table, you don't need to make it dynamic.",
-                    "When submitting the project for review, you need to include an xls file that can be read by your application."
-                },
-                ResourcesIntro = "The knowledge you gained from the previous three projects will be enough to complete this project.You’ll only need to find out how EPPlus Package works. <a href='https://www.youtube.com/watch?v=kBwmP-kLEEE'>Here's a good Youtube tutorial</a>. If it’s not enough search for further videos on Youtube and/or specific questions in StackOverflow 😁",
-                Tips = new List<string>
-                {
-                    "Before anything else you’ll have to create an Excel table that will be stored in your main project folder. The more organised the easier it will be for your program to read it. The first row of your columns need to be the property names of your model class",
-                    "Don't forget to create a Github repository for your project from the beginning.",
-                    "Remember, this time you don’t need any user input. The only interaction your program will have with the user is to show the data from your database.",
-                    "You could structure the program in three parts. One for database creation, one for reading from the file and return a list and the last to populate your database using the returned list"
+                    "Your app needs to have a report functionality that exports data into a pdf file in your computer.",
+                    "Handle errors so that a file is corrupted or the path is wrong, the app doesn't crash."
                 },
                 Challenges = new List<string>
                 {
-                    "If you want to expand on this project, try to create a program that reads data from any excel sheet, regardless of the number of columns or the content of the header.",
-                    "Add the ability to read from other types of files, i.e. csv, pdf, doc",
-                    "Let the user choose the file that will be read, by inserting the path.",
-                    "Add a functionality to write into files, you can also use EPPlus for that."
+                    "Give the user the option to import/export data using different formats.",
+                    "Add the ability to read from other types of files, i.e. csv, pdf, doc.",
+                    "Create a functionality that creates reports periodically.",
+                    "Import/Export to an Azure Blob for further processing."
                 }
             },
              new Project

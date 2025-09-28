@@ -1,4 +1,4 @@
-﻿@using TCSA.V2026.Services
+@using TCSA.V2026.Services
 @inherits LayoutComponentBase
 @inject ThemeService ThemeService
 @inject IHttpContextAccessor HttpContextAccessor
@@ -23,9 +23,27 @@
             Class="ma-4" 
             T="bool" 
             Label="Toggle Light/Dark Mode" />
-        <MudIconButton Icon=@Icons.Custom.Brands.Discord OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://discord.gg/aDMDET8ywB", "_blank", "noopener,noreferrer"))"/>
-        <MudIconButton Icon=@Icons.Custom.Brands.YouTube OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://www.youtube.com/channel/UCUb14APzNlpUcDElcCEw5OA", "_blank", "noopener,noreferrer"))" />
-        <MudIconButton Icon=@Icons.Custom.Brands.LinkedIn OnClick="@(() => JS.InvokeVoidAsync("window.open", "https://www.linkedin.com/school/thecsharpacademy/", "_blank", "noopener,noreferrer"))" />
+        <MudLink Color="Color.Default"
+                 Href="https://discord.gg/aDMDET8ywB"
+                 Target="_blank"
+                 Class="mud-icon-button mud-button-root"
+                 UserAttributes="@(new() { ["aria-label"] = "Discord", ["rel"] = "noopener noreferrer" })">
+            <MudIcon Icon=@Icons.Custom.Brands.Discord />
+        </MudLink>
+        <MudLink Color="Color.Default"
+                 Href="https://www.youtube.com/channel/UCUb14APzNlpUcDElcCEw5OA"
+                 Target="_blank"
+                 Class="mud-icon-button mud-button-root"
+                 UserAttributes="@(new() { ["aria-label"] = "YouTube", ["rel"] = "noopener noreferrer" })">
+            <MudIcon Icon=@Icons.Custom.Brands.YouTube />
+        </MudLink>
+        <MudLink Color="Color.Default"
+                 Href="https://www.linkedin.com/school/thecsharpacademy/"
+                 Target="_blank"
+                 Class="mud-icon-button mud-button-root"
+                 UserAttributes="@(new() { ["aria-label"] = "LinkedIn", ["rel"] = "noopener noreferrer" })">
+            <MudIcon Icon=@Icons.Custom.Brands.LinkedIn />
+        </MudLink>
     </MudAppBar>
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />

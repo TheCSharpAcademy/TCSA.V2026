@@ -28,21 +28,21 @@
                  Target="_blank"
                  Class="mud-icon-button mud-button-root"
                  UserAttributes="@(new() { ["aria-label"] = "Discord", ["rel"] = "noopener noreferrer" })">
-            <MudIcon Icon=@Icons.Custom.Brands.Discord />
+            <MudIcon Icon=@Icons.Custom.Brands.Discord UserAttributes="@(new() { ["aria-hidden"] = "true" })" />
         </MudLink>
         <MudLink Color="Color.Default"
                  Href="https://www.youtube.com/channel/UCUb14APzNlpUcDElcCEw5OA"
                  Target="_blank"
                  Class="mud-icon-button mud-button-root"
                  UserAttributes="@(new() { ["aria-label"] = "YouTube", ["rel"] = "noopener noreferrer" })">
-            <MudIcon Icon=@Icons.Custom.Brands.YouTube />
+            <MudIcon Icon=@Icons.Custom.Brands.YouTube UserAttributes="@(new() { ["aria-hidden"] = "true" })" />
         </MudLink>
         <MudLink Color="Color.Default"
                  Href="https://www.linkedin.com/school/thecsharpacademy/"
                  Target="_blank"
                  Class="mud-icon-button mud-button-root"
                  UserAttributes="@(new() { ["aria-label"] = "LinkedIn", ["rel"] = "noopener noreferrer" })">
-            <MudIcon Icon=@Icons.Custom.Brands.LinkedIn />
+            <MudIcon Icon=@Icons.Custom.Brands.LinkedIn UserAttributes="@(new() { ["aria-hidden"] = "true" })" />
         </MudLink>
     </MudAppBar>
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">

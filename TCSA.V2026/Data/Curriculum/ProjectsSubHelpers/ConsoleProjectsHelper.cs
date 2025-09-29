@@ -728,7 +728,7 @@ public class ConsoleProjectsHelper
                 Id = 17,
                 Title = "Shifts Logger",
                 IconUrl = "icons8-nurse-256.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-rdne-6129507.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug="shifts-logger",
                 Description = "Build an App for shift workers to log their hours. In this app you’ll learn how to build a Web API and consume it with a Console App",
@@ -741,19 +741,19 @@ public class ConsoleProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="If you’ve been learning to code for more than five minutes, you probably heard about <a href='https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction'>'APIs'</a>. They’re at the core of back-end programming. In web development, their main job will be to communicate with databases using “endpoints”. From now on you’ll be creating APIs all the time and this acronym will forever be part of your vocabulary. "
+                        Body="If you’ve been learning to code for more than five minutes, you probably heard about <a href='https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction'><b>APIs</b></a>. They’re at the core of back-end programming. In web development, their main job will be to communicate with databases using <b>endpoints</b>. From now on you’ll be creating Web APIs all the time and this acronym will forever be part of your vocabulary. "
                     },
                     new Paragraph
                     {
-                        Body="In the <a href='project/15/drinks' target='blank'>Drinks Info App</a> we have created a program that consumed an external API. This time we will track a worker’s “shifts”. We’ll create an API and the console app that will consume it. When using Microsoft’s Documentation, often times you’ll come across Web APIs being developed with Entity Framework, which acts as layer between the “endpoints” and the actual database. "
+                        Body="In the <a href='project/15/drinks' target='blank'>Drinks Info App</a> you created a program that consumed an external API. This time <b>you will track a worker’s shifts</b>. We’ll create an API and the console app that will consume it. When using Microsoft’s Documentation, often you’ll come across Web APIs being developed with Entity Framework, which acts as layer between the endpoints and the actual database. "
                     },
                     new Paragraph
                     {
-                        Body="This stack (Web API/EF) is very common in enterprise applications, but it’s important to know that  Web Apis can be developed using ADO.NET and Dapper. These data access solutions have the advantage of giving the developers more control over the SQL queries. In the end, all solutions are valid. Each has pros and cons and it comes down to personal preference. For this project, we will be using Entity Framework, as it takes care the basic CRUD operations we need as beginners. "
+                        Body="This stack (Web API/EF) is very common in enterprise applications, but it’s important to know that Web Apis can be developed using ADO.NET and Dapper. These data access solutions have the advantage of giving the developers more control over the SQL queries. In the end, all solutions are valid. Each has pros and cons and it comes down to personal preference. For this project, we will be using Entity Framework, as it takes care the basic CRUD operations that we need as beginners. "
                     },
                     new Paragraph
                     {
-                        Body="This project has as a requirement the use of Web APIs testing tools. In development you need a way to quickly test your endpoints without having to create a UI. These days, Swagger is already scaffolded into the .NET Core Web Api project so you can start using it as soon as you run your project. Postman is very complete external tool with an user interface that makes it very easy to store tests for later use, which saves a lot of development time. The learning curve for Postman is slightly steeper, but don’t skip it, it will pay off. "
+                        Body="This project has as a requirement the use of Web APIs testing tools. In development you need a way to quickly test your endpoints without having to create a UI. <b>Postman</b> is a free, very comprehensive professional tool with an user interface that makes it very easy to store tests for later use, which saves a lot of development time. "
                     }
                 },
                 Requirements = new List<string>
@@ -762,7 +762,6 @@ public class ConsoleProjectsHelper
                     "You need to create two applications: the Web API and the UI that will call it.",
                     "All validation and user input should happen in the UI app.",
                     "Your API's controller should be lean. Any logic should be handled in a separate \"service\".",
-                    "You should use SQL Server, not SQLite",
                     "You should use the \"code first\" approach to create your database, using Entity Framework's migrations tool.",
                     "Your front-end project needs to have try-catch blocks around the API calls so it handles unexpected errors (i.e. the API isn't running or returns a 500 error.)"
                 },
@@ -780,10 +779,10 @@ public class ConsoleProjectsHelper
                 Tips = new List<string>
                 {
                     "If this is your first contact with .NET Web API, follow the tutorial closely using the Todo List data model and http-repl for testing. In a second moment, follow the tutorial one more time, this time following the project's requirements.",
-                    "Don't forget to create a Github repository for your project from the beginning.",
                     "First, create the Web API project, then use Swagger and Postman to test it. Only then create the UI project.",
-                    "You might be tempted to skip testing with Swagger and Postman. Don't make that mistake. These tools are essential for working with web apis in enterprise and your hiring managers will be unimpressed if you are not familiar with them.",
-                    "Calculate the duration of the shift based on its start and end.",
+                    "You might be tempted to skip testing with Postman. Don't make that mistake. These tools are essential for working with web apis in enterprise and your hiring managers will be unimpressed if you are not familiar with them.",
+                    "Calculate the duration of the shift based on its start and end. Don't forget to validate the end date.",
+                    "In .NET's Web API template, there's a lot of code you might not have seen before, particularly in Program.cs and in the controllers. Study the code carefully so you understand each keyword. Don't hesitate to ask AI what's happening behind the scenes."
                 }
             },
              new Project

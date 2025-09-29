@@ -1,5 +1,6 @@
 ﻿using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.LanguageModels;
+using static System.Net.WebRequestMethods;
 
 namespace TCSA.V2026.Data.Helpers.ProjectsSubHelpers;
 
@@ -129,7 +130,7 @@ internal static class ReactProjectsHelper
                 Id = 37,
                 Title = "Shopping List",
                 IconUrl = "icons8-shopping-list-512.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-jack-sparrow-4198972.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "shopping-list",
                 Description = "Build your first full CRUD app with React, calling a .NET Web API",
@@ -149,25 +150,26 @@ internal static class ReactProjectsHelper
                     "This is a CRUD Shopping List App with React and .NET Web API .",
                     "Users should be able to cross items from the shopping-list without deleting them. You can use a IsPickedUp boolean for that.",
                     "You should create two projects: A .NET WebApi and a React app.",
-                    "You can choose whatever database solution you want: Sqlite, SQL server or whatever you're comfortable with.",
-                    "You can choose whatever ORM you want: Dapper, EF, ADO.NET.",
-                    "To keep it simple, don't create a project that allows multiple shopping lists.",
-                    "Your database should have a single \"ShoppingListItems\" table. The objective is to focus on React, so we should avoid the complexities of relational data.",
-                    "You CANNOT use Axios or Redux."
-
-
+                    "You state management libraries (i.e. Redux)."
                 },
-                ResourcesIntro = "The resources from the previous projects will be helpful in the completion of this project, plus this tutorial:",
+                ResourcesIntro = "The resources from the previous projects will be helpful in the completion of this project, plus these tutorials:",
 
                 Resources = new List<string>
                 {
-                    "<a target='_blank' href='https://www.freecodecamp.org/news/fetch-data-react/'>Crud React Tutorial Example</a>"
+                    "<a target='_blank' href='https://www.freecodecamp.org/news/fetch-data-react/'>Crud React Tutorial Example</a>",
+                    "<a target='_blank' href='https://handsonreact.com/docs/labs/react-tutorial-typescript'>Hands on React Tutorial</a>"
                 },
-                ResourcesConclusion = "This is just an example of a tutorial where a React app uses it’s inbuilt Http client to call an api. However React is one of the most popular libraries out there, so feel free to search for other examples. ",
+                ResourcesConclusion = "These are just a couple of examples of tutorials where a React app uses it’s inbuilt Http client to call an api. However React is one of the most popular libraries out there, so feel free to search for other examples. ",
                 Tips = new List<string>
                 {
                     "Start by building the complete CRUD .NET Webapi",
                     "In your second step, make sure you can call the get method from the API using React. Once the data is flowing between apps, everything else becomes easier."
+                },
+                Challenges = new List<string>
+                {
+                    "The <b>Hands on React Tutorial</b> in the resources list above has the same app written with vanilla JS and Typescript. Try rewriting your Shopping List using Typescript, as it's commonly used along .NET in enteprise development.",
+                    "Create a feature that lets users click on commonly used items to add them to a list.",
+                    "Add a drag and drop feature to reorder the list."
                 }
             },
             new Project

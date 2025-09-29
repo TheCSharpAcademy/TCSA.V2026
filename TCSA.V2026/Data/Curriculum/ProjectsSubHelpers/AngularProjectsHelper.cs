@@ -78,7 +78,7 @@ internal static class AngularProjectsHelper
                 Id = 32,
                 Title = "Coffee Tracker",
                 IconUrl = "icons8-coffee-mug-128.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-apgpotr-683039.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "Coffee Tracker",
                 Description = "Track your coffee consumption with a C# Web Api and Angular",
@@ -90,25 +90,19 @@ internal static class AngularProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Now that you’re familiar with Angular, let’s combine it with .NET! And what a powerful combination that is. The limit of what you can build using these two is only the limit of your imagination. We will be creating two separate applications: An Angular front-end and a C# Web Api. The front-end will call the api, similarly to what you’ve done before in our Shifts Logger project."
+                        Body="Now that you’re familiar with Angular, let’s combine it with .NET! And what a powerful combination that is. The limit of what you can build using these two is only the limit of your imagination. We will be creating two separate applications: An Angular front-end and an ASP.NET Core Web Api. The front-end will call the api, similarly to what you’ve done before in our Shifts Logger project."
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "This is an application where you should record your consumption of coffee.",
-                    "You can choose something else to track, in case you're not a coffee person.",
+                    "This is an application where you should record sales in a coffee shop.",
+                    "You can choose a different type of shop, if you're not a coffee person 🤓.",
                     "You should create two projects: A.NET WebApi and an Angular app.",
-                    "You can choose whatever database solution you want: Sqlite, SQL server or whatever you're comfortable with.",
-                    "You can choose whatever ORM you want: Dapper, EF, ADO.NET.",
-                    "You should have a filter functionality, so I can select records per date.",
-                    "Your database should have a single 'Records' table.The objective is to focus on Angular, so we should avoid the complexities of relational data.",
-                    "You CANNOT use Angular Material."
-
+                    "You should have a filter functionality, so users can select records per date.",
+                    "Make sure validation is user-friendly so the users know exactly what's wrong with their input."
                 },
                 Resources = new List<string>
                 {
-                    "<a target='_blank' href='https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio'>Microsoft Docs: Web Api</a>",
-                    "<a target='_blank' href='https://angular.io/tutorial/tour-of-heroes'>Angular Docs: Tour of Heroes Beginner’s Tutorial</a>",
                     "<a target='_blank' href='https://www.itsolutionstuff.com/post/angular-12-crud-application-tutorial-exampleexample.html'>Angular CRUD Tutorial</a>",
                     "<a target='_blank' href='https://www.youtube.com/watch?v=S5dzfuh3t8U'>Angular + C# Web Api Youtube Tutorial</a>",
                     "<a target='_blank' href='https://stackoverflow.com/questions/65082452/cors-is-not-working-with-net-core-api-and-angular-frontend'>Dealing With CORS (Cross Origin Resource Sharing)</a>"
@@ -116,9 +110,16 @@ internal static class AngularProjectsHelper
                 ResourcesConclusion = $"Since this is your first full-stack Angular project, make sure you look up everything you don’t know. Try not to let any keyword, method or concept left-behind. This is the moment to build your foundation. And don’t forget to reach out on our <a  target='_blank' href='{DiscordLink}'>Discord community</a> if you have questions!",
                 Tips = new List<string>
                 {
+                    "Angular has changed quite a bit over the years. Make sure you follow the latest documentation and tutorials, otherwise you might end up learning deprecated ways of doing things.",
                     "Your main objective is to call your API from the Angular App. Everything else is just moving data around and styling.",
-                    "There are two ways to approach the construction of this app: Finishing the API first and then building the UI, or building each method end-to-end (ex: GetAllRecords method in the back-end plus list of records in the front-end). Choose one and stick to it.",
-                    "Don't use Angular Material (a library for styling) in this project. Angular alone can be challenging enough and adding a rich library early on might overwhelm you. Also, you'll appreciate Angular Material more if you built applications without it first."
+                    "There are two ways to approach the construction of this app: Finishing the API first and then building the UI, or building each method end-to-end (ex: GetRecords method in the back-end plus list of records in the front-end). Choose one and stick to it.",
+                    "We suggest you don't use UI libraries (such as Angular Material) in this project. Angular alone can be challenging enough and adding a rich library early on might overwhelm you. Also, you'll appreciate Angular Material more if you built applications without it first."
+                },
+                Challenges = new List<string>
+                {
+                    "Can you add integration with a real coffee api?",
+                    "Enhance your app with other types of products sold in a cafe. 🍰",
+                    "If you're comfortable with Angular, add complexity to your ecommerce with more entities: Products, Employees, Orders, Stock"
                 }
             },
             new Project

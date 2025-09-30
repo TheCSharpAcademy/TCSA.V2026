@@ -1,4 +1,4 @@
-﻿@page "/dashboard"
+@page "/dashboard"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Components.UI
@@ -18,6 +18,10 @@
     {
         <DashboardToolBar User=@User></DashboardToolBar>
     }
+
+    <h1 class="visually-hidden">Dashboard</h1>
+    <h2 class="visually-hidden">Areas</h2>
+
     <MudCheckBox @bind-Value="@_showCompleted"
                  Label="Show Completed"
                  CheckedIcon="@Icons.Material.Outlined.CheckBox"
@@ -40,7 +44,7 @@
                             <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
                         </CardHeaderAvatar>
                         <CardHeaderContent>
-                            <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: bold;">@area.CardName</MudText>
+                            <h3 class="mud-typography-body1 mud-primary-text" style="font-weight: bold;">@area.CardName</h3>
                             <MudText Typo="Typo.body2">@area.Description</MudText>
                         </CardHeaderContent>
                         <CardHeaderActions>
@@ -84,7 +88,7 @@
                             <MudImage Width="40" Src="@($"img/icons/{area.ImgUrl}")" />
                         </CardHeaderAvatar>
                         <CardHeaderContent>
-                            <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: bold;">@area.CardName</MudText>
+                            <h3 class="mud-typography-body1 mud-primary-text" style="font-weight: bold;">@area.CardName</h3>
                             <MudText Typo="Typo.body2">@area.Description</MudText>
                         </CardHeaderContent>
                         <CardHeaderActions>

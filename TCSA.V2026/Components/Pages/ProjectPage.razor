@@ -1,4 +1,4 @@
-﻿@page "/project/{ProjectId:int}/{ProjectSlug}"
+@page "/project/{ProjectId:int}/{ProjectSlug}"
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
@@ -20,7 +20,7 @@
         <MudPaper Class="jumbotron d-flex align-center justify-center mt-3"
         Style=@GetBanner()>
             <div class="jumbotron-overlay">
-                <MudText Typo="Typo.h3" Class="text-white text-center">@Project.Title</MudText>
+                <h1 class="mud-typography-h3 text-white text-center">@Project.Title</h1>
             </div>
         </MudPaper>
 
@@ -41,7 +41,7 @@
                     }
                     @if (Project.Id != 86)
                     {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Requirements</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@Project.LanguageHeadings.Requirements</h2>
                         @if (!string.IsNullOrEmpty(Project.RequirementsIntro))
                         {
                             <MudText Class="mt-2">@((MarkupString)(Project.RequirementsIntro))</MudText>
@@ -67,7 +67,7 @@
                     }
                     @if (Project.LearningItems != null)
                     {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Learn</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@Project.LanguageHeadings.Learn</h2>
                         @if (!string.IsNullOrEmpty(Project.LearningIntro))
                         {
                             <MudText Class="mt-2 mb-2">@((MarkupString)(Project.LearningIntro))</MudText>
@@ -83,7 +83,7 @@
                     }
                     @if (Project.Resources != null)
                     {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Resources</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@Project.LanguageHeadings.Resources</h2>
                         @if (!string.IsNullOrEmpty(Project.ResourcesIntro))
                         {
                             <MudText Class="mt-2 mb-2">@((MarkupString)(Project.ResourcesIntro))</MudText>
@@ -106,7 +106,7 @@
                     }
                     @if (Project.Tips != null)
                     {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Tips</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@Project.LanguageHeadings.Tips</h2>
                         <MudList T="MarkupString" Color="Color.Default">
                             @foreach (var tip in Project.Tips)
                             {
@@ -122,7 +122,7 @@
 
                     @if (Project.Challenges != null)
                     {
-                        <MudText Class="mt-10 mb-2" Typo="Typo.h6">@Project.LanguageHeadings.Challenges</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@Project.LanguageHeadings.Challenges</h2>
                         <MudList T="MarkupString" Color="Color.Default">
                             @foreach (var challenge in Project.Challenges)
                             {
@@ -141,7 +141,8 @@
                         {
                             @if (!string.IsNullOrWhiteSpace(block.Title))
                             {
-                                <MudText Typo="Typo.h6" Class="mt-10 mb-2">@block.Title</MudText>
+                                <h2 class="mud-typography-h6 mt-10 mb-2">@block.Title</h2>
+
                             }
 
                             @foreach (var paragraph in block.Paragraphs)
@@ -188,9 +189,7 @@
 
                     @if (Project.Screenshots != null)
                     {
-                        <MudText Typo="Typo.h6" Class="mt-10 mb-2">
-                            Example Screenshots
-                        </MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">Example Screenshots</h2>
                         @if (Project.Screenshots.Count == 1)
                         {
                             <MudPaper Class="d-flex justify-center mx-20" Elevation="0">
@@ -221,9 +220,7 @@
                             </MudItem>
 
                             <MudItem xs="12" sm="10">
-                                <MudText Typo="Typo.h5" Class="mb-2">
-                                    @Project.LanguageHeadings.ReviewRepository
-                                </MudText>
+                                <h2 class="mud-typography-h5 mb-2">@Project.LanguageHeadings.ReviewRepository</h2>
 
                                 <MudLink Href="@Project.RepositoryLink" Target="_blank">
                                     @Project.RepositoryLink
@@ -236,7 +233,7 @@
                     {
                         @if (CodeWarsNotFoundShowing)
                         {
-                            <MudText Class="mt-10 mb-2" Typo="Typo.h6">You haven't integrated Codewars yet.</MudText>
+                            <h2 class="mud-typography-h6 mt-10 mb-2">You haven't integrated Codewars yet.</h2>
                             <MudText Class="mt-10 mb-2" Typo="Typo.body1">
                                 In The C# Academy's Dashboard, you'll see a button where you can insert your Codewars user name. Your input has to match Code War's username exactly, including case sensitivity, or we won't be able to track your results.
 
@@ -245,7 +242,7 @@
                         }
                         else
                         {
-                            <MudText Class="mt-10 mb-2" Typo="Typo.h6">Your Progress</MudText>
+                            <h2 class="mud-typography-h6 mt-10 mb-2">Your Progress</h2>
                             <MudList T="MarkupString" Color="Color.Default">
                                 @foreach (var challenge in Project.CodeWarsChallenges)
                                 {

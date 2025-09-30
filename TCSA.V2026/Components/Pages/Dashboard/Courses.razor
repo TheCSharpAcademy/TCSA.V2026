@@ -1,4 +1,4 @@
-﻿@page "/dashboard/Courses"
+@page "/dashboard/Courses"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
@@ -13,6 +13,7 @@
 <PageTitle>Courses</PageTitle>
 
 <MudContainer>
+    <h1 class="visually-hidden">Courses</h1>
     @if (User != null)
     {
         <DashboardToolBar User=@User></DashboardToolBar>
@@ -32,7 +33,7 @@
                         <MudImage Width="40" Src="@($"img/icons/{course.ImgUrl}")" />
                     </CardHeaderAvatar>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.body1" Style="font-weight: bold;">@course.Title</MudText>
+                        <h2 class="mud-typography-body1" style="font-weight: bold">@course.Title</h2>
                         <MudText Typo="Typo.body2">@course.Description</MudText>
                     </CardHeaderContent>
                     <CardHeaderActions>

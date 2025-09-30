@@ -1,4 +1,4 @@
-﻿@page "/course/{courseId:int}/article/{articleDisplayId:int}/{articleId:int}/{isCode:bool}"
+@page "/course/{courseId:int}/article/{articleDisplayId:int}/{articleId:int}/{isCode:bool}"
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
@@ -34,13 +34,13 @@
                     <MudAlert Class="mt-3 mb-3" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
                 }
 
-                <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2 mt-8">@Article.Title</MudText>
+                <h1 class="mud-typography-h4 mud-primary-text mb-2 mt-8">@Article.Title</h1>
 
                 @foreach (var block in BlocksToShow)
                 {
                     if (!string.IsNullOrEmpty(block.Title))
                     {
-                        <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-2 mt-8">@block.Title</MudText>
+                        <h2 class="mud-typography-h6 mud-primary-text mb-2 mt-8">@block.Title</h2>
                     }
 
                     @foreach (var paragraph in block.Paragraphs)

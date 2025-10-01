@@ -1,4 +1,4 @@
-﻿@page "/dashboard/profile"
+@page "/dashboard/profile"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using TCSA.V2026.Components.UI
@@ -22,8 +22,10 @@
     {
         <DashboardToolBar User=@User></DashboardToolBar>
 
+        <h1 class="visually-hidden">Profile</h1>
+
         <MudPaper Class="pa-4 mt-5" Elevation="4">
-            <MudText Typo="Typo.h6" GutterBottom="true">Edit User Profile</MudText>
+            <h2 class="mud-typography-h6 mud-typography-gutterbottom">Edit User Profile</h2>
 
             <MudForm Spacing="4" Model="@User">
                 <MudTextField @bind-Value="User.DisplayName" Label="Display Name" Required="true" />
@@ -43,6 +45,7 @@
         </MudPaper>
 
         <MudPaper Class="pa-4 mt-5" Elevation="4">
+            <h2 class="visually-hidden">Account Actions</h2>
             <MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="Reset" Class="mt-4">Reset Account</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Delete" Class="mt-4">Delete Account</MudButton>
         </MudPaper>

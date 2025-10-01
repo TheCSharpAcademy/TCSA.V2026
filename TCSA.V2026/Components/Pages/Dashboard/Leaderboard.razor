@@ -15,6 +15,7 @@
     {
         <DashboardToolBar User=@User></DashboardToolBar>
     }
+    <h1 class="visually-hidden">@(IsReviews ? "Reviews Leaderboard" : "All Time Leaderboard")</h1>
     <MudButton FullWidth="true" Variant="Variant.Filled" Color="Color.Primary" Class="mb-4" OnClick="FilterReviews">
         Click to see @(IsReviews ? "All Time" : "Reviews") Leaderboard
     </MudButton>

@@ -25,6 +25,8 @@ public class DiscordService : IDiscordService
     {
         try
         {
+            await _client.RequestGuildUsersAsync(new GuildUsersRequestProperties(_guildId));
+
             var user = _client.Cache.Guilds[_guildId].Users.Values.FirstOrDefault(u => u.Nickname == discordAlias || u.Username == discordAlias);
 
             if (user is null)

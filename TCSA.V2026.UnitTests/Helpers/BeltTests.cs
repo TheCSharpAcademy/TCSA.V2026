@@ -519,17 +519,17 @@ public class BeltTests
     public void AzureShouldReturnGrey()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74,
-            76, 77, 78, // SQL
-            47, 48, 49, 50, // Azure
-            139 // flagship
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
+            (int) ArticleName.Flagship,
         }, 7, 12);
         Assert.That(result, Is.EqualTo("Grey"));
     }
@@ -538,17 +538,17 @@ public class BeltTests
     public void AzureShouldReturnBlue()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74,
-            76, 77, 78, // SQL
-            47, 48, 49, 50, // Azure
-            139 // flagship
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
+            (int) ArticleName.Flagship,
         }, 10, 17);
         Assert.That(result, Is.EqualTo("Blue"));
     }
@@ -557,18 +557,18 @@ public class BeltTests
     public void TwoFullStacksShouldReturnBlue()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            24, 25, 26, 27,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74,
-            76, 77, 78, // SQL
-            47, 48, 49, 50, // Azure
-            139 // flagship
+             (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
+            (int) ArticleName.Flagship
         }, 10, 17);
         Assert.That(result, Is.EqualTo("Blue"));
     }
@@ -577,18 +577,18 @@ public class BeltTests
     public void TwoFullStacksShouldReturnBlack()
     {
         var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            5, 6, 7, 8,
-            11, 12, 13,
-            14, 15, 16, 17,
-            18, 19, 20, 21,
-            22, 23,
-            24, 25, 26, 27,
-            43, 44, 45, 46,
-            53, 75,
-            28, 72, 74,
-            76, 77, 78, // SQL
-            47, 48, 49, 50, // Azure
-            139 // flagship
+            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
+            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
+            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
+            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
+            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
+            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
+            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
+            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
+            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
+            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
+            (int) ArticleName.Flagship
         }, 15, 25);
         Assert.That(result, Is.EqualTo("Black"));
     }

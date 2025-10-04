@@ -280,7 +280,7 @@
         var reviews = User.ReviewedProjects;
         var issues = User.Issues.Count();
 
-        return RoadmapHelper.GetExpectedBelt(completedProjects, reviews, issues);
+        return RoadmapHelper.GetExpectedBelt(completedProjects, issues, reviews);
     }
 
     private async Task SubmitLevel()

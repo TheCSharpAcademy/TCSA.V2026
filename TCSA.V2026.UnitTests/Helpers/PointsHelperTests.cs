@@ -186,7 +186,7 @@ public class PointsHelperTests
                 },
                 new DashboardProject
                 {
-                    ProjectId = (int) ArticleName.CoursesOopIntro,
+                    ProjectId = (int) ArticleName.CoursesOopFirst,
                     IsCompleted = true,
                 }
             },
@@ -243,7 +243,7 @@ public class PointsHelperTests
                 },
                 new DashboardProject
                 {
-                    ProjectId = (int) ArticleName.CoursesOopIntro,
+                    ProjectId = (int) ArticleName.CoursesOopFirst,
                     IsCompleted = true,
                 }
             },

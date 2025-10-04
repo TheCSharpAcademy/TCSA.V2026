@@ -11,23 +11,113 @@ public static class RoadmapHelper
     private static List<Project>? Projects = ProjectHelper.GetProjects();
     private static Project FlagshipProject = Projects.Single(x => x.Id == 139);
 
-    public static readonly int[] GreenRequirements = { 5, 6, 7, 8, 53, 75 };
-    public static readonly int[] OliveGreenRequirements = { 11, 12, 13 };
-    public static readonly int[] YellowRequirements = { 14, 15, 16, 17 };
-    public static readonly int[] OrangeRequirements = { 18, 19, 20, 21 };
-    public static readonly int[] RedRequirements = { 22, 23 };
-    public static readonly int[] GreyAndBlackRequirements = { 139 };
-    public static readonly int[] AspNetRequirements = { 24, 25, 26, 27 };
-    public static readonly int[] AngularRequirements = { 31, 32, 33, 34 };
-    public static readonly int[] ReactRequirements = { 35, 36, 37, 38 };
-    public static readonly int[] BlazorRequirements = { 39, 40, 41, 42 };
-    public static readonly int[] MauiRequirements = { 43, 44, 45, 46 };
-    public static readonly int[] AuthRequirements = { 28, 72, 74 };
-    public static readonly int[] SqlRequirements = { 76, 77, 78 };
-    public static readonly int[] AzureRequirements = { 47, 48, 49, 50 };
-    public static readonly int[][] FullStackAreas = { AspNetRequirements, AngularRequirements, ReactRequirements, BlazorRequirements, MauiRequirements };
-    public static readonly int[][] AspNetAreas = { AspNetRequirements, BlazorRequirements, MauiRequirements };
+    #region projectRequirements
+    public static readonly int[] GreenRequirements = {
+        (int) ArticleName.StartHere,  
+        (int) ArticleName.GettingHelp, 
+        (int) ArticleName.SettingUp, 
+        (int) ArticleName.Foundations,
+        (int) ArticleName.FreecodeCamp, 
+        (int) ArticleName.MathGame
+    };
 
+    public static readonly int[] OliveGreenRequirements = {
+        (int) ArticleName.Calculator, 
+        (int) ArticleName.HabitLogger, 
+        (int) ArticleName.CodingTracker
+    };
+
+    public static readonly int[] YellowRequirements = {
+        (int) ArticleName.Flashcards, 
+        (int) ArticleName.Drinks, 
+        (int) ArticleName.PhoneBook, 
+        (int) ArticleName.ShiftsLogger
+    };
+
+    public static readonly int[] OrangeRequirements = {
+       (int) ArticleName.Ecommerce, 
+       (int) ArticleName.SportsResults, 
+       (int) ArticleName.ExcelReader, 
+       (int) ArticleName.UnitTesting
+    };
+
+    public static readonly int[] RedRequirements = {
+        (int) ArticleName.Portfolio, 
+        (int) ArticleName.Resume,
+    };
+
+    public static readonly int[] GreyAndBlackRequirements = { 
+        (int)ArticleName.Flagship, 
+    };
+
+    public static readonly int[] AspNetRequirements = {
+        (int) ArticleName.WaterLogger, 
+        (int) ArticleName.Movies, 
+        (int) ArticleName.TodoList, 
+        (int) ArticleName.Budget,
+    };
+
+    public static readonly int[] AngularRequirements = {
+        (int) ArticleName.TourOfHeroes, 
+        (int) ArticleName.CoffeeTracker, 
+        (int) ArticleName.SleepTracker, 
+        (int) ArticleName.Quizgame
+    };
+
+    public static readonly int[] ReactRequirements = { 
+        (int)ArticleName.TicTacToe, 
+        (int)ArticleName.ExternalApi, 
+        (int)ArticleName.ShoppingList, 
+        (int)ArticleName.FriendsManager
+    };
+
+    public static readonly int[] BlazorRequirements = {
+        (int) ArticleName.WardrobeInventory, 
+        (int) ArticleName.MemoryGame, 
+        (int) ArticleName.FoodJournal, 
+        (int) ArticleName.SportsStatistics
+    };
+
+    public static readonly int[] MauiRequirements = {
+        (int) ArticleName.MauiMath, 
+        (int) ArticleName.Books, 
+        (int) ArticleName.Monkeys, 
+        (int) ArticleName.Warehouse
+    };
+
+    public static readonly int[] AuthRequirements = {
+        (int) ArticleName.Auth, 
+        (int) ArticleName.ProductManagement, 
+        (int) ArticleName.ExternalAuth,
+    };
+
+    public static readonly int[] SqlRequirements = {
+        (int) ArticleName.Sql1, 
+        (int) ArticleName.Sql2, 
+        (int) ArticleName.Sql3
+    };
+
+    public static readonly int[] AzureRequirements = {
+        (int) ArticleName.DeploySimpleApp, 
+        (int) ArticleName.DeployFullStack, 
+        (int) ArticleName.DeployFramework, 
+    };
+
+    public static readonly int[][] FullStackAreas = { 
+        AspNetRequirements, 
+        AngularRequirements, 
+        ReactRequirements, 
+        BlazorRequirements, MauiRequirements 
+    };
+
+    public static readonly int[][] AspNetAreas = { 
+        AspNetRequirements, 
+        BlazorRequirements, 
+        MauiRequirements 
+    };
+    #endregion
+
+    #region descriptions
     public static readonly List<string> GreenBeltReqs = new()
     {
         "Read the 5 Articles below",
@@ -93,6 +183,7 @@ public static class RoadmapHelper
         "Complete 5 Community Project Issues",
         "Complete Flagship Project"
     };
+    #endregion
 
     public static List<int> completedProjects = new();
     public static List<int> mauiProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MAUI).Select(x => x.Id).ToList();

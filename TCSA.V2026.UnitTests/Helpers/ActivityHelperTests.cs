@@ -43,7 +43,7 @@ public class ActivityHelperTests
                 },
                 new DashboardProject
                 {
-                    ProjectId = (int) ArticleName.CoursesOopIntro,
+                    ProjectId = (int) ArticleName.CoursesOopFirst,
                     IsCompleted = true,
                 }
             },
@@ -79,7 +79,7 @@ public class ActivityHelperTests
                 new AppUserActivity
                 {
                     DateSubmitted = DateTime.Now.AddDays(-4),
-                    ProjectId =  (int) ArticleName.CoursesOopIntro,
+                    ProjectId =  (int) ArticleName.CoursesOopFirst,
                     ActivityType = ActivityType.ArticleRead
                 },
                 new AppUserActivity

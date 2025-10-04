@@ -41,6 +41,15 @@ public class CommunityService : ICommunityService
                 var lastIssue = await context.Issues.OrderBy(x => x.ProjectId).LastOrDefaultAsync();
                 int nextProjectId = lastIssue != null ? lastIssue.ProjectId + 1 : 1;
 
+                var existingIssue = await context.Issues.FirstOrDefaultAsync(i => i.GithubUrl == issueUrl);
+
+                if (existingIssue != null)
+                {
+                    result.Status = ResponseStatus.Fail;
+                    result.Message = "Issue with the same URL already exists.";
+                    return result;
+                }
+
                 var issue = new CommunityIssue
                 {
                     GithubUrl = issueUrl,

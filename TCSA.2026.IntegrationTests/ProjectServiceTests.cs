@@ -1,43 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NetCord.Gateway.JsonModels;
-using TCSA.V2026.Data;
-using TCSA.V2026.Data.Models;
-using TCSA.V2026.Services;
+﻿using TCSA.V2026.Services;
 
-namespace TCSA._2026.IntegrationTests;
+namespace TCSA.V2026.IntegrationTests;
 
 [TestFixture]
-public class ProjectServiceTests
+public class ProjectServiceTests : IntegrationTestsBase
 {
-    private IDbContextFactory<ApplicationDbContext> _factory;
-    private ApplicationDbContext _context;
     private ProjectService _service;
 
     [SetUp]
     public void Setup()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDb") // This requires the Microsoft.EntityFrameworkCore.InMemory package
-            .Options;
-
-        _context = new ApplicationDbContext(options);
-        _factory = new TestDbContextFactory(_context);
-        _service = new ProjectService(_factory);
-
-        _context.Database.EnsureCreated();
-        _context.AspNetUsers.Add(new ApplicationUser
-        {
-            Id = "user1",
-            UserName = "testuser",
-            Email = ""
-        });
+        BaseSetup();
+        _service = new ProjectService(DbContextFactory);
     }
 
     [TearDown]
     public void TearDown()
     {
-        _context.Database.EnsureDeleted(); // Clears the in-memory database
-        _context.Dispose(); // Releases resources
+        BaseTearDown();
     }
 
     [Test]
@@ -46,24 +26,12 @@ public class ProjectServiceTests
         await _service.PostArticle(12, "user1", "fakeUrl", false);
         await _service.PostArticle(12, "user1", "fakeUrl", false);
 
-        _context.SaveChanges();
+        using var verifyContext = DbContextFactory.CreateDbContext();
 
-        var list = _context.DashboardProjects.ToList();
+        var list = verifyContext.DashboardProjects
+        .Where(p => p.ProjectId == 12 && p.AppUserId == "user1")
+        .ToList();
+
+        Assert.That(list.Count, Is.EqualTo(1));
     }
 }
-
-public class TestDbContextFactory : IDbContextFactory<ApplicationDbContext>
-{
-    private readonly ApplicationDbContext _context;
-
-    public TestDbContextFactory(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public ApplicationDbContext CreateDbContext()
-    {
-        return _context;
-    }
-}
-//Install - Package Microsoft.EntityFrameworkCore.InMemory

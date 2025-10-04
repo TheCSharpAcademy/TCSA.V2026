@@ -1,4 +1,4 @@
-﻿@media (max-width: 600px) {
+@media (max-width: 600px) {
     .responsive-banner {
         font-size: 1.5rem; /* Smaller for mobile */
     }
@@ -105,4 +105,16 @@
     padding: 2px 4px;
     border-radius: 4px;
     color: #f8f8f2;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

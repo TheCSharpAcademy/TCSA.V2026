@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
@@ -14,9 +14,9 @@ else
         <MudPaper Class="pa-10" Elevation="4">
             <MudGrid>
                 <MudItem xs="12" md="6" Class="responsive-center">
-                    <MudText Typo="Typo.h3" Class="responsive-banner font-weight-bold" Color="Color.Primary">
+                    <h1 class="responsive-banner mud-typography-h3 mud-primary-text">
                         Learn .NET/C# With Real Projects
-                    </MudText>
+                    </h1>
                     <MudText Class="mt-4">
                         Build real-world skills in .NET and C# through hands-on projects, guided practice, and expert mentoring. Our course is practical, engaging, and
                         <MudLink Href="https://exercism.org" Target="_blank">100% free, forever</MudLink>.
@@ -45,13 +45,10 @@ else
     @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
 
     <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
-        <MudText Typo="Typo.h4"
-                 Color="Color.Primary"
-                 Align="Align.Center"
-                 Style="font-weight: 500;"
-                 Class="mb-2">
+        <h2 class="mud-typography-h4 mud-primary-text mud-typography-align-center mb-2"
+            style="font-weight: 500;">
             First Steps
-        </MudText>
+        </h2>
 
         <MudText Typo="Typo.subtitle1"
                  Align="Align.Center"
@@ -72,12 +69,9 @@ else
                                           Style="width: 100px; height: 100px; object-fit: cover;" />
                             </MudCardContent>
                             <MudCardContent Class="mb-5">
-                                <MudText Class="mb-3 font-weight-bold"
-                                         Align="Align.Center"
-                                         Color="Color.Primary"
-                                         Typo="Typo.h5">
+                                <h3 class="mud-typography-h5 mud-primary-text mud-typography-align-center mb-3">
                                     @article.Title
-                                </MudText>
+                                </h3>
                                 <MudText Class="mb-10" Typo="Typo.body2">@article.Description</MudText>
                             </MudCardContent>
                         </MudCard>
@@ -89,13 +83,10 @@ else
     </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
-        <MudText Typo="Typo.h4"
-                 Align="Align.Center"
-                 Color="Color.Primary"
-                 Style="font-weight: 500;"
-                 Class="mb-2 mt-5">
+        <h2 class="mud-typography-h4 mud-primary-text mud-typography-align-center mb-2 mt-5"
+            style="font-weight: 500;">
             Console Apps
-        </MudText>
+        </h2>
         <MudGrid Class="mt-3">
             @foreach (var p in Projects.Where(x => x.Area == Area.Console && x.Id != 52 && x.Id != 75))
             {
@@ -108,12 +99,9 @@ else
                                           Style="width: 100px; height: 100px; object-fit: cover;" />
                             </MudCardContent>
                             <MudCardContent>
-                                <MudText Class="mb-3"
-                                         Align="Align.Center"
-                                         Typo="Typo.h5"
-                                         Color="Color.Primary">
+                                <h3 class="mud-typography-h5 mud-primary-text mud-typography-align-center mb-3">
                                     @p.Title
-                                </MudText>
+                                </h3>
                                 <MudText Align="Align.Center"
                                          Class="mb-10"
                                          Typo="Typo.body2">@p.Description</MudText>
@@ -136,9 +124,9 @@ else
                               Alt="@a.Area.ToString()"
                               Style="width: 50px; height: 50px; object-fit: cover;" />
                 }
-                <MudText Color="Color.Primary" Typo="Typo.h4" Class="text-primary">
+                <h2 class="mud-typography-h4 mud-primary-text">
                     @a.Title
-                </MudText>
+                </h2>
             </div>
 
             <MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mb-6 text-secondary">
@@ -158,12 +146,9 @@ else
                                 </MudCardContent>
 
                                 <MudCardContent Class="flex-grow-1 d-flex flex-column justify-between">
-                                    <MudText Class="mb-3"
-                                             Color="Color.Primary"
-                                             Align="Align.Center"
-                                             Typo="Typo.h5">
+                                    <h3 class="mud-typography-h5 mud-primary-text mud-typography-align-center mb-3">
                                         @p.Title
-                                    </MudText>
+                                    </h3>
                                     <MudText Class="mb-10" Typo="Typo.body2">@p.Description</MudText>
                                 </MudCardContent>
                             </MudCard>

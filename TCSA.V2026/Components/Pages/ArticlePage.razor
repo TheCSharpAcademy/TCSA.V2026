@@ -1,4 +1,4 @@
-﻿@page "/article/{ArticleId:int}/{ArticleSlug}"
+@page "/article/{ArticleId:int}/{ArticleSlug}"
 @using System.Security.Claims
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
@@ -15,7 +15,7 @@
 <MudContainer MaxWidth="MaxWidth.Large">
     <MudPaper Class="jumbotron d-flex align-center justify-center mt-3" Style=@GetBanner()>
         <div class="jumbotron-overlay">
-            <MudText Typo="Typo.h3" Class="text-white text-center">@Article.Title</MudText>
+            <h1 class="mud-typography-h3 text-white text-center">@Article.Title</h1>
         </div>
     </MudPaper>
     @if (IsLoading)
@@ -35,7 +35,7 @@
                 {
                     if (!string.IsNullOrWhiteSpace(block.Title))
                     {
-                        <MudText Typo="Typo.h6" Class="mt-10 mb-2">@block.Title</MudText>
+                        <h2 class="mud-typography-h6 mt-10 mb-2">@block.Title</h2>
                     }
 
                     @foreach (var paragraph in block.Paragraphs)

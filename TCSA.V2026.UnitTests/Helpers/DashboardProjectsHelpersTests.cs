@@ -165,4 +165,52 @@ public class DashboardProjectsHelpersTests
         // Assert
         Assert.That(isCompleted, Is.True);
     }
+
+    [Test]
+    public void CheckIfAreaIsCompleted_ShouldReturnTrue_WhenStartHereAreaIsCompleted()
+    {
+        // Arrange
+        var area = Area.StartHere;
+        var completedProjects = new List<int>
+        {
+            (int)ArticleName.StartHere,
+            (int)ArticleName.GettingHelp,
+            (int)ArticleName.SettingUp,
+            (int)ArticleName.Foundations,
+            (int)ArticleName.ImportanceOfConsole,
+            (int)ArticleName.FreecodeCamp
+        };
+
+        var articles = ArticleHelper.GetArticles();
+        var projects = ProjectHelper.GetProjects().Where(x => x.IsClosed == false);
+
+        // Act
+        var isCompleted = DashboardProjectsHelpers.CheckIfAreaIsCompleted(projects, articles, completedProjects, area, null);
+
+        // Assert
+        Assert.That(isCompleted, Is.True);
+    }
+
+    [Test]
+    public void CheckIfAreaIsCompleted_ShouldReturnFalse_WhenStartHereAreaIsNotCompleted()
+    {
+        // Arrange
+        var area = Area.StartHere;
+        var completedProjects = new List<int>
+        {
+            (int)ArticleName.StartHere,
+            (int)ArticleName.GettingHelp,
+            (int)ArticleName.SettingUp,
+            (int)ArticleName.Foundations
+        };
+
+        var articles = ArticleHelper.GetArticles();
+        var projects = ProjectHelper.GetProjects().Where(x => x.IsClosed == false);
+
+        // Act
+        var isCompleted = DashboardProjectsHelpers.CheckIfAreaIsCompleted(projects, articles, completedProjects, area, null);
+
+        // Assert
+        Assert.That(isCompleted, Is.False);
+    }
 }

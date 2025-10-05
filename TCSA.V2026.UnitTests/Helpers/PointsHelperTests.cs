@@ -287,4 +287,46 @@ public class PointsHelperTests
 
         Assert.That(breakdown.Total.Equals(57));
     }
+
+    [Test]
+    public void ReviewsFromTheSameProjectShouldReturnCorrectPoints()
+    {
+        var user = new ApplicationUser
+        {
+            Id = Guid.NewGuid().ToString(),
+            CodeReviewProjects = new List<UserReview>
+            {
+                new UserReview
+                {
+                    DashboardProject = new DashboardProject
+                    {
+                        ProjectId = 13,
+                        IsCompleted = true,
+                    }
+                },
+                new UserReview
+                {
+                    DashboardProject = new DashboardProject
+                    {
+                        ProjectId = 13,
+                        IsCompleted = false,
+                        IsArchived = true,
+                    }
+                },
+                new UserReview
+                {
+                    DashboardProject = new DashboardProject
+                    {
+                        ProjectId = 13,
+                        IsCompleted = false,
+                        IsArchived = true,
+                    }
+                }
+            }
+        };
+
+        var breakdown = PointsHelper.GetPointBreakdown(user);
+
+        Assert.That(breakdown.Total.Equals(30));
+    }
 }

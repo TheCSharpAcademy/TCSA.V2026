@@ -213,4 +213,38 @@ public class DashboardProjectsHelpersTests
         // Assert
         Assert.That(isCompleted, Is.False);
     }
+
+    [TestCase(Area.Console, Difficulty.Beginner, new[] { (int)ArticleName.MathGame, (int)ArticleName.Calculator, (int)ArticleName.HabitLogger, (int)ArticleName.CodingTracker })]
+    [TestCase(Area.Console, Difficulty.Intermediate, new[] { (int)ArticleName.Flashcards, (int)ArticleName.Drinks, (int)ArticleName.PhoneBook, (int)ArticleName.ShiftsLogger })]
+    [TestCase(Area.Console, Difficulty.Advanced, new[] { (int)ArticleName.Ecommerce, (int)ArticleName.SportsResults, (int)ArticleName.ExcelReader, (int)ArticleName.UnitTesting })]
+    public void CheckIfAreaIsCompleted_ShouldReturnTrue_WhenConsoleAreaWithDifficultyIsCompleted(
+        Area area, Difficulty difficulty, int[] completedProjects)
+    {
+        // Arrange
+        var articles = ArticleHelper.GetArticles();
+        var projects = ProjectHelper.GetProjects().Where(x => x.IsClosed == false);
+
+        // Act
+        var isCompleted = DashboardProjectsHelpers.CheckIfAreaIsCompleted(projects, articles, completedProjects.ToList(), area, difficulty);
+
+        // Assert
+        Assert.That(isCompleted, Is.True);
+    }
+
+    [TestCase(Area.Console, Difficulty.Beginner, new[] { (int)ArticleName.Calculator, (int)ArticleName.HabitLogger, (int)ArticleName.CodingTracker })]
+    [TestCase(Area.Console, Difficulty.Intermediate, new[] { (int)ArticleName.Drinks, (int)ArticleName.PhoneBook, (int)ArticleName.ShiftsLogger })]
+    [TestCase(Area.Console, Difficulty.Advanced, new[] { (int)ArticleName.SportsResults, (int)ArticleName.ExcelReader, (int)ArticleName.UnitTesting })]
+    public void CheckIfAreaIsCompleted_ShouldReturnFalse_WhenConsoleAreaWithDifficultyIsNotCompleted(
+        Area area, Difficulty difficulty, int[] completedProjects)
+    {
+        // Arrange
+        var articles = ArticleHelper.GetArticles();
+        var projects = ProjectHelper.GetProjects().Where(x => x.IsClosed == false);
+
+        // Act
+        var isCompleted = DashboardProjectsHelpers.CheckIfAreaIsCompleted(projects, articles, completedProjects.ToList(), area, difficulty);
+
+        // Assert
+        Assert.That(isCompleted, Is.False);
+    }
 }

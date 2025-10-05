@@ -139,7 +139,10 @@ public enum ArticleName
     DeployFramework = 49,
     AzureFunctions = 1000,
 
+    BreweryApi = 64,
     Flagship = 139, 
+
+    DockerIntro = 100002,
 
     ConsoleGraduation = 10,
     Roadmap = 51,

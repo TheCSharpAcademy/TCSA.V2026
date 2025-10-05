@@ -1,4 +1,5 @@
-﻿using TCSA.V2026.Data.Models;
+﻿using TCSA.V2026.Data.Curriculum;
+using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.LanguageModels;
 
 namespace TCSA.V2026.Data.Helpers.ProjectsSubHelpers;
@@ -14,7 +15,7 @@ internal static class AuthProjectsHelper
                 Id = 28,
                 Title = "Authentication and Authorization",
                 IconUrl = "icons8-safe-ok-480.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-asphotograpy-218686.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "authentication-and-authorization",
                 Description = "Learn how to secure your app with ASP.NET Core Identity",
@@ -27,40 +28,39 @@ internal static class AuthProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="So far we’ve learned how to build a full-stack app but we’ll never be able to deploy it without securing it first. If you publish a form that calls a database and allow anyone to use it, it will eventually be found by bots designed to find database vulnerabilities. If you pay for your data server as you use it, the result will be a massive bill. Believe me, I learned the hard way. 😁"
+                        Body="So far we’ve learned how to build a full-stack app but we’ll never be able to deploy it without securing it. If you publish a form that talks to a database and allow anyone to use it, it will eventually be found by bots designed to find database vulnerabilities. If you pay for your data server as you use it, the result will be a massive bill. 😟"
                     },
                     new Paragraph
                     {
-                        Body="In principle, creating a custom authentication and authorisation system is fairly easy. You can even try yourself. Simply create an ‘user’ table with login and password and create a registration form that will insert a new user and a login form that will check the user input against that table. Then if the user is logged in you can allow them to view your page. If not, redirect them to the login/registration area."
+                        Body="In principle, creating a custom authentication and authorisation system is fairly easy. You can try it yourself with the knowledge you already have. Simply create a ‘user’ table with login and password and create a registration form that will insert a new user and a login form that will check the user input against that table. If the input password matches the one stored in the database they're 'authenticated' and 'authorized' to view your page. If not, redirect them to the login/registration area."
                     },
                     new Paragraph
                     {
-                        Body = "The reality is a little bit more complex though, since any real A&A system will need to support functionalities like changing password, managing an account, confirming a registration, just to name a few. ASP.NET Identity offers scaffolding for dozens of these operations, shipping fully-functioning front and back-end solutions. And they’re customisable too! Let’s see how it works."
+                        Body = "The reality is a little bit more complex though. Not only this simple approach is easy to hack, but any real A&A system will need to support functionalities like changing password, managing an account, confirming a registration, just to name a few. There are several battle-tested enterprise level approaches for this task. Since this is a .NET/C# course we'll be using an approach that's part of the .NET ecosystem: <b>ASP.NET Core Identity</b> offers scaffolding for dozens of these operations, shipping fully-functioning front and back-end solutions. And they’re customisable too! Let’s see how it works."
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "In this project, you'll have two tasks.",
-                    "In a first moment you'll create a new Web App project with Identity as part of it.",
-                    "In a second moment you'll scaffold Identity into the Movies App you created before. If you haven't done the Movies app, you can scaffold it into a project of your choice. This is the only project you need to submit for review.",
+                    "In this project, you'll have two tasks. In a first moment you'll create a new Web App project with Identity as part of it.",
+                    "In a second moment you'll scaffold Identity into the one of the Blazor or MVC apps you created before. If you chose the Angular or React paths, you'll have to learn how to create and run a basic Blazor or MVC or Razor Pages project to complete this task. ",
                     "You need to use Entity Framework, raw SQL isn't allowed.",
                     "You need to seed test data.",
                     "You need to use EF's EnsureCreated method so the database and tables are created automatically.",
                     "You need to add logging logic to your app and save logs to your database when errors occur.",
-                    "You don't need to handle auth scenarios such as e-mail confirmation, password recovery, etc. These will be addressed in future projects."
+                    "You don't need to handle auth scenarios such as e-mail confirmation, password recovery, etc. These will be addressed in future projects.",
+                    CurriculumConstants.ReadMeRequirement
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
-                    "<a target='blank' href='https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio'>Introduction to Identity</a>",
+                    "<a target='blank' href='https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-9.0&tabs=visual-studio'>Introduction to Identity</a>",
                     "<a target='blank' href='https://docs.microsoft.com/en-us/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-6.0&tabs=visual-studio'>Scaffolding Identity into Existing App</a>",
-                    "<a target='blank' href='https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line'>Logging in C# and .NET</a>",
-                    "<a target='blank' href='https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization'>.NET 8 Web API Identity (for React, Angular, etc.)</a>"
                 },
                 Tips = new List<string>
                 {
+                    "If your front-end choice is React or Angular, you might want to go back and complete the first couple of projects of the Blazor or MVC areas first. Don't worry, it's fairly straightforward. And it won't be a waste of time. Even if you never work with these technologies again, this exposure to ASP.NET Core technologies and the .NET scaffolding system will make you a more well-rounded developer.",
                     "After wiring Identity up, you need to apply it to the controller you want to protect.",
-                    "You'll only submit one project for review, however it's important to complete both tasks. Creating an app with identity from the beginning. And then scaffolding identity into an existing app. These are two different beasts and it's important to have exposure to both."
+                    "You'll only submit one project for review, however it's important to complete both tasks. Creating an app with identity from the beginning, and then scaffolding identity into an existing app. These are two different beasts and it's important to have exposure to both."
                 }
              },
              new Project

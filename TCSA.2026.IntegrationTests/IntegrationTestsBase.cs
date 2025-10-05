@@ -33,16 +33,32 @@ public class IntegrationTestsBase
 
         using var seedContext = DbContextFactory.CreateDbContext();
         seedContext.Database.EnsureCreated();
-        seedContext.AspNetUsers.Add(new ApplicationUser
-        {
-            Id = "user1",
-            UserName = "testuser",
-            Email = "test@test.com",
-            Country = "Testland",
-            FirstName = "Test",
-            LastName = "User",
 
-        });
+        var testUsers = new List<ApplicationUser>
+        {
+            new ApplicationUser
+            {
+                Id = "user1",
+                UserName = "testuser",
+                Email = "test@test.com",
+                Country = "Testland",
+                FirstName = "Test",
+                LastName = "User",
+            },
+            new ApplicationUser
+            {
+                 Id = "user2",
+                 UserName = "testuser2",
+                 Email = "test2@test.com",
+                 Country = "Testonia",
+                 FirstName = "Testingson",
+                 LastName = "Userson",
+                 Level = Level.Yellow,
+                 ExperiencePoints = 100
+            }
+        };
+
+        seedContext.AspNetUsers.AddRange(testUsers);
 
         seedContext.SaveChanges();
     }

@@ -181,6 +181,7 @@ public class ProjectService : IProjectService
             using (var context = _factory.CreateDbContext())
             {
                 var user = await context.Users
+                    .AsNoTracking()
                     .Include(u => u.UserActivity)
                     .Include(u => u.DashboardProjects)
                     .FirstOrDefaultAsync(u => u.Id == userId);
@@ -202,9 +203,9 @@ public class ProjectService : IProjectService
                         GithubUrl = url
                     };
 
-                    user.DashboardProjects.Add(newProject);
+                    context.DashboardProjects.Add(newProject);
 
-                    user.UserActivity.Add(
+                    context.UserActivity.Add(
                       new AppUserActivity
                       {
                           ProjectId = projectId,
@@ -215,6 +216,8 @@ public class ProjectService : IProjectService
 
                     user.ExperiencePoints = isArticle ? (user.ExperiencePoints + project.ExperiencePoints) : user.ExperiencePoints;
 
+                    context.Entry(user).Property(u => u.ExperiencePoints).IsModified = true;
+                    context.Attach(user);
                     await context.SaveChangesAsync();
                 };
             };

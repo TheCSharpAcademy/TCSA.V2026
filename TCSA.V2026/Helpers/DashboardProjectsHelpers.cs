@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
@@ -468,6 +468,11 @@ public static class DashboardProjectsHelpers
         }
         else
         {
+            if (!completedProjects.Contains(75) || !completedProjects.Contains(9))
+            {
+                return false;
+            }
+
             var articleIds = articles
                 .Where(x => x.Area == Area.StartHere)
                 .Select(x => x.Id);
@@ -479,11 +484,6 @@ public static class DashboardProjectsHelpers
                     return false;
                 }
             }
-        }
-
-        if (!completedProjects.Contains(75) || !completedProjects.Contains(9))
-        {
-            return false;
         }
 
         return true;

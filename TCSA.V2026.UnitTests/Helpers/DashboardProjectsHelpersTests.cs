@@ -247,4 +247,49 @@ public class DashboardProjectsHelpersTests
         // Assert
         Assert.That(isCompleted, Is.False);
     }
+
+    [Test]
+    public void GetAreas_StartHereDescriptionIsCorrect_WithFreeCodeCamp()
+    {
+        // Arrange
+        var completedProjects = new List<int>
+        {
+            (int)ArticleName.StartHere,
+            (int)ArticleName.GettingHelp,
+            (int)ArticleName.SettingUp,
+            (int)ArticleName.Foundations,
+            (int)ArticleName.ImportanceOfConsole,
+            (int)ArticleName.FreecodeCamp
+        };
+
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects, []);
+
+        // Act
+        var description = areas.First(a => a.Area == Area.StartHere).Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo("6 out of 6 tasks completed"));
+    }
+
+    [Test]
+    public void GetAreas_StartHereDescriptionIsCorrect_WithoutFreeCodeCamp()
+    {
+        // Arrange
+        var completedProjects = new List<int>
+        {
+            (int)ArticleName.StartHere,
+            (int)ArticleName.GettingHelp,
+            (int)ArticleName.SettingUp,
+            (int)ArticleName.Foundations,
+            (int)ArticleName.ImportanceOfConsole
+        };
+
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects, []);
+
+        // Act
+        var description = areas.First(a => a.Area == Area.StartHere).Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo("5 out of 6 tasks completed"));
+    }
 }

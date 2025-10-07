@@ -137,7 +137,7 @@ public enum ArticleName
     DeploySimpleApp = 47,
     DeployFullStack = 48,
     DeployFramework = 49,
-    AzureFunctions = 1000,
+    AzureFunctions = 100000,
 
     BreweryApi = 64,
     Flagship = 139, 

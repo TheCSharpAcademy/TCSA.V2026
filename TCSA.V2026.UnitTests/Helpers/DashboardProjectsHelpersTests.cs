@@ -292,4 +292,105 @@ public class DashboardProjectsHelpersTests
         // Assert
         Assert.That(description, Is.EqualTo("5 out of 6 tasks completed"));
     }
+
+    [TestCase(new int[] { (int)ArticleName.Sql1, (int)ArticleName.Sql2, (int)ArticleName.Sql3 }
+             , "3 out of 3 tasks completed")]
+    [TestCase(new int[] { (int)ArticleName.Sql1, (int)ArticleName.Sql2 }
+             , "2 out of 3 tasks completed")]
+    public void GetAreas_SqlDescriptionIsCorrect(int[] completedProjects, string expected)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == "SQL").Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
+
+    [TestCase(new int[] { (int)ArticleName.Flagship }, "1 out of 1 tasks completed")]
+    [TestCase(new int[] { }, "0 out of 1 tasks completed")]
+    public void GetAreas_GraduationProjectDescriptionIsCorrect(int[] completedProjects, string expected)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == "Flagship Project").Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
+
+    [TestCase(new int[] { (int)ArticleName.MathGame, (int)ArticleName.Calculator, (int)ArticleName.HabitLogger, (int)ArticleName.CodingTracker }
+             , "4 out of 4 tasks completed")]
+    [TestCase(new int[] { (int)ArticleName.MathGame, (int)ArticleName.Calculator, (int)ArticleName.HabitLogger }
+             , "3 out of 4 tasks completed")]
+    public void GetAreas_BeginnerConsoleDescriptionIsCorrect(int[] completedProjects, string expected)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == "Beginner Console").Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
+
+    [TestCase(new int[] { (int)ArticleName.Flashcards, (int)ArticleName.Drinks, (int)ArticleName.PhoneBook, (int)ArticleName.ShiftsLogger }
+             , "4 out of 4 tasks completed")]
+    [TestCase(new int[] { (int)ArticleName.Flashcards, (int)ArticleName.Drinks, (int)ArticleName.PhoneBook }
+            , "3 out of 4 tasks completed")]
+    public void GetAreas_IntermediateConsoleDescriptionIsCorrect(int[] completedProjects, string expected)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == "Intermediate Console").Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
+
+    [TestCase(new int[] { (int)ArticleName.Ecommerce, (int)ArticleName.SportsResults, (int)ArticleName.ExcelReader, (int)ArticleName.UnitTesting }
+             , "4 out of 4 tasks completed")]
+    [TestCase(new int[] { (int)ArticleName.Ecommerce, (int)ArticleName.SportsResults, (int)ArticleName.ExcelReader }
+             , "3 out of 4 tasks completed")]
+    public void GetAreas_AdvancedConsoleDescriptionIsCorrect(int[] completedProjects, string expected)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == "Advanced Console").Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
+
+    [TestCase(new int[] { (int)ArticleName.TicTacToe, (int)ArticleName.ExternalApi, (int)ArticleName.ShoppingList, (int)ArticleName.FriendsManager }
+             , "4 out of 4 tasks completed", "React")]
+    [TestCase(new int[] { (int)ArticleName.TicTacToe, (int)ArticleName.ExternalApi, (int)ArticleName.ShoppingList }
+             , "3 out of 4 tasks completed", "React")]
+    [TestCase(new int[] { (int)ArticleName.Portfolio, (int)ArticleName.Resume }
+             , "2 out of 2 tasks completed", "Start Applying")]
+    [TestCase(new int[] { (int)ArticleName.Resume }, "1 out of 2 tasks completed", "Start Applying")]
+    [TestCase(new int[] { (int)ArticleName.WaterLogger, (int)ArticleName.Movies, (int)ArticleName.TodoList, (int)ArticleName.Budget }
+             , "4 out of 4 tasks completed", "ASP.NET Core MVC")]
+    [TestCase(new int[] { (int)ArticleName.WaterLogger, (int)ArticleName.Movies, (int)ArticleName.TodoList }
+             , "3 out of 4 tasks completed", "ASP.NET Core MVC")]
+    public void GetAreas_OthersDescriptionIsCorrect(int[] completedProjects, string expected, string areaName)
+    {
+        // Arrange
+        var areas = DashboardProjectsHelpers.GetAreas(completedProjects.ToList(), []);
+
+        // Act
+        var description = areas.First(a => a.CardName == areaName).Description;
+
+        // Assert
+        Assert.That(description, Is.EqualTo(expected));
+    }
 }

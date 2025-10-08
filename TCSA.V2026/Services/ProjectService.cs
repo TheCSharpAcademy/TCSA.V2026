@@ -176,12 +176,12 @@ public class ProjectService : IProjectService
     public async Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle)
     {
         var project = DashboardProjectsHelpers.GetProject(projectId);
+
         try
         {
             using (var context = _factory.CreateDbContext())
             {
                 var user = await context.Users
-                    .AsNoTracking()
                     .Include(u => u.UserActivity)
                     .Include(u => u.DashboardProjects)
                     .FirstOrDefaultAsync(u => u.Id == userId);
@@ -214,10 +214,8 @@ public class ProjectService : IProjectService
                           ActivityType = isArticle ? ActivityType.ArticleRead : ActivityType.ProjectSubmitted
                       });
 
-                    user.ExperiencePoints = isArticle ? (user.ExperiencePoints + project.ExperiencePoints) : user.ExperiencePoints;
+                    user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
 
-                    context.Entry(user).Property(u => u.ExperiencePoints).IsModified = true;
-                    context.Attach(user);
                     await context.SaveChangesAsync();
                 };
             };

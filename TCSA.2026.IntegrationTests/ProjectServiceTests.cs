@@ -37,6 +37,20 @@ public class ProjectServiceTests : IntegrationTestsBase
     }
 
     [Test]
+    public async Task AddingArticlesShouldIncrementXPs()
+    {
+        await _service.PostArticle((int)ArticleName.StartHere, "user1", "fakeUrl", true);
+
+        using var verifyContext = DbContextFactory.CreateDbContext();
+
+        using var assertContext = DbContextFactory.CreateDbContext();
+        var user = assertContext.AspNetUsers
+            .FirstOrDefault(u => u.Id.Equals("user1"));
+
+        Assert.That(user.ExperiencePoints, Is.EqualTo(5));
+    }
+
+    [Test]
     public async Task ArchivedCanBeReopened()
     {
         using (var seedContext = DbContextFactory.CreateDbContext())

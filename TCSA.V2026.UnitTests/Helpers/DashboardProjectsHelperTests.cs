@@ -10,7 +10,7 @@ using TaskStatus = TCSA.V2026.Data.DTOs.TaskStatus;
 namespace TCSA.V2026.UnitTests.Helpers;
 
 [TestFixture]
-public class DashboardProjectsHelpersTests
+public class DashboardProjectsHelperTests
 {
     [SetUp]
     public void SetUp()

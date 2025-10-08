@@ -54,6 +54,14 @@ public static class DashboardProjectsHelpers
         {
             count = 1;
             ids = Projects.Where(x => x.Area == Area.GraduationProject).Select(x => x.Id).ToList();
+
+            foreach (int id in ids)
+            {
+                if (completedProjects != null && completedProjects.Contains(id))
+                {
+                    completedProjectsCount += 1;
+                }
+            }
         }
         else
         {

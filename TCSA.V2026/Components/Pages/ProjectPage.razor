@@ -319,7 +319,7 @@
                 && !IsCompleted
                 && !Project.CodeWarsChallenges.Any(x => x.IsCompleted == false))
             {
-                await CodewarsService.MarkCodeWarsAsCompleted(Project.Id, UserId);
+                await CodewarsService.MarkSqlProjectAsCompleted(Project.Id, UserId);
             }
         }
         catch (Exception ex)

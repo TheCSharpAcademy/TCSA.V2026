@@ -12,7 +12,8 @@ namespace TCSA.V2026.Services;
 
 public interface ICodewarsService
 {
-    Task<int> MarkCodeWarsAsCompleted(int projectId, string userId);
+    Task<int> MarkSqlProjectAsCompleted(int projectId, string userId);
+    Task MarkChallengeAsComplete(int challengeId, string userId);
     Task<BaseResponse> Sync(string? username, int challengeId, string externalId, string userId);
     Task<CodeWarsResponse> GetCodeWarsCompletedChallenges(string? username, List<CodeWarsChallenge> challenges);
 }
@@ -28,6 +29,7 @@ public class CodewarsService: ICodewarsService
         _httpClient = httpClientFactory.CreateClient();
     }
 
+    // This checks if challenges from the SQL area were completed on CodeWars, it's called from Project Page (provided it's a SQL project). 
     public async Task<CodeWarsResponse> GetCodeWarsCompletedChallenges(string userId, List<CodeWarsChallenge> challenges)
     {
         var codeWarsResponse = new CodeWarsResponse();
@@ -117,6 +119,13 @@ public class CodewarsService: ICodewarsService
                         ChallengeId = challengeId,
                         CompletedAt = DateTime.UtcNow
                     });
+
+                    var user = await context.AspNetUsers
+                        .Where(x => x.Id == userId)
+                        .FirstOrDefaultAsync();
+
+                    user.ExperiencePoints += project.Entity.Challenge.ExperiencePoints;
+
                     await context.SaveChangesAsync();
                 }
 
@@ -137,7 +146,32 @@ public class CodewarsService: ICodewarsService
         }
     }
 
-    public async Task<int> MarkCodeWarsAsCompleted(int projectId, string userId)
+    public async Task MarkChallengeAsComplete(int challengeId, string userId)
+    {
+        using (var context = _factory.CreateDbContext())
+        {
+            var project = context.UserChallenges.Add(new UserChallenge
+            {
+                UserId = userId,
+                ChallengeId = challengeId,
+                CompletedAt = DateTime.UtcNow
+            });
+
+            var user = await context.AspNetUsers
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
+            var challenge = await context.Challenges
+                .Where(c => c.Id == challengeId)
+                .FirstOrDefaultAsync();
+
+            user.ExperiencePoints += challenge.ExperiencePoints;
+
+            await context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<int> MarkSqlProjectAsCompleted(int projectId, string userId)
     {
         var project = SqlProjectsHelper.GetProjects().FirstOrDefault(x => x.Id == projectId);
 

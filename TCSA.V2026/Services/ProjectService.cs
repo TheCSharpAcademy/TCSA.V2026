@@ -203,6 +203,13 @@ public class ProjectService : IProjectService
                         GithubUrl = url
                     };
 
+                    var trackedEntity = context.ChangeTracker.Entries<DashboardProject>().FirstOrDefault(e => e.Entity.ProjectId == newProject.ProjectId);
+
+                    if (trackedEntity != null)
+                    {
+                        trackedEntity.State = EntityState.Detached;
+                    }
+
                     context.DashboardProjects.Add(newProject);
 
                     context.UserActivity.Add(

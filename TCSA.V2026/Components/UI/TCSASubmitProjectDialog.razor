@@ -32,6 +32,7 @@
     [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public int ProjectId { get; set; }
     [Parameter] public bool IsIssue { get; set; }
+    [Parameter] public bool IsUpdate { get; set; }
     [Parameter] public ApplicationUser User { get; set; }
 
     public string GithubUrl = string.Empty;
@@ -90,7 +91,7 @@
         } 
         else
         {
-            result = await ProjectService.PostArticle(ProjectId, User.Id, GithubUrl, false);
+            result = await ProjectService.PostArticle(ProjectId, User.Id, GithubUrl, false, IsUpdate);
         }
 
         MudDialog.Close(DialogResult.Ok(result.Status));

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using TCSA.V2026.Data.Models;
 using TCSA.V2026.Services;
 
 namespace TCSA.V2026.Webhooks;
@@ -13,84 +13,99 @@ public class GithubWebhookController : Controller
     {
         get;
     }
+
     public GithubWebhookController(IGithubService githubService)
     {
         GithubService = githubService;
     }
 
     [HttpPost]
-    //public async Task<IActionResult> Receive([FromBody] JsonElement payload)
-    //{
-    //    var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true });
-    //    Console.WriteLine(json); // Or use ILogger
-    //    return Ok();
-    //}
-
-    public async Task<IActionResult> Receive([FromBody] GitHubWebhookDto payload)
+    public async Task<IActionResult> Receive([FromBody] JsonElement payload)
     {
-        int projectId = 0;
-        if (payload.Review?.State != "approved") { return Ok(); }
+        var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true });
 
-        if (Enum.IsDefined(typeof(GithubRepository), payload.Repository.Id))
+        var eventType = Request.Headers["X-GitHub-Event"].ToString();
+
+        switch (eventType)
         {
-            var repo = (GithubRepository)payload.Repository.Id;
-            Console.WriteLine($"Matched repository: {repo}");
+            case "pull_request":
+                var prDto = JsonSerializer.Deserialize<PullRequestDto>(
+                    payload.GetRawText(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
 
-            if (RepoToArticleMap.TryGetValue(repo, out projectId))
-            {
-                Console.WriteLine($"Mapped to article: {projectId}");
-            }
-            else
-            {
-                Console.WriteLine($"No article mapping found for repository: {repo}");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"Unknown repository ID: {payload.Repository.Id}");
-        }
+                await GithubService.ProcessPullRequest(prDto);
+                break;
 
-        await GithubService.MarkAsCompleted(projectId, payload.PullRequest.Number);
+            case "pull_request_review":
+                var reviewDto = JsonSerializer.Deserialize<PullRequestReviewDto>(
+                    payload.GetRawText(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+                await GithubService.MarkAsCompleted(reviewDto);
+                break;
+
+            default:
+                return NoContent();
+        }
 
         return Ok();
     }
 
-    private static readonly Dictionary<GithubRepository, int> RepoToArticleMap = new()
-    {
-        { GithubRepository.MathGame, (int)ArticleName.MathGame },
-        { GithubRepository.Calculator, (int)ArticleName.Calculator },
-        { GithubRepository.HabitLogger, (int)ArticleName.HabitLogger },
-        { GithubRepository.CodingTracker, (int)ArticleName.CodingTracker },
-        { GithubRepository.Flashcards, (int)ArticleName.Flashcards },
-        { GithubRepository.Drinks, (int)ArticleName.Drinks },
-        { GithubRepository.PhoneBook, (int)ArticleName.PhoneBook },
-        { GithubRepository.ShiftsLogger, (int)ArticleName.ShiftsLogger },
-        { GithubRepository.Ecommerce, (int)ArticleName.Ecommerce },
-        { GithubRepository.SportsResults, (int)ArticleName.SportsResults },
-        { GithubRepository.ExcelReader, (int)ArticleName.ExcelReader },
-        { GithubRepository.UnitTesting, (int)ArticleName.UnitTesting }
-    };
+    //public async Task<IActionResult> Receive([FromBody] GitHubWebhookDto payload)
+    //{
+    //    if (payload.Action.Equals("opened"))
+    //    {
+    //        Console.WriteLine("yay");
+    //    }
+
+    //    int projectId = 0;
+
+    //    if (payload.Review?.State != "approved")
+    //    {
+    //        return NoContent();
+    //    }
+
+    //    if (Enum.IsDefined(typeof(GithubRepository), payload.Repository.Id))
+    //    {
+    //        var repo = (GithubRepository)payload.Repository.Id;
+
+    //        if (!RepoToArticleMap.TryGetValue(repo, out projectId))
+    //        {
+    //            return NoContent();
+    //        }
+
+    //        await GithubService.MarkAsCompleted(projectId, payload.PullRequest.Number);
+
+    //        return Ok();
+    //    }
+
+    //    return NoContent();
+    //}
 
 
 }
 
-public enum GithubRepository : long
+public class PullRequestDto
 {
-    MathGame = 587597495,
-    Calculator = 573911382,
-    HabitLogger = 573675655,
-    CodingTracker = 573911543,
-    Flashcards = 573911617,
-    Drinks = 573911726,
-    PhoneBook = 573911920,
-    ShiftsLogger = 573912212,
-    Ecommerce = 573912286,
-    SportsResults = 675864949,
-    ExcelReader = 573912431,
-    UnitTesting = 573912512
+    public string Action
+    {
+        get; set;
+    }
+
+    public Repository Repository
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("pull_request")]
+    public PullRequest PullRequest
+    {
+        get; set;
+    }
 }
 
-public class GitHubWebhookDto
+public class PullRequestReviewDto
 {
     public string Action
     {
@@ -120,11 +135,29 @@ public class PullRequest
     {
         get; set;
     }
+    public User User
+    {
+        get; set;
+    }
+
+    [JsonPropertyName("html_url")]
+    public string HtmlUrl
+    {
+        get; set;
+    }
 }
 
 public class Repository
 {
     public long Id
+    {
+        get; set;
+    }
+}
+
+public class User
+{
+    public string Login
     {
         get; set;
     }

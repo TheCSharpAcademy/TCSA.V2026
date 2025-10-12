@@ -13,7 +13,7 @@ public interface IProjectService
     Task<BaseResponse> MarkAsCompleted(int projectId);
     Task<bool> IsProjectCompleted(string userId, int projectId);
     Task<List<int>> GetCompletedProjectsById(string userId);
-    Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle);
+    Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle, bool isUpdate);
     Task<BaseResponse> DeleteProject(int dashboardProjectId, string userId);
     Task<BaseResponse> Archive(int dashboardProjectId);
     Task<BaseResponse> AcknowledgeNotifications(string userId);
@@ -173,7 +173,7 @@ public class ProjectService : IProjectService
         }
     }
 
-    public async Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle)
+    public async Task<BaseResponse> PostArticle(int projectId, string userId, string url, bool isArticle, bool isUpdate)
     {
         var project = DashboardProjectsHelpers.GetProject(projectId);
 
@@ -188,6 +188,13 @@ public class ProjectService : IProjectService
 
                 var dashboardProject = user?.DashboardProjects?.FirstOrDefault
                 (dp => dp.ProjectId == projectId && dp.AppUserId == userId && !dp.IsArchived);
+
+                if (isUpdate)
+                {
+                    dashboardProject!.GithubUrl = url;
+                    await context.SaveChangesAsync();
+                    return new BaseResponse();
+                }
 
                 if (user != null && user.DashboardProjects != null && dashboardProject == null)
                 {
@@ -210,9 +217,9 @@ public class ProjectService : IProjectService
                         trackedEntity.State = EntityState.Detached;
                     }
 
-                    context.DashboardProjects.Add(newProject);
+                    await context.DashboardProjects.AddAsync(newProject);
 
-                    context.UserActivity.Add(
+                    await context.UserActivity.AddAsync(
                       new AppUserActivity
                       {
                           ProjectId = projectId,

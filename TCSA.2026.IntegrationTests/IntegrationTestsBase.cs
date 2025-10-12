@@ -41,15 +41,19 @@ public class IntegrationTestsBase
                 Id = "user1",
                 UserName = "testuser",
                 Email = "test@test.com",
+                GithubUsername = "TheCSharpAcademy",
                 Country = "Testland",
                 FirstName = "Test",
                 LastName = "User",
+                ExperiencePoints = 0,
+                DashboardProjects = new List<DashboardProject>()
             },
             new ApplicationUser
             {
                  Id = "user2",
                  UserName = "testuser2",
                  Email = "test2@test.com",
+                 GithubUsername = "testGithubUsername2",
                  Country = "Testonia",
                  FirstName = "Testingson",
                  LastName = "Userson",

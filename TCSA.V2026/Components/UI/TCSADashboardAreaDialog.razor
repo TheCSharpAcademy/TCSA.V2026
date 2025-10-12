@@ -33,11 +33,12 @@
                             {
                                 var color = task.Status == Data.DTOs.TaskStatus.PendingReview ? Color.Warning : Color.Success;
                                 var text = task.Status == Data.DTOs.TaskStatus.PendingReview ? "Update" : "Submit";
+                                var isUpdate = task.Status == Data.DTOs.TaskStatus.PendingReview;
                                 var icon = task.Status == Data.DTOs.TaskStatus.PendingReview ? Icons.Material.Filled.Edit : Icons.Material.Filled.Send;
                                 <MudButton Class="ml-5 mt-5"
                                            Size="@_buttonSize"
                                            Variant="@Variant.Filled" Color="@color"
-                                           OnClick="@(() => SubmitToReviewDialog(task.Id))"
+                                           OnClick="@(() => SubmitToReviewDialog(task.Id, isUpdate))"
                                            StartIcon="@icon">
                                     @text
                                 </MudButton>
@@ -72,12 +73,13 @@
     private Size _buttonSize = Size.Medium;
     private void Cancel() => MudDialog.Cancel();
 
-    private async Task SubmitToReviewDialog(int projectId)
+    private async Task SubmitToReviewDialog(int projectId, bool isUpdate)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var parameters = new DialogParameters<TCSASubmitProjectDialog>
         {
             { p => p.ProjectId, projectId },
+            { p => p.IsUpdate, isUpdate },
             { p => p.User, User }
         };
         var dialog = await DialogService.ShowAsync<TCSASubmitProjectDialog>("Submit Project", parameters, options);

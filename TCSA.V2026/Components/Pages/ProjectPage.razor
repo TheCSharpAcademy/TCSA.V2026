@@ -19,9 +19,7 @@
     {
         <MudPaper Class="jumbotron d-flex align-center justify-center mt-3"
         Style=@GetBanner()>
-            <div class="jumbotron-overlay">
-                <h1 class="mud-typography-h3 text-white text-center">@Project.Title</h1>
-            </div>
+            <h1 class="mud-typography-h3 text-white mud-typography-align-center py-4 px-4 px-md-10">@Project.Title</h1>
         </MudPaper>
 
         @if (IsLoggedIn && IsCompleted)
@@ -30,7 +28,7 @@
         }
 
         <MudGrid Class="mt-1">
-            <MudItem>
+            <MudItem xs="12">
                 <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-4 px-md-10">
                     @if (Project.Introduction != null)
                     {
@@ -292,7 +290,7 @@
     private string GetBanner()
     {
         var banner = string.IsNullOrEmpty(Project.BannerUrl) ? "article-banner.jpg" : Project.BannerUrl;
-        return $"position: relative; height: 350px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
+        return $"min-height: 350px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 
     private async Task CheckCodeWars()

@@ -1,6 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -15,6 +14,7 @@ public interface IUserService
     Task<BaseResponse> SaveProfile(ApplicationUser user);
     Task<BaseResponse> ResetAccount(ApplicationUser user);
     Task<BaseResponse> DeleteAccount(ApplicationUser user);
+    Task<ApplicationUser?> GetUserByIdWithShowcaseItems(string? userid);
 }
 
 public class UserService : IUserService
@@ -91,7 +91,7 @@ public class UserService : IUserService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var dbUser =  await context.AspNetUsers.FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
+                var dbUser = await context.AspNetUsers.FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
                 dbUser.DisplayName = user.DisplayName;
                 dbUser.DiscordAlias = user.DiscordAlias;
                 dbUser.GithubUsername = user.GithubUsername;
@@ -189,4 +189,21 @@ public class UserService : IUserService
         }
     }
 
+    public async Task<ApplicationUser?> GetUserByIdWithShowcaseItems(string? userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.AspNetUsers
+                .Include(x => x.DashboardProjects)
+                .Include(x => x.ShowcaseItems)
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
 }

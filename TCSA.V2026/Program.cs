@@ -42,6 +42,7 @@ builder.Services.AddScoped<IChallengeService, ChallengeService>();
 builder.Services.AddScoped<ICodewarsService, CodewarsService>();
 builder.Services.AddScoped<IDiscordService, DiscordService>();
 builder.Services.AddScoped<IGithubService, GithubService>();
+builder.Services.AddScoped<IGalleryService, GalleryService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
 

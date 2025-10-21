@@ -1,0 +1,90 @@
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+<MudDialog Style="min-width: 400px;">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
+            @MudDialog.Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudSelect T="int" Label="Select Project" @bind-Value="ProjectId" Class="my-2" Dense="true">
+            @foreach (var project in Projects)
+            {
+                <MudSelectItem T="int" Value="@project.Id">@project.Area - @project.Title</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="VideoUrl"
+        Required="false"
+        Label="Video Url" />
+        <MudTextField @bind-Value="GithubUrl"
+        Required="true"
+        Label="Github Url" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Inject] protected IGalleryService GalleryService { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
+    [Parameter] public required IEnumerable<ShowcaseProjectInfo> Projects { get; set; }
+
+    private string GithubUrl = string.Empty;
+    private string? VideoUrl;
+    private int ProjectId;
+
+    private string ErrorText = string.Empty;
+    private bool HasError;
+
+    private async Task Submit()
+    {
+        ValidateUrl();
+
+        if (HasError)
+            return;
+
+        var newItem = new ShowcaseItemDTO
+        {
+                ApplicationUserId = CurrentUser.Id,
+                DashboardProjectId = CurrentUser.DashboardProjects.First(x => x.ProjectId == ProjectId).Id,
+                ProjectId = ProjectId,
+                VideoUrl = VideoUrl != null ? GalleryHelper.GalleryVideoUrlFormatter(VideoUrl) : string.Empty,
+                GithubUrl = GithubUrl
+        };
+
+        var result = await GalleryService.AddItem(newItem);
+
+        MudDialog.Close(DialogResult.Ok(result.Status));
+    }
+
+    private void ValidateUrl()
+    {
+        if (VideoUrl != null && !GalleryHelper.YouTubeUrlValidator(VideoUrl))
+        {
+            HasError = true;
+            ErrorText = "Video URL is not valid.";
+        }
+        else if (string.IsNullOrWhiteSpace(GithubUrl))
+        {
+            HasError = true;
+            ErrorText = "URL is required.";
+        }
+        else if (!GithubUrl.StartsWith("https://github.com/", StringComparison.OrdinalIgnoreCase))
+        {
+            HasError = true;
+            ErrorText = "Github URL is not valid. URL must start with 'https://github.com/'";
+        }
+        else
+        {
+            HasError = false;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -127,7 +127,7 @@ public class GalleryService : IGalleryService
 
             var itemDTOs = items.Select(x => GalleryHelper.ConvertToDTO(x)).ToList();
 
-            return new PaginatedList<ShowcaseItemDTO>(itemDTOs, totalItems, pageNumber);
+            return new PaginatedList<ShowcaseItemDTO>(itemDTOs, totalItems, pageNumber, PagingConstants.GalleryPageSize);
         }
         catch (Exception ex)
         {

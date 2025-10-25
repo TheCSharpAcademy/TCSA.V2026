@@ -1,14 +1,22 @@
+using TCSA.V2026.Data.Models;
+
 namespace TCSA.V2026.Helpers.Constants;
 
 public static class ProjectConstants
 {
     public static readonly List<string> ProjectlessAreas = new()
     {
-        "StandAlone", "FullStack", "StartApplying", "OpenSource", "HowItWorks", "StartHere", "SQL", "Azure"
+        Area.StandAlone.ToString(), Area.FullStack.ToString(),
+        Area.StartApplying.ToString(), Area.OpenSource.ToString(),
+        Area.HowItWorks.ToString(), Area.StartHere.ToString(), Area.SQL.ToString(),
+        Area.Azure.ToString(), Area.Blog.ToString(), Area.Principles.ToString(), Area.Course.ToString()
     };
 
     public static readonly List<int> NonApplicableProjects = new()
     {
-        75, 22, 23, 76, 77, 78, 47, 48, 49, 100000, 86
+        (int)ArticleName.FreecodeCamp, (int)ArticleName.Portfolio, (int)ArticleName.Resume,
+        (int)ArticleName.Sql1, (int)ArticleName.Sql2, (int)ArticleName.Sql3,
+        (int)ArticleName.DeploySimpleApp, (int)ArticleName.DeployFullStack, (int)ArticleName.DeployFramework,
+        (int)ArticleName.AzureFunctions
     };
 }

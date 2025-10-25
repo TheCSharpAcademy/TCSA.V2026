@@ -113,7 +113,6 @@ public class GalleryService : IGalleryService
             if (projectIds.Any())
             {
                 query = query.Where(i => projectIds.Contains(i.DashboardProject.ProjectId));
-                pageNumber = 1;
             }
 
             var orderedQuery = query.OrderByDescending(i => i.DateCreated);

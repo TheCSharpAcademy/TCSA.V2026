@@ -45,14 +45,9 @@ public static class GalleryHelper
         };
     }
 
-    public static ShowcaseItem ConvertToModel(ShowcaseItemDTO dto, IEnumerable<DashboardProject> projects, IEnumerable<ApplicationUser> users)
+    public static string GetProjectTitle(IEnumerable<ShowcaseProjectInfo> projects, int projectId)
     {
-        return new ShowcaseItem
-        {
-            Id = dto.Id,
-            AppUserId = dto.ApplicationUserId,
-            DateCreated = DateTime.Now,
-            VideoUrl = dto.VideoUrl
-        };
+        var project = projects.FirstOrDefault(p => p.Id == projectId);
+        return project?.Title ?? projectId.ToString();
     }
 }

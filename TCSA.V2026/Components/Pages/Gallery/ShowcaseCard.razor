@@ -6,7 +6,9 @@
         <iframe src="@Item.VideoUrl" frameborder="0" allowfullscreen style="height: 200px; width: 100%"></iframe>
     } else
     {
-        <MudImage Height="200" Src="https://placehold.co/600x400.png" Alt="No Video" Class="w-100 rounded" />
+        <div style="height:200px; width:300px; background-color:#e0e0e0;" class="d-flex align-center justify-center rounded">
+            <MudIcon Icon="@Icons.Material.Filled.Panorama" Size="Size.Large" Color="Color.Default" />
+        </div>
     }
     <div class="d-flex justify-space-between align-center">
         <div class="d-flex gap-1 align-center">

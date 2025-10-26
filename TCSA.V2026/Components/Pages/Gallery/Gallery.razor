@@ -31,8 +31,8 @@
         <CategoryList OnClickCallback="@GetAreaItems" Areas="@Areas" />
         <AuthorizeView>
             <Authorized>
-                <MudTooltip Text="You must complete a project before submitting to the gallery."
-                Disabled="@(CompletedProjectsNotShowcased.Count > 0)">
+                <MudTooltip Text="You can only submit projects that are completed and not yet showcased."
+                            Disabled="@(CompletedProjectsNotShowcased.Count > 0)">
                     <MudButton Size="Size.Medium"
                     Variant="Variant.Filled"
                     Color="Color.Primary"

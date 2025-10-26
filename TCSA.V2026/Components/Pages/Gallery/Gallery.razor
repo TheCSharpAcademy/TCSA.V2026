@@ -1,0 +1,226 @@
+@using System.Security.Claims
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Data.Curriculum
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Helpers.Constants
+@using TCSA.V2026.Services
+@page "/gallery"
+
+<PageTitle>Gallery</PageTitle>
+<MudContainer>
+    <h1 class="mud-primary-text mt-3">Project Showcase</h1>
+    <p class="mb-4 text-secondary mud-typography-body1">Explore projects submitted by our community members</p>
+    <MudStack Row Breakpoint="Breakpoint.Xs" AlignItems="AlignItems.Center">
+        @if (SelectedAreaProjects.Any())
+        {
+            <MudSelect ToStringFunc="@(id => GalleryHelper.GetProjectTitle(Projects, id))"
+            FitContent T="int"
+            MultiSelection Label="Filter By Project"
+            SelectedValues="SelectedProjects"
+            SelectedValuesChanged="@((IEnumerable<int> values) => HandleProjectSelection(values))"
+            Variant="Variant.Outlined">
+                @foreach (var project in SelectedAreaProjects)
+                {
+                    <MudSelectItem T="int" Value="project.Id">@project.Title</MudSelectItem>
+                }
+            </MudSelect> 
+        }
+        <CategoryList OnClickCallback="@GetAreaItems" Areas="@Areas" />
+        <AuthorizeView>
+            <Authorized>
+                <MudTooltip Text="You must complete a project before submitting to the gallery."
+                Disabled="@(CompletedProjectsNotShowcased.Count > 0)">
+                    <MudButton Size="Size.Medium"
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    Disabled="@(CompletedProjectsNotShowcased.Count == 0)"
+                    OnClick="@(() => SubmitShowcaseProjectDialog())">
+                        Submit Project
+                    </MudButton>
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
+    </MudStack>
+    @if (PaginatedList != null && PaginatedList.TotalPages > 1)
+    {
+        <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
+            <MudPagination Count="PaginatedList.TotalPages"
+            Selected="PageNumber"
+            SelectedChanged="OnPageChangedAsync"
+            BoundaryCount="_boundaryCount"
+            Size="_paginationSize"
+            Class="mt-1" />
+        </MudBreakpointProvider>
+    }
+    @if (ItemsToShow != null && ItemsToShow.Any())
+    {
+        <MudGrid Spacing="6" Class="my-2">
+            @foreach (var item in ItemsToShow)
+            {
+                <MudItem>
+                    <ShowcaseCard Item="@item"
+                    CurrentUserId="@UserId"
+                    IsUserOwner=@(item.ApplicationUserId == UserId)
+                    OnDelete=@(() => HandleDelete(item)) />
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudText Align="Align.Center" Typo="Typo.body2" Class="mt-6 mud-typography-h6">No projects found</MudText>
+    }
+</MudContainer>
+
+@code {
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; } = default!;
+    [Inject] private IUserService UserService { get; set; } = default!;
+    [Inject] private IGalleryService GalleryService { get; set; } = default!;
+    [Inject] private ISnackbar Snackbar { get; set; } = default!;
+    [Inject] private IDialogService DialogService { get; set; } = default!;
+
+    private List<string> EnumAreas = Enum.GetNames(typeof(Area)).ToList();
+    private List<string> Areas { get; set; } = new();
+
+    private int _boundaryCount = 1;
+    private Size _paginationSize = Size.Medium;
+
+    private ApplicationUser? User;
+    private string? UserId;
+
+    private IEnumerable<ShowcaseProjectInfo> Projects { get; set; } = [];
+    private IEnumerable<ShowcaseProjectInfo> SelectedAreaProjects { get; set; } = [];
+    private PaginatedList<ShowcaseItemDTO>? PaginatedList { get; set; }
+    private List<ShowcaseItemDTO>? ItemsToShow { get; set; } = [];
+    private List<int> CompletedProjectsNotShowcased { get; set; } = new();
+    private IEnumerable<int> SelectedProjects { get; set; } = [];
+
+    private bool IsLoading = true;
+    private int PageNumber = 1;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Areas = EnumAreas.Except(ProjectConstants.ProjectlessAreas).ToList();
+
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        Projects = ProjectHelper.GetProjectInfos();
+
+        await UpdateCompletedProjectsNotShowcased();
+
+        await GetLists();
+
+        IsLoading = false;
+    }
+
+    private async Task GetLists()
+    {
+        PaginatedList = await GalleryService.GetItems(PageNumber, SelectedProjects.ToList());
+        ItemsToShow = PaginatedList?.Items;
+    }
+
+    private async Task GetAreaItems(string area)
+    {
+        if (area == "All")
+        {
+            PageNumber = 1;
+            SelectedAreaProjects = [];
+        }
+        else
+        {
+            var areaEnum = Enum.Parse<Area>(area);
+            SelectedAreaProjects = Projects.Where(project => project.Area == areaEnum).ToList();
+        }
+
+        SelectedProjects = [];
+        await GetLists();
+        StateHasChanged();
+    }
+
+    private async Task HandleDelete(ShowcaseItemDTO itemToDelete)
+    {
+        IsLoading = true;
+        var result = await GalleryService.DeleteItem(itemToDelete);
+
+        if (result.Status == ResponseStatus.Success)
+        {
+            await UpdateCompletedProjectsNotShowcased();
+
+            PageNumber = 1;
+            await GetLists();
+        }
+        else
+        {
+            Snackbar.Add($"Failed to delete the project", Severity.Error);
+        }
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task OnPageChangedAsync(int newPageNumber)
+    {
+        PageNumber = newPageNumber;
+        await GetLists();
+    }
+
+    private async Task SubmitShowcaseProjectDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<TCSASubmitShowcaseProjectDialog>
+        {
+            { x => x.CurrentUser, User },
+            { x => x.Projects, Projects.Where(p => CompletedProjectsNotShowcased.Contains(p.Id)) }
+        };
+        var dialog = await DialogService.ShowAsync<TCSASubmitShowcaseProjectDialog>("Submit Showcase Project", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await UpdateCompletedProjectsNotShowcased();
+            Snackbar.Add("Project submitted successfully", Severity.Success);
+        }
+
+        await GetLists();
+        StateHasChanged();
+    }
+
+    private async Task UpdateCompletedProjectsNotShowcased()
+    {
+        User = await UserService.GetUserByIdWithShowcaseItems(UserId);
+
+        if (User is not null)
+        {
+            CompletedProjectsNotShowcased = User.DashboardProjects
+                .Where(dp => dp.IsCompleted && !User.ShowcaseItems.Any(si => si.DashboardProjectId == dp.Id))
+                .Select(dp => dp.ProjectId)
+                .Except(ProjectConstants.NonApplicableProjects)
+                .ToList();
+        }
+    }
+
+    private async Task HandleProjectSelection(IEnumerable<int> values)
+    {
+        PageNumber = 1;
+        SelectedProjects = values;
+        await GetLists();
+    }
+
+    private void BreakpointChanged(Breakpoint breakpoint)
+    {
+        if (breakpoint < Breakpoint.Sm)
+        {
+            _paginationSize = Size.Small;
+            _boundaryCount = 1;
+        }
+        else
+        {
+            _paginationSize = Size.Medium;
+            _boundaryCount = 2;
+        }
+    }
+}

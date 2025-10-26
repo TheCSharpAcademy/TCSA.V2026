@@ -10,7 +10,15 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudSelect T="int" Label="Select Project" @bind-Value="ProjectId" Class="my-2" Dense="true">
+        <MudSelect T="int"
+                   Label="Select Project"
+                   @bind-Value="ProjectId"
+                   Class="my-2"
+                   Dense="true"
+                   Error=@HasProjectError
+                   ErrorText="@ProjectErrorText"
+                   OnBlur="ValidateProject">
+            <MudSelectItem T="int" Value="0" Disabled="true">-- Select a Project --</MudSelectItem>
             @foreach (var project in Projects)
             {
                 <MudSelectItem T="int" Value="@project.Id">@project.Area - @project.Title</MudSelectItem>
@@ -18,15 +26,15 @@
         </MudSelect>
         <MudTextField @bind-Value="VideoUrl"
         Required="false"
-                      Error="@HasYoutubeUrlError"
-                      ErrorText="@YoutubeUrlErrorText"
-                      OnBlur="ValidateVideoUrl"
+        Error="@HasYoutubeUrlError"
+        ErrorText="@YoutubeUrlErrorText"
+        OnBlur="ValidateVideoUrl"
         Label="Video Url" />
         <MudTextField @bind-Value="GithubUrl"
         Required="true"
-                      Error="@HasGithubUrlError"
-                      ErrorText="@GithubUrlErrorText"
-                      OnBlur="ValidateGithubUrl"
+        Error="@HasGithubUrlError"
+        ErrorText="@GithubUrlErrorText"
+        OnBlur="ValidateGithubUrl"
         Label="Github Url" />
     </DialogContent>
     <DialogActions>
@@ -47,15 +55,18 @@
 
     private string YoutubeUrlErrorText = string.Empty;
     private string GithubUrlErrorText = string.Empty;
+    private string ProjectErrorText = string.Empty;
     private bool HasGithubUrlError;
     private bool HasYoutubeUrlError;
+    private bool HasProjectError;
 
     private async Task Submit()
     {
         ValidateGithubUrl();
         ValidateVideoUrl();
+        ValidateProject();
 
-        if (HasGithubUrlError || HasYoutubeUrlError)
+        if (HasGithubUrlError || HasYoutubeUrlError || HasProjectError)
             return;
 
         var newItem = new ShowcaseItemDTO
@@ -99,6 +110,18 @@
         } else
         {
             HasGithubUrlError = false;
+        }
+    }
+
+    private void ValidateProject()
+    {
+        if (ProjectId == 0)
+        {
+            HasProjectError = true;
+            ProjectErrorText = "Please select a project";
+        } else
+        {
+            HasProjectError = false;
         }
     }
 

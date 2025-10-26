@@ -40,6 +40,7 @@ public static class GalleryHelper
                 : $"{item.ApplicationUser.FirstName} {item.ApplicationUser.LastName}",
             Area = projectsHelper.FirstOrDefault(p => p.Id == item.DashboardProject.ProjectId)!.Area,
             VideoUrl = item.VideoUrl,
+            GithubUrl = item.GithubUrl,
             ProjectName = projectsHelper.FirstOrDefault(p => p.Id == item.DashboardProject.ProjectId)?.Title ?? ""
         };
     }

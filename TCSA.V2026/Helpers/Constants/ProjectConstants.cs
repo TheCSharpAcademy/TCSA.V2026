@@ -14,6 +14,8 @@ public static class ProjectConstants
 
     public static readonly List<int> NonApplicableProjects = new()
     {
+        (int)ArticleName.StartHere, (int)ArticleName.GettingHelp, (int)ArticleName.SettingUp,
+        (int)ArticleName.Foundations, (int)ArticleName.ImportanceOfConsole,
         (int)ArticleName.FreecodeCamp, (int)ArticleName.Portfolio, (int)ArticleName.Resume,
         (int)ArticleName.Sql1, (int)ArticleName.Sql2, (int)ArticleName.Sql3,
         (int)ArticleName.DeploySimpleApp, (int)ArticleName.DeployFullStack, (int)ArticleName.DeployFramework,

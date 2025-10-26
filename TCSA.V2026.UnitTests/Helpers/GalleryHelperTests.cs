@@ -30,8 +30,8 @@ public class GalleryHelperTests
         Assert.That(result, Is.True);
     }
 
-    [TestCase("https://www.youtube.com/watch?v=short")]
-    [TestCase("https://www.youtube.com/watch?v=toolong123456")]
+    [TestCase("https://www.youtube.com/watch?x=short")]
+    [TestCase("https://www.youtube.xzy/watch?v=toolong123456")]
     [TestCase("https://www.notyoutube.com/watch?v=dQw4w9WgXcQ")]
     [TestCase("")]
     [TestCase(" ")]

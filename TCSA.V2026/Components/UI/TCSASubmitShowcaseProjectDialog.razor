@@ -11,13 +11,12 @@
     </TitleContent>
     <DialogContent>
         <MudSelect T="int"
-                   Label="Select Project"
-                   @bind-Value="ProjectId"
-                   Class="my-2"
-                   Dense="true"
-                   Error=@HasProjectError
-                   ErrorText="@ProjectErrorText"
-                   OnBlur="ValidateProject">
+        Label="Select Project"
+        Class="my-2"
+        Dense="true"
+        Error=@HasProjectError
+        ErrorText="@ProjectErrorText"
+        ValueChanged="OnProjectChanged">
             <MudSelectItem T="int" Value="0" Disabled="true">-- Select a Project --</MudSelectItem>
             @foreach (var project in Projects)
             {
@@ -124,6 +123,12 @@
             HasProjectError = false;
             ProjectErrorText = string.Empty;
         }
+    }
+
+    private void OnProjectChanged(int value)
+    {
+        ProjectId = value;
+        ValidateProject();
     }
 
     private void Cancel() => MudDialog.Cancel();

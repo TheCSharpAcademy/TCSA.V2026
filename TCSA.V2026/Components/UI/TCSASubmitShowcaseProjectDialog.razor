@@ -18,9 +18,15 @@
         </MudSelect>
         <MudTextField @bind-Value="VideoUrl"
         Required="false"
+                      Error="@HasYoutubeUrlError"
+                      ErrorText="@YoutubeUrlErrorText"
+                      OnBlur="ValidateVideoUrl"
         Label="Video Url" />
         <MudTextField @bind-Value="GithubUrl"
         Required="true"
+                      Error="@HasGithubUrlError"
+                      ErrorText="@GithubUrlErrorText"
+                      OnBlur="ValidateGithubUrl"
         Label="Github Url" />
     </DialogContent>
     <DialogActions>
@@ -39,14 +45,17 @@
     private string? VideoUrl;
     private int ProjectId;
 
-    private string ErrorText = string.Empty;
-    private bool HasError;
+    private string YoutubeUrlErrorText = string.Empty;
+    private string GithubUrlErrorText = string.Empty;
+    private bool HasGithubUrlError;
+    private bool HasYoutubeUrlError;
 
     private async Task Submit()
     {
-        ValidateUrl();
+        ValidateGithubUrl();
+        ValidateVideoUrl();
 
-        if (HasError)
+        if (HasGithubUrlError || HasYoutubeUrlError)
             return;
 
         var newItem = new ShowcaseItemDTO
@@ -63,26 +72,33 @@
         MudDialog.Close(DialogResult.Ok(result.Status));
     }
 
-    private void ValidateUrl()
+    private void ValidateVideoUrl()
     {
         if (VideoUrl != null && !GalleryHelper.YouTubeUrlValidator(VideoUrl))
         {
-            HasError = true;
-            ErrorText = "Video URL is not valid.";
-        }
-        else if (string.IsNullOrWhiteSpace(GithubUrl))
-        {
-            HasError = true;
-            ErrorText = "URL is required.";
-        }
-        else if (!GithubUrl.StartsWith("https://github.com/", StringComparison.OrdinalIgnoreCase))
-        {
-            HasError = true;
-            ErrorText = "Github URL is not valid. URL must start with 'https://github.com/'";
+            HasYoutubeUrlError = true;
+            YoutubeUrlErrorText = "Video URL is not valid.";
         }
         else
         {
-            HasError = false;
+            HasYoutubeUrlError = false;
+        }
+    }
+
+    private void ValidateGithubUrl()
+    {
+        if (string.IsNullOrWhiteSpace(GithubUrl))
+        {
+            HasGithubUrlError = true;
+            GithubUrlErrorText = "URL is required.";
+        }
+        else if (!GithubUrl.StartsWith("https://github.com/", StringComparison.OrdinalIgnoreCase))
+        {
+            HasGithubUrlError = true;
+            GithubUrlErrorText = "Github URL is not valid. URL must start with 'https://github.com/'";
+        } else
+        {
+            HasGithubUrlError = false;
         }
     }
 

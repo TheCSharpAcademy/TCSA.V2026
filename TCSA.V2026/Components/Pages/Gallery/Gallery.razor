@@ -143,23 +143,31 @@
 
     private async Task HandleDelete(ShowcaseItemDTO itemToDelete)
     {
-        IsLoading = true;
-        var result = await GalleryService.DeleteItem(itemToDelete);
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters { ["Message"] = "Are you sure you want to delete this showcase project? This action cannot be undone." };
+        var dialog = await DialogService.ShowAsync<TCSADeleteDialog>("Confirm Delete", parameters, options);
+        var dialogResult = await dialog.Result;
 
-        if (result.Status == ResponseStatus.Success)
+        if (!dialogResult.Canceled)
         {
-            await UpdateCompletedProjectsNotShowcased();
+            IsLoading = true;
+            var result = await GalleryService.DeleteItem(itemToDelete);
 
-            PageNumber = 1;
-            await GetLists();
-        }
-        else
-        {
-            Snackbar.Add($"Failed to delete the project", Severity.Error);
-        }
+            if (result.Status == ResponseStatus.Success)
+            {
+                await UpdateCompletedProjectsNotShowcased();
 
-        IsLoading = false;
-        StateHasChanged();
+                PageNumber = 1;
+                await GetLists();
+            }
+            else
+            {
+                Snackbar.Add($"Failed to delete the project", Severity.Error);
+            }
+
+            IsLoading = false;
+            StateHasChanged();
+        }
     }
 
     private async Task OnPageChangedAsync(int newPageNumber)
@@ -182,10 +190,10 @@
         if (!result.Canceled)
         {
             await UpdateCompletedProjectsNotShowcased();
+            await GetLists();
             Snackbar.Add("Project submitted successfully", Severity.Success);
         }
 
-        await GetLists();
         StateHasChanged();
     }
 

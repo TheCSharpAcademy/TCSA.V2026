@@ -88,7 +88,7 @@
         if (VideoUrl != null && !GalleryHelper.YouTubeUrlValidator(VideoUrl))
         {
             HasYoutubeUrlError = true;
-            YoutubeUrlErrorText = "Video URL is not valid.";
+            YoutubeUrlErrorText = "Video URL is not valid. URL must start with 'https://www.youtube.com/watch?v='";
         }
         else
         {
@@ -122,6 +122,7 @@
         } else
         {
             HasProjectError = false;
+            ProjectErrorText = string.Empty;
         }
     }
 

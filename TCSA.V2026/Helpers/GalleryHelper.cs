@@ -19,7 +19,7 @@ public static class GalleryHelper
             return false;
         }
 
-        string pattern = @"^(https:\/\/www\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})$";
+        string pattern = @"^https:\/\/www\.youtube\.com\/watch\?v=.+$";
         Regex regex = new Regex(pattern);
 
         return regex.IsMatch(url);

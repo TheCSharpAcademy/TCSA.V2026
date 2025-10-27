@@ -179,19 +179,3 @@ public class GithubService : IGithubService
         }
     }
 }
-
-public enum GithubRepository : long
-{
-    MathGame = 587597495,
-    Calculator = 573911382,
-    HabitLogger = 573675655,
-    CodingTracker = 573911543,
-    Flashcards = 573911617,
-    Drinks = 573911726,
-    PhoneBook = 573911920,
-    ShiftsLogger = 573912212,
-    Ecommerce = 573912286,
-    SportsResults = 675864949,
-    ExcelReader = 573912431,
-    UnitTesting = 573912512
-}

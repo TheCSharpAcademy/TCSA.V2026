@@ -19,9 +19,7 @@
     {
         <MudPaper Class="jumbotron d-flex align-center justify-center mt-3"
         Style=@GetBanner()>
-            <div class="jumbotron-overlay">
-                <h1 class="mud-typography-h3 text-white text-center">@Project.Title</h1>
-            </div>
+            <h1 class="mud-typography-h3 text-white mud-typography-align-center py-4 px-4 px-md-10">@Project.Title</h1>
         </MudPaper>
 
         @if (IsLoggedIn && IsCompleted)
@@ -30,8 +28,8 @@
         }
 
         <MudGrid Class="mt-1">
-            <MudItem>
-                <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-10">
+            <MudItem xs="12">
+                <MudPaper Class="d-flex flex-column mud-width-full py-1 pb-10 px-4 px-md-10">
                     @if (Project.Introduction != null)
                     {
                         foreach (var paragraph in Project.Introduction)
@@ -212,21 +210,16 @@
 
                     @if (!string.IsNullOrEmpty(Project.RepositoryLink))
                     {
-                        <MudGrid Class="pb-5 mt-5">
-                            <MudItem xs="12" sm="2" Class="d-flex align-items-center justify-center">
-                                <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                                    <MudImage Src="img/github.png" Width="70" Alt="GitHub logo" Class="align-middle" />
-                                </MudHidden>
-                            </MudItem>
-
-                            <MudItem xs="12" sm="10">
+                        <MudStack Class="pb-5 mt-10 align-start align-md-center" Row Breakpoint="Breakpoint.SmAndDown" Spacing="6">
+                            <MudImage Src="img/github.png" Width="70" Alt="GitHub logo" />
+                            <div>
                                 <h2 class="mud-typography-h5 mb-2">@Project.LanguageHeadings.ReviewRepository</h2>
 
-                                <MudLink Href="@Project.RepositoryLink" Target="_blank">
+                                <MudLink Href="@Project.RepositoryLink" Target="_blank" Style="word-break: break-word;">
                                     @Project.RepositoryLink
                                 </MudLink>
-                            </MudItem>
-                        </MudGrid>
+                            </div>
+                        </MudStack>
                     }
 
                     @if (IsLoggedIn && Project.Area == Area.SQL && !IsCompleted)
@@ -297,7 +290,7 @@
     private string GetBanner()
     {
         var banner = string.IsNullOrEmpty(Project.BannerUrl) ? "article-banner.jpg" : Project.BannerUrl;
-        return $"position: relative; height: 350px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
+        return $"min-height: 350px; background-image: url('/img/banners/{banner}'); background-size: cover; background-position: center;";
     }
 
     private async Task CheckCodeWars()

@@ -975,7 +975,8 @@ public class ConsoleProjectsHelper
                 {
                     "<a href='https://www.accelq.com/blog/unit-testing/'>The Importance of Unit Testing</a>",
                     "<a href='https://dev.to/tkarropoulos/unit-testing-in-net-tools-and-techniques-nei'>C# Testing Essentials</a>",
-                    "<a href='https://www.youtube.com/watch?v=HYrXogLj7vg'>Unit Testing C# Code on Youtube</a>"
+                    "<a href='https://www.youtube.com/watch?v=HYrXogLj7vg'>Unit Testing C# Code on Youtube</a>",
+                    "<a href='https://www.youtube.com/watch?v=RXSPCIrrjHc'>Learn Integration Testing in C# in 25 minutes.</a>"
                 },
                 Tips = new List<string>
                 {

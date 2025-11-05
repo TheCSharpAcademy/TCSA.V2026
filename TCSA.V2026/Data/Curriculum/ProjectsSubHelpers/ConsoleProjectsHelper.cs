@@ -966,7 +966,7 @@ public class ConsoleProjectsHelper
                     "In this project, you'll create tests for the Coding Tracker App, the second project in the course.",
                     "You'll need to create a CodingTracker.Tests project, parallel to your coding tracker and reference it in your csproj file",
                     "You'll need to create <b>unit tests</b> for the validation methods, making sure the app correctly prevents the user from giving incorrect inputs.",
-                    "You'll need to create integration tests to all methods that interact with your database, making sure the data is retrieved or persisted correctly.",
+                    "You'll need to create <b>integration tests</b> to all methods that interact with your database, making sure the data is retrieved or persisted correctly.",
                     "You can user whatever testing library you want. The most popular are NUnit and Xunit.",
                     "You should test both correct and incorrect inputs"
                 },
@@ -974,14 +974,15 @@ public class ConsoleProjectsHelper
                 Resources = new List<string>
                 {
                     "<a href='https://www.accelq.com/blog/unit-testing/'>The Importance of Unit Testing</a>",
-                    "<a href='https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest'>MSTest Docs</a>",
+                    "<a href='https://dev.to/tkarropoulos/unit-testing-in-net-tools-and-techniques-nei'>C# Testing Essentials</a>",
                     "<a href='https://www.youtube.com/watch?v=HYrXogLj7vg'>Unit Testing C# Code on Youtube</a>"
                 },
                 Tips = new List<string>
                 {
                     "Naming your tests properly is almost as important as writing them. Make sure your tests express their intent clearly as they serve as documentation. Don't be afraid of being verbose. \"WhenQuantityInputIsPositive_DataIsPersistedCorrectly\" is a good name, while \"QuantityTest\" doesn't have enough information.",
                     "In your test, you'll have to mock the tested service and call it's methods. Think of all possibilities of correct and incorrect inputs and test if the application handles them.",
-                    "Mocking dependencies in integration testing can be very frustrating. If you're struggling to create testable methods, try breaking them down so they do only one thing. That's the best way to make your code more testable and maintanable."
+                    "Mocking dependencies in integration testing can be very frustrating. If you're struggling to create testable methods, try breaking them down so they do only one thing. That's the best way to make your code more testable and maintanable.",
+                    "Sometimes it's good to create one method that runs all tests for a specific functionality. This way you can be sure that all edge cases are covered without having to run each test individually."
                 },
                 Challenges = new List<string>
                 {

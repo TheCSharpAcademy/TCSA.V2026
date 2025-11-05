@@ -939,7 +939,7 @@ public class ConsoleProjectsHelper
              new Project
              {
                 Id = 21,
-                Title = "Unit Testing",
+                Title = "Testing",
                 IconUrl = "icons8-test-tube-100.png",
                 BannerUrl = "",
                 LanguageHeadings = new EnglishHeadings(),
@@ -958,15 +958,16 @@ public class ConsoleProjectsHelper
                     },
                     new Paragraph
                     {
-                        Body="More likely than not (and hopefully) the organisation you’ll work will have systems that use automatic unit testing. They make sure everything is running properly before each deployment. The code covered by those tests won’t need to be tested manually every time a change is made, which is prone to errors and very expensive. A strong suite of unit tests helps developers write better code, more efficiently. So let's do it!"
+                        Body="More likely than not (and hopefully) the organisation you’ll work will have systems that use automated testing. They make sure everything is running properly before each deployment. The code covered by those tests won’t need to be tested manually every time a change is made, which is prone to errors and very expensive. A strong suite of tests helps developers code that's more maintainable and reliable. So let's jump into it!"
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "In this project, you'll create unit tests for the Coding Tracker App, the second project in the course",
+                    "In this project, you'll create tests for the Coding Tracker App, the second project in the course.",
                     "You'll need to create a CodingTracker.Tests project, parallel to your coding tracker and reference it in your csproj file",
-                    "You'll only test the validation methods, making sure the app correctly prevents the user from giving incorrect inputs",
-                    "You should use .NETs MSTest Library",
+                    "You'll need to create <b>unit tests</b> for the validation methods, making sure the app correctly prevents the user from giving incorrect inputs.",
+                    "You'll need to create integration tests to all methods that interact with your database, making sure the data is retrieved or persisted correctly.",
+                    "You can user whatever testing library you want. The most popular are NUnit and Xunit.",
                     "You should test both correct and incorrect inputs"
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
@@ -978,9 +979,13 @@ public class ConsoleProjectsHelper
                 },
                 Tips = new List<string>
                 {
-                    "Don't worry about integration or end-to-end tests, they're out of the scope of this project",
-                    "Make sure the names of your tests are clear, even if they have to be long. \"WhenQuantityInputIsCorrect()\" is a good name, while \"QuantityTest\" doesn't have enough information.",
-                    "In your test, you'll have to mock the tested service and call it's methods. Think of all possibilities of correct and incorrect inputs and test if the application handles them."
+                    "Naming your tests properly is almost as important as writing them. Make sure your tests express their intent clearly as they serve as documentation. Don't be afraid of being verbose. \"WhenQuantityInputIsPositive_DataIsPersistedCorrectly\" is a good name, while \"QuantityTest\" doesn't have enough information.",
+                    "In your test, you'll have to mock the tested service and call it's methods. Think of all possibilities of correct and incorrect inputs and test if the application handles them.",
+                    "Mocking dependencies in integration testing can be very frustrating. If you're struggling to create testable methods, try breaking them down so they do only one thing. That's the best way to make your code more testable and maintanable."
+                },
+                Challenges = new List<string>
+                {
+                    "From now on you'll be required to write tests in many projects. To get a bit more practice before moving on, try going back and writing tests for more apps. The Phonebook, the Shifts Logger and the Document Processor could be significantly enhanced with a good testing suite."
                 }
             },
         };

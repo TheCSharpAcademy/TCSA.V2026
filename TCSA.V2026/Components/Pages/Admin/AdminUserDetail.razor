@@ -184,7 +184,7 @@
     }
 </MudContainer>
 
-@code {
+    @code {
     [Parameter] public string UserId { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] protected IUserService UserService { get; set; }
@@ -435,11 +435,6 @@
         AllAdminActivity.AddRange(challengesForAdmin);
 
         FilteredActivity = AllAdminActivity;
-
-        // if (_showPending)
-        // {
-        //     FilteredActivity = AllAdminActivity.Where(x => x.IsCompleted == false).ToList();
-        // }
     }
 
     private string GetTitle(int projectId)

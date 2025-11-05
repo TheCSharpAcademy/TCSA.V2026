@@ -94,6 +94,19 @@
                         </TemplateColumn>
                         <PropertyColumn Property="x => x.ExperiencePoints" Title="XPs Won" />
                         <PropertyColumn Property="x => x.CurrentExperiencePoints" Title="Total XPs" />
+                        <TemplateColumn>
+                            <CellTemplate>
+                                @if (context.Item.IsDuplicate)
+                                {
+                                    <MudButton Size="Size.Small"
+                                               Variant="Variant.Filled"
+                                               Color="Color.Error"
+                                               OnClick="@(() => HandleDuplicate(context.Item.ActivityId))">
+                                        Resolve Dupe
+                                    </MudButton>
+                                }
+                            </CellTemplate>
+                        </TemplateColumn>
                     </Columns>
                 </MudDataGrid>
             </MudHidden>
@@ -101,10 +114,11 @@
     }
 </MudContainer>
 
-@code {
+    @code {
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IActivityService ActivityService { get; set; }
     [Inject] private IUserService UserService { get; set; }
     [Inject] protected ICommunityService CommunityService { get; set; }
     [Parameter] public string UserId { get; set; }
@@ -197,6 +211,12 @@
         return attributes?.FirstOrDefault() is DisplayAttribute displayAttribute
             ? displayAttribute.Name
             : type.ToString(); // Fall back to raw enum name if no attribute is found
+    }
+
+    private async Task HandleDuplicate(int activityId)
+    {
+        await ActivityService.DeleteDupe(activityId);
+        AllUserActivity = ActivityHelper.GetActivityDisplay(User);
     }
 
     private void OnPageChanged(int page)

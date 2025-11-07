@@ -1,0 +1,135 @@
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+<MudDialog Style="min-width: 400px;">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Send" Class="mr-3 mb-n1" />
+            @MudDialog.Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudSelect T="int"
+        Label="Select Project"
+        Class="my-2"
+        Dense="true"
+        Error=@HasProjectError
+        ErrorText="@ProjectErrorText"
+        ValueChanged="OnProjectChanged">
+            <MudSelectItem T="int" Value="0" Disabled="true">-- Select a Project --</MudSelectItem>
+            @foreach (var project in Projects)
+            {
+                <MudSelectItem T="int" Value="@project.Id">@project.Area - @project.Title</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="VideoUrl"
+        Required="false"
+        Error="@HasYoutubeUrlError"
+        ErrorText="@YoutubeUrlErrorText"
+        OnBlur="ValidateVideoUrl"
+        Label="Video Url" />
+        <MudTextField @bind-Value="GithubUrl"
+        Required="true"
+        Error="@HasGithubUrlError"
+        ErrorText="@GithubUrlErrorText"
+        OnBlur="ValidateGithubUrl"
+        Label="Github Url" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Inject] protected IGalleryService GalleryService { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public ApplicationUser CurrentUser { get; set; } = new();
+    [Parameter] public required IEnumerable<ShowcaseProjectInfo> Projects { get; set; }
+
+    private string GithubUrl = string.Empty;
+    private string? VideoUrl;
+    private int ProjectId;
+
+    private string YoutubeUrlErrorText = string.Empty;
+    private string GithubUrlErrorText = string.Empty;
+    private string ProjectErrorText = string.Empty;
+    private bool HasGithubUrlError;
+    private bool HasYoutubeUrlError;
+    private bool HasProjectError;
+
+    private async Task Submit()
+    {
+        ValidateGithubUrl();
+        ValidateVideoUrl();
+        ValidateProject();
+
+        if (HasGithubUrlError || HasYoutubeUrlError || HasProjectError)
+            return;
+
+        var newItem = new ShowcaseItemDTO
+        {
+                ApplicationUserId = CurrentUser.Id,
+                DashboardProjectId = CurrentUser.DashboardProjects.First(x => x.ProjectId == ProjectId).Id,
+                ProjectId = ProjectId,
+                VideoUrl = VideoUrl != null ? GalleryHelper.GalleryVideoUrlFormatter(VideoUrl) : string.Empty,
+                GithubUrl = GithubUrl
+        };
+
+        var result = await GalleryService.AddItem(newItem);
+
+        MudDialog.Close(DialogResult.Ok(result.Status));
+    }
+
+    private void ValidateVideoUrl()
+    {
+        if (VideoUrl != null && !GalleryHelper.YouTubeUrlValidator(VideoUrl))
+        {
+            HasYoutubeUrlError = true;
+            YoutubeUrlErrorText = "Video URL is not valid. URL must start with 'https://www.youtube.com/watch?v='";
+        }
+        else
+        {
+            HasYoutubeUrlError = false;
+        }
+    }
+
+    private void ValidateGithubUrl()
+    {
+        if (string.IsNullOrWhiteSpace(GithubUrl))
+        {
+            HasGithubUrlError = true;
+            GithubUrlErrorText = "URL is required.";
+        }
+        else if (!GithubUrl.StartsWith("https://github.com/", StringComparison.OrdinalIgnoreCase))
+        {
+            HasGithubUrlError = true;
+            GithubUrlErrorText = "Github URL is not valid. URL must start with 'https://github.com/'";
+        } else
+        {
+            HasGithubUrlError = false;
+        }
+    }
+
+    private void ValidateProject()
+    {
+        if (ProjectId == 0)
+        {
+            HasProjectError = true;
+            ProjectErrorText = "Please select a project";
+        } else
+        {
+            HasProjectError = false;
+            ProjectErrorText = string.Empty;
+        }
+    }
+
+    private void OnProjectChanged(int value)
+    {
+        ProjectId = value;
+        ValidateProject();
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

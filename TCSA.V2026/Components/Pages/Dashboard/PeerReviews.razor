@@ -39,18 +39,22 @@
                         </CardHeaderAvatar>
                         <CardHeaderContent>
                             <MudGrid Style="align-self: flex-start;">
-                                <MudItem xs="2">
+                                <MudItem xs="2" Class="d-flex align-center justify-center">
                                     <MudText Style="@($"font-weight:bolder; color:{Colors.DeepPurple.Lighten1}")">@project.Title</MudText>
                                 </MudItem>
-                                <MudItem xs="2">
+                                <MudItem xs="2" Class="d-flex align-center justify-center">
                                     <MudText>@project.Name</MudText>
                                 </MudItem>
-                                <MudItem xs="5">
+                                <MudItem xs="1" Class="d-flex align-center justify-center gap-1">
+                                    <MudImage Src="img/experience.png" Alt="XP" ObjectFit="ObjectFit.ScaleDown" Fluid ObjectPosition="ObjectPosition.Top" Width="30" />
+                                    <MudText>@project.ExperiencePoints</MudText>
+                                </MudItem>
+                                <MudItem xs="4" Class="d-flex align-center justify-center">
                                     <MudText Style="@(project.DurationOpen.TotalDays > 7 ? "color: red" : "")">
                                         @TimeSpanFormatter.FormatDurationOpen(project.DurationOpen)
                                     </MudText>
                                 </MudItem>
-                                <MudItem xs="3">
+                                <MudItem xs="3" Class="d-flex align-center justify-end">
                                         <MudButton Size="@Size.Small"
                                                    Class="mr-1"
                                                    Variant="@Variant.Filled"

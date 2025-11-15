@@ -40,7 +40,11 @@
                         <CardHeaderContent>
                             <MudGrid Style="align-self: flex-start;">
                                 <MudItem xs="2">
-                                    <MudText Style="@($"font-weight:bolder; color:{Colors.DeepPurple.Lighten1}")">@project.Title</MudText>
+                                    <MudLink Href="@($"project/{project.ProjectId}/{project.ProjectSlug}")"
+                                             Target="_blank"
+                                             Style="@($"font-weight:bolder; color:{Colors.DeepPurple.Lighten1} !important")">
+                                        @project.Title
+                                    </MudLink>
                                 </MudItem>
                                 <MudItem xs="2">
                                     <MudText>@project.Name</MudText>

@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
@@ -18,7 +18,7 @@ public interface ICodewarsService
     Task<CodeWarsResponse> GetCodeWarsCompletedChallenges(string? username, List<CodeWarsChallenge> challenges);
 }
 
-public class CodewarsService: ICodewarsService
+public class CodewarsService : ICodewarsService
 {
     private readonly IDbContextFactory<ApplicationDbContext> _factory;
     private readonly HttpClient _httpClient;
@@ -111,23 +111,7 @@ public class CodewarsService: ICodewarsService
         {
             try
             {
-                using (var context = _factory.CreateDbContext())
-                {
-                    var project = context.UserChallenges.Add(new UserChallenge
-                    {
-                        UserId = userId,
-                        ChallengeId = challengeId,
-                        CompletedAt = DateTime.UtcNow
-                    });
-
-                    var user = await context.AspNetUsers
-                        .Where(x => x.Id == userId)
-                        .FirstOrDefaultAsync();
-
-                    user.ExperiencePoints += project.Entity.Challenge.ExperiencePoints;
-
-                    await context.SaveChangesAsync();
-                }
+                await MarkChallengeAsComplete(challengeId, userId);
 
                 return result;
             }
@@ -137,7 +121,7 @@ public class CodewarsService: ICodewarsService
                 result.Status = ResponseStatus.Fail;
                 return result;
             }
-        } 
+        }
         else
         {
             result.Status = ResponseStatus.Fail;

@@ -210,6 +210,7 @@
             await ChallengeService.UpdateStreakInfo(UserId);
             UserStreak = await ChallengeService.GetStreakInfo(UserId);
             User = await UserService.GetUserChallengeDetails(UserId);
+            CompletedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
         }
         else
         {

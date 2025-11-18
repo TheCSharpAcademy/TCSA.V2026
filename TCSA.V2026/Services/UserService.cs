@@ -1,6 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
@@ -10,6 +9,7 @@ namespace TCSA.V2026.Services;
 public interface IUserService
 {
     Task<ApplicationUser> GetUserById(string userId);
+    Task<ApplicationUser> GetUserChallengeDetails(string userId);
     Task<ApplicationUser> GetDetailedUserById(string userId);
     Task<ApplicationUser> GetUserProfileById(string userId);
     Task<BaseResponse> SaveProfile(ApplicationUser user);
@@ -72,7 +72,7 @@ public class UserService : IUserService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var user = 
+                var user =
                 await context.AspNetUsers
                 .AsNoTracking()
                 .Include(x => x.CodeReviewProjects)
@@ -101,7 +101,7 @@ public class UserService : IUserService
         {
             using (var context = _factory.CreateDbContext())
             {
-                var dbUser =  await context.AspNetUsers.FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
+                var dbUser = await context.AspNetUsers.FirstOrDefaultAsync(x => x.Id.Equals(user.Id));
                 dbUser.DisplayName = user.DisplayName;
                 dbUser.DiscordAlias = user.DiscordAlias;
                 dbUser.GithubUsername = user.GithubUsername;
@@ -202,4 +202,27 @@ public class UserService : IUserService
         }
     }
 
+    public async Task<ApplicationUser> GetUserChallengeDetails(string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user =
+                await context.AspNetUsers
+                .AsNoTracking()
+                .Include(x => x.UserChallenges)
+                    .ThenInclude(x => x.Challenge)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+
+                return user;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to retrieve GetUserChallengeDetails {UserId}", userId);
+            return null;
+        }
+    }
 }

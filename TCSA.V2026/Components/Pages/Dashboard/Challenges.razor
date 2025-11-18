@@ -185,7 +185,7 @@
 
         var claims = authSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User = await UserService.GetDetailedUserById(UserId);
+        User = await UserService.GetUserChallengeDetails(UserId);
         ChallengesList = await ChallengeService.GetChallenges(User.Level);
         CompletedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
         UserStreak = await ChallengeService.GetStreakInfo(UserId);
@@ -206,16 +206,15 @@
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Sync Successful", Severity.Success);
+
             await ChallengeService.UpdateStreakInfo(UserId);
             UserStreak = await ChallengeService.GetStreakInfo(UserId);
-            User = await UserService.GetUserById(UserId);
+            User = await UserService.GetUserChallengeDetails(UserId);
         }
         else
         {
             Snackbar.Add($"Error: {result.Message}", Severity.Error);
         }
-
-        User = await UserService.GetUserById(UserId);
     }
 
     private void OnPageChanged(int page)

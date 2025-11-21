@@ -144,4 +144,65 @@ public class ChallengeServiceTests : IntegrationTestsBase
         Assert.That(streakInfo.LongestStreak, Is.EqualTo(6));
         Assert.That(streakInfo.LastCompletedDate.Date, Is.EqualTo(DateTime.UtcNow.Date));
     }
+
+    [Test]
+    public async Task GetStreakInfo_ShouldReturnNewStreakInfo_WhenUserHasNoExistingStreak()
+    {
+        // Arrange
+        string userId = "user1";
+        using (var seedContext = DbContextFactory.CreateDbContext())
+        {
+            var existingStreak = await seedContext.DailyStreaks
+                .FirstOrDefaultAsync(s => s.AppUserId == userId);
+            if (existingStreak != null)
+            {
+                seedContext.DailyStreaks.Remove(existingStreak);
+                await seedContext.SaveChangesAsync();
+            }
+        }
+
+        // Act
+        var streakInfo = await _service.GetStreakInfo(userId);
+
+        // Assert
+        Assert.That(streakInfo, Is.Not.Null);
+        Assert.That(streakInfo.CurrentStreak, Is.EqualTo(0));
+        Assert.That(streakInfo.LongestStreak, Is.EqualTo(0));
+        Assert.That(streakInfo.LastCompletedDate, Is.EqualTo(default(DateTime)));
+    }
+
+    [Test]
+    public async Task GetStreakInfo_ShouldResetStreak_WhenLastCompletedDateIsBeforeYesterday()
+    {
+        // Arrange
+        string userId = "user1";
+        using (var seedContext = DbContextFactory.CreateDbContext())
+        {
+            var existingStreak = await seedContext.DailyStreaks
+                .FirstOrDefaultAsync(s => s.AppUserId == userId);
+            if (existingStreak != null)
+            {
+                existingStreak.CurrentStreak = 3;
+                existingStreak.LongestStreak = 5;
+                existingStreak.LastCompletedDate = DateTime.UtcNow.Date.AddDays(-3);
+                seedContext.DailyStreaks.Update(existingStreak);
+                await seedContext.SaveChangesAsync();
+            }
+        }
+
+        // Act
+        var streakInfo = await _service.GetStreakInfo(userId);
+
+        // Assert
+        Assert.That(streakInfo, Is.Not.Null);
+        Assert.That(streakInfo.CurrentStreak, Is.EqualTo(0));
+        Assert.That(streakInfo.LongestStreak, Is.EqualTo(5));
+        Assert.That(streakInfo.LastCompletedDate.Date, Is.EqualTo(DateTime.UtcNow.Date.AddDays(-3)));
+
+        using var assertContext = DbContextFactory.CreateDbContext();
+        var updatedStreak = await assertContext.DailyStreaks
+            .FirstOrDefaultAsync(s => s.AppUserId == userId);
+        Assert.That(updatedStreak, Is.Not.Null);
+        Assert.That(updatedStreak.CurrentStreak, Is.EqualTo(0));
+    }
 }

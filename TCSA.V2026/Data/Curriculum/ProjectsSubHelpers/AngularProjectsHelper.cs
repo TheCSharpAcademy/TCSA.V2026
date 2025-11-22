@@ -127,7 +127,7 @@ internal static class AngularProjectsHelper
                 Id = 33,
                 Title = "Sleep Tracker",
                 IconUrl = "icons8-sleeping-512.png",
-                BannerUrl = "",
+                BannerUrl = "pexels-whitedragonflymedia-1716753.jpg",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "sleep-tracker",
                 Description = "Build on your Angular foundation with an app to log and generate reports about your sleep",
@@ -149,17 +149,17 @@ internal static class AngularProjectsHelper
                 Requirements = new List<string>
                 {
                     "This is an application where you should record sleep time.",
-                    "You should create two projects: A .NET WebApi and an Angular app.",
+                    "You should create two projects: An ASP.NET Core/EntityFramework WebApi and an Angular app.",
                     "You need to use Angular Material.",
-                    "You can choose whatever database solution you want: Sqlite, SQL server or whatever you're comfortable with.",
-                    "You can choose whatever ORM you want: Dapper, EF, ADO.NET.",
-                    "You should have a filter functionality, so I can show records per type and / or date.",
+                    "You should have a filter functionality, so I can show records per type and or date.",
                     "Your database should have a single 'Records' table.The objective is to focus on Angular, so we should avoid the complexities of relational data.",
                     "This app needs to have a timer that will log your sleep once stopped and saved.",
                     "Users should also be able to input their sleep time using a form.",
-                    "Your list of sleep records should have pagination, so you're not loading all records every time you visualise the list."
-
-
+                    "Every action performed in the app should prompt a 'Toast' notification indicating success or failure.",
+                    "Your list of sleep records should have pagination, so you're not loading all records every time you visualise the list.",
+                    "This app should be mobile-first, since realistically , most users will use it from their phones.",
+                    "Your app should contain integration tests for the services that are interacting with the database, and unit tests where you find applicable.",
+                    "Your repository should contain a Postman collection with all endpoints documented for easy testing."
                 },
                 Resources = new List<string>
                 {
@@ -171,8 +171,8 @@ internal static class AngularProjectsHelper
                 Tips = new List<string>
                 {
                     "When building your timer, I suggest you have a pause, play, stop and save buttons for better user experience.",
-                    "If you get stuck implementing Angular Material in your project, take a step back and build a couple of simple purely front-end projects from Youtube tutorials."
-
+                    "If you get stuck implementing Angular Material in your project, take a step back and build a couple of simple purely front-end projects from Youtube tutorials.",
+                    "Since tests are part of the requirements, we suggest you write the tests as you go, instead of leaving it to the end. The tests will help you write more clean and maintainable code and it can be hard (technically and psychologically) to refactor your web api after it's finished."
                 }
             },
             new Project

@@ -217,6 +217,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to retrieve GetUserByIdWithShowcaseItems {UserId}", userId);
             return null;
         }
     }

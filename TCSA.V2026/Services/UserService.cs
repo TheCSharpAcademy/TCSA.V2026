@@ -212,6 +212,7 @@ public class UserService : IUserService
                 return await context.AspNetUsers
                 .Include(x => x.DashboardProjects)
                 .Include(x => x.ShowcaseItems)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
             }
         }

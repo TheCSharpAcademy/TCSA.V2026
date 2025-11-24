@@ -210,6 +210,7 @@ public class UserService : IUserService
             using (var context = _factory.CreateDbContext())
             {
                 return await context.AspNetUsers
+                .AsNoTracking()
                 .Include(x => x.DashboardProjects)
                 .Include(x => x.ShowcaseItems)
                 .AsSplitQuery()

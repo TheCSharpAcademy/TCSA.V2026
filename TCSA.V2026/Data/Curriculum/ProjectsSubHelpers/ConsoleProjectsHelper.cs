@@ -80,23 +80,6 @@ public class ConsoleProjectsHelper
                 {
                     new Block
                     {
-                        Title = "AI Challenge",
-                        ImgUrl= "icons8-artificial-intelligence-64.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "This is a slightly more advanced project but it taps into the future of programming: Artificial intelligence. Can you make it so the users of your game are able to reply to the game's questions using their voice? For this you'll use Azure's Language Services. You can find a step-by-step tutorial below:"
-                            },
-                            new Paragraph
-                            {
-                                IsVideo = true,
-                                VideoUrl = "https://www.youtube.com/embed/XMJS-eQ4Y48?si=Bwbn0UZUe-thB8md"
-                            }
-                        }
-                    },
-                    new Block
-                    {
                         Title = "Source Control",
                         ImgUrl = "icons8-git-96.png",
                         Paragraphs = new List<Paragraph>

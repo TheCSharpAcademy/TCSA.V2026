@@ -47,7 +47,8 @@ public class ConsoleProjectsHelper
                 },
                 Requirements = new List<string>
                 {
-                    @"You need to create a Math game containing the 4 basic operations",
+                    @"You need to create a game that consists of asking the player what's the result of a math question (i.e. 9 x 9 = ?), collecting the input and adding a point in case of a correct answer.",
+                    @"A game needs to have at least 5 questions.",
                     @"The divisions should result on INTEGERS ONLY and dividends should go from 0 to 100. Example: Your app shouldn't present the division 7/2 to the user, since it doesn't result in an integer.",
                     @"Users should be presented with a menu to choose an operation",
                     @"You should record previous games in a List and there should be an option in the menu for the user to visualize a history of previous games.",
@@ -77,23 +78,6 @@ public class ConsoleProjectsHelper
                 },
                 Blocks = new List<Block>
                 {
-                    new Block
-                    {
-                        Title = "AI Challenge",
-                        ImgUrl= "icons8-artificial-intelligence-64.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "This is a slightly more advanced project but it taps into the future of programming: Artificial intelligence. Can you make it so the users of your game are able to reply to the game's questions using their voice? For this you'll use Azure's Language Services. You can find a step-by-step tutorial below:"
-                            },
-                            new Paragraph
-                            {
-                                IsVideo = true,
-                                VideoUrl = "https://www.youtube.com/embed/XMJS-eQ4Y48?si=Bwbn0UZUe-thB8md"
-                            }
-                        }
-                    },
                     new Block
                     {
                         Title = "Source Control",
@@ -696,31 +680,30 @@ public class ConsoleProjectsHelper
                     "This is an application where you should record contacts with their phone numbers.",
                     "Users should be able to Add, Delete, Update and Read from a database, using the console.",
                     "You need to use Entity Framework. ADO.NET, Dapper and any other ORM aren't allowed.",
-                    "Your code should contain a base Contact class with AT LEAST name, email and phone number properties.",
+                    "Your code should contain a base Contact class with <b>at least</b> name, email and phone number properties.",
                     "You should validate e-mails and phone numbers and let the user know what formats are expected.",
                     "Make sure you handle errors so the app doesn't crash unexpectedly in case EF or the database have problems.",
                     "You should use Code-First Approach, which means EF will create the database schema for you.",
-                    "You should use SQL Server, not SQLite",
                     "You should seed data using Entity Framework so the user has some contacts to start with.",
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
-                    "<a href='https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli'>Entity Framework Docs</a>",
+                    "<a href='https://learn.microsoft.com/en-us/ef/core/'>Entity Framework: Microsoft Learn</a>",
                     "<a href='https://www.youtube.com/watch?v=tDiJdthMs1Q&list=PL4G0MUH8YWiDcv8EUWTbDxDlkSndfh-T0'>CRUD Console APP with EF on Youtube</a>"
                 },
                 ResourcesConclusion = "There are many other Youtube videos and blog articles about Entity Framework everything else you need. Don’t be ashamed to use Google! If you use AI, make sure you understand each line that's being suggested 🤓",
                 Tips = new List<string>
                 {
                     "Before starting the phone book app, finish the program in the Microsoft Documentation article without any changes and store in your Github repository for reference. Make sure you understand most of the code before you get started.",
-                    "Don't forget to create a Github repository for your project from the beginning."
+                    "For each interaction with the DB with Entity Framework, print the correspondent SQL queries so you learn what your EF queries are translated into.",
                 },
                 Challenges = new List<string>
                 {
-                    "For each interaction with the DB with Entity Framework, print the correspondent SQL queries so you learn what your EF queries are translated into.",
                     "Create a functionality that allows users to add the contact's e-mail address and send an e-mail message from the app.",
                     "Expand the app by creating categories of contacts (i.e. Family, Friends, Work, etc).",
-                    "What if you want to send not only e-mails but SMS?"
+                    "What if you want to send not only e-mails but SMS?",
+                    "Create an unit tests project and test your validation methods. Pass several invalid and valid inputs to make sure your validation works as expected."
                 }
             },
              new Project
@@ -938,7 +921,7 @@ public class ConsoleProjectsHelper
              new Project
              {
                 Id = 21,
-                Title = "Unit Testing",
+                Title = "Testing",
                 IconUrl = "icons8-test-tube-100.png",
                 BannerUrl = "",
                 LanguageHeadings = new EnglishHeadings(),
@@ -957,29 +940,36 @@ public class ConsoleProjectsHelper
                     },
                     new Paragraph
                     {
-                        Body="More likely than not (and hopefully) the organisation you’ll work will have systems that use automatic unit testing. They make sure everything is running properly before each deployment. The code covered by those tests won’t need to be tested manually every time a change is made, which is prone to errors and very expensive. A strong suite of unit tests helps developers write better code, more efficiently. So let's do it!"
+                        Body="More likely than not (and hopefully) the organisation you’ll work will have systems that use automated testing. They make sure everything is running properly before each deployment. The code covered by those tests won’t need to be tested manually every time a change is made, which is prone to errors and very expensive. A strong suite of tests helps developers code that's more maintainable and reliable. So let's jump into it!"
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "In this project, you'll create unit tests for the Coding Tracker App, the second project in the course",
+                    "In this project, you'll create tests for the Coding Tracker App, the second project in the course.",
                     "You'll need to create a CodingTracker.Tests project, parallel to your coding tracker and reference it in your csproj file",
-                    "You'll only test the validation methods, making sure the app correctly prevents the user from giving incorrect inputs",
-                    "You should use .NETs MSTest Library",
+                    "You'll need to create <b>unit tests</b> for the validation methods, making sure the app correctly prevents the user from giving incorrect inputs.",
+                    "You'll need to create <b>integration tests</b> to all methods that interact with your database, making sure the data is retrieved or persisted correctly.",
+                    "You can user whatever testing library you want. The most popular are NUnit and Xunit.",
                     "You should test both correct and incorrect inputs"
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
                     "<a href='https://www.accelq.com/blog/unit-testing/'>The Importance of Unit Testing</a>",
-                    "<a href='https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest'>MSTest Docs</a>",
-                    "<a href='https://www.youtube.com/watch?v=HYrXogLj7vg'>Unit Testing C# Code on Youtube</a>"
+                    "<a href='https://dev.to/tkarropoulos/unit-testing-in-net-tools-and-techniques-nei'>C# Testing Essentials</a>",
+                    "<a href='https://www.youtube.com/watch?v=HYrXogLj7vg'>Unit Testing C# Code on Youtube</a>",
+                    "<a href='https://www.youtube.com/watch?v=RXSPCIrrjHc'>Learn Integration Testing in C# in 25 minutes.</a>"
                 },
                 Tips = new List<string>
                 {
-                    "Don't worry about integration or end-to-end tests, they're out of the scope of this project",
-                    "Make sure the names of your tests are clear, even if they have to be long. \"WhenQuantityInputIsCorrect()\" is a good name, while \"QuantityTest\" doesn't have enough information.",
-                    "In your test, you'll have to mock the tested service and call it's methods. Think of all possibilities of correct and incorrect inputs and test if the application handles them."
+                    "Naming your tests properly is almost as important as writing them. Make sure your tests express their intent clearly as they serve as documentation. Don't be afraid of being verbose. \"WhenQuantityInputIsPositive_DataIsPersistedCorrectly\" is a good name, while \"QuantityTest\" doesn't have enough information.",
+                    "In your test, you'll have to mock the tested service and call it's methods. Think of all possibilities of correct and incorrect inputs and test if the application handles them.",
+                    "Mocking dependencies in integration testing can be very frustrating. If you're struggling to create testable methods, try breaking them down so they do only one thing. That's the best way to make your code more testable and maintanable.",
+                    "Sometimes it's good to create one method that runs all tests for a specific functionality. This way you can be sure that all edge cases are covered without having to run each test individually."
+                },
+                Challenges = new List<string>
+                {
+                    "From now on you'll be required to write tests in many projects. To get a bit more practice before moving on, try going back and writing tests for more apps. The Phonebook, the Shifts Logger and the Document Processor could be significantly enhanced with a good testing suite."
                 }
             },
         };

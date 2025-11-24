@@ -102,6 +102,7 @@
     {
         if (externalLoginInfo is null)
         {
+            Logger.LogWarning("External login info was null during login callback.");
             RedirectManager.RedirectToWithStatus("Account/Login", "Error loading external login information.", HttpContext);
         }
 
@@ -122,20 +123,33 @@
         }
         else if (result.IsLockedOut)
         {
+            Logger.LogWarning(
+            "User {UserName} is locked out during login attempt via {LoginProvider}.",
+            externalLoginInfo.Principal.Identity?.Name ?? "Unknown",
+            externalLoginInfo.LoginProvider);
             RedirectManager.RedirectTo("Account/Lockout");
         }
 
-        // If the user does not have an account, then ask the user to create an account.
+        Logger.LogError(
+            "Login failed for {UserName} via {LoginProvider}.",
+            externalLoginInfo.Principal.Identity?.Name ?? "Unknown",
+            externalLoginInfo.LoginProvider);
+
         if (externalLoginInfo.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
         {
             Input.Email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
+            Logger.LogInformation("Captured email claim for user {UserName}: {Email}", externalLoginInfo.Principal.Identity?.Name ?? "Unknown", Input.Email);
         }
+
+        message = "Please confirm your email to finish creating your account.";
+        StateHasChanged();
     }
 
     private async Task OnValidSubmitAsync()
     {
         if (externalLoginInfo is null)
         {
+            Logger.LogWarning("External login info was null during account confirmation.");
             RedirectManager.RedirectToWithStatus("Account/Login", "Error loading external login information during confirmation.", HttpContext);
         }
 
@@ -154,6 +168,8 @@
         var result = await UserManager.CreateAsync(user);
         if (result.Succeeded)
         {
+            Logger.LogInformation("New user created: {UserName} with email {Email}", user.UserName, Input.Email);
+
             result = await UserManager.AddLoginAsync(user, externalLoginInfo);
             if (result.Succeeded)
             {
@@ -166,20 +182,22 @@
                 var callbackUrl = NavigationManager.GetUriWithQueryParameters(
                     NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
                     new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code });
-                await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+                // await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
-                // If account confirmation is required, we need to show the link if we don't have a real email sender
-                if (UserManager.Options.SignIn.RequireConfirmedAccount)
-                {
-                    RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email });
-                }
+                // // If account confirmation is required, we need to show the link if we don't have a real email sender
+                // if (UserManager.Options.SignIn.RequireConfirmedAccount)
+                // {
+                //     RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email });
+                // }
 
-                await SignInManager.SignInAsync(user, isPersistent: false, externalLoginInfo.LoginProvider);
+                await SignInManager.SignInAsync(user, isPersistent: true, externalLoginInfo.LoginProvider);
                 RedirectManager.RedirectTo(ReturnUrl);
             }
         }
 
-        message = $"Error: {string.Join(",", result.Errors.Select(error => error.Description))}";
+        Logger.LogError("Failed to link external login for user {UserName}. Errors: {Errors}",
+            user.UserName,
+            string.Join(",", result.Errors.Select(e => e.Description)));
     }
 
     private static ApplicationUser CreateUser()

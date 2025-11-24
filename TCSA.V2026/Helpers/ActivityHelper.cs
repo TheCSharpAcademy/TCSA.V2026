@@ -96,9 +96,29 @@ public static class ActivityHelper
 
             currentPoints = i == 0 ? currentPoints : currentPoints - activityDisplay[i - 1].ExperiencePoints;
             activityToAdd.CurrentExperiencePoints = currentPoints;
+            activityToAdd.ActivityId = item.Id;
             activityDisplay.Add(activityToAdd);
         }
 
+        activityDisplay = CheckForDupes(activityDisplay);
+
         return activityDisplay;
+    }
+    public static List<ActivityDisplay> CheckForDupes (List<ActivityDisplay> activities)
+    {
+        var activitySet = new HashSet<string>();
+        foreach (var activity in activities)
+        {
+            string activityKey = $"{activity.Description}";
+            if (activitySet.Contains(activityKey))
+            {
+                activity.IsDuplicate = true;
+            }
+            else
+            {
+                activitySet.Add(activityKey);
+            }
+        }
+        return activities;
     }
 }

@@ -37,7 +37,7 @@ public class ProjectServiceTests : IntegrationTestsBase
     }
 
     [Test]
-    public async Task AddingArticlesShouldIncrementXPs()
+    public async Task AddingArticles_ShouldIncrementXPs()
     {
         await _service.PostArticle((int)ArticleName.StartHere, "user1", "fakeUrl", true, false);
 
@@ -48,6 +48,20 @@ public class ProjectServiceTests : IntegrationTestsBase
             .FirstOrDefault(u => u.Id.Equals("user1"));
 
         Assert.That(user.ExperiencePoints, Is.EqualTo(5));
+    }
+
+    [Test]
+    public async Task AddingProject_ShouldNotIncrementXPs()
+    {
+        await _service.PostArticle((int)ArticleName.MathGame, "user1", "fakeUrl", false, false);
+
+        using var verifyContext = DbContextFactory.CreateDbContext();
+
+        using var assertContext = DbContextFactory.CreateDbContext();
+        var user = assertContext.AspNetUsers
+            .FirstOrDefault(u => u.Id.Equals("user1"));
+
+        Assert.That(user.ExperiencePoints, Is.EqualTo(0));
     }
 
     [Test]

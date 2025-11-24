@@ -1150,7 +1150,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                             },
                             new Paragraph
                             {
-                                Body = @"Once your pull request is reviewed, the pull request will be closed but it can still be assessed on Github in case you want to revisit later. The reviewers will be relatively strict with coding standards, so you'll have a good taste of the demands of the software engineering industry. Below is a video tutorial plus a list of steps on how to create a pull-request for your code to be reviewed."
+                                Body = @"Once your pull request is reviewed, it will be closed but it can still be assessed on Github in case you want to revisit it later. The reviewers will be relatively strict with coding standards, so you'll have a good taste of the demands of the software engineering industry. Below is a video tutorial plus a list of steps on how to create a pull-request for your code to be reviewed."
                             },
                             new Paragraph
                             {
@@ -1266,7 +1266,7 @@ git push</code>"
                             },
                              new Paragraph
                             {
-                                Body = "If issues were found, you'll see the following message. Click on    the 'details' link on the right side:  "
+                                Body = "If issues were found, you'll see the following message. Click on the 'details' link on the right side:  "
                             },
                             new Paragraph
                             {
@@ -1293,7 +1293,7 @@ git push</code>"
                             },
                             new Paragraph
                             {
-                                Body = "Important: If codacy is demanding you make changes that break your code, <b>feel free to ignore</b>. Also, ignore changes to the README file."
+                                Body = "<b>Important</b>: If Codacy is demanding you make changes that break your code, <b>feel free to ignore</b>. Also, <b>ignore Codacy's warnings about the README file</b>."
                             },
                         }
                     },
@@ -1304,7 +1304,11 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "Git pull requests aren't yet integrated to our dashboard. Because of this you'll have to submit your project into our platform as per the picture below:"
+                                Body = "If your github username has been correctly included in your profile, your project will be already showing as pending in your dashboard. If that doesn't happen, double check your github username."
+                            },
+                            new Paragraph
+                            {
+                                Body = "If for whatever reason our Github integration doesn't work and your project is not updated automatically in your dashboard, you can submit it manually by clicking on the <b>Submit</b> button, as per this picture:"
                             },
                             new Paragraph
                             {

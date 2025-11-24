@@ -228,7 +228,10 @@ public class ProjectService : IProjectService
                           ActivityType = isArticle ? ActivityType.ArticleRead : ActivityType.ProjectSubmitted
                       });
 
-                    user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
+                    if (isArticle)
+                    {
+                        user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
+                    }
 
                     await context.SaveChangesAsync();
                 };

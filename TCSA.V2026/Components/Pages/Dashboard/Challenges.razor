@@ -24,17 +24,17 @@
                 <MudText Style="font-size: 1.25rem;">Challenges</MudText>
             </MudStack>
         </MudPaper>
-        @* <MudPaper Class="flex-grow-1 pb-3" Elevation="3" Outlined="false">
+        <MudPaper Class="flex-grow-1 pb-3" Elevation="3" Outlined="false">
             <MudStack AlignItems="AlignItems.Center" Spacing="2" Class="py-3 px-4 px-md-5" Style="@($"background-color:{Colors.Red.Default}")">
                 <i class="fas fa-fire fa-3x" style="color: white;" />
                 <MudText Typo="Typo.subtitle1" Style="font-weight: bold; color: white;">STREAK</MudText>
             </MudStack>
             <MudStack Spacing="0" AlignItems="AlignItems.Center" Class="px-4 px-md-5">
-                <MudText Style="font-size: 2.5rem; font-weight: bolder;">12</MudText>
+                <MudText Style="font-size: 2.5rem; font-weight: bolder;">@UserStreak.CurrentStreak</MudText>
                 <MudText Style="font-size: 1.25rem;">Days</MudText>
-                <MudText Typo="Typo.caption">Best: 30 days</MudText>
+                <MudText Typo="Typo.caption">Best: @UserStreak.LongestStreak days</MudText>
             </MudStack>
-        </MudPaper> *@
+        </MudPaper>
     </MudStack>
 
     @if (IsLoading)
@@ -52,11 +52,11 @@
                 CheckedIcon="@Icons.Material.Outlined.CheckBox"
                 UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
                 <MudSelect T="Level"
-                    Label="Filter by Level"
-                    Placeholder="Level"
-                    Class="flex-grow-0"
-                    MultiSelection="true"
-                    @bind-SelectedValues="SelectedLevels">
+                Label="Filter by Level"
+                Placeholder="Level"
+                Class="flex-grow-0"
+                MultiSelection="true"
+                @bind-SelectedValues="SelectedLevels">
                     @foreach (Level item in Enum.GetValues(typeof(Level)))
                     {
                         <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
@@ -105,12 +105,12 @@
             @if (Pages > 1) {
                 <MudBreakpointProvider OnBreakpointChanged="BreakpointChanged">
                     <MudPagination Class="mt-3 justify-center"
-                                   Style="width: 100%;"
-                                   Count="Pages"
-                                   Selected="CurrentPage"
-                                   SelectedChanged="OnPageChanged"
-                                   BoundaryCount="_boundaryCount"
-                                   Size="_paginationSize" />
+                    Style="width: 100%;"
+                    Count="Pages"
+                    Selected="CurrentPage"
+                    SelectedChanged="OnPageChanged"
+                    BoundaryCount="_boundaryCount"
+                    Size="_paginationSize" />
                 </MudBreakpointProvider>
             }
         }
@@ -128,6 +128,7 @@
     [Inject] private ISnackbar Snackbar { get; set; }
 
     private List<Challenge> ChallengesList = new();
+    private DailyStreak UserStreak = new();
     private List<int> CompletedChallenges = new();
     private ApplicationUser User { get; set; }
     private List<Challenge> FilteredChallenges =>
@@ -184,9 +185,10 @@
 
         var claims = authSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User = await UserService.GetDetailedUserById(UserId);
+        User = await UserService.GetUserChallengeDetails(UserId);
         ChallengesList = await ChallengeService.GetChallenges(User.Level);
         CompletedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
+        UserStreak = await ChallengeService.GetStreakInfo(UserId);
 
         LoadTime = DateTime.UtcNow - startTime;
 
@@ -204,14 +206,16 @@
         if (result.Status == ResponseStatus.Success)
         {
             Snackbar.Add("Sync Successful", Severity.Success);
-            User = await UserService.GetUserById(UserId);
+
+            await ChallengeService.UpdateStreakInfo(UserId);
+            UserStreak = await ChallengeService.GetStreakInfo(UserId);
+            User = await UserService.GetUserChallengeDetails(UserId);
+            CompletedChallenges = User.UserChallenges.Select(uc => uc.ChallengeId).ToList();
         }
         else
         {
             Snackbar.Add($"Error: {result.Message}", Severity.Error);
         }
-
-        User = await UserService.GetUserById(UserId);
     }
 
     private void OnPageChanged(int page)

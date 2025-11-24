@@ -560,6 +560,26 @@ public class DiCourse
                             },
                             new Block
                             {
+                                Title = "Service layer",
+                                Paragraphs = new List<Paragraph>
+                                {
+                                    new Paragraph
+                                    {
+                                        Body = "Services are classes commonly used for <b>business logic</b>. In a real world scenario this class would be responsible for processing data before sending it to the controller or saving it to the database."
+                                    },
+                                    new Paragraph
+                                    {
+                                        Body = "Create a new folder <b>Services</b> and inside it a new class <code class='inline-code'>EmployeeService</code> with the following code:"
+                                    },
+                                    new Paragraph
+                                    {
+                                        IsCode = true,
+                                        Body = "public class EmployeeService\r\n{\r\n    // By manually creating an instance of a dependency class means we have tight coupling\r\n    private readonly EmployeeRepository _employeeRepository = new();\r\n    public List<Employee> GetAllEmployees()\r\n    {\r\n        return _employeeRepository.GetAllEmployees();\r\n    }\r\n}"
+                                    }
+                                }
+                            },
+                            new Block
+                            {
                                 Title = "Controllers layer",
                                 Paragraphs = new List<Paragraph>
                                 {

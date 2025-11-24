@@ -9,6 +9,7 @@ namespace TCSA.V2026.Services;
 public interface IUserService
 {
     Task<ApplicationUser> GetUserById(string userId);
+    Task<ApplicationUser> GetUserChallengeDetails(string userId);
     Task<ApplicationUser> GetDetailedUserById(string userId);
     Task<ApplicationUser> GetUserProfileById(string userId);
     Task<BaseResponse> SaveProfile(ApplicationUser user);
@@ -20,10 +21,12 @@ public interface IUserService
 public class UserService : IUserService
 {
     private readonly IDbContextFactory<ApplicationDbContext> _factory;
+    private readonly ILogger<UserService> _logger;
 
-    public UserService(IDbContextFactory<ApplicationDbContext> factory)
+    public UserService(IDbContextFactory<ApplicationDbContext> factory, ILogger<UserService> logger)
     {
         _factory = factory;
+        _logger = logger;
     }
     public async Task<ApplicationUser> GetUserProfileById(string userId)
     {
@@ -36,6 +39,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to GetUserProfileById for userId: {UserId}", userId);
             return null;
         }
     }
@@ -46,16 +50,19 @@ public class UserService : IUserService
         {
             using (var context = _factory.CreateDbContext())
             {
-                return await context.AspNetUsers
+                var user = await context.AspNetUsers
                 .Include(x => x.Issues)
                 .Include(x => x.DashboardProjects)
                 .Include(x => x.UserActivity)
                     .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+
+                return user;
             }
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to retrieve GetUserById {UserId}", userId);
             return null;
         }
     }
@@ -66,7 +73,8 @@ public class UserService : IUserService
         {
             using (var context = _factory.CreateDbContext())
             {
-                return await context.AspNetUsers
+                var user =
+                await context.AspNetUsers
                 .AsNoTracking()
                 .Include(x => x.CodeReviewProjects)
                    .ThenInclude(x => x.DashboardProject)
@@ -77,10 +85,13 @@ public class UserService : IUserService
                     .ThenInclude(x => x.Challenge)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+
+                return user;
             }
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to retrieve GetDetailedUserById {UserId}", userId);
             return null;
         }
     }
@@ -110,6 +121,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to SaveProfile {UserId}", user.Id);
             return new BaseResponse
             {
                 Status = ResponseStatus.Fail,
@@ -138,6 +150,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to DeleteAccount {UserId}", user.Id);
             return new BaseResponse
             {
                 Status = ResponseStatus.Fail,
@@ -181,6 +194,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to ResetAccount {UserId}", user.Id);
             return new BaseResponse
             {
                 Status = ResponseStatus.Fail,
@@ -203,6 +217,30 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
+            return null;
+        }
+    }
+
+    public async Task<ApplicationUser> GetUserChallengeDetails(string userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user =
+                await context.AspNetUsers
+                .AsNoTracking()
+                .Include(x => x.UserChallenges)
+                    .ThenInclude(x => x.Challenge)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+
+                return user;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to retrieve GetUserChallengeDetails {UserId}", userId);
             return null;
         }
     }

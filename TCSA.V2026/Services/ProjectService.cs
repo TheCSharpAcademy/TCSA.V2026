@@ -228,7 +228,7 @@ public class ProjectService : IProjectService
                           ActivityType = isArticle ? ActivityType.ArticleRead : ActivityType.ProjectSubmitted
                       });
 
-                    if (!isArticle)
+                    if (isArticle)
                     {
                         user.ExperiencePoints = user.ExperiencePoints + project.ExperiencePoints;
                     }

@@ -697,31 +697,30 @@ public class ConsoleProjectsHelper
                     "This is an application where you should record contacts with their phone numbers.",
                     "Users should be able to Add, Delete, Update and Read from a database, using the console.",
                     "You need to use Entity Framework. ADO.NET, Dapper and any other ORM aren't allowed.",
-                    "Your code should contain a base Contact class with AT LEAST name, email and phone number properties.",
+                    "Your code should contain a base Contact class with <b>at least</b> name, email and phone number properties.",
                     "You should validate e-mails and phone numbers and let the user know what formats are expected.",
                     "Make sure you handle errors so the app doesn't crash unexpectedly in case EF or the database have problems.",
                     "You should use Code-First Approach, which means EF will create the database schema for you.",
-                    "You should use SQL Server, not SQLite",
                     "You should seed data using Entity Framework so the user has some contacts to start with.",
                 },
                 ResourcesIntro = "Here are a few resources that might be helpful.",
                 Resources = new List<string>
                 {
-                    "<a href='https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli'>Entity Framework Docs</a>",
+                    "<a href='https://learn.microsoft.com/en-us/ef/core/'>Entity Framework: Microsoft Learn</a>",
                     "<a href='https://www.youtube.com/watch?v=tDiJdthMs1Q&list=PL4G0MUH8YWiDcv8EUWTbDxDlkSndfh-T0'>CRUD Console APP with EF on Youtube</a>"
                 },
                 ResourcesConclusion = "There are many other Youtube videos and blog articles about Entity Framework everything else you need. Don’t be ashamed to use Google! If you use AI, make sure you understand each line that's being suggested 🤓",
                 Tips = new List<string>
                 {
                     "Before starting the phone book app, finish the program in the Microsoft Documentation article without any changes and store in your Github repository for reference. Make sure you understand most of the code before you get started.",
-                    "Don't forget to create a Github repository for your project from the beginning."
+                    "For each interaction with the DB with Entity Framework, print the correspondent SQL queries so you learn what your EF queries are translated into.",
                 },
                 Challenges = new List<string>
                 {
-                    "For each interaction with the DB with Entity Framework, print the correspondent SQL queries so you learn what your EF queries are translated into.",
                     "Create a functionality that allows users to add the contact's e-mail address and send an e-mail message from the app.",
                     "Expand the app by creating categories of contacts (i.e. Family, Friends, Work, etc).",
-                    "What if you want to send not only e-mails but SMS?"
+                    "What if you want to send not only e-mails but SMS?",
+                    "Create an unit tests project and test your validation methods. Pass several invalid and valid inputs to make sure your validation works as expected."
                 }
             },
              new Project

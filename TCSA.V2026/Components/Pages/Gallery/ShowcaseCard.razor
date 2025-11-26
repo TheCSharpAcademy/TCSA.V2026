@@ -1,0 +1,52 @@
+@using TCSA.V2026.Data.DTOs
+
+<MudPaper Class="pa-3 rounded-lg elevation-3">
+    @if (!string.IsNullOrEmpty(Item.VideoUrl))
+    {
+        <iframe src="@Item.VideoUrl" frameborder="0" allowfullscreen style="height: 200px; width: 100%"></iframe>
+    } else
+    {
+        <div style="height:200px; width:300px; background-color:#e0e0e0;" class="d-flex align-center justify-center rounded">
+            <MudIcon Icon="@Icons.Material.Filled.Panorama" Size="Size.Large" Color="Color.Default" />
+        </div>
+    }
+    <div class="d-flex justify-space-between align-center">
+        <div class="d-flex gap-1 align-center">
+            <h3 class="mud-typography-body1 mud-primary-text" style="font-weight: bold;">@Item.ProjectName</h3>
+            <MudChip T="string" Color="Color.Info" Variant="Variant.Filled">
+                @Item.Area
+            </MudChip>
+        </div>
+        <AuthorizeView>
+            <Authorized>
+                @if (IsUserOwner)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(() => HandleDelete())" />
+                }
+            </Authorized>
+        </AuthorizeView>
+    </div>
+    <MudText Typo="Typo.body2">by @Item.Username</MudText>
+    <MudStack Row Spacing="1" Class="mt-2">
+        @if (!string.IsNullOrEmpty(Item.GithubUrl))
+        {
+            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Href="@Item.GithubUrl" Target="_blank" Color="Color.Default" />
+        }
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public required ShowcaseItemDTO Item { get; set; }
+    [Parameter]
+    public string? CurrentUserId { get; set; }
+    [Parameter]
+    public EventCallback<ShowcaseItemDTO> OnDelete { get; set; }
+    [Parameter]
+    public bool IsUserOwner { get; set; }
+
+    private async Task HandleDelete()
+    {
+        await OnDelete.InvokeAsync(Item);
+    }
+}

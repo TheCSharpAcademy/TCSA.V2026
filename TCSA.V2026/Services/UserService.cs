@@ -15,6 +15,7 @@ public interface IUserService
     Task<BaseResponse> SaveProfile(ApplicationUser user);
     Task<BaseResponse> ResetAccount(ApplicationUser user);
     Task<BaseResponse> DeleteAccount(ApplicationUser user);
+    Task<ApplicationUser?> GetUserByIdWithShowcaseItems(string? userid);
 }
 
 public class UserService : IUserService
@@ -199,6 +200,27 @@ public class UserService : IUserService
                 Status = ResponseStatus.Fail,
                 Message = ex.Message
             };
+        }
+    }
+
+    public async Task<ApplicationUser?> GetUserByIdWithShowcaseItems(string? userId)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.AspNetUsers
+                .AsNoTracking()
+                .Include(x => x.DashboardProjects)
+                .Include(x => x.ShowcaseItems)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to retrieve GetUserByIdWithShowcaseItems {UserId}", userId);
+            return null;
         }
     }
 

@@ -1304,7 +1304,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "If your github username has been correctly included in your profile, your project will be already showing as pending in your dashboard. If that doesn't happen, double check your github username."
+                                Body = "If your github username has been correctly included in your profile, <b>your project will be already showing as pending in your dashboard</b>. If that doesn't happen, double check your github username."
                             },
                             new Paragraph
                             {
@@ -1324,7 +1324,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "If your project is missing any requirements, you'll receive feedback with changes requested. Check your e-mails, as github warns you once the status of your pull request changes. Once you change your project based on the comments, all you need to do is repeat step 4 (stage, commit, push) and the pull request will be updated. You don’t need to submit another Pull request. Once your project is accepted, go to the Academy's repository where you'll see your project included."
+                                Body = "If your project is missing any requirements, you'll receive feedback with changes requested. Check your e-mails, as github warns you once the status of your pull request changes. Once you change your project based on the comments, all you need to do is <b>repeat step 4</b> (stage, commit, push) and the pull request will be updated. You don’t need to submit another pull request."
                             },
                             new Paragraph
                             {
@@ -1340,7 +1340,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "If we request changes and you don't act in two weeks, we remove it from the dashboard. You can submit reopen the pull request or submit another one whenever you want. You'll just have to resubmit in the Dashboard."
+                                Body = "If we request changes and you don't act in two weeks, we remove it from the dashboard. You can reopen the pull request or submit another one whenever you want."
                             }
                         }
                     },
@@ -1363,10 +1363,11 @@ git push</code>"
                             new Paragraph
                             {
                                 Body = @"<ul> 
+                                       <li>Make sure your project <b>doesn't contain a .git folder</b> when you move it into our repository for review or your files won't be visible to the reviewer.</li>
                                        <li>Before submitting your code, make sure it follows <a href='https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions' target='_blank'>C# coding conventions</a>.</li>
                                        <li>Remove unused 'using' statements and any other code that's not being used.</li>
                                        <li>Don't write too many statements without spacing. It makes your code harder to read.</li>
-                        <li>On the other hand, never have more than one empty line. Or empty lines between code and brackets.</li>
+                                       <li>On the other hand, never have more than one empty line. Or empty lines between code and brackets.</li>
                                        <li>Use the <a href='https://www.honlsoft.com/blog/2021-06-06-new-namespace-features-in-csharp-10' target='_blank'>latest namespaces and usings</a> convention to prevent extra indentation of your classes and to write less code.</li>
                                        <li>Double check the project's requirements to make sure your project fulfils them.</li>
                                        <li>Refactor your code. You'll be surprised about how many improvements you can think of by checking your code a couple more times after completion.</li>

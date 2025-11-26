@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Curriculum;
+using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
-using TCSA.V2026.Webhooks;
 
 namespace TCSA.V2026.Services;
 

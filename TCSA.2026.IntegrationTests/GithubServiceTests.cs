@@ -1,4 +1,5 @@
 ﻿using Moq;
+using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.IntegrationTests;
@@ -125,7 +126,6 @@ public class GithubServiceTests : IntegrationTestsBase
 
         Assert.That(project.GithubUrl.Equals("test_pull_request/777"));
         Assert.That(activity.ActivityType == ActivityType.ProjectSubmitted);
-
     }
 
     [Test]
@@ -134,6 +134,12 @@ public class GithubServiceTests : IntegrationTestsBase
         var pullRequestDto = new PullRequestReviewDto
         {
             Action = "changes_requested",
+
+            Review = new Review
+            {
+                State = "changes_requested"
+            },
+
             Repository = new Repository
             {
                 Id = 573911382

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TCSA.V2026.Data.Models;
 
@@ -27,6 +26,7 @@ public class Challenge
 
     [Required(ErrorMessage = "Platform is required.")]
     public ChallengePlatform Platform { get; set; }
+
     [Required(ErrorMessage = "Challenge Type is required")]
     public ChallengeCategory Category { get; set; }
 
@@ -40,7 +40,6 @@ public class DailyStreak
 {
     public string AppUserId { get; set; }
     public ApplicationUser User { get; set; }
-
     public int CurrentStreak { get; set; }
     public int LongestStreak { get; set; }
     public DateTime LastCompletedDate { get; set; }
@@ -51,10 +50,8 @@ public class UserChallenge
 {
     public int ChallengeId { get; set; }
     public Challenge Challenge { get; set; }
-
     public string UserId { get; set; }
     public ApplicationUser User { get; set; }
-
     public DateTime CompletedAt { get; set; }
 }
 

@@ -46,22 +46,35 @@
         @*  <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
         if (ChallengesList != null && ChallengesList.Count > 0)
         {
-            <MudStack Row Class="mt-6 mb-4" Spacing="4" AlignItems="AlignItems.Center">
+            <MudStack Row Class="mt-6 mb-4" Spacing="4" AlignItems="AlignItems.Center" Breakpoint="Breakpoint.Xs">                
                 <MudCheckBox @bind-Value="@ShowCompleted"
                 Label="Show Completed"
                 CheckedIcon="@Icons.Material.Outlined.CheckBox"
                 UncheckedIcon="@Icons.Material.Outlined.CheckBoxOutlineBlank" />
-                <MudSelect T="Level"
-                Label="Filter by Level"
-                Placeholder="Level"
-                Class="flex-grow-0"
-                MultiSelection="true"
-                @bind-SelectedValues="SelectedLevels">
-                    @foreach (Level item in Enum.GetValues(typeof(Level)))
-                    {
-                        <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
-                    }
-                </MudSelect>
+                <MudStack Row Spacing="4">
+                    <MudSelect T="Level"
+                    Label="Filter by Level"
+                    Placeholder="Level"
+                    Class="flex-grow-0"
+                    MultiSelection="true"                
+                    @bind-SelectedValues="SelectedLevels">
+                        @foreach (Level item in Enum.GetValues(typeof(Level)))
+                        {
+                            <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudSelect T="ChallengeCategory"
+                    Label="Filter by Category"
+                    Placeholder="Category"
+                    Class="flex-grow-0"
+                    MultiSelection="true"
+                    @bind-SelectedValues="SelectedCategories">
+                        @foreach (ChallengeCategory item in Enum.GetValues(typeof(ChallengeCategory)))
+                        {
+                            <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudStack>
             </MudStack>
             <MudStack Spacing="4">
                 @foreach (var challenge in PaginatedChallenges)
@@ -74,6 +87,7 @@
                                     <MudText Style="font-weight:bolder" Typo="Typo.subtitle1" Class="mud-primary-text">@challenge.Name</MudText>
                                     <MudText Typo="Typo.body2">@challenge.Description</MudText>
                                     <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
+                                        <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.Category.ToString()</MudText>
                                         <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
                                         <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.ExperiencePoints</MudText>
                                     </MudStack>
@@ -134,7 +148,8 @@
     private List<Challenge> FilteredChallenges =>
         ChallengesList.Where(c =>
             (!_showCompleted || IsCompleted(c.Id)) &&
-            (!_selectedLevels.Any() || _selectedLevels.Contains(c.Level))
+            (!_selectedLevels.Any() || _selectedLevels.Contains(c.Level)) &&
+            (!_selectedCategories.Any() || _selectedCategories.Contains(c.Category))
         )
         .ToList();
 
@@ -154,6 +169,16 @@
         set
         {
             _selectedLevels = value;
+            CurrentPage = 1;
+        }
+    }
+    private IEnumerable<ChallengeCategory> _selectedCategories = new HashSet<ChallengeCategory>();
+    private IEnumerable <ChallengeCategory> SelectedCategories
+    {
+        get => _selectedCategories;
+        set
+        {
+            _selectedCategories = value;
             CurrentPage = 1;
         }
     }

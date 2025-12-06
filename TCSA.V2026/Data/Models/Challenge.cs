@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCSA.V2026.Data.Models;
 
@@ -26,9 +27,11 @@ public class Challenge
 
     [Required(ErrorMessage = "Platform is required.")]
     public ChallengePlatform Platform { get; set; }
+    [Required(ErrorMessage = "Challenge Type is required")]
+    public ChallengeCategory Category { get; set; }
 
     [Required(ErrorMessage = "Level is required.")]
-    public Level Level { get; set; }
+    public Level Level { get; set; }    
 
     public virtual ICollection<UserChallenge> UserChallenges { get; set; }
 }
@@ -60,4 +63,11 @@ public enum ChallengePlatform
     CodeWars = 1,
     LeetCode,
     HackerRank
+}
+
+public enum ChallengeCategory
+{
+    [Display(Name = "C#")]
+    CSharp = 1,
+    SQL
 }

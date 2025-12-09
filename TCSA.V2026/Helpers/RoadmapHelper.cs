@@ -1,4 +1,4 @@
-﻿using TCSA.V2026.Data.Curriculum;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 
@@ -13,107 +13,107 @@ public static class RoadmapHelper
 
     #region projectRequirements
     public static readonly int[] GreenRequirements = {
-        (int) ArticleName.StartHere,  
-        (int) ArticleName.GettingHelp, 
-        (int) ArticleName.SettingUp, 
+        (int) ArticleName.StartHere,
+        (int) ArticleName.GettingHelp,
+        (int) ArticleName.SettingUp,
         (int) ArticleName.Foundations,
-        (int) ArticleName.FreecodeCamp, 
+        (int) ArticleName.FreecodeCamp,
         (int) ArticleName.MathGame
     };
 
     public static readonly int[] OliveGreenRequirements = {
-        (int) ArticleName.Calculator, 
-        (int) ArticleName.HabitLogger, 
+        (int) ArticleName.Calculator,
+        (int) ArticleName.HabitLogger,
         (int) ArticleName.CodingTracker
     };
 
     public static readonly int[] YellowRequirements = {
-        (int) ArticleName.Flashcards, 
-        (int) ArticleName.Drinks, 
-        (int) ArticleName.PhoneBook, 
+        (int) ArticleName.Flashcards,
+        (int) ArticleName.Drinks,
+        (int) ArticleName.PhoneBook,
         (int) ArticleName.ShiftsLogger
     };
 
     public static readonly int[] OrangeRequirements = {
-       (int) ArticleName.Ecommerce, 
-       (int) ArticleName.SportsResults, 
-       (int) ArticleName.ExcelReader, 
+       (int) ArticleName.Ecommerce,
+       (int) ArticleName.SportsResults,
+       (int) ArticleName.ExcelReader,
        (int) ArticleName.UnitTesting
     };
 
     public static readonly int[] RedRequirements = {
-        (int) ArticleName.Portfolio, 
+        (int) ArticleName.Portfolio,
         (int) ArticleName.Resume,
     };
 
-    public static readonly int[] GreyAndBlackRequirements = { 
-        (int)ArticleName.Flagship, 
+    public static readonly int[] GreyAndBlackRequirements = {
+        (int)ArticleName.Flagship,
     };
 
     public static readonly int[] AspNetRequirements = {
-        (int) ArticleName.WaterLogger, 
-        (int) ArticleName.Movies, 
-        (int) ArticleName.TodoList, 
+        (int) ArticleName.WaterLogger,
+        (int) ArticleName.Movies,
+        (int) ArticleName.TodoList,
         (int) ArticleName.Budget,
     };
 
     public static readonly int[] AngularRequirements = {
-        (int) ArticleName.TourOfHeroes, 
-        (int) ArticleName.CoffeeTracker, 
-        (int) ArticleName.SleepTracker, 
+        (int) ArticleName.TourOfHeroes,
+        (int) ArticleName.CoffeeTracker,
+        (int) ArticleName.SleepTracker,
         (int) ArticleName.Quizgame
     };
 
-    public static readonly int[] ReactRequirements = { 
-        (int)ArticleName.TicTacToe, 
-        (int)ArticleName.ExternalApi, 
-        (int)ArticleName.ShoppingList, 
+    public static readonly int[] ReactRequirements = {
+        (int)ArticleName.TicTacToe,
+        (int)ArticleName.ExternalApi,
+        (int)ArticleName.ShoppingList,
         (int)ArticleName.FriendsManager
     };
 
     public static readonly int[] BlazorRequirements = {
-        (int) ArticleName.WardrobeInventory, 
-        (int) ArticleName.MemoryGame, 
-        (int) ArticleName.FoodJournal, 
+        (int) ArticleName.WardrobeInventory,
+        (int) ArticleName.MemoryGame,
+        (int) ArticleName.FoodJournal,
         (int) ArticleName.SportsStatistics
     };
 
     public static readonly int[] MauiRequirements = {
-        (int) ArticleName.MauiMath, 
-        (int) ArticleName.Books, 
-        (int) ArticleName.Monkeys, 
+        (int) ArticleName.MauiMath,
+        (int) ArticleName.Books,
+        (int) ArticleName.Monkeys,
         (int) ArticleName.Warehouse
     };
 
     public static readonly int[] AuthRequirements = {
-        (int) ArticleName.Auth, 
-        (int) ArticleName.ProductManagement, 
+        (int) ArticleName.Auth,
+        (int) ArticleName.ProductManagement,
         (int) ArticleName.ExternalAuth,
     };
 
     public static readonly int[] SqlRequirements = {
-        (int) ArticleName.Sql1, 
-        (int) ArticleName.Sql2, 
+        (int) ArticleName.Sql1,
+        (int) ArticleName.Sql2,
         (int) ArticleName.Sql3
     };
 
     public static readonly int[] AzureRequirements = {
-        (int) ArticleName.DeploySimpleApp, 
-        (int) ArticleName.DeployFullStack, 
-        (int) ArticleName.DeployFramework, 
+        (int) ArticleName.DeploySimpleApp,
+        (int) ArticleName.DeployFullStack,
+        (int) ArticleName.DeployFramework,
     };
 
-    public static readonly int[][] FullStackAreas = { 
-        AspNetRequirements, 
-        AngularRequirements, 
-        ReactRequirements, 
-        BlazorRequirements, MauiRequirements 
+    public static readonly int[][] FullStackAreas = {
+        AspNetRequirements,
+        AngularRequirements,
+        ReactRequirements,
+        BlazorRequirements, MauiRequirements
     };
 
-    public static readonly int[][] AspNetAreas = { 
-        AspNetRequirements, 
-        BlazorRequirements, 
-        MauiRequirements 
+    public static readonly int[][] AspNetAreas = {
+        AspNetRequirements,
+        BlazorRequirements,
+        MauiRequirements
     };
     #endregion
 
@@ -133,7 +133,7 @@ public static class RoadmapHelper
         level = (level >= Level.OliveGreen && YellowRequirements.All(completedProjects.Contains)) ? Level.Yellow : level;
         level = (level >= Level.Yellow && OrangeRequirements.All(completedProjects.Contains)) ? Level.Orange : level;
 
-        if (level >= Level.Orange 
+        if (level >= Level.Orange
             && RedRequirements.All(completedProjects.Contains)
             && issues >= 1
             && reviews >= 2)
@@ -386,7 +386,7 @@ public static class RoadmapHelper
                 IsCompleted = issuesCount >= 1,
                 Tooltip = "Complete 1 Community Project Issue"
             }
-            });
+        });
 
         if (userLevel > Level.Yellow && tasks.Any(x => !x.IsCompleted))
         {
@@ -406,30 +406,22 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-purple";
 
+        bool isFullStackCompleted =
+            mvcProjects.All(x => completedProjects.Contains(x)) ||
+            reactProjects.All(x => completedProjects.Contains(x)) ||
+            angularProjects.All(x => completedProjects.Contains(x)) ||
+            blazorProjects.All(x => completedProjects.Contains(x));
+
         var tasks = new List<RoadmapTask>();
+
         tasks.AddRange(new List<RoadmapTask> {
-            new RoadmapTask {
-                IconUrl = "mvc.png",
-                Name = "MVC",
-                IsCompleted =  mvcProjects.All(x => completedProjects.Contains(x))
+            new RoadmapTask
+            {
+                IconUrl = "fullstack.png",
+                Name = "Complete any Full-stack Area",
+                IsCompleted = isFullStackCompleted,
+                Tooltip = "Complete all projects in one full-stack area (MVC, React, Angular, Blazor or MAUI)"
             },
-            new RoadmapTask {
-                IconUrl = "icons8-react-100.png",
-                Name = "React",
-                IsCompleted = reactProjects.All(x => completedProjects.Contains(x))
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-angularjs-96.png",
-                Name = "Angular",
-                IsCompleted = angularProjects.All(x => completedProjects.Contains(x))
-            },
-            new RoadmapTask {
-                IconUrl = "blazor.png",
-                Name = "Blazor",
-                IsCompleted = blazorProjects.All(x => completedProjects.Contains(x))
-            },
-        });
-        tasks.AddRange(new List<RoadmapTask> {
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 3",
@@ -513,7 +505,7 @@ public static class RoadmapHelper
                 IsCompleted = issuesCount >= 4,
                 Tooltip = "Complete Community Project Issue 2 of 2"
             }
-            });
+        });
 
         if (userLevel > Level.Red && tasks.Any(x => !x.IsCompleted))
         {
@@ -708,93 +700,17 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-black";
 
+        int fullStackCompleted = GetFullStackAreasCompleted();
+
         var tasks = new List<RoadmapTask>();
 
         tasks.AddRange(new List<RoadmapTask> {
-            new RoadmapTask {
-                IconUrl = "maui.png",
-                Name = "MAUI",
-                IsCompleted = mauiProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.MAUI)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "mvc.png",
-                Name = "MVC",
-                IsCompleted =  mvcProjects.All(x => completedProjects.Contains(x)),
-                Subtasks = Projects
-                .Where(x => x.Area == Area.MVC)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-react-100.png",
-                Name = "React",
-                IsCompleted = reactProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.React)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-angularjs-96.png",
-                Name = "Angular",
-                IsCompleted = angularProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.Angular)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "blazor.png",
-                Name = "Blazor",
-                IsCompleted = blazorProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.Blazor)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
+            new RoadmapTask
+            {
+                IconUrl = "fullstack2.png",
+                Name = "Complete any 2 Full-stack Areas",
+                IsCompleted = fullStackCompleted >= 2,
+                Tooltip = "Complete all projects in two full-stack areas (MVC, React, Angular, Blazor or MAUI)"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",

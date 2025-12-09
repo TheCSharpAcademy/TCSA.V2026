@@ -1,4 +1,4 @@
-﻿@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.DTOs
 
 <MudCard Outlined="true" Elevation="25">
     <MudCardContent>
@@ -7,7 +7,7 @@
             {
                 <div class="m-1">
                     <!-- Added proper margin class -->
-                    <MudTooltip Text=@($"{task.Name}")>
+                    <MudTooltip Text=@($"{task.Tooltip}")>
                         <MudAvatar Size="Size.Large"
                                    Class=@($"avatar-spacing clean-avatar {(task.IsCompleted ? "complete-border" : "incomplete-border")}")
                                    style="position: relative; overflow: hidden;">

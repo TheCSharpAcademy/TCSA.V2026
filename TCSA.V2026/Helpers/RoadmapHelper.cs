@@ -141,12 +141,7 @@ public static class RoadmapHelper
             level = Level.Red;
         }
 
-        int fullStackAreas = 0;
-        if (BlazorRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (AspNetRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (ReactRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (AngularRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (MauiRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        int fullStackAreas = GetFullStackAreasCompleted();
 
         if (level >= Level.Red
             && fullStackAreas >= 1
@@ -851,5 +846,18 @@ public static class RoadmapHelper
 
         result.Tasks = tasks;
         return result;
+    }
+
+    public static int GetFullStackAreasCompleted()
+    {
+        int fullStackCompleted = 0;
+
+        if (mvcProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (reactProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (angularProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (blazorProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (mauiProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+
+        return fullStackCompleted;
     }
 }

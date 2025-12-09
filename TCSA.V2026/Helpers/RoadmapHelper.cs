@@ -827,4 +827,29 @@ public static class RoadmapHelper
 
         return fullStackCompleted;
     }
+
+    public static List<RoadmapTask> GetMissingTasksForNextBelt(Level currentLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
+    {
+        Level nextLevel = currentLevel < Level.Black ? (Level)((int)currentLevel + 1) : Level.Black;
+
+        RoadmapStage? nextStage = nextLevel switch
+        {
+            Level.Green => GetGreenBeltTasks(completedProjects),
+            Level.OliveGreen => GetOliveGreenBeltTasks(currentLevel, completedProjects),
+            Level.Yellow => GetYellowBeltTasks(currentLevel, completedProjects),
+            Level.Orange => GetOrangeBeltTasks(currentLevel, completedProjects),
+            Level.Red => GetRedBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            Level.Purple => GetPurpleBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            Level.Brown => GetBrownBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            Level.Grey => GetGreyBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            Level.Blue => GetBlueBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            Level.Black => GetBlackBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
+            _ => null
+        };
+
+        if (nextStage == null)
+            return new List<RoadmapTask>();
+
+        return nextStage.Tasks.Where(t => !t.IsCompleted).ToList();
+    }
 }

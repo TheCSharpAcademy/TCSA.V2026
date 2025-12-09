@@ -24,6 +24,33 @@
     }
     else
     {
+        if (MissingTasksForNextBelt.Count > 0)
+        {
+            <MudCard Class="mt-2">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">
+                        Tasks to get your next belt
+                    </MudText>
+                    <MudStack Row>
+                        @foreach (var task in MissingTasksForNextBelt)
+                        {
+                            <MudTooltip Text=@($"{task.Tooltip}")>
+                                <MudAvatar Size="Size.Medium"
+                                           Class=@($"avatar-spacing clean-avatar {(task.IsCompleted ? "complete-border" : "incomplete-border")}")
+                                           style="position: relative; overflow: hidden;">
+                                    <MudImage Src=@($"/img/icons/{task.IconUrl}") />
+
+                                    @if (task.IsCompleted)
+                                    {
+                                        <div class="image-overlay"></div>
+                                    }
+                                </MudAvatar>
+                            </MudTooltip>
+                        }
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        }
         if (RoadmapStages != null)
         {
             <MudTimeline TimelinePosition="TimelinePosition.Start">
@@ -57,6 +84,7 @@
     public static List<int> CompletedProjects = new();
 
     public static List<RoadmapStage> RoadmapStages = new();
+    public static List<RoadmapTask> MissingTasksForNextBelt = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,6 +108,7 @@
         IssuesCount = User.Issues != null ? User.Issues.Count(x => x.IsClosed) : 0;
 
         RoadmapStages = RoadmapHelper.GetRoadmap(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
+        MissingTasksForNextBelt = RoadmapHelper.GetMissingTasksForNextBelt(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
 
         LoadTime = DateTime.UtcNow - startTime;
         IsLoading = false;

@@ -217,7 +217,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsArticle = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Read {x.Title} article"
         })
             .ToList();
 
@@ -230,7 +231,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -264,7 +266,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -295,7 +298,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -326,7 +330,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -357,7 +362,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -366,16 +372,19 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 1",
                 IsCompleted = reviewsCount >= 1,
+                Tooltip = "Complete Code Review 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 2",
                 IsCompleted = reviewsCount >= 2,
+                Tooltip = "Complete Code Review 2 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 1",
-                IsCompleted = issuesCount >= 1
+                IsCompleted = issuesCount >= 1,
+                Tooltip = "Complete 1 Community Project Issue"
             }
             });
 
@@ -425,16 +434,19 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 3",
                 IsCompleted = reviewsCount >= 3,
+                Tooltip = "Complete Code Review 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 4",
                 IsCompleted = reviewsCount >= 4,
+                Tooltip = "Complete Code Review 2 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 2",
-                IsCompleted = issuesCount >= 2
+                IsCompleted = issuesCount >= 2,
+                Tooltip = "Complete 1 Community Project Issue"
             }
         });
 
@@ -465,7 +477,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -474,26 +487,31 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 5",
                 IsCompleted = reviewsCount >= 5,
+                Tooltip = "Complete Code Review 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 6",
                 IsCompleted = reviewsCount >= 6,
+                Tooltip = "Complete Code Review 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 7",
                 IsCompleted = reviewsCount >= 7,
+                Tooltip = "Complete Code Review 3 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 3",
-                IsCompleted = issuesCount >= 3
+                IsCompleted = issuesCount >= 3,
+                Tooltip = "Complete Community Project Issue 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 4",
-                IsCompleted = issuesCount >= 4
+                IsCompleted = issuesCount >= 4,
+                Tooltip = "Complete Community Project Issue 2 of 2"
             }
             });
 
@@ -524,7 +542,8 @@ public static class RoadmapHelper
                 Name = x.Title,
                 Slug = x.Slug,
                 IsProject = true,
-                IsCompleted = completedProjects.Contains(x.Id)
+                IsCompleted = completedProjects.Contains(x.Id),
+                Tooltip = $"Complete {x.Title}"
             })
             .ToList();
 
@@ -533,6 +552,7 @@ public static class RoadmapHelper
             IconUrl = FlagshipProject.IconUrl,
             Name = FlagshipProject.Title,
             IsCompleted = false,
+            Tooltip = "Submit a PR with Readme and Systems Design For Flagship Project"
         });
 
         tasks.AddRange(new List<RoadmapTask> {
@@ -540,41 +560,49 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 8",
                 IsCompleted = reviewsCount >= 8,
+                Tooltip = "Complete Code Review 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 9",
                 IsCompleted = reviewsCount >= 9,
+                Tooltip = "Complete Code Review 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 10",
                 IsCompleted = reviewsCount >= 10,
+                Tooltip = "Complete Code Review 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 11",
                 IsCompleted = reviewsCount >= 11,
+                Tooltip = "Complete Code Review 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 12",
                 IsCompleted = reviewsCount >= 12,
+                Tooltip = "Complete Code Review 5 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 5",
                 IsCompleted = issuesCount >= 5,
+                Tooltip = "Complete Community Project Issue 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 6",
                 IsCompleted = issuesCount >= 6,
+                Tooltip = "Complete Community Project Issue 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 7",
                 IsCompleted = issuesCount >= 7,
+                Tooltip = "Complete Community Project Issue 3 of 3"
             },
         });
 
@@ -605,7 +633,8 @@ public static class RoadmapHelper
            Name = x.Title,
            Slug = x.Slug,
            IsProject = true,
-           IsCompleted = completedProjects.Contains(x.Id)
+           IsCompleted = completedProjects.Contains(x.Id),
+           Tooltip = $"Complete {x.Title}"
        })
            .ToList();
 
@@ -614,41 +643,49 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 13",
                 IsCompleted = reviewsCount >= 13,
+                Tooltip = "Complete Code Review 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 14",
                 IsCompleted = reviewsCount >= 14,
+                Tooltip = "Complete Code Review 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 15",
                 IsCompleted = reviewsCount >= 15,
+                Tooltip = "Complete Code Review 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 16",
                 IsCompleted = reviewsCount >= 16,
+                Tooltip = "Complete Code Review 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 17",
                 IsCompleted = reviewsCount >= 17,
+                Tooltip = "Complete Code Review 5 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 8",
                 IsCompleted = issuesCount >= 8,
+                Tooltip = "Complete Community Project Issue 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 9",
                 IsCompleted = issuesCount >= 9,
+                Tooltip = "Complete Community Project Issue 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 10",
                 IsCompleted = issuesCount >= 10,
+                Tooltip = "Complete Community Project Issue 3 of 3"
             },
         });
 
@@ -763,66 +800,79 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 18",
                 IsCompleted = reviewsCount >= 18,
+                Tooltip = "Complete Code Review 1 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 19",
                 IsCompleted = reviewsCount >= 19,
+                Tooltip = "Complete Code Review 2 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 20",
                 IsCompleted = reviewsCount >= 20,
+                Tooltip = "Complete Code Review 3 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 21",
                 IsCompleted = reviewsCount >= 21,
+                Tooltip = "Complete Code Review 4 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 22",
                 IsCompleted = reviewsCount >= 22,
+                Tooltip = "Complete Code Review 5 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 23",
                 IsCompleted = reviewsCount >= 23,
+                Tooltip = "Complete Code Review 6 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 24",
                 IsCompleted = reviewsCount >= 24,
+                Tooltip = "Complete Code Review 7 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 25",
                 IsCompleted = reviewsCount >= 25,
+                Tooltip = "Complete Code Review 8 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 11",
                 IsCompleted = issuesCount >= 11,
+                Tooltip = "Complete Community Project Issue 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 12",
                 IsCompleted = issuesCount >= 12,
+                Tooltip = "Complete Community Project Issue 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 13",
                 IsCompleted = issuesCount >= 13,
+                Tooltip = "Complete Community Project Issue 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 14",
                 IsCompleted = issuesCount >= 14,
+                Tooltip = "Complete Community Project Issue 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 15",
                 IsCompleted = issuesCount >= 15,
+                Tooltip = "Complete Community Project Issue 5 of 5"
             },
         });
 
@@ -831,6 +881,7 @@ public static class RoadmapHelper
             IconUrl = FlagshipProject.IconUrl,
             Name = FlagshipProject.Title,
             IsCompleted = false,
+            Tooltip = "Complete Flagship Project"
         });
 
 

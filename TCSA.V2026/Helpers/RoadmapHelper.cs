@@ -141,7 +141,7 @@ public static class RoadmapHelper
             level = Level.Red;
         }
 
-        int fullStackAreas = GetFullStackAreasCompleted();
+        int fullStackAreas = GetFullStackAreasCompleted(completedProjects);
 
         if (level >= Level.Red
             && fullStackAreas >= 1
@@ -700,7 +700,7 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-black";
 
-        int fullStackCompleted = GetFullStackAreasCompleted();
+        int fullStackCompleted = GetFullStackAreasCompleted(completedProjects);
 
         var tasks = new List<RoadmapTask>();
 
@@ -815,7 +815,7 @@ public static class RoadmapHelper
         return result;
     }
 
-    public static int GetFullStackAreasCompleted()
+    public static int GetFullStackAreasCompleted(List<int> completedProjects)
     {
         int fullStackCompleted = 0;
 

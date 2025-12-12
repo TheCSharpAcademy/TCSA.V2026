@@ -6,7 +6,6 @@ namespace TCSA.V2026.Helpers;
 
 public static class RoadmapHelper
 {
-    private static List<int>? IncompleteTasks = new();
     private static List<Article>? Articles = ArticleHelper.GetArticles();
     private static List<Project>? Projects = ProjectHelper.GetProjects();
     private static Project FlagshipProject = Projects.Single(x => x.Id == 139);
@@ -238,16 +237,6 @@ public static class RoadmapHelper
 
         tasks.AddRange(greenBeltProjectTasks);
 
-        if (tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = greenBeltProjectTasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
-
         result.Tasks = tasks;
 
         return result;
@@ -271,16 +260,6 @@ public static class RoadmapHelper
         })
             .ToList();
 
-        if (userLevel > Level.White && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
-
         result.Tasks = tasks;
         return result;
     }
@@ -303,16 +282,6 @@ public static class RoadmapHelper
         })
             .ToList();
 
-        if (userLevel > Level.Green && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
-
         result.Tasks = tasks;
         return result;
     }
@@ -334,16 +303,6 @@ public static class RoadmapHelper
             Tooltip = $"Complete {x.Title}"
         })
             .ToList();
-
-        if (userLevel > Level.OliveGreen && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -388,16 +347,6 @@ public static class RoadmapHelper
             }
         });
 
-        if (userLevel > Level.Yellow && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
-
         result.Tasks = tasks;
         return result;
     }
@@ -441,16 +390,6 @@ public static class RoadmapHelper
                 Tooltip = "Complete 1 Community Project Issue"
             }
         });
-
-        if (userLevel > Level.Orange && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -506,16 +445,6 @@ public static class RoadmapHelper
                 Tooltip = "Complete Community Project Issue 2 of 2"
             }
         });
-
-        if (userLevel > Level.Red && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -598,16 +527,6 @@ public static class RoadmapHelper
             },
         });
 
-        if (userLevel > Level.Purple && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
-
         result.Tasks = tasks;
         return result;
     }
@@ -680,17 +599,6 @@ public static class RoadmapHelper
                 Tooltip = "Complete Community Project Issue 3 of 3"
             },
         });
-
-
-        if (userLevel > Level.Brown && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -799,17 +707,6 @@ public static class RoadmapHelper
             IsCompleted = false,
             Tooltip = "Complete Flagship Project"
         });
-
-
-        if (userLevel > Level.Grey && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;

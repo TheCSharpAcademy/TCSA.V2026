@@ -526,4 +526,23 @@ public class BeltTests
         ), 15, 25);
         Assert.That(result, Is.EqualTo("Black"));
     }
+
+    [TestCaseSource(nameof(FullStackAreaTestCases))]
+    public void GetFullStackAreasCompletedReturnsExpectedCount(List<int> completedProjects, int expectedCount)
+    {
+        var result = RoadmapHelper.GetFullStackAreasCompleted(completedProjects);
+        Assert.That(result, Is.EqualTo(expectedCount));
+    }
+
+    private static IEnumerable<TestCaseData> FullStackAreaTestCases()
+    {
+        yield return new TestCaseData(AspNetRequirements.ToList(), 1).SetName("MVC only");
+        yield return new TestCaseData(ReactRequirements.ToList(), 1).SetName("React only");
+        yield return new TestCaseData(AngularRequirements.ToList(), 1).SetName("Angular only");
+        yield return new TestCaseData(BlazorRequirements.ToList(), 1).SetName("Blazor only");
+        yield return new TestCaseData(MauiRequirements.ToList(), 1).SetName("MAUI only");
+        yield return new TestCaseData(
+            new List<int>([.. AspNetRequirements, .. ReactRequirements]), 2).SetName("MVC and React");
+        yield return new TestCaseData(new List<int>(), 0).SetName("None completed");
+    }
 }

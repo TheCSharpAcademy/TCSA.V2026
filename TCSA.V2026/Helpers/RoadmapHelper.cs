@@ -186,9 +186,9 @@ public static class RoadmapHelper
         return level.ToString();
     }
 
-    public static List<RoadmapStage> GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapResult GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
-        return new List<RoadmapStage>
+        var stages = new List<RoadmapStage>
         {
             GetGreenBeltTasks(completedProjects),
             GetOliveGreenBeltTasks(level, completedProjects),
@@ -200,6 +200,32 @@ public static class RoadmapHelper
             GetGreyBeltTasks(level, completedProjects, reviewsCount, issuesCount),
             GetBlueBeltTasks(level, completedProjects, reviewsCount, issuesCount),
             GetBlackBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+        };
+
+        Level nextLevel = level < Level.Black ? level + 1 : Level.Black;
+        RoadmapStage? nextStage = nextLevel switch
+        {
+            Level.Green => stages[0],
+            Level.OliveGreen => stages[1],
+            Level.Yellow => stages[2],
+            Level.Orange => stages[3],
+            Level.Red => stages[4],
+            Level.Purple => stages[5],
+            Level.Brown => stages[6],
+            Level.Grey => stages[7],
+            Level.Blue => stages[8],
+            Level.Black => stages[9],
+            _ => null
+        };
+
+        var missingTasks = nextStage?.Tasks
+            .Where(x => !x.IsCompleted)
+            .ToList() ?? new List<RoadmapTask>();
+
+        return new RoadmapResult
+        {
+            Stages = stages,
+            MissingTasksForNextBelt = missingTasks
         };
     }
     public static RoadmapStage GetGreenBeltTasks(List<int> completedProjects)
@@ -723,30 +749,5 @@ public static class RoadmapHelper
         if (mauiProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
 
         return fullStackCompleted;
-    }
-
-    public static List<RoadmapTask> GetMissingTasksForNextBelt(Level currentLevel, List<int> completedProjects, int reviewsCount, int issuesCount)
-    {
-        Level nextLevel = currentLevel < Level.Black ? (Level)((int)currentLevel + 1) : Level.Black;
-
-        RoadmapStage? nextStage = nextLevel switch
-        {
-            Level.Green => GetGreenBeltTasks(completedProjects),
-            Level.OliveGreen => GetOliveGreenBeltTasks(currentLevel, completedProjects),
-            Level.Yellow => GetYellowBeltTasks(currentLevel, completedProjects),
-            Level.Orange => GetOrangeBeltTasks(currentLevel, completedProjects),
-            Level.Red => GetRedBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            Level.Purple => GetPurpleBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            Level.Brown => GetBrownBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            Level.Grey => GetGreyBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            Level.Blue => GetBlueBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            Level.Black => GetBlackBeltTasks(currentLevel, completedProjects, reviewsCount, issuesCount),
-            _ => null
-        };
-
-        if (nextStage == null)
-            return new List<RoadmapTask>();
-
-        return nextStage.Tasks.Where(t => !t.IsCompleted).ToList();
     }
 }

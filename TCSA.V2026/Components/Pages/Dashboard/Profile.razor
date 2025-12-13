@@ -92,7 +92,7 @@
 
         if (result.Status == ResponseStatus.Success)
         {
-            SnackbarService.Add("Profile Update Successfuly", Severity.Success);
+            SnackbarService.Add("Profile Updated Successfully", Severity.Success);
             User = await UserService.GetUserById(UserId);
         }
         else
@@ -114,7 +114,7 @@
 
             if (apiResult.Status == ResponseStatus.Success)
             {
-                SnackbarService.Add("Account Deleted Successfuly", Severity.Success);
+                SnackbarService.Add("Account Deleted Successfully", Severity.Success);
                 User = await UserService.GetUserById(UserId);
             }
             else

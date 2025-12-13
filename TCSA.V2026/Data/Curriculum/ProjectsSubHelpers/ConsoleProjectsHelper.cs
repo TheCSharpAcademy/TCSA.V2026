@@ -1,5 +1,6 @@
 ﻿using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.LanguageModels;
+using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.Data.Helpers.ProjectsSubHelpers;
 
@@ -225,15 +226,15 @@ public class ConsoleProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="This is a very simple app that will teach you how to perform <a href='https://en.wikipedia.org/wiki/Create,_read,_update_and_delete'>CRUD operations</a> against a real database. These operations are the base of web-development and you’ll be using them throughout your career in any most applications. We think it’s very important to do it from the start of your journey, since everything that will happen from here is just adding complexity to CRUD operations. No matter how complex and fancy the app you’re building is, in the end it all comes down to executing CRUD calls to a database."
+                        Body="It's time to learn how to integrate C# code with a database! In this very simple task you'll build a very simple app that will teach you how to perform <a target='_blank' href='https://en.wikipedia.org/wiki/Create,_read,_update_and_delete'>CRUD operations</a> against a real database. These operations are the base of web-development and you’ll be using them throughout your career in most applications. For this reason, we think it’s very important to do it from the start of your journey." 
                     },
                     new Paragraph
                     {
-                        Body="For that you’ll have to learn very simple <a href='https://en.wikipedia.org/wiki/SQL'>SQL commands</a>. I know it sounds scary, but you’ll be amazed about how little SQL knowledge you need to build a full-stack app. Don’t worry, we will take you by the hand and by the end you’ll have completed your first fully functioning CRUD app. The most common ways of calling a SQL database with C# are through <a href='https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/'>ADO.NET</a>, Dapper and Entity Framework. We will start by using ADO.NET, because it’s the closest to raw SQL."
+                        Body="For that you’ll have to learn very simple <a target='_blank' href='https://en.wikipedia.org/wiki/SQL'>SQL commands</a>. I know it sounds scary, but you’ll be amazed about how little SQL knowledge you need to build a full-stack app. Don’t worry, we will take you by the hand and by the end you’ll have completed your first fully functioning CRUD app. The most common ways of calling a SQL database with C# are through <a target='_blank' href='https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/'>ADO.NET</a>, Dapper and Entity Framework. We will start by using ADO.NET, because it’s the closest to raw SQL."
                     },
                     new Paragraph
                     {
-                        Body="If you think this project is too hard for you and you have no idea where to even start, you’re probably right. You might need an extra hand to build a real application on your own. If that’s the case, <a href='https://youtu.be/d1JIJdDVFjs'>watch the video tutorial for this project</a> and then come back and try it again on your own. It’s perfectly ok to feel lost, since most beginner courses don’t actually teach you how to build something. "
+                        Body="If you think this project is too hard for you and you have no idea where to even start, you’re probably right. You might need an extra hand to build a real application on your own. If that’s the case, <a target='_blank' href='https://youtu.be/d1JIJdDVFjs'>watch the video tutorial for this project</a> and then come back and try it again on your own. It’s perfectly ok to feel lost, since most beginner courses don’t actually teach you how to build something. "
                     },
                     new Paragraph
                     {
@@ -252,27 +253,26 @@ public class ConsoleProjectsHelper
                     "You should handle all possible errors so that the application never crashes.",
                     "You can only interact with the database using ADO.NET. You can’t use mappers such as Entity Framework or Dapper.",
                     "Follow the <a href='/article/30006/dry-principle-csharp' target='_blank'>DRY Principle</a>, and avoid code repetition.",
-                    "Your project needs to contain a Read Me file where you'll explain how your app works. Here's a nice example:"
+                    "Your project needs to contain a Read Me file where you'll explain how your app works and tell a little bit about your thought progress. What was hard? What was easy? What have you learned? Here's a nice example:"
                 },
-                RequirementsConclusion = "<a href='https://github.com/thags/ConsoleTimeLogger'>Github project with an example of a tidy Read Me file.</a><br>Don't panic! I'll help! 😁",
+                RequirementsConclusion = "<a target='_blank' href='https://github.com/thags/ConsoleTimeLogger'>Github project with an example of a tidy Read Me file.</a>",
 
                 Tips = new List<string>
                 {
-                    "Read <a href='https://www.bytehide.com/blog/kiss-principle-csharp' target='_blank'>this article about the KISS principle</a> and try to apply it to this project.",
+                    "Read <a target='_blank' href='https://www.bytehide.com/blog/kiss-principle-csharp' target='_blank'>this article about the KISS principle</a> and try to apply it to this project.",
                     "Test your SQL commands on DB Browser before using them in your program.",
                     "To improve the user's experience, when asking for a date input, give the option to type a simple command to add today's date",
                     "You can keep all of the code in one single class if you wish. We'll deal with Object Oriented Programming in the next project",
-                    "Use a switch statement for the user input menus.",
                     "Don't forget the user input's validation: Check for incorrect dates. What happens if a menu option is chosen that's not available? What happens if the users input a string instead of a number?"
                 },
                  Challenges = new List<string>
                 {
-                    "If you haven't, <a href='https://reintech.io/blog/mastering-parameterized-queries-ado-net' target='_blank'>try using parameterized queries</a> to make your application more secure.",
-                    "Let the users create their own habits to track. That will require that you let them choose the unit of measurement of each habit.",
+                    "If you already have a bit of experience with programming, we highly recommend you get into the habit of <b>writing unit tests</b> for a few methods in your project. Any method that outputs data and doesn't talk to a database (those are tested in <b>integration tests</b>) can be unit tested. A good example is any method that deals with validation. <a href='/article/30009/unit-testing-for-beginners' target='_blank'>Here's a quick tutorial.</a> ",
+                    "If you haven't, <a target='_blank' href='https://reintech.io/blog/mastering-parameterized-queries-ado-net' target='_blank'>try using parameterized queries</a> to make your application more secure.",
+                    "Let the users create their own habits to track. That will require that you let them choose the unit of measurement of each habit. Hot tip: <b>You should not create a table for each habit</b>.",
                     "Seed Data into the database automatically when the database gets created for the first time, generating a few habits and inserting a hundred records with randomly generated values. This is specially helpful during development so you don't have to reinsert data every time you create the database. ",
-                    "Create a report functionality where the users can view specific information (i.e. how many times the user ran in a year? how many kms?) SQL allows you to ask very interesting things from your database.",
                 },
-                 Blocks = new List<Block>
+                Blocks = new List<Block>
                 {
                     new Block
                     {
@@ -319,35 +319,6 @@ public class ConsoleProjectsHelper
                     },
                     new Block
                     {
-                        Title = "Start Coding!",
-                        ImgUrl = "icons8-coding-64.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "Every time you start your app, it should check if there’s a database. If there isn’t, it will create one along with a table where you’ll store your data. If you delete your database externally, it will always create one. If the database exists, it will move to the next step: take the user input about what you want to do. Something like this:"
-                            },
-                            new Paragraph
-                            {
-                                IsPicture = true,
-                                PictureUrl = "habit-menu.png"
-                            },
-                            new Paragraph
-                            {
-                                Body = "In ASP.NET C# development, the use of SQL Server is very common. But we won’t be using it here. SQLite is a super lightweight database system and it’s important to get familiar with it before jumping into SQL server."
-                            },
-                            new Paragraph
-                            {
-                                Body = "You’ll need to tell your program to create a sqlite file. You’ll be able to visualise that file externally with the help of a small application. <a href='https://www.youtube.com/watch?v=HQKwgk6XkIA'>Here's a link to a basic sqlite tutorial</a>."
-                            },
-                            new Paragraph
-                            {
-                                Body = $"That’s where your actual code begins! You’re on your own for a while. If you get stuck, keep trying, <a href='article/6/getting-help' target='blank'>remember the steps to debug your app/get unstuck</a>. And if you ultimately can’t do it, reach out to our <a href='{DiscordLink}'>Discord Community</a> or myself and we will help!"
-                            },
-                        }
-                    },
-                    new Block
-                    {
                         Title = "Video Tutorial",
                         ImgUrl = "external-video-tutorial-online-learning-photo3ideastudio-flat-photo3ideastudio-300x300.png",
                         Paragraphs = new List<Paragraph>
@@ -361,18 +332,6 @@ public class ConsoleProjectsHelper
                                 IsVideo = true,
                                 VideoUrl = "https://www.youtube.com/embed/d1JIJdDVFjs"
                             },
-                        }
-                    },
-                    new Block
-                    {
-                        Title = "Code Review",
-                        ImgUrl= "icons8-code-review-64.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "If you want your code to be reviewed by a member of the C# Academy, instead of creating your own repository, <a href='article/52/code-reviews'>follow this article</a>, where you’ll learn how to create a fork from our base review repository."
-                            }
                         }
                     }
                 }

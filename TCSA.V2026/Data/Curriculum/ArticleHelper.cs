@@ -2948,6 +2948,115 @@ git push</code>"
                     }
                 }
             },
+            new Article
+            {
+                Id = 30009,
+                Title = "Unit Testing",
+                IconUrl = "",
+                Slug="unit-testing-for-beginners",
+                BannerUrl = "",
+                CardImgUrl = "open-source.jpg",
+                Description = "Learn how to make your projects more reliable and bug-free.",
+                ExperiencePoints = 1,
+                Area = Area.StandAlone,
+                Blocks = new List<Block>
+                {
+                    new Block
+                    {
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "Testing is one of those things every developer knows they should be writing, but somehow they keep getting pushed to “later”: right after that feature, that deadline, or that refactor. In this article, we’ll have a look at some principles of unit testing. At the end you'll find a quick Youtube tutorial to get you started in practice. You’ll see how unit tests give you confidence to <b>change your code without fear</b>, catch bugs early, and stop relying on “let me just run it and click around” as your main testing strategy. By the end, you won’t just know what unit tests are, you’ll actually feel comfortable writing them in your own projects."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Types of Testing",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "When people talk about automated tests, they usually mean one of three types: <b>Unit tests</b> focus on a tiny piece of code in isolation and are great for checking small pieces of logic. <b>Integration tests</b> check how different parts of the system work together, such as your code plus a database or an external service. <b>End to end</b> tests simulate a real user clicking through the application, making sure the whole stack behaves correctly from the UI down to the database."
+                            },
+                            new Paragraph
+                            {
+                                Body = "If you're new to testing, we don't think it's a good idea to learn all of these at the same time. For that reason, this article will focus on unit tests only. We highly recommend you understand and apply what you learn here in your projects before jumping onto integration testing. Those can be significantly harder to set up. We don't want to scare you away from testing. You need to ease into it. "
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "What should you test?",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "A simple rule of thumb is to test the parts of your code that contain decisions, calculations, and rules, because that is where bugs like to hide. <b>Focus on your core business logic</b>, such as pricing, validation, permissions, and anything that transforms input into output. Make sure you cover edge cases as well, like empty collections, null values, invalid data, and unusual combinations of inputs. You can usually skip tests for trivial code that only passes data through or for framework features that are already well tested. The goal is not to test every single line, but to test the pieces that would hurt the most if they broke."
+                            },
+                            new Paragraph
+                            {
+                                Body = "When maintaining an app, you'll eventually come across bugs and scenarios that demand complex logic dependant on multiple variables. Those are very good for informing what you should test. It's impossible to know every scenario that needs testing during initial development. Real-world usage by real users will ultimately dictate your testing strategy."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Given, When, Then",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "Given When Then is a simple way to name your tests so they <b>tell a clear story</b> about what is happening. <b>Given</b> describes the starting situation of your test, such as the objects you set up. <b>When</b> describes the action you perform, for example calling a method or clicking a button in your system. <b>Then</b> describes what you expect to happen as a result, such as a returned value, a state change, or a thrown exception. When you follow this pattern your tests become easier to read and understand because each one explains the context, the action, and the outcome in a very natural way."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Don't be afraid to be verbose",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "Make your future self and anyone else that will ever read your tests and be verbose when naming them. You might think you are on top of things but you don't want to waste precious time in the future trying to figure out what's going on because you were too lazy to name your methods."
+                            },
+                            new Paragraph
+                            {
+                                Body = "<b>Withdraw_Should_Decrease_Balance</b> is an ok name but I would rather be more specific and detailed: <b>GivenBalanceIsPositive_WhenWithdrawMoneyIsCalled_ThenBalanceDecreases</b>. Unit Testing acts as an important piece of documentation for your code. Name your methods with that in mind."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Arrange, Act, Assert",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body = "In line with Given, When, Then there's a famous acronym in the testing world: Arrange, Act, Assert. In the <b>Arrange step</b> you set up the objects data and state your test needs. Sometimes the this step or part of it will happen outside of the testing method, in a setup method or class that can be shared across tests. In the <b>Act step</b> you perform a single action usually by calling the method under test. In the <b>Assert step</b> you check that the result is what you expected whether that is a return value a change in state or a thrown exception. Keeping these three phases separate makes your tests easier to read reason about and maintain because anyone can see at a glance what the setup is what you are doing and what you expect to happen. A simple example:"
+                            },
+                            new Paragraph
+                            {
+                                IsCode = true,
+                                Body = "public class CalculatorTests\r\n{\r\n    [Fact]\r\n    public void Add_ShouldReturnSumOfTwoNumbers()\r\n    {\r\n        // Arrange\r\n        var calculator = new Calculator();\r\n        var a = 5;\r\n        var b = 7;\r\n\r\n        // Act\r\n        var result = calculator.Add(a, b);\r\n\r\n        // Assert\r\n        Assert.Equal(12, result);\r\n    }\r\n}\r\n"
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Video Tutorial",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                IsVideo = true,
+                                VideoUrl = "https://www.youtube.com/embed/hw1DDiwnH6w"
+                            }
+                        }
+                    }
+                }
+            },
         };
     }
 }

@@ -21,7 +21,7 @@
     <PackageReference Include="Extensions.MudBlazor.StaticInput" Version="3.*" />
     <PackageReference Include="NetCord" Version="1.0.0-alpha.410" />
     <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.410" />
-	  <PackageReference Include="SendGrid" Version="9.29.3" />
+	<PackageReference Include="SendGrid" Version="9.29.3" />
   </ItemGroup>
 
 

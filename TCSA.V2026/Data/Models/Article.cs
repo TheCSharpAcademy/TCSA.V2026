@@ -184,5 +184,8 @@ public enum ArticleReference
     CodeConventions = 58,
     IntroGuide = 20000,
     SeparationOfConcerns = 30005,
-
+    DryPrinciple = 30006,
+    DotnetNames = 30007,
+    ContributingToAcademy = 30008,
+    UnitTesting = 30009
 }

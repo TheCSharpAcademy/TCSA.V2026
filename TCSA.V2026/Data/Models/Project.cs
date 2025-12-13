@@ -1,4 +1,5 @@
 ﻿using TCSA.V2026.Data.Models.LanguageModels;
+using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.Data.Models;
 
@@ -23,11 +24,4 @@ public class Project : Article
     public ILanguageHeadings LanguageHeadings { get; set; }
     public string? RepositoryLink { get; set; }
     public ICollection<ShowcaseItem> ShowcaseItems { get; set; } = [];
-}
-
-public enum Difficulty
-{
-    Beginner,
-    Intermediate,
-    Advanced
 }

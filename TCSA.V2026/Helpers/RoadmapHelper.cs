@@ -1,4 +1,4 @@
-﻿using TCSA.V2026.Data.Curriculum;
+using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Models;
 
@@ -6,182 +6,113 @@ namespace TCSA.V2026.Helpers;
 
 public static class RoadmapHelper
 {
-    private static List<int>? IncompleteTasks = new();
     private static List<Article>? Articles = ArticleHelper.GetArticles();
     private static List<Project>? Projects = ProjectHelper.GetProjects();
     private static Project FlagshipProject = Projects.Single(x => x.Id == 139);
 
     #region projectRequirements
     public static readonly int[] GreenRequirements = {
-        (int) ArticleName.StartHere,  
-        (int) ArticleName.GettingHelp, 
-        (int) ArticleName.SettingUp, 
+        (int) ArticleName.StartHere,
+        (int) ArticleName.GettingHelp,
+        (int) ArticleName.SettingUp,
         (int) ArticleName.Foundations,
-        (int) ArticleName.FreecodeCamp, 
+        (int) ArticleName.FreecodeCamp,
         (int) ArticleName.MathGame
     };
 
     public static readonly int[] OliveGreenRequirements = {
-        (int) ArticleName.Calculator, 
-        (int) ArticleName.HabitLogger, 
+        (int) ArticleName.Calculator,
+        (int) ArticleName.HabitLogger,
         (int) ArticleName.CodingTracker
     };
 
     public static readonly int[] YellowRequirements = {
-        (int) ArticleName.Flashcards, 
-        (int) ArticleName.Drinks, 
-        (int) ArticleName.PhoneBook, 
+        (int) ArticleName.Flashcards,
+        (int) ArticleName.Drinks,
+        (int) ArticleName.PhoneBook,
         (int) ArticleName.ShiftsLogger
     };
 
     public static readonly int[] OrangeRequirements = {
-       (int) ArticleName.Ecommerce, 
-       (int) ArticleName.SportsResults, 
-       (int) ArticleName.ExcelReader, 
+       (int) ArticleName.Ecommerce,
+       (int) ArticleName.SportsResults,
+       (int) ArticleName.ExcelReader,
        (int) ArticleName.UnitTesting
     };
 
     public static readonly int[] RedRequirements = {
-        (int) ArticleName.Portfolio, 
+        (int) ArticleName.Portfolio,
         (int) ArticleName.Resume,
     };
 
-    public static readonly int[] GreyAndBlackRequirements = { 
-        (int)ArticleName.Flagship, 
+    public static readonly int[] GreyAndBlackRequirements = {
+        (int)ArticleName.Flagship,
     };
 
     public static readonly int[] AspNetRequirements = {
-        (int) ArticleName.WaterLogger, 
-        (int) ArticleName.Movies, 
-        (int) ArticleName.TodoList, 
+        (int) ArticleName.WaterLogger,
+        (int) ArticleName.Movies,
+        (int) ArticleName.TodoList,
         (int) ArticleName.Budget,
     };
 
     public static readonly int[] AngularRequirements = {
-        (int) ArticleName.TourOfHeroes, 
-        (int) ArticleName.CoffeeTracker, 
-        (int) ArticleName.SleepTracker, 
+        (int) ArticleName.TourOfHeroes,
+        (int) ArticleName.CoffeeTracker,
+        (int) ArticleName.SleepTracker,
         (int) ArticleName.Quizgame
     };
 
-    public static readonly int[] ReactRequirements = { 
-        (int)ArticleName.TicTacToe, 
-        (int)ArticleName.ExternalApi, 
-        (int)ArticleName.ShoppingList, 
+    public static readonly int[] ReactRequirements = {
+        (int)ArticleName.TicTacToe,
+        (int)ArticleName.ExternalApi,
+        (int)ArticleName.ShoppingList,
         (int)ArticleName.FriendsManager
     };
 
     public static readonly int[] BlazorRequirements = {
-        (int) ArticleName.WardrobeInventory, 
-        (int) ArticleName.MemoryGame, 
-        (int) ArticleName.FoodJournal, 
+        (int) ArticleName.WardrobeInventory,
+        (int) ArticleName.MemoryGame,
+        (int) ArticleName.FoodJournal,
         (int) ArticleName.SportsStatistics
     };
 
     public static readonly int[] MauiRequirements = {
-        (int) ArticleName.MauiMath, 
-        (int) ArticleName.Books, 
-        (int) ArticleName.Monkeys, 
+        (int) ArticleName.MauiMath,
+        (int) ArticleName.Books,
+        (int) ArticleName.Monkeys,
         (int) ArticleName.Warehouse
     };
 
     public static readonly int[] AuthRequirements = {
-        (int) ArticleName.Auth, 
-        (int) ArticleName.ProductManagement, 
+        (int) ArticleName.Auth,
+        (int) ArticleName.ProductManagement,
         (int) ArticleName.ExternalAuth,
     };
 
     public static readonly int[] SqlRequirements = {
-        (int) ArticleName.Sql1, 
-        (int) ArticleName.Sql2, 
+        (int) ArticleName.Sql1,
+        (int) ArticleName.Sql2,
         (int) ArticleName.Sql3
     };
 
     public static readonly int[] AzureRequirements = {
-        (int) ArticleName.DeploySimpleApp, 
-        (int) ArticleName.DeployFullStack, 
-        (int) ArticleName.DeployFramework, 
+        (int) ArticleName.DeploySimpleApp,
+        (int) ArticleName.DeployFullStack,
+        (int) ArticleName.DeployFramework,
     };
 
-    public static readonly int[][] FullStackAreas = { 
-        AspNetRequirements, 
-        AngularRequirements, 
-        ReactRequirements, 
-        BlazorRequirements, MauiRequirements 
+    public static readonly int[][] FullStackAreas = {
+        AspNetRequirements,
+        AngularRequirements,
+        ReactRequirements,
+        BlazorRequirements, MauiRequirements
     };
 
-    public static readonly int[][] AspNetAreas = { 
-        AspNetRequirements, 
-        BlazorRequirements, 
-        MauiRequirements 
-    };
-    #endregion
-
-    #region descriptions
-    public static readonly List<string> GreenBeltReqs = new()
-    {
-        "Read the 5 Articles below",
-        "Complete Freecodecamp C# Certification",
-        "Complete Math Game project"
-    };
-    public static readonly List<string> OliveGreenBeltReqs = new()
-    {
-        "Complete Calculator project",
-        "Complete Habit Logger project",
-        "Complete Coding Tracker project"
-    };
-    public static readonly List<string> YellowBeltReqs = new()
-    {
-        "Complete Flashcards project",
-        "Complete Drinks Info project",
-        "Complete Phone Book project",
-        "Complete Shifts Logger project"
-    };
-    public static readonly List<string> OrangeBeltReqs = new()
-    {
-        "Complete Exercise Tracker project",
-        "Complete Sports Results notifier project",
-        "Complete Excel Reader project",
-        "Complete Unit Testing project"
-    };
-    public static readonly List<string> RedBeltReqs = new()
-    {
-        "Complete Portfolio project",
-        "Complete Resume project",
-        "Complete 2 Code Reviews",
-        "Complete 1 Community Project Issue"
-    };
-    public static readonly List<string> PurpleBeltReqs = new()
-    {
-        "Complete 1 Full-stack area",
-        "Complete 2 Code Reviews",
-        "Complete 1 Community Project Issue"
-    };
-    public static readonly List<string> BrownBeltReqs = new()
-    {
-        "Complete Auth Area",
-        "Complete 3 Code Reviews",
-        "Complete 2 Community Project Issues"
-    };
-    public static readonly List<string> GreyBeltReqs = new()
-    {
-        "Complete SQL Challenges",
-        "Complete 5 Code Reviews",
-        "Complete 3 Community Project Issues",
-        "Submit a PR with Readme and Systems Design For Flagship Project"
-    };
-    public static readonly List<string> BlueBeltReqs = new()
-    {
-        "Complete Azure Area",
-        "Complete 5 Code Reviews",
-        "Complete 3 Community Project Issues"
-    };
-    public static readonly List<string> BlackBeltReqs = new()
-    {
-        "Complete at least 2 full-stack areas. One of them has to be MVC, Blazor or Maui",
-        "Complete 8 Code Reviews",
-        "Complete 5 Community Project Issues",
-        "Complete Flagship Project"
+    public static readonly int[][] AspNetAreas = {
+        AspNetRequirements,
+        BlazorRequirements,
+        MauiRequirements
     };
     #endregion
 
@@ -201,7 +132,7 @@ public static class RoadmapHelper
         level = (level >= Level.OliveGreen && YellowRequirements.All(completedProjects.Contains)) ? Level.Yellow : level;
         level = (level >= Level.Yellow && OrangeRequirements.All(completedProjects.Contains)) ? Level.Orange : level;
 
-        if (level >= Level.Orange 
+        if (level >= Level.Orange
             && RedRequirements.All(completedProjects.Contains)
             && issues >= 1
             && reviews >= 2)
@@ -209,12 +140,7 @@ public static class RoadmapHelper
             level = Level.Red;
         }
 
-        int fullStackAreas = 0;
-        if (BlazorRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (AspNetRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (ReactRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (AngularRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
-        if (MauiRequirements.All(completedProjects.Contains)) { fullStackAreas += 1; }
+        int fullStackAreas = GetFullStackAreasCompleted(completedProjects);
 
         if (level >= Level.Red
             && fullStackAreas >= 1
@@ -260,9 +186,9 @@ public static class RoadmapHelper
         return level.ToString();
     }
 
-    public static List<RoadmapStage> GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
+    public static RoadmapResult GetRoadmap(Level level, List<int> completedProjects, int reviewsCount, int issuesCount)
     {
-        return new List<RoadmapStage>
+        var stages = new List<RoadmapStage>
         {
             GetGreenBeltTasks(completedProjects),
             GetOliveGreenBeltTasks(level, completedProjects),
@@ -274,6 +200,32 @@ public static class RoadmapHelper
             GetGreyBeltTasks(level, completedProjects, reviewsCount, issuesCount),
             GetBlueBeltTasks(level, completedProjects, reviewsCount, issuesCount),
             GetBlackBeltTasks(level, completedProjects, reviewsCount, issuesCount),
+        };
+
+        Level nextLevel = level < Level.Black ? level + 1 : Level.Black;
+        RoadmapStage? nextStage = nextLevel switch
+        {
+            Level.Green => stages[0],
+            Level.OliveGreen => stages[1],
+            Level.Yellow => stages[2],
+            Level.Orange => stages[3],
+            Level.Red => stages[4],
+            Level.Purple => stages[5],
+            Level.Brown => stages[6],
+            Level.Grey => stages[7],
+            Level.Blue => stages[8],
+            Level.Black => stages[9],
+            _ => null
+        };
+
+        var missingTasks = nextStage?.Tasks
+            .Where(x => !x.IsCompleted)
+            .ToList() ?? new List<RoadmapTask>();
+
+        return new RoadmapResult
+        {
+            Stages = stages,
+            MissingTasksForNextBelt = missingTasks
         };
     }
     public static RoadmapStage GetGreenBeltTasks(List<int> completedProjects)
@@ -290,7 +242,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsArticle = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Read {x.Title} article"
         })
             .ToList();
 
@@ -303,21 +256,12 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
         tasks.AddRange(greenBeltProjectTasks);
-
-        if (tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = greenBeltProjectTasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
 
@@ -337,19 +281,10 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
-
-        if (userLevel > Level.White && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -368,19 +303,10 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
-
-        if (userLevel > Level.Green && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -399,19 +325,10 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
-
-        if (userLevel > Level.OliveGreen && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -430,7 +347,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -439,28 +357,21 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 1",
                 IsCompleted = reviewsCount >= 1,
+                Tooltip = "Complete Code Review 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 2",
                 IsCompleted = reviewsCount >= 2,
+                Tooltip = "Complete Code Review 2 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 1",
-                IsCompleted = issuesCount >= 1
+                IsCompleted = issuesCount >= 1,
+                Tooltip = "Complete 1 Community Project Issue"
             }
-            });
-
-        if (userLevel > Level.Yellow && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
+        });
 
         result.Tasks = tasks;
         return result;
@@ -470,56 +381,41 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-purple";
 
+        bool isFullStackCompleted =
+            mvcProjects.All(x => completedProjects.Contains(x)) ||
+            reactProjects.All(x => completedProjects.Contains(x)) ||
+            angularProjects.All(x => completedProjects.Contains(x)) ||
+            blazorProjects.All(x => completedProjects.Contains(x));
+
         var tasks = new List<RoadmapTask>();
+
         tasks.AddRange(new List<RoadmapTask> {
-            new RoadmapTask {
-                IconUrl = "mvc.png",
-                Name = "MVC",
-                IsCompleted =  mvcProjects.All(x => completedProjects.Contains(x))
+            new RoadmapTask
+            {
+                IconUrl = "fullstack.png",
+                Name = "Complete any Full-stack Area",
+                IsCompleted = isFullStackCompleted,
+                Tooltip = "Complete all projects in one full-stack area (MVC, React, Angular, Blazor or MAUI)"
             },
-            new RoadmapTask {
-                IconUrl = "icons8-react-100.png",
-                Name = "React",
-                IsCompleted = reactProjects.All(x => completedProjects.Contains(x))
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-angularjs-96.png",
-                Name = "Angular",
-                IsCompleted = angularProjects.All(x => completedProjects.Contains(x))
-            },
-            new RoadmapTask {
-                IconUrl = "blazor.png",
-                Name = "Blazor",
-                IsCompleted = blazorProjects.All(x => completedProjects.Contains(x))
-            },
-        });
-        tasks.AddRange(new List<RoadmapTask> {
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 3",
                 IsCompleted = reviewsCount >= 3,
+                Tooltip = "Complete Code Review 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 4",
                 IsCompleted = reviewsCount >= 4,
+                Tooltip = "Complete Code Review 2 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 2",
-                IsCompleted = issuesCount >= 2
+                IsCompleted = issuesCount >= 2,
+                Tooltip = "Complete 1 Community Project Issue"
             }
         });
-
-        if (userLevel > Level.Orange && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -538,7 +434,8 @@ public static class RoadmapHelper
             Name = x.Title,
             Slug = x.Slug,
             IsProject = true,
-            IsCompleted = completedProjects.Contains(x.Id)
+            IsCompleted = completedProjects.Contains(x.Id),
+            Tooltip = $"Complete {x.Title}"
         })
             .ToList();
 
@@ -547,38 +444,33 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 5",
                 IsCompleted = reviewsCount >= 5,
+                Tooltip = "Complete Code Review 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 6",
                 IsCompleted = reviewsCount >= 6,
+                Tooltip = "Complete Code Review 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 7",
                 IsCompleted = reviewsCount >= 7,
+                Tooltip = "Complete Code Review 3 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 3",
-                IsCompleted = issuesCount >= 3
+                IsCompleted = issuesCount >= 3,
+                Tooltip = "Complete Community Project Issue 1 of 2"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 4",
-                IsCompleted = issuesCount >= 4
+                IsCompleted = issuesCount >= 4,
+                Tooltip = "Complete Community Project Issue 2 of 2"
             }
-            });
-
-        if (userLevel > Level.Red && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
+        });
 
         result.Tasks = tasks;
         return result;
@@ -597,7 +489,8 @@ public static class RoadmapHelper
                 Name = x.Title,
                 Slug = x.Slug,
                 IsProject = true,
-                IsCompleted = completedProjects.Contains(x.Id)
+                IsCompleted = completedProjects.Contains(x.Id),
+                Tooltip = $"Complete {x.Title}"
             })
             .ToList();
 
@@ -606,6 +499,7 @@ public static class RoadmapHelper
             IconUrl = FlagshipProject.IconUrl,
             Name = FlagshipProject.Title,
             IsCompleted = false,
+            Tooltip = "Submit a PR with Readme and Systems Design For Flagship Project"
         });
 
         tasks.AddRange(new List<RoadmapTask> {
@@ -613,53 +507,51 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 8",
                 IsCompleted = reviewsCount >= 8,
+                Tooltip = "Complete Code Review 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 9",
                 IsCompleted = reviewsCount >= 9,
+                Tooltip = "Complete Code Review 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 10",
                 IsCompleted = reviewsCount >= 10,
+                Tooltip = "Complete Code Review 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 11",
                 IsCompleted = reviewsCount >= 11,
+                Tooltip = "Complete Code Review 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 12",
                 IsCompleted = reviewsCount >= 12,
+                Tooltip = "Complete Code Review 5 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 5",
                 IsCompleted = issuesCount >= 5,
+                Tooltip = "Complete Community Project Issue 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 6",
                 IsCompleted = issuesCount >= 6,
+                Tooltip = "Complete Community Project Issue 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 7",
                 IsCompleted = issuesCount >= 7,
+                Tooltip = "Complete Community Project Issue 3 of 3"
             },
         });
-
-        if (userLevel > Level.Purple && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -678,7 +570,8 @@ public static class RoadmapHelper
            Name = x.Title,
            Slug = x.Slug,
            IsProject = true,
-           IsCompleted = completedProjects.Contains(x.Id)
+           IsCompleted = completedProjects.Contains(x.Id),
+           Tooltip = $"Complete {x.Title}"
        })
            .ToList();
 
@@ -687,54 +580,51 @@ public static class RoadmapHelper
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 13",
                 IsCompleted = reviewsCount >= 13,
+                Tooltip = "Complete Code Review 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 14",
                 IsCompleted = reviewsCount >= 14,
+                Tooltip = "Complete Code Review 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 15",
                 IsCompleted = reviewsCount >= 15,
+                Tooltip = "Complete Code Review 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 16",
                 IsCompleted = reviewsCount >= 16,
+                Tooltip = "Complete Code Review 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 17",
                 IsCompleted = reviewsCount >= 17,
+                Tooltip = "Complete Code Review 5 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 8",
                 IsCompleted = issuesCount >= 8,
+                Tooltip = "Complete Community Project Issue 1 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 9",
                 IsCompleted = issuesCount >= 9,
+                Tooltip = "Complete Community Project Issue 2 of 3"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 10",
                 IsCompleted = issuesCount >= 10,
+                Tooltip = "Complete Community Project Issue 3 of 3"
             },
         });
-
-
-        if (userLevel > Level.Brown && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
@@ -744,158 +634,95 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-black";
 
+        int fullStackCompleted = GetFullStackAreasCompleted(completedProjects);
+
         var tasks = new List<RoadmapTask>();
 
         tasks.AddRange(new List<RoadmapTask> {
-            new RoadmapTask {
-                IconUrl = "maui.png",
-                Name = "MAUI",
-                IsCompleted = mauiProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.MAUI)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "mvc.png",
-                Name = "MVC",
-                IsCompleted =  mvcProjects.All(x => completedProjects.Contains(x)),
-                Subtasks = Projects
-                .Where(x => x.Area == Area.MVC)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-react-100.png",
-                Name = "React",
-                IsCompleted = reactProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.React)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "icons8-angularjs-96.png",
-                Name = "Angular",
-                IsCompleted = angularProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.Angular)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
-            },
-            new RoadmapTask {
-                IconUrl = "blazor.png",
-                Name = "Blazor",
-                IsCompleted = blazorProjects.All(x => completedProjects.Contains(x)),
-                 Subtasks = Projects
-                .Where(x => x.Area == Area.Blazor)
-                .Select(x => new RoadmapTask
-                    {
-                        Id = x.Id,
-                        IconUrl = x.IconUrl,
-                        Name = x.Title,
-                        Slug = x.Slug,
-                        IsProject = true,
-                        IsCompleted = completedProjects.Contains(x.Id)
-                    })
-                    .ToList()
+            new RoadmapTask
+            {
+                IconUrl = "fullstack2.png",
+                Name = "Complete any 2 Full-stack Areas",
+                IsCompleted = fullStackCompleted >= 2,
+                Tooltip = "Complete all projects in two full-stack areas (MVC, React, Angular, Blazor or MAUI)"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 18",
                 IsCompleted = reviewsCount >= 18,
+                Tooltip = "Complete Code Review 1 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 19",
                 IsCompleted = reviewsCount >= 19,
+                Tooltip = "Complete Code Review 2 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 20",
                 IsCompleted = reviewsCount >= 20,
+                Tooltip = "Complete Code Review 3 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 21",
                 IsCompleted = reviewsCount >= 21,
+                Tooltip = "Complete Code Review 4 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 22",
                 IsCompleted = reviewsCount >= 22,
+                Tooltip = "Complete Code Review 5 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 23",
                 IsCompleted = reviewsCount >= 23,
+                Tooltip = "Complete Code Review 6 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 24",
                 IsCompleted = reviewsCount >= 24,
+                Tooltip = "Complete Code Review 7 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-magnifying-glass-64.png",
                 Name = "Code Review 25",
                 IsCompleted = reviewsCount >= 25,
+                Tooltip = "Complete Code Review 8 of 8"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 11",
                 IsCompleted = issuesCount >= 11,
+                Tooltip = "Complete Community Project Issue 1 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 12",
                 IsCompleted = issuesCount >= 12,
+                Tooltip = "Complete Community Project Issue 2 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 13",
                 IsCompleted = issuesCount >= 13,
+                Tooltip = "Complete Community Project Issue 3 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 14",
                 IsCompleted = issuesCount >= 14,
+                Tooltip = "Complete Community Project Issue 4 of 5"
             },
             new RoadmapTask {
                 IconUrl = "icons8-community-96.png",
                 Name = "Community Project Issue 15",
                 IsCompleted = issuesCount >= 15,
+                Tooltip = "Complete Community Project Issue 5 of 5"
             },
         });
 
@@ -904,20 +731,23 @@ public static class RoadmapHelper
             IconUrl = FlagshipProject.IconUrl,
             Name = FlagshipProject.Title,
             IsCompleted = false,
+            Tooltip = "Complete Flagship Project"
         });
-
-
-        if (userLevel > Level.Grey && tasks.Any(x => !x.IsCompleted))
-        {
-            var incompleteTasks = tasks.Where(x => !x.IsCompleted).Select(x => x.Id);
-
-            foreach (var task in incompleteTasks)
-            {
-                IncompleteTasks.Add(task);
-            }
-        }
 
         result.Tasks = tasks;
         return result;
+    }
+
+    public static int GetFullStackAreasCompleted(List<int> completedProjects)
+    {
+        int fullStackCompleted = 0;
+
+        if (mvcProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (reactProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (angularProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (blazorProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (mauiProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+
+        return fullStackCompleted;
     }
 }

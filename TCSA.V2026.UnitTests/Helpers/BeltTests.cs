@@ -10,6 +10,99 @@ namespace TCSA.V2026.UnitTests.Helpers;
 [TestFixture]
 public class BeltTests
 {
+    #region requirements
+    public static readonly int[] GreenRequirements = {
+        (int) ArticleName.StartHere,
+        (int) ArticleName.GettingHelp,
+        (int) ArticleName.SettingUp,
+        (int) ArticleName.Foundations,
+        (int) ArticleName.FreecodeCamp,
+        (int) ArticleName.MathGame
+    };
+
+    public static readonly int[] OliveGreenRequirements = {
+        (int) ArticleName.Calculator,
+        (int) ArticleName.HabitLogger,
+        (int) ArticleName.CodingTracker
+    };
+
+    public static readonly int[] YellowRequirements = {
+        (int) ArticleName.Flashcards,
+        (int) ArticleName.Drinks,
+        (int) ArticleName.PhoneBook,
+        (int) ArticleName.ShiftsLogger
+    };
+
+    public static readonly int[] OrangeRequirements = {
+       (int) ArticleName.Ecommerce,
+       (int) ArticleName.SportsResults,
+       (int) ArticleName.ExcelReader,
+       (int) ArticleName.UnitTesting
+    };
+
+    public static readonly int[] RedRequirements = {
+        (int) ArticleName.Portfolio,
+        (int) ArticleName.Resume,
+    };
+
+    public static readonly int[] GreyAndBlackRequirements = {
+        (int)ArticleName.Flagship,
+    };
+
+    public static readonly int[] AspNetRequirements = {
+        (int) ArticleName.WaterLogger,
+        (int) ArticleName.Movies,
+        (int) ArticleName.TodoList,
+        (int) ArticleName.Budget,
+    };
+
+    public static readonly int[] AngularRequirements = {
+        (int) ArticleName.TourOfHeroes,
+        (int) ArticleName.CoffeeTracker,
+        (int) ArticleName.SleepTracker,
+        (int) ArticleName.Quizgame
+    };
+
+    public static readonly int[] ReactRequirements = {
+        (int)ArticleName.TicTacToe,
+        (int)ArticleName.ExternalApi,
+        (int)ArticleName.ShoppingList,
+        (int)ArticleName.FriendsManager
+    };
+
+    public static readonly int[] BlazorRequirements = {
+        (int) ArticleName.WardrobeInventory,
+        (int) ArticleName.MemoryGame,
+        (int) ArticleName.FoodJournal,
+        (int) ArticleName.SportsStatistics
+    };
+
+    public static readonly int[] MauiRequirements = {
+        (int) ArticleName.MauiMath,
+        (int) ArticleName.Books,
+        (int) ArticleName.Monkeys,
+        (int) ArticleName.Warehouse
+    };
+
+    public static readonly int[] AuthRequirements = {
+        (int) ArticleName.Auth,
+        (int) ArticleName.ProductManagement,
+        (int) ArticleName.ExternalAuth,
+    };
+
+    public static readonly int[] SqlRequirements = {
+        (int) ArticleName.Sql1,
+        (int) ArticleName.Sql2,
+        (int) ArticleName.Sql3
+    };
+
+    public static readonly int[] AzureRequirements = {
+        (int) ArticleName.DeploySimpleApp,
+        (int) ArticleName.DeployFullStack,
+        (int) ArticleName.DeployFramework,
+    };
+    #endregion
+
     [SetUp]
     public void SetUp()
     {
@@ -31,565 +124,425 @@ public class BeltTests
     [Test]
     public void GreenCompleteShouldReturnGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> { 
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations, 
-            (int) ArticleName.MathGame, (int)ArticleName.FreecodeCamp 
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt([.. GreenRequirements], 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
 
     [Test]
     public void HabitCompletedShouldStillReturnGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.HabitLogger,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [.. GreenRequirements, (int)ArticleName.HabitLogger]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
 
     [Test]
     public void CodingCompletedShouldStillReturnGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, (int)ArticleName.HabitLogger, (int)ArticleName.CodingTracker]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Green"));
     }
 
     [Test]
     public void OliveGreenCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void FlashcardsCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, (int)ArticleName.Flashcards]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void DrinksCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, (int)ArticleName.Flashcards, (int)ArticleName.Drinks]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void PhonebookCompleteShouldReturnOliveGreen()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements,
+            (int)ArticleName.Flashcards, (int)ArticleName.Drinks, (int)ArticleName.PhoneBook]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("OliveGreen"));
     }
 
     [Test]
     public void ShiftsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExerciseCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, 
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, (int)ArticleName.Ecommerce]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void SportsCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements,
+            (int)ArticleName.Ecommerce, (int) ArticleName.SportsResults]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void ExcelCompleteShouldReturnYellow()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements,
+            (int)ArticleName.Ecommerce, (int)ArticleName.SportsResults, (int)ArticleName.ExcelReader]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Yellow"));
     }
 
     [Test]
     public void TestingCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void PortfolioCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            (int)ArticleName.Portfolio]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void ResumeCompleteShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume, 
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            (int) ArticleName.Resume]
+        ), 0, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneReviewShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 0, 1);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements]
+        ), 0, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 1, 0);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements]
+        ), 1, 0);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueAndReviewShouldReturnOrange()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 1, 1);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements]
+        ), 1, 1);
         Assert.That(result, Is.EqualTo("Orange"));
     }
 
     [Test]
     public void OneIssueAndTwoReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 1, 2);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements]
+        ), 1, 2);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void TwoIssuesAndFourReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void AspNetCoreCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList, (int) ArticleName.Budget,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. AspNetRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void AspNetCoreCompleteButNotEnoughReviewsShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,  (int) ArticleName.Budget,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 3);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. AspNetRequirements]
+        ), 2, 3);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void AspNetCoreCompleteButNotEnoughIssuesShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList, (int) ArticleName.Budget,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        },1, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. AspNetRequirements]
+        ), 1, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void ReactCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList, (int) ArticleName.FriendsManager,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. ReactRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void AngularCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. AngularRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void BlazorCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal, (int) ArticleName.SportsStatistics,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. BlazorRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void MauiCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. MauiRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void JumpingAroundShouldReturnRed()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements,
             (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys,
             (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
             (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
             (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
-            (int) ArticleName.MathGame, (int) ArticleName.FreecodeCamp
-        }, 2, 4);
+            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Red"));
     }
 
     [Test]
     public void FCCMissingShouldReturnWhite()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse, 
-            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
-            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
-            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
-            (int) ArticleName.MathGame
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [(int)ArticleName.StartHere, (int)ArticleName.GettingHelp, (int)ArticleName.SettingUp, (int)ArticleName.Foundations,
+            (int)ArticleName.MathGame,
+            .. OliveGreenRequirements,
+            .. YellowRequirements,
+            .. OrangeRequirements,
+            .. RedRequirements,
+            .. MauiRequirements,
+            (int)ArticleName.WardrobeInventory, (int)ArticleName.MemoryGame, (int)ArticleName.FoodJournal,
+            (int)ArticleName.TourOfHeroes, (int)ArticleName.CoffeeTracker, (int)ArticleName.SleepTracker,
+            (int)ArticleName.TicTacToe, (int)ArticleName.ExternalApi, (int)ArticleName.ShoppingList,
+            (int)ArticleName.WaterLogger, (int)ArticleName.Movies, (int)ArticleName.TodoList]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("White"));
     }
 
     [Test]
     public void MathMissingShouldReturnWhite()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.WardrobeInventory, (int) ArticleName.MemoryGame, (int) ArticleName.FoodJournal,
-            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker,
-            (int) ArticleName.TicTacToe, (int) ArticleName.ExternalApi, (int) ArticleName.ShoppingList,
-            (int) ArticleName.WaterLogger, (int) ArticleName.Movies, (int)ArticleName.TodoList,
-            (int) ArticleName.FreecodeCamp, 
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [(int)ArticleName.StartHere, (int)ArticleName.GettingHelp, (int)ArticleName.SettingUp, (int)ArticleName.Foundations,
+            (int)ArticleName.FreecodeCamp,
+            .. OliveGreenRequirements,
+            .. YellowRequirements,
+            .. OrangeRequirements,
+            .. RedRequirements,
+            .. MauiRequirements,
+            (int)ArticleName.WardrobeInventory, (int)ArticleName.MemoryGame, (int)ArticleName.FoodJournal,
+            (int)ArticleName.TourOfHeroes, (int)ArticleName.CoffeeTracker, (int)ArticleName.SleepTracker,
+            (int)ArticleName.TicTacToe, (int)ArticleName.ExternalApi, (int)ArticleName.ShoppingList,
+            (int)ArticleName.WaterLogger, (int)ArticleName.Movies, (int)ArticleName.TodoList]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("White"));
     }
 
     [Test]
     public void AuthCompleteShouldReturnPurple()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
-        }, 2, 4);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. MauiRequirements, .. AuthRequirements]
+        ), 2, 4);
         Assert.That(result, Is.EqualTo("Purple"));
     }
 
     [Test]
     public void AuthCompleteShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
-        }, 5, 7);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [.. GreenRequirements, .. OliveGreenRequirements, .. YellowRequirements, .. OrangeRequirements,
+            .. RedRequirements, .. MauiRequirements, .. AuthRequirements]
+        ), 5, 7);
         Assert.That(result, Is.EqualTo("Brown"));
     }
 
     [Test]
     public void SQLCompleteShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
-        }, 5, 7);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AuthRequirements, .. SqlRequirements]
+        ), 5, 7);
         Assert.That(result, Is.EqualTo("Brown"));
     }
 
     [Test]
     public void NoFlagshipShouldReturnBrown()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame
-        }, 7, 12);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>(
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AuthRequirements, .. SqlRequirements]
+        ), 7, 12);
         Assert.That(result, Is.EqualTo("Brown"));
     }
 
     [Test]
     public void FlagshipShouldReturnGrey()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
-            (int) ArticleName.Flagship,
-        }, 7, 12);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AuthRequirements, ..SqlRequirements,
+            (int)ArticleName.Flagship]
+        ), 7, 12);
         Assert.That(result, Is.EqualTo("Grey"));
     }
 
     [Test]
     public void AzureShouldReturnGrey()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
-            (int) ArticleName.Flagship,
-        }, 7, 12);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AuthRequirements, ..SqlRequirements, ..AzureRequirements,
+            (int)ArticleName.Flagship]
+        ), 7, 12);
         Assert.That(result, Is.EqualTo("Grey"));
     }
 
     [Test]
     public void AzureShouldReturnBlue()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
-            (int) ArticleName.Flagship,
-        }, 10, 17);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AuthRequirements, ..SqlRequirements, ..AzureRequirements,
+            (int)ArticleName.Flagship]
+        ), 10, 17);
         Assert.That(result, Is.EqualTo("Blue"));
     }
 
     [Test]
     public void TwoFullStacksShouldReturnBlue()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-             (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
-            (int) ArticleName.Flagship
-        }, 10, 17);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AngularRequirements, ..AuthRequirements, ..SqlRequirements,
+            ..AzureRequirements,
+            (int)ArticleName.Flagship]
+        ), 10, 17);
         Assert.That(result, Is.EqualTo("Blue"));
     }
 
     [Test]
     public void TwoFullStacksShouldReturnBlack()
     {
-        var result = RoadmapHelper.GetExpectedBelt(new List<int> {
-            (int) ArticleName.StartHere,  (int) ArticleName.GettingHelp, (int) ArticleName.SettingUp, (int) ArticleName.Foundations,
-            (int) ArticleName.Calculator, (int) ArticleName.HabitLogger, (int) ArticleName.CodingTracker,
-            (int) ArticleName.Flashcards, (int) ArticleName.Drinks, (int) ArticleName.PhoneBook, (int) ArticleName.ShiftsLogger,
-            (int) ArticleName.Ecommerce, (int) ArticleName.SportsResults, (int) ArticleName.ExcelReader, (int) ArticleName.UnitTesting,
-            (int) ArticleName.Portfolio, (int) ArticleName.Resume,
-            (int) ArticleName.MauiMath, (int) ArticleName.Books, (int) ArticleName.Monkeys, (int) ArticleName.Warehouse,
-            (int) ArticleName.TourOfHeroes, (int) ArticleName.CoffeeTracker, (int) ArticleName.SleepTracker, (int) ArticleName.Quizgame,
-            (int) ArticleName.FreecodeCamp, (int) ArticleName.MathGame,
-            (int) ArticleName.Auth, (int) ArticleName.ProductManagement, (int) ArticleName.ExternalAuth,
-            (int) ArticleName.Sql1, (int) ArticleName.Sql2, (int) ArticleName.Sql3,
-            (int) ArticleName.DeploySimpleApp, (int) ArticleName.DeployFullStack, (int) ArticleName.DeployFramework, (int) ArticleName.AzureFunctions,
-            (int) ArticleName.Flagship
-        }, 15, 25);
+        var result = RoadmapHelper.GetExpectedBelt(new List<int>
+        (
+            [..GreenRequirements, ..OliveGreenRequirements, ..YellowRequirements, ..OrangeRequirements,
+            ..RedRequirements, ..MauiRequirements, ..AngularRequirements, ..AuthRequirements, ..SqlRequirements,
+            ..AzureRequirements,
+            (int)ArticleName.Flagship]
+        ), 15, 25);
         Assert.That(result, Is.EqualTo("Black"));
+    }
+
+    [TestCaseSource(nameof(FullStackAreaTestCases))]
+    public void GetFullStackAreasCompletedReturnsExpectedCount(List<int> completedProjects, int expectedCount)
+    {
+        var result = RoadmapHelper.GetFullStackAreasCompleted(completedProjects);
+        Assert.That(result, Is.EqualTo(expectedCount));
+    }
+
+    private static IEnumerable<TestCaseData> FullStackAreaTestCases()
+    {
+        yield return new TestCaseData(AspNetRequirements.ToList(), 1).SetName("MVC only");
+        yield return new TestCaseData(ReactRequirements.ToList(), 1).SetName("React only");
+        yield return new TestCaseData(AngularRequirements.ToList(), 1).SetName("Angular only");
+        yield return new TestCaseData(BlazorRequirements.ToList(), 1).SetName("Blazor only");
+        yield return new TestCaseData(MauiRequirements.ToList(), 1).SetName("MAUI only");
+        yield return new TestCaseData(
+            new List<int>([.. AspNetRequirements, .. ReactRequirements]), 2).SetName("MVC and React");
+        yield return new TestCaseData(new List<int>(), 0).SetName("None completed");
     }
 }

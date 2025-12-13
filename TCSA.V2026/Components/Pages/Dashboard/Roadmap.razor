@@ -24,10 +24,37 @@
     }
     else
     {
-        if (RoadmapStages != null)
+        if (RoadmapResult.MissingTasksForNextBelt.Count > 0)
+        {
+            <MudCard Class="mt-2" Elevation="25">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6" Color="Color.Primary">
+                        Tasks to get your next belt
+                    </MudText>
+                    <MudStack Row Wrap="Wrap.Wrap" Spacing="1">
+                        @foreach (var task in RoadmapResult.MissingTasksForNextBelt)
+                        {
+                            <MudTooltip Text=@($"{task.Tooltip}")>
+                                <MudAvatar Size="Size.Medium"
+                                           Class=@($"avatar-spacing clean-avatar {(task.IsCompleted ? "complete-border" : "incomplete-border")}")
+                                           style="position: relative; overflow: hidden;">
+                                    <MudImage Src=@($"/img/icons/{task.IconUrl}") />
+
+                                    @if (task.IsCompleted)
+                                    {
+                                        <div class="image-overlay"></div>
+                                    }
+                                </MudAvatar>
+                            </MudTooltip>
+                        }
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        }
+        if (RoadmapResult.Stages.Count > 0)
         {
             <MudTimeline TimelinePosition="TimelinePosition.Start">
-                @foreach (var stage in RoadmapStages)
+                @foreach (var stage in RoadmapResult.Stages)
                 {
                     <MudTimelineItem Size="Size.Large"
                                      Class="@($"{stage.Class}")"
@@ -56,7 +83,7 @@
 
     public static List<int> CompletedProjects = new();
 
-    public static List<RoadmapStage> RoadmapStages = new();
+    public static RoadmapResult RoadmapResult = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,8 +106,7 @@
 
         IssuesCount = User.Issues != null ? User.Issues.Count(x => x.IsClosed) : 0;
 
-        RoadmapStages = RoadmapHelper.GetRoadmap(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
-
+        RoadmapResult = RoadmapHelper.GetRoadmap(User.Level, CompletedProjects, ReviewsCount, IssuesCount);
         LoadTime = DateTime.UtcNow - startTime;
         IsLoading = false;
     }

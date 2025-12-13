@@ -1,4 +1,4 @@
-﻿namespace TCSA.V2026.Data.DTOs;
+namespace TCSA.V2026.Data.DTOs;
 
 public class RoadmapTask
 {
@@ -10,4 +10,5 @@ public class RoadmapTask
     public bool IsArticle { get; set; }
     public bool IsCompleted { get; set; }
     public List<RoadmapTask>? Subtasks { get; set; }
+    public string? Tooltip { get; set; }
 }

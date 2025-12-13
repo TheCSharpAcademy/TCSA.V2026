@@ -1,0 +1,35 @@
+<MudSelect FitContent T="string" Label="Filter by Area" ValueChanged="@((string value) => HandleSelectionChange(value))" Variant="Variant.Outlined">
+    @foreach (var area in CategoryListAreas)
+    {
+        <MudSelectItem T="string" Value="@area">@area</MudSelectItem>
+    }
+</MudSelect>
+
+@code {
+    [Parameter, EditorRequired] public EventCallback<string> OnClickCallback { get; set; }
+    [Parameter, EditorRequired] public required List<string> Areas { get; set; }
+
+    private List<string> CategoryListAreas { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        CategoryListAreas = Areas.ToList();
+        CategoryListAreas.Add("All");
+    }
+
+    private async Task HandleSelectionChange(string selectedArea)
+    {
+        if (!string.IsNullOrEmpty(selectedArea))
+        {
+            await HandleClick(selectedArea);
+        }
+    }
+
+    private async Task HandleClick(string area)
+    {
+        if (OnClickCallback.HasDelegate)
+        {
+            await OnClickCallback.InvokeAsync(area);
+        }
+    }
+}

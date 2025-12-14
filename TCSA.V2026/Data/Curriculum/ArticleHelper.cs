@@ -2898,7 +2898,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "You can find pending tasks in <a href='https://github.com/users/TheCSharpAcademy/projects/5/views/1' target='_blank'>The C# Academy's Github</a> Project. You'll see a TCSA Team Issues, which are for the academy's staff only and a Community Issues, which is open to everyone else."
+                                Body = "You can find pending tasks in <a href='https://github.com/users/TheCSharpAcademy/projects/23' target='_blank'>The C# Academy's Github</a> Project. You'll see a TCSA Team Issues, which are for the academy's staff only and a Community Issues, which is open to everyone else."
                             }
                         }
                     },
@@ -2931,7 +2931,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "Navigate to <a href='https://github.com/TheCSharpAcademy/TCSA.V2' target='_blank'>the project's repository</a>, clone it and follow the instructions in the Readme file to run it. Make sure you <b>test your changes thoroughly</b> before moving to the next step. "
+                                Body = "Navigate to <a href='https://github.com/TheCSharpAcademy/TCSA.V2026' target='_blank'>the project's repository</a>, clone it and follow the instructions in the Readme file to run it. Make sure you <b>test your changes thoroughly</b> before moving to the next step. "
                             }
                         }
                     },
@@ -2954,9 +2954,9 @@ git push</code>"
                 Title = "Unit Testing",
                 IconUrl = "",
                 Slug="unit-testing-for-beginners",
-                BannerUrl = "",
-                CardImgUrl = "open-source.jpg",
-                Description = "Learn how to make your projects more reliable and bug-free.",
+                BannerUrl = "unit-banner.jpg",
+                CardImgUrl = "unit-test-card.png",
+                Description = "Learn how to make your projects more reliable and bug-free",
                 ExperiencePoints = 1,
                 Area = Area.StandAlone,
                 Blocks = new List<Block>

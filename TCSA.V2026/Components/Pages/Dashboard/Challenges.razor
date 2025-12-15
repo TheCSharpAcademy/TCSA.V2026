@@ -71,7 +71,10 @@
                     @bind-SelectedValues="SelectedCategories">
                         @foreach (ChallengeCategory item in Enum.GetValues(typeof(ChallengeCategory)))
                         {
-                            <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                            if(item != ChallengeCategory.Unknown)
+                            {
+                                <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                            }
                         }
                     </MudSelect>
                 </MudStack>
@@ -87,7 +90,10 @@
                                     <MudText Style="font-weight:bolder" Typo="Typo.subtitle1" Class="mud-primary-text">@challenge.Name</MudText>
                                     <MudText Typo="Typo.body2">@challenge.Description</MudText>
                                     <MudStack Row="true" Spacing="2" AlignItems="AlignItems.Center">
-                                        <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.Category.ToString()</MudText>
+                                        @if(challenge.Category != ChallengeCategory.Unknown)
+                                        {
+                                            <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.Category.ToString()</MudText>
+                                        }
                                         <MudImage ObjectFit="ObjectFit.Contain" Width="30" Src="img/experience.png" />
                                         <MudText Style="font-weight:bolder" Typo="Typo.subtitle2">@challenge.ExperiencePoints</MudText>
                                     </MudStack>

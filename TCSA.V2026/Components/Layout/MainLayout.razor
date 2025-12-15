@@ -48,11 +48,26 @@
     <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
     </MudDrawer>
+    @if (string.IsNullOrEmpty(Nav.ToBaseRelativePath(Nav.Uri)))
+    {
+        <MudDrawer id="feed-drawer" Variant="DrawerVariant.Responsive" @bind-Open="_feedOpen" Anchor="Anchor.Right" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <CommunityFeed />
+        </MudDrawer>
+    }
     <MudMainContent Class="pt-16">
         @Body
     </MudMainContent>
 </MudLayout>
 
+@if (string.IsNullOrEmpty(Nav.ToBaseRelativePath(Nav.Uri)))
+{
+    <MudFab StartIcon="@(_feedOpen ? Icons.Material.Filled.Close : Icons.Material.Filled.Feed)"
+    Color="Color.Primary"
+    Style="position: fixed; bottom: 32px; right: 32px; z-index: 1305;"
+    OnClick="@ToggleFeedDrawer"
+    aria-label="Toggle News Feed"
+    Title="@(_feedOpen ? "Close News Feed" : "Open News Feed")" />
+}
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
@@ -62,6 +77,7 @@
 
 @code {
     private bool _drawerOpen = true;
+    private bool _feedOpen = true;
 
     protected override void OnInitialized()
     {
@@ -72,6 +88,10 @@
         };
     }
 
+    private void ToggleFeedDrawer()
+    {
+        _feedOpen = !_feedOpen;
+    }
     private async Task ToggleTheme()
     {
         ThemeService.ToggleTheme();

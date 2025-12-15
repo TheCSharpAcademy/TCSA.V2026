@@ -16,6 +16,7 @@ public interface IUserService
     Task<BaseResponse> ResetAccount(ApplicationUser user);
     Task<BaseResponse> DeleteAccount(ApplicationUser user);
     Task<ApplicationUser?> GetUserByIdWithShowcaseItems(string? userid);
+    Task<List<ApplicationUser>> GetRecentlyJoinedUsers(int count);
 }
 
 public class UserService : IUserService
@@ -245,6 +246,26 @@ public class UserService : IUserService
         {
             _logger.LogError(ex, "Failed to retrieve GetUserChallengeDetails {UserId}", userId);
             return null;
+        }
+    }
+
+    public async Task<List<ApplicationUser>> GetRecentlyJoinedUsers(int count)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                return await context.AspNetUsers
+                    .AsNoTracking()
+                    .OrderByDescending(u => u.CreatedDate)
+                    .Take(count)
+                    .ToListAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to retrieve GetRecentlyJoinedUsers");
+            return new List<ApplicationUser>();
         }
     }
 }

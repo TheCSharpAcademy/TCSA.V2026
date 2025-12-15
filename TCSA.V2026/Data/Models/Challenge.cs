@@ -64,7 +64,8 @@ public enum ChallengePlatform
 
 public enum ChallengeCategory
 {
+    Unknown = 0,
     [Display(Name = "C#")]
-    CSharp = 1,
+    CSharp,
     SQL
 }

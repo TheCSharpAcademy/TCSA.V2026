@@ -27,8 +27,8 @@
         {
             @foreach (var item in PaginatedFeedItems.Items)
             {
-                <MudItem xs="12" sm="6">
-                    <MudPaper Class="pa-4 mb-3" Elevation="2">
+                <MudItem Class="d-flex" xs="12" sm="6" lg="4">
+                    <MudPaper Class="pa-4 mb-3 d-flex" Elevation="2" Width="100%">
                         <div class="d-flex align-center gap-2">
                             @switch (item.ActivityType)
                             {

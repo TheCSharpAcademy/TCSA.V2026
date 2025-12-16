@@ -55,7 +55,7 @@
     @if (string.IsNullOrEmpty(Nav.ToBaseRelativePath(Nav.Uri)))
     {
         <MudDrawer id="feed-drawer" Variant="DrawerVariant.Responsive" @bind-Open="_feedOpen" Anchor="Anchor.Right" ClipMode="DrawerClipMode.Always" Elevation="2">
-            <CommunityFeed />
+            <CommunityFeedWidget />
         </MudDrawer>
     }
     <MudMainContent Class="pt-16">

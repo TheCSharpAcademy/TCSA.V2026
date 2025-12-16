@@ -63,27 +63,6 @@
                     Challenges
                 </MudNavLink>
             </MudNavGroup>
-            <MudNavLink
-                Href="Feed"
-                Match="NavLinkMatch.Prefix"
-                Icon="@Icons.Material.Filled.Feed"
-                IconColor="Color.Primary">
-                Community Feed
-            </MudNavLink>
-            <MudNavLink 
-                Href="Articles/articles" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.Newspaper"
-                IconColor="Color.Primary">
-                Articles
-            </MudNavLink>
-            <MudNavLink 
-                Href="Articles/blog" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.Book"
-                IconColor="Color.Primary">
-                Blog
-            </MudNavLink>
             <MudNavLink Href="https://thecsharpschool.getlearnworlds.com/subscription/the-c-academy-membership"
                         Match="NavLinkMatch.Prefix"
                         Target="_blank"
@@ -105,6 +84,24 @@
             </form>
         </Authorized>
         <NotAuthorized>
+            <MudNavLink Href="Feed"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Feed"
+                        IconColor="Color.Primary">
+                Community Feed
+            </MudNavLink>
+            <MudNavLink Href="Articles/articles"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Newspaper"
+                        IconColor="Color.Primary">
+                Articles
+            </MudNavLink>
+            <MudNavLink Href="Articles/blog"
+                        Match="NavLinkMatch.Prefix"
+                        Icon="@Icons.Material.Filled.Book"
+                        IconColor="Color.Primary">
+                Blog
+            </MudNavLink>
             <MudNavLink Href="Account/Register"
                         IconColor="Color.Primary"
                         Match="NavLinkMatch.Prefix"

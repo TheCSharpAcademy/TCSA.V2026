@@ -92,31 +92,10 @@ public class FeedService : IFeedService
         var recentActivities = recentActivitiesTask.Result;
         var recentUsers = recentUsersTask.Result;
 
-        var feedDisplays = new List<FeedDisplay>();
-        foreach (var activity in recentActivities)
-        {
-            var feedItem = new FeedDisplay
-            {
-                User = activity.ApplicationUser,
-                ActivityType = activity.ActivityType,
-                Date = activity.DateSubmitted,
-                ProjectIconUrl = ProjectHelper.GetProjectIconUrl(activity.ProjectId),
-                ProjectName = ProjectHelper.GetProjectName(activity.ProjectId)
-            };
-            feedDisplays.Add(feedItem);
-        }
-
-        foreach (var user in recentUsers)
-        {
-            var feedItem = new FeedDisplay
-            {
-                User = user,
-                ActivityType = ActivityType.NewUser,
-                Date = user.CreatedDate
-            };
-            feedDisplays.Add(feedItem);
-        }
-
-        return feedDisplays.OrderByDescending(fd => fd.Date).ToList();
+        return recentActivities
+            .Select(FeedHelper.MapActivityToFeedDisplay)
+            .Concat(recentUsers.Select(FeedHelper.MapUserToFeedDisplay))
+            .OrderByDescending(fd => fd.Date)
+            .ToList();
     }
 }

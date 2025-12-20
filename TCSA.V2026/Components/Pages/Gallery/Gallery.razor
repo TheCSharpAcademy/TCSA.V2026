@@ -16,7 +16,7 @@
     <MudStack Row Breakpoint="Breakpoint.Xs" AlignItems="AlignItems.Center">
         @if (SelectedAreaProjects.Any())
         {
-            <MudSelect ToStringFunc="@(id => GalleryHelper.GetProjectTitle(Projects, id))"
+            <MudSelect ToStringFunc="@(id => GalleryHelper.GetProjectTitle(ShowcaseProjects, id))"
             FitContent T="int"
             MultiSelection Label="Filter By Project"
             SelectedValues="SelectedProjects"
@@ -75,13 +75,13 @@
     }
 </MudContainer>
 
-@code {
+    @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; } = default!;
     [Inject] private IUserService UserService { get; set; } = default!;
     [Inject] private IGalleryService GalleryService { get; set; } = default!;
     [Inject] private ISnackbar Snackbar { get; set; } = default!;
     [Inject] private IDialogService DialogService { get; set; } = default!;
-
+    [Inject] private IProjectService ProjectService { get; set; } = default!;
     private List<string> EnumAreas = Enum.GetNames(typeof(Area)).ToList();
     private List<string> Areas { get; set; } = new();
 
@@ -91,7 +91,7 @@
     private ApplicationUser? User;
     private string? UserId;
 
-    private IEnumerable<ShowcaseProjectInfo> Projects { get; set; } = [];
+    private IEnumerable<ShowcaseProjectInfo> ShowcaseProjects { get; set; } = [];
     private IEnumerable<ShowcaseProjectInfo> SelectedAreaProjects { get; set; } = [];
     private PaginatedList<ShowcaseItemDTO>? PaginatedList { get; set; }
     private List<ShowcaseItemDTO>? ItemsToShow { get; set; } = [];
@@ -108,7 +108,7 @@
         var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
         var claims = AuthSate.User;
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        Projects = ProjectHelper.GetProjectInfos();
+        ShowcaseProjects = ProjectHelper.GetProjectInfos();
 
         await UpdateCompletedProjectsNotShowcased();
 
@@ -133,11 +133,15 @@
         else
         {
             var areaEnum = Enum.Parse<Area>(area);
-            SelectedAreaProjects = Projects.Where(project => project.Area == areaEnum).ToList();
+            SelectedAreaProjects = ShowcaseProjects.Where(project => project.Area == areaEnum).ToList();
         }
-
         SelectedProjects = [];
+
         await GetLists();
+        if(SelectedAreaProjects.Any())
+        {
+            ItemsToShow = ItemsToShow?.Where(item => item.Area == Enum.Parse<Area>(area)).ToList();
+        }
         StateHasChanged();
     }
 
@@ -182,7 +186,7 @@
         var parameters = new DialogParameters<TCSASubmitShowcaseProjectDialog>
         {
             { x => x.CurrentUser, User },
-            { x => x.Projects, Projects.Where(p => CompletedProjectsNotShowcased.Contains(p.Id)) }
+            { x => x.Projects, ShowcaseProjects.Where(p => CompletedProjectsNotShowcased.Contains(p.Id)) }
         };
         var dialog = await DialogService.ShowAsync<TCSASubmitShowcaseProjectDialog>("Submit Showcase Project", parameters, options);
         var result = await dialog.Result;

@@ -359,7 +359,7 @@ public class ConsoleProjectsHelper
                     },
                     new Paragraph
                     {
-                        Body="This time you’ll have to deal with the complexity of handling Dates and Times, which is a real challenge in any application. You’ll also be using your first external library. Often times in professional environments programmers don’t reinvent the wheel and save time by using public solutions provided by other coders. That’s the beauty of the internet. You have access to an amazing coding community! "
+                        Body="This time you’ll have to deal with the complexity of handling dates and times, which is a real challenge in any application. You’ll also be using your first external library. Often in professional environments programmers don’t reinvent the wheel and save time by using public solutions provided by other coders. That’s the beauty of the internet. You have access to an amazing coding community! "
                     },
                     new Paragraph
                     {
@@ -369,38 +369,34 @@ public class ConsoleProjectsHelper
                 Requirements = new List<string>
                 {
                     "This application has the same requirements as the previous project, except that now you'll be logging your daily coding time.",
-                    "To show the data on the console, you should use the \"Spectre.Console\" library.",
-                    "You're required to have separate classes in different files (ex. UserInput.cs, Validation.cs, CodingController.cs)",
-                    "You should tell the user the specific format you want the date and time to be logged and not allow any other format.",
-                    "You'll need to create a configuration file that you'll contain your database path and connection strings.",
-                    "You'll need to create a \"CodingSession\" class in a separate file. It will contain the properties of your coding session: Id, StartTime, EndTime, Duration",
-                    "The user shouldn't input the duration of the session. It should be calculated based on the Start and End times, in a separate \"CalculateDuration\" method.",
+                    "To show the data on the console, you should use the <b>Spectre.Console</b> library.",
+                    "You're required to have separate classes in different files (i.e. UserInput.cs, Validation.cs, CodingController.cs)",
+                    "You should tell the user the <b>specific format</b> you want the date and time to be logged and not allow any other format.",
+                    "You'll need to create a configuration file called <b>appsettings.json</b>, which will contain your database path and connection strings (and any other configs you might need).",
+                    "You'll need to create a <b>CodingSession</b> class in a separate file. It will contain the properties of your coding session: Id, StartTime, EndTime, Duration. When reading from the database, you can't use an anonymous object, you have to read your table into a <b>List of CodingSession</b>.",
+                    "The user shouldn't input the duration of the session. It should be calculated based on the Start and End times",
                     "The user should be able to input the start and end times manually.",
-                    "You need to use Dapper ORM for the data access instead of ADO.NET. (This requirement was included in Feb/2024)",
-                    "When reading from the database, you can't use an anonymous object, you have to read your table into a List of Coding Sessions.",
-                    "Follow the <a href='/article/30006/dry-principle-csharp' target='_blank'>DRY Principle</a>, and avoid code repetition."
+                    "You need to use <b>Dapper ORM</b> for the data access instead of ADO.NET. (This requirement was included in Feb/2024)",
+                    "Follow the <a href='/article/30006/dry-principle-csharp' target='_blank'>DRY Principle</a>, and avoid code repetition.",
+                    "Don't forget the <b>ReadMe</b> explaining your thought process."
                 },
                 Resources = new List<string>
                 {
                     "<a target='_blank' href='https://spectreconsole.net/'>Spectre Console</a> documentation</a>.",
-                    "<a target='_blank' href='https://docs.microsoft.com/en-us/troubleshoot/dotnet/csharp/store-custom-information-config-file'>Using Configuration Manager</a>",
-                    "<a target='_blank' href='https://medium.com/@Has_San/datetime-in-c-1aef47db4feb'>Parsing DateTime in C#</a>",
                     "<a target='_blank' href='https://www.learndapper.com/'>Dapper Tutorial</a>.",
                 },
                 ResourcesIntro = "If you have learned the basics of C# following the <a href='article/8/foundations' target='blank'>C# Foundations</a> article, and completed the <a href='project/12/habit-logger' target='blank'>Habit Logger</a> project, you should know all the basic techniques needed to complete this project. Here’s a list of extra resources you might need:",
                 Tips = new List<string>
                 {
-                    "It's up to you the order in which you'll build, but we recommend you do it in this order: configuration file, model, database/table creation, CRUD controller (where the operations will happen), TableVisualisationEngine (where the consoleTableExt code will be run) and finally: validation of data.",
+                    "It's up to you the order in which you'll build, but we recommend you do it in this order: configuration file, model, database/table creation, CRUD controller (where the operations will happen), TableVisualisationEngine and finally: validation of data.",
                     "Sqlite doesn't support dates. We recommend you store the datetime as a string in the database and then parse it using C#. You'll need to parse it to calculate the duration of your sessions.",
-                    "Don't forget to push your changes to github every time you stop working.",
                     "Don't forget the user input's validation: Check for incorrect dates. What happens if a menu option is chosen that's not available? What happens if the users input a string instead of a number? Remember that the end date can't be before the start date."
                 },
                  Challenges = new List<string>
                 {
                     "Add the possibility of tracking the coding time via a stopwatch so the user can track the session as it happens.",
                     "Let the users filter their coding records per period (weeks, days, years) and/or order ascending or descending.",
-                    "Create reports where the users can see their total and average coding session per period.",
-                    "Create the ability to set coding goals and show how far the users are from reaching their goal, along with how many hours a day they would have to code to reach their goal. You can do it via SQL queries or with C#.",
+                    "If you already have a bit of experience with programming, we highly recommend you get into the habit of <b>writing unit tests</b> for a few methods in your project. Any method that outputs data and doesn't talk to a database (those are tested in <b>integration tests</b>) can be unit tested. A good example is any method that deals with validation and testing your data-retrieving methods with different filters. <a href='/article/30009/unit-testing-for-beginners' target='_blank'>Here's a quick tutorial.</a>"
                 },
                  Blocks = new List<Block>
                 {
@@ -418,18 +414,6 @@ public class ConsoleProjectsHelper
                             {
                                 IsVideo = true,
                                 VideoUrl = "https://www.youtube.com/embed/XMJS-eQ4Y48?si=Bwbn0UZUe-thB8md"
-                            }
-                        }
-                    },
-                    new Block
-                    {
-                        Title = "Creating a Configuration File",
-                        ImgUrl = "external-configuration-computer-itim2101-lineal-color-itim2101-300x300.png",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "In advanced applications, configuration properties are stored in an xml file. This practice makes it easier to configure your application in production. It’s not absolutely necessary now, but it’s not hard to learn and you should get used to it from the beginning of your coding journey. It makes your code cleaner and more organised. <a href='https://docs.microsoft.com/en-us/troubleshoot/dotnet/csharp/store-custom-information-config-file'>Check out the documentation</a> and if necessary search for “configuration file C#” on Youtube. "
                             }
                         }
                     },

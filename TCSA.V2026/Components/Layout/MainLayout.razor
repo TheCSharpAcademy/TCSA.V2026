@@ -65,12 +65,25 @@
 
 @if (string.IsNullOrEmpty(Nav.ToBaseRelativePath(Nav.Uri)))
 {
-    <MudFab StartIcon="@(_feedOpen ? Icons.Material.Filled.Close : Icons.Material.Filled.Feed)"
-    Color="Color.Primary"
-    Style="position: fixed; bottom: 32px; right: 32px; z-index: 1305;"
-    OnClick="@ToggleFeedDrawer"
-    aria-label="Toggle News Feed"
-    Title="@(_feedOpen ? "Close News Feed" : "Open News Feed")" />
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        @if (!_navOpen)
+        {
+            <MudFab StartIcon="@(_feedOpen? Icons.Material.Filled.Close : Icons.Material.Filled.Feed)"
+                    Color="Color.Primary"
+                    Style="position: fixed; bottom: 32px; right: 32px; z-index: 1305;"
+                    OnClick="@ToggleFeedDrawer"
+                    aria-label="Toggle News Feed"
+                    Title="@(_feedOpen ? "Close News Feed" : "Open News Feed")" />
+        }
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <MudFab StartIcon="@(_feedOpen? Icons.Material.Filled.Close : Icons.Material.Filled.Feed)"
+                Color="Color.Primary"
+                Style="position: fixed; bottom: 32px; right: 32px; z-index: 1305;"
+                OnClick="@ToggleFeedDrawer"
+                aria-label="Toggle News Feed"
+                Title="@(_feedOpen ? "Close News Feed" : "Open News Feed")" />
+    </MudHidden>
 }
 
 <div id="blazor-error-ui" data-nosnippet>

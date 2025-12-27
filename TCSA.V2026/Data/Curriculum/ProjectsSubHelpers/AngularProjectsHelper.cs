@@ -205,8 +205,7 @@ internal static class AngularProjectsHelper
                     "You should use Entity Framework.",
                     "Your app needs to support multiple users.",
                     "Your UI needs to have a vibrant color scheme.",
-                    "You need to secure your application so that users have to pay, register and login to use it.",
-                    "You should use Stripe for your payment integration."
+                    "You need to secure your application so that users have to register and login to use it.",
                 },
                 Resources = new List<string>
                 {
@@ -220,8 +219,12 @@ internal static class AngularProjectsHelper
                     "Plan your database scheme carefully. Many-to-many relationships can get tricky if not well thought out.",
                     "This project has loose design requirements, so search for quiz game designs on Google for inspiration, when you're planning your app.",
                     "Try to work with a couple of UI elements you haven't used before, for practice. In Angular Material's Documentation, if you click on Components, you'll see a large list of components on the left side of the screen. Grab one or two that you think can fit the project.",
-                    "This is a very strong portfolio project, so make sure you pay attention to details, don't leave any stone unturned and ask for feedback in our community.",
-                    "Take your project a step further by creating interesting features such as: A timer for your games, which the users can use. Or reports such as: games played per week, favourite games, etc. Let your creativity loose!"
+                    "This is a very strong portfolio project, so make sure you pay attention to details, don't leave any stone unturned and ask for feedback in our community."
+                },
+                Challenges = new List<string>
+                {
+                    "Integrate with Stripe and make it so that users can only create three quizzes for free. Any more than that, they'll need to purchase a subscription.",
+                    "Add multi-player support so users can play against each other online."
                 }
             },
         };

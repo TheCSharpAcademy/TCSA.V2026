@@ -181,7 +181,7 @@ internal static class AngularProjectsHelper
                 Id = 34,
                 Title = "Quiz Game",
                 IconUrl = "icons8-quiz-game-contestants-480.png",
-                BannerUrl = "",
+                BannerUrl = "angular-quiz-banner.png",
                 LanguageHeadings = new EnglishHeadings(),
                 Slug = "quiz-game",
                 Description = "Build a highly interactive Quiz Game with Angular and Angular Material",
@@ -199,15 +199,14 @@ internal static class AngularProjectsHelper
                 Requirements = new List<string>
                 {
                     "This is an application where you will create and play quiz games.",
-                    "You should create two projects: A .NET WebApi and an Angular app.",
-                    "You can choose whatever database solution you want: Sqlite, SQL server or whatever you're comfortable with.",
-                    "You can choose only use Entity Framework, no other ORM is allowed.",
-                    "Your database should have three tables: Question, Quiz, Game.",
-                    "A question needs to have a Quiz associated with it, hence a foreign key is needed.",
-                    "A game needs to have a Quiz associated with it, hence a foreign key is needed.",
-                    "If a quiz is deleted, all questions and games associated with it need to be deleted.",
-                    "You need to use pagination, which means you can't show any lists or tables longer than the height of the screen.",
-                    "You need to use Angular Material"
+                    "The app should contain two main areas: one for management of quizzes and one for playing the games.",
+                    "The relationship between questions and quizzes should be a many-to-many. Questions could be part of many quizzes.",
+                    "You should create two projects: An ASP.NET Core WebApi and an Angular app.",
+                    "You should use Entity Framework.",
+                    "Your app needs to support multiple users.",
+                    "Your UI needs to have a vibrant color scheme.",
+                    "You need to secure your application so that users have to pay, register and login to use it.",
+                    "You should use Stripe for your payment integration."
                 },
                 Resources = new List<string>
                 {
@@ -218,11 +217,11 @@ internal static class AngularProjectsHelper
                 ResourcesIntro = "The resourced from the previous Angular projects can be used for the completion of this project, plus these: ",
                 Tips = new List<string>
                 {
+                    "Plan your database scheme carefully. Many-to-many relationships can get tricky if not well thought out.",
                     "This project has loose design requirements, so search for quiz game designs on Google for inspiration, when you're planning your app.",
                     "Try to work with a couple of UI elements you haven't used before, for practice. In Angular Material's Documentation, if you click on Components, you'll see a large list of components on the left side of the screen. Grab one or two that you think can fit the project.",
                     "This is a very strong portfolio project, so make sure you pay attention to details, don't leave any stone unturned and ask for feedback in our community.",
                     "Take your project a step further by creating interesting features such as: A timer for your games, which the users can use. Or reports such as: games played per week, favourite games, etc. Let your creativity loose!"
-
                 }
             },
         };

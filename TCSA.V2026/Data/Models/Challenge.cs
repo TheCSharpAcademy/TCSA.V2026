@@ -27,8 +27,11 @@ public class Challenge
     [Required(ErrorMessage = "Platform is required.")]
     public ChallengePlatform Platform { get; set; }
 
+    [Required(ErrorMessage = "Challenge Type is required")]
+    public ChallengeCategory Category { get; set; }
+
     [Required(ErrorMessage = "Level is required.")]
-    public Level Level { get; set; }
+    public Level Level { get; set; }    
 
     public virtual ICollection<UserChallenge> UserChallenges { get; set; }
 }
@@ -37,7 +40,6 @@ public class DailyStreak
 {
     public string AppUserId { get; set; }
     public ApplicationUser User { get; set; }
-
     public int CurrentStreak { get; set; }
     public int LongestStreak { get; set; }
     public DateTime LastCompletedDate { get; set; }
@@ -48,10 +50,8 @@ public class UserChallenge
 {
     public int ChallengeId { get; set; }
     public Challenge Challenge { get; set; }
-
     public string UserId { get; set; }
     public ApplicationUser User { get; set; }
-
     public DateTime CompletedAt { get; set; }
 }
 
@@ -60,4 +60,12 @@ public enum ChallengePlatform
     CodeWars = 1,
     LeetCode,
     HackerRank
+}
+
+public enum ChallengeCategory
+{
+    Unknown = 0,
+    [Display(Name = "C#")]
+    CSharp,
+    SQL
 }

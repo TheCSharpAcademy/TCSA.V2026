@@ -182,9 +182,9 @@ else
 
         Articles = ArticleHelper.GetArticles();
         Projects = ProjectHelper.GetProjects();
-        CertificationProject = Projects.Single(x => x.Id == 75);
-        ConsoleArticle = Articles.Single(x => x.Id == 9);
-        GraduationArticle = Articles.Single(x => x.Id == 10);
+        CertificationProject = Projects.Single(x => x.Id == (int)ArticleName.FreecodeCamp);
+        ConsoleArticle = Articles.Single(x => x.Id == (int)ArticleName.ImportanceOfConsole);
+        GraduationArticle = Articles.Single(x => x.Id == (int)ArticleName.ConsoleGraduation);
 
         GetAreas();
 

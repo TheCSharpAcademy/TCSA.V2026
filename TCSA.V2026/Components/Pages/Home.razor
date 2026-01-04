@@ -2,6 +2,7 @@
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
 <PageTitle>Home</PageTitle>
 
 @if (IsLoading)
@@ -43,6 +44,48 @@ else
     </MudContainer>
 
     @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
+
+    <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
+        <div class="cards-grid">
+            <div class="card-item">
+                <MudPaper Class="pa-5 d-flex flex-column align-center justify-center" Height="100%" Elevation="4">
+                    <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.AllUsers</h2>
+                    <div class="d-flex gap-1 align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Person" />
+                        <MudText Typo="Typo.body2" Style="font-weight: bold">Users</MudText>
+                    </div>
+                </MudPaper>
+            </div>
+            <div class="card-item">
+                <MudPaper Class="pa-5 d-flex flex-column align-center justify-center" Height="100%" Elevation="4">
+                    <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.CurrentYearUsers</h2>
+                    <div class="d-flex gap-1 align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.PersonAddAlt1" />
+                        <MudText Typo="Typo.body2" Style="font-weight: bold">New Users @Statistics.CurrentYear</MudText>
+                    </div>
+                </MudPaper>
+            </div>
+            <div class="card-item">
+                <MudPaper Class="pa-5 d-flex flex-column align-center justify-center" Height="100%" Elevation="4">
+                    <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.AllReviewedProjects</h2>
+                    <div class="d-flex gap-1 align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.RateReview" />
+                        <MudText Typo="Typo.body2" Style="font-weight: bold">Projects Reviewed</MudText>
+
+                    </div>
+                </MudPaper>
+            </div>
+            <div class="card-item">
+                <MudPaper Class="pa-5 d-flex flex-column align-center justify-center" Height="100%" Elevation="4">
+                    <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.CurrentYearReviewedProjects</h2>
+                    <div class="d-flex gap-1 align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.PostAdd" />
+                        <MudText Typo="Typo.body2" Style="font-weight: bold">Projects Reviewed @Statistics.CurrentYear</MudText>
+                    </div>
+                </MudPaper>
+            </div>
+        </div>
+    </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
         <h2 class="mud-typography-h4 mud-primary-text mud-typography-align-center mb-2"
@@ -164,6 +207,7 @@ else
 @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private IStatisticsService StatisticsService { get; set; } = default!;
 
     protected List<Project> Projects = new();
     protected List<Article> Articles = new();
@@ -171,6 +215,7 @@ else
     protected Project CertificationProject = new();
     protected Article ConsoleArticle = new();
     protected Article GraduationArticle = new();
+    protected HomePageStatistics Statistics;
 
     private TimeSpan LoadTime = TimeSpan.Zero;
     private bool IsLoading = true;
@@ -190,6 +235,7 @@ else
 
         LoadTime = DateTime.UtcNow - startTime;
 
+        Statistics = await StatisticsService.GetHomePageStatisticsAsync();
         var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
         IsLoading = false;
 
@@ -330,4 +376,20 @@ else
             transform: scale(1.02);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
+
+    .cards-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, 250px);
+        justify-content: center;
+    }
+
+    .grid-item, .card-item {
+        width: 100%;
+    }
+
+    .card-item {
+        display: flex;
+        flex-direction: column;
+    }
 </style>

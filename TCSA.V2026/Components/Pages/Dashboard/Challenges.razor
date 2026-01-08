@@ -1,10 +1,13 @@
 @page "/dashboard/challenges"
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
+@using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Helpers
 @using TCSA.V2026.Helpers.Constants
 @using TCSA.V2026.Services
+@using TCSA.V2026.Services.Challenges
 @attribute [Authorize]
 
 <MudContainer>
@@ -103,7 +106,7 @@
                                 <MudButton Size="@Size.Small"
                                 Variant="@Variant.Filled"
                                 Color="@Color.Warning"
-                                OnClick="@(() => JS.InvokeVoidAsync("window.open", $"https://www.codewars.com/kata/{challenge.ExternalId}", "_blank", "noopener,noreferrer"))"
+                                OnClick="@(() => JS.InvokeVoidAsync("window.open", @ChallengeHelper.GetChallengeUrl(challenge.ExternalId, challenge.Platform), "_blank", "noopener,noreferrer"))"
                                 StartIcon="fas fa-eye">
                                     View
                                 </MudButton>
@@ -112,7 +115,7 @@
                                     <MudButton Size="@Size.Small"
                                     Variant="@Variant.Filled"
                                     Color="@Color.Primary"
-                                    OnClick="@(() => Sync(challenge.Id, challenge.ExternalId))"
+                                    OnClick="@(() => Sync(challenge.Id, challenge.ExternalId, challenge.Platform))"
                                     StartIcon="@Icons.Material.Filled.Cached">
                                         Sync
                                     </MudButton>
@@ -141,7 +144,7 @@
     [Inject] private NavigationManager Navigation { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IChallengeService ChallengeService { get; set; }
-    [Inject] private ICodewarsService CodewarsService { get; set; }
+    [Inject] private ChallengeManager ChallengeManager { get; set; }
     [Inject] private IUserService UserService { get; set; }
 
     [Inject] private IJSRuntime JS { get; set; }
@@ -230,9 +233,15 @@
         return CompletedChallenges.Contains(id);
     }
 
-    private async Task Sync(int challengeId, string externalId)
+    private async Task Sync(int challengeId, string externalId, ChallengePlatform platform)
     {
-        var result = await CodewarsService.Sync(User.CodeWarsUsername, challengeId, externalId, UserId);
+        var result = await ChallengeManager.Sync(new SyncChallengeRequest
+        (
+            new UserPlatformCredentials(User.CodeWarsUsername, User.LeetCodeUsername),
+            challengeId,
+            externalId,
+            UserId
+        ), platform);
 
         if (result.Status == ResponseStatus.Success)
         {

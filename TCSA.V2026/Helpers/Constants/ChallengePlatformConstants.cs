@@ -4,11 +4,13 @@ public static class ChallengePlatformConstants
 {
     public static class CodeWars
     {
-        public const string BaseUrl = "https://www.codewars.com/kata/";
+        public const string BaseUrl = "https://www.codewars.com/";
+        public const string KataUrl = $"{BaseUrl}kata/";
     }
 
     public static class LeetCode
     {
-        public const string BaseUrl = "https://leetcode.com/problems/";
+        public const string BaseUrl = "https://leetcode.com/";
+        public const string ProblemsUrl = $"{BaseUrl}problems/";
     }
 }

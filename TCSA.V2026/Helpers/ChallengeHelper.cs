@@ -9,8 +9,8 @@ public static class ChallengeHelper
     {
         return platform switch
         {
-            ChallengePlatform.CodeWars => $"{ChallengePlatformConstants.CodeWars.BaseUrl}{externalId}",
-            ChallengePlatform.LeetCode => $"{ChallengePlatformConstants.LeetCode.BaseUrl}{externalId}",
+            ChallengePlatform.CodeWars => $"{ChallengePlatformConstants.CodeWars.KataUrl}{externalId}",
+            ChallengePlatform.LeetCode => $"{ChallengePlatformConstants.LeetCode.ProblemsUrl}{externalId}",
             _ => throw new ArgumentOutOfRangeException(nameof(platform), platform, null)
         };
     }

@@ -1,0 +1,114 @@
+@using System.Text.Json
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Responses
+@using TCSA.V2026.Services
+
+<MudDialog Style="min-width: 400px;">
+    <DialogContent>
+        <MudText Typo="Typo.h6">Accountability Buddy</MudText>
+        <MudText Typo="Typo.body2" Class="mb-3">
+            Pick your pledge and deadline. Miss it, and you pay.
+        </MudText>
+
+        <MudStack Spacing="2">
+            <!-- Pledge slider -->
+            <MudText Typo="Typo.subtitle2">Pledge amount: <b>$@PledgeAmount</b></MudText>
+            <MudSlider T="int"
+                       Min="5"
+                       Max="10"
+                       Step="1"
+                       @bind-Value="PledgeAmount"
+                       Disabled="@IsBusy"
+                       ValueLabel="true"
+                       Color="Color.Primary" />
+
+            <MudNumericField T="int"
+                             Label="Deadline (days)"
+                             HelperText="Choose between 2 and 14 days"
+                             Min="2"
+                             Max="14"
+                             Immediate="true"
+                             @bind-Value="DeadlineDays"
+                             Disabled="@IsBusy"
+                             Variant="Variant.Outlined" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Filled"
+                   OnClick="Submit"
+                   Disabled="@IsBusy"
+                   StartIcon="@Icons.Material.Filled.Security">
+            @(IsBusy ? "Starting..." : "Activate")
+        </MudButton>
+
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Inject] public IDialogService DialogService{ get; set; } = default!;
+    [Inject] public ISnackbar Snackbar { get; set; } = default!;
+    [Inject] public IAccountabilityBuddyService AccountabilityBuddyService { get; set; } = default!;
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public int ProjectId { get; set; }
+    [Parameter] public string UserId { get; set; }
+    [Parameter] public string Email { get; set; }
+
+    private string? ErrorMessage { get; set; }
+    public bool IsBusy = false;
+    private int DeadlineDays { get; set; } = 7;
+    private int PledgeAmount { get; set; } = 5;
+
+    protected override void OnParametersSet()
+    {
+
+    }
+
+    private async Task Submit() 
+    {
+        ErrorMessage = null;
+        IsBusy = true;
+
+        try
+        {
+            var response = await AccountabilityBuddyService.EnableAsync(new EnableAccountabilityRequest
+            {
+                TcsaUserId = UserId,               
+                Email = Email,
+                ProjectId = ProjectId,
+                PledgeAmount = PledgeAmount,
+                DeadlineDays = DeadlineDays
+            });
+
+            if (!response.IsSuccessful)
+            {
+                ErrorMessage = response.Message ?? "Could not start Stripe Checkout.";
+                return;
+            }
+
+            var data = response.Data as EnableAccountabilityResponse;
+            var checkoutUrl = data?.CheckoutUrl;
+
+            if (string.IsNullOrWhiteSpace(checkoutUrl))
+            {
+                ErrorMessage = "Stripe Checkout URL was not returned.";
+                return;
+            }
+
+            MudDialog.Close(DialogResult.Ok(checkoutUrl));
+
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add("Something went wrong starting Accountability Buddy.", Severity.Error);
+            ErrorMessage = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -15,6 +15,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<DailyStreak> DailyStreaks { get; set; }
     public virtual DbSet<ShowcaseItem> ShowcaseItems { get; set; }
     public virtual DbSet<UserReview> UserReviews { get; set; }
+    public virtual DbSet<UserStripe> UserStripe { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

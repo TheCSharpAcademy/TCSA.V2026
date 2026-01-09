@@ -12,5 +12,19 @@ public static class ChallengePlatformConstants
     {
         public const string BaseUrl = "https://leetcode.com/";
         public const string ProblemsUrl = $"{BaseUrl}problems/";
+        public const string GraphQLEndpoint = $"{BaseUrl}graphql";
+
+        public static class Queries
+        {
+            public const string GetRecentSubmissions = """
+                query($username: String!) {
+                    recentAcSubmissionList(username: $username) {
+                        title
+                        titleSlug
+                        statusDisplay
+                    }
+                }
+                """;
+        }
     }
 }

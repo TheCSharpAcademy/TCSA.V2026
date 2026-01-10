@@ -1,3 +1,5 @@
+@using Microsoft.Extensions.Options
+@using TCSA.V2026.Data.Models.Options
 @implements IDisposable
 
 @inject NavigationManager NavigationManager
@@ -81,7 +83,7 @@
                     Challenges
                 </MudNavLink>
             </MudNavGroup>
-            <MudNavLink Href="https://thecsharpschool.getlearnworlds.com/subscription/the-c-academy-membership"
+            <MudNavLink Href="@LinkOptions.Value.VipMembership"
                         Match="NavLinkMatch.Prefix"
                         Target="_blank"
                         Icon="@Icons.Material.Filled.School"
@@ -127,6 +129,8 @@
 
 
 @code {
+    [Inject] private IOptions<LinksOptions> LinkOptions { get; set; }
+
     private string? currentUrl;
 
     protected override void OnInitialized()

@@ -51,17 +51,19 @@ public class FeedService : IFeedService
                 Date = u.CreatedDate
             });
 
-        var allItems = await activitiesQuery
+        var query = activitiesQuery
             .Union(usersQuery)
             .OrderByDescending(f => f.Date)
-            .AsNoTracking()
-            .ToListAsync();
+            .AsNoTracking();
 
-        var totalItems = allItems.Count;
+        var totalItems = await query.CountAsync();
 
-        var pagedItems = allItems
-            .Skip((pageNumber - 1) * PagingConstants.FeedPageSize)
-            .Take(PagingConstants.FeedPageSize)
+        var pageRows = await query
+        .Skip((pageNumber - 1) * PagingConstants.FeedPageSize)
+        .Take(PagingConstants.FeedPageSize)
+        .ToListAsync();
+
+        var pagedItems = pageRows
             .Select(f => new FeedDisplay
             {
                 User = f.User,

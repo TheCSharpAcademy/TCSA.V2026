@@ -5,81 +5,82 @@
 <MudNavMenu Dense="true">
     <MudNavLink Href="" IconColor="Color.Primary" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavLink Href="Gallery" IconColor="Color.Primary" Icon="@Icons.Material.Filled.Bento">Gallery</MudNavLink>
-    <AuthorizeView>
-        <Authorized>
-            <MudNavLink 
-                Href="Dashboard" 
-                Match="NavLinkMatch.All" 
-                Icon="@Icons.Material.Filled.Dashboard"
-                IconColor="Color.Primary">
-                Dashboard
-            </MudNavLink>
-            <MudNavLink Href="Dashboard/profile"
-                        Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.VerifiedUser"
-                        IconColor="Color.Primary">
-                Profile
-            </MudNavLink>
-            <MudNavLink Href="Dashboard/Roadmap"
-                        Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.Map"
-                        IconColor="Color.Primary">
-                Roadmap
-            </MudNavLink>
-            <MudNavLink Href="Dashboard/Leaderboard"
-                        Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.Leaderboard"
-                        IconColor="Color.Primary">
-                Leaderboard
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Activity" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.Hiking"
-                IconColor="Color.Primary">
-                Activity
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Community" 
+    <MudNavLink Href="Feed"
                 Match="NavLinkMatch.Prefix"
-                Icon="@Icons.Material.Filled.Groups"
+                Icon="@Icons.Material.Filled.Feed"
                 IconColor="Color.Primary">
-                Community
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Reviews" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.RateReview"
-                IconColor="Color.Primary">
-                Peer Reviews
-            </MudNavLink>
-            <MudNavLink 
-                Href="Dashboard/Courses" 
-                Match="NavLinkMatch.Prefix" 
-                Icon="@Icons.Material.Filled.LibraryBooks"
-                IconColor="Color.Primary">
-                Courses
-            </MudNavLink>
-            <MudNavLink 
-                Href="Articles/articles" 
-                Match="NavLinkMatch.Prefix" 
+        Community Feed
+    </MudNavLink>
+    <MudNavLink Href="Articles/articles"
+                Match="NavLinkMatch.Prefix"
                 Icon="@Icons.Material.Filled.Newspaper"
                 IconColor="Color.Primary">
-                Articles
-            </MudNavLink>
-            <MudNavLink 
-                Href="Articles/blog" 
-                Match="NavLinkMatch.Prefix" 
+        Articles
+    </MudNavLink>
+    <MudNavLink Href="Articles/blog"
+                Match="NavLinkMatch.Prefix"
                 Icon="@Icons.Material.Filled.Book"
                 IconColor="Color.Primary">
-                Blog
-            </MudNavLink>
-            <MudNavLink Href="Dashboard/Challenges"
-                        Match="NavLinkMatch.Prefix"
-                        Icon="@Icons.Material.Filled.Sports"
-                        IconColor="Color.Primary">
-                Challenges
-            </MudNavLink>
+        Blog
+    </MudNavLink>
+    <AuthorizeView>
+        <Authorized>
+            <MudNavGroup Title="Dashboard" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Primary">
+                <MudNavLink Href="Dashboard"
+                            Match="NavLinkMatch.All"
+                            Icon="@Icons.Material.Filled.GridView"
+                            IconColor="Color.Primary">
+                    Overview
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/profile"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.VerifiedUser"
+                            IconColor="Color.Primary">
+                    Profile
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Roadmap"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.Map"
+                            IconColor="Color.Primary">
+                    Roadmap
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Leaderboard"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.Leaderboard"
+                            IconColor="Color.Primary">
+                    Leaderboard
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Activity"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.Hiking"
+                            IconColor="Color.Primary">
+                    Activity
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Community"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.Groups"
+                            IconColor="Color.Primary">
+                    Community
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Reviews"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.RateReview"
+                            IconColor="Color.Primary">
+                    Peer Reviews
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Courses"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.LibraryBooks"
+                            IconColor="Color.Primary">
+                    Courses
+                </MudNavLink>
+                <MudNavLink Href="Dashboard/Challenges"
+                            Match="NavLinkMatch.Prefix"
+                            Icon="@Icons.Material.Filled.Sports"
+                            IconColor="Color.Primary">
+                    Challenges
+                </MudNavLink>
+            </MudNavGroup>
             <MudNavLink Href="https://thecsharpschool.getlearnworlds.com/subscription/the-c-academy-membership"
                         Match="NavLinkMatch.Prefix"
                         Target="_blank"

@@ -1,4 +1,6 @@
-﻿namespace TCSA.V2026.Data.Models;
+﻿using TCSA.V2026.Data.Models.Enums;
+
+namespace TCSA.V2026.Data.Models;
 
 public sealed class UserStripe
 {
@@ -18,6 +20,5 @@ public sealed class UserStripe
 
     // Optional: helps you handle edge cases / retries / UI states
     //[MaxLength(50)]
-    public string Status { get; set; } = "Pending"; // Pending|Active|NeedsAction|Disabled
+    public AccountabilityStatus Status { get; set; }
 }
-

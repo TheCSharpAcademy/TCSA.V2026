@@ -115,7 +115,7 @@
     }
 </MudGrid>
 
-@code {
+    @code {
     [Inject] NavigationManager NavigationManager { get; set; }
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
@@ -160,10 +160,24 @@
         }
         else
         {
-            SnackbarService.Add("There was an error", Severity.Error);
+            SnackbarService.Add(response.Message, Severity.Error);
         }
 
         IsCompleted = await ProjectService.IsProjectCompleted(UserId, ArticleId);
+        if (response.Status == Data.Models.Responses.ResponseStatus.Success)
+        {
+            if (Article.Id != Course.Articles.Last().Id)
+            {
+                var nextArticle = Course.Articles
+                .Where(a => a.CourseDisplayId.Value == ArticleDisplayId + 1)
+                .First();
+                NavigateToArticle(Article.CourseDisplayId.Value + 1, nextArticle.Id,false);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/dashboard/Courses");
+            }
+        }
     }
 
     protected async override Task OnParametersSetAsync()

@@ -10,9 +10,12 @@ using TCSA.V2026.Components.Account;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Helpers;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Data.Models.Options;
 using TCSA.V2026.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<LinksOptions>(builder.Configuration.GetSection("Links"));
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -52,6 +55,7 @@ builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IGithubService, GithubService>();
 builder.Services.AddScoped<IGalleryService, GalleryService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddScoped<IFeedService, FeedService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICustomEmailSender, EmailSender>();
 

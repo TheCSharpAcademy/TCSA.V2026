@@ -1,4 +1,4 @@
-﻿using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.DTOs;
 using TCSA.V2026.Data.Helpers.ProjectsSubHelpers;
 using TCSA.V2026.Data.Models;
 
@@ -26,6 +26,18 @@ public static class ProjectHelper
             .Concat(OpenSourceProjectsHelper.GetProjects())
             .Concat(DockerProjectsHelper.GetProjects())
             .ToList();
+    }
+
+    public static string GetProjectIconUrl(int projectId)
+    {
+        var project = GetProjects().FirstOrDefault(p => p.Id == projectId);
+        return project != null ? project.IconUrl : string.Empty;
+    }
+
+    public static string GetProjectName(int projectId)
+    {
+        var project = GetProjects().FirstOrDefault(p => p.Id == projectId);
+        return project != null ? project.Title : string.Empty;
     }
 
     public static List<ShowcaseProjectInfo> GetProjectInfos()

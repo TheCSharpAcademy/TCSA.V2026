@@ -140,7 +140,8 @@ public enum ArticleName
     AzureFunctions = 100000,
 
     BreweryApi = 64,
-    Flagship = 139, 
+    Flagship = 139,
+    BuildAGame = 100003,
 
     DockerIntro = 100002,
 

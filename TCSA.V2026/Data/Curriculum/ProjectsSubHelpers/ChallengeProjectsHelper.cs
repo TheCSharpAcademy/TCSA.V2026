@@ -72,6 +72,46 @@ internal static class ChallengeProjectsHelper
                     "Create a separate project with a front-end of your choice. Provide instructions on how to run it. <b>(Bonus: 50XPs)</b>"
                 }
             },
+             new Project
+             {
+                Id = (int) ArticleName.BuildAGame,
+                Title = "Build a Game",
+                IconUrl = "icons8-board-game-64.png",
+                BannerUrl = "buildagame-banner.jpg",
+                Slug = "build-a-game",
+                LanguageHeadings = new EnglishHeadings(),
+                ExperiencePoints = 50,
+                Description = "Build a game of your choice with .NET",
+                Area = Area.MonthlyChallenge,
+                Introduction = new List<Paragraph>
+                {
+                    new Paragraph
+                    {
+                        Body="A lot of people start programming to build their own games. When it comes to .NET, we usually think that to achieve that we need sophisticated engines. While this is true for complex games, there are a lot of simple, yet incredibly fun games that can be created without engines. Think Chess, Poker, Wordle, just to name a few. In this project, your objective is to create any game you want using C# and the .NET ecosystem — but no game engines (so no Unity, no Godot, etc.). It can be a game that already exists or something entirely new. Time to get creative!"
+                    }
+                },
+                Requirements = new List<string>
+                {
+                    @"Your project must be written in .NET/C# and can't use Unity/Godot.",
+                    @"Your game must have a clear objective (how to win) and a game over condition (how to lose).",
+                    @"You must present the a menu to the user where they can start the game, view game history/stats and quit the app.",
+                    @"You must handle errors (no crashing on invalid input)",
+                    @"You need to include a unit test project with tests you think are relevant.",
+                    @"You need to provide a Readme with information on how to run your project and detailing your thought process. This is extremely useful for your learning. Science shows self-reflection goes a long way in retention and motivation. Plus you'll be working on your communication skills.",
+                    @"You don’t need a database. History can reset when the app closes."
+
+                },
+                RequirementsConclusion = "You can use any technology you want, as long as .NET/C# is involved. Console? WPF? MAUI? Avalonia? Blazor? Winforms? Totally up to you.",
+                Tips = new List<string>
+                {
+                    "Start tiny: build the menu + one playable round before adding features.",
+                    "If you create a game that already exists, add a tweak to make it feel more personal.",
+                    "Keep your logic separated:UI layer (Console/WPF/WinForms/etc.), Game rules (movement, scoring, win/lose checks), Storage (history list)",
+                    "Make the game replayable without restarting the app.",
+                    "Before starting to build, do the following exercise: Go for a walk for at least 30 minutes, no devices, no music, only a small notebook or piece of paper with something to write on. Write down your ideas as they come.",
+                },
+                RepositoryLink = "https://github.com/TheCSharpAcademy/CodeReviews.BuildGameChallenge"
+            },
         };
     }
 }

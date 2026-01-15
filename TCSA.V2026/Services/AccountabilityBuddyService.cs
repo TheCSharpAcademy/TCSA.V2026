@@ -1,0 +1,148 @@
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Stripe;
+using Stripe.Checkout;
+using TCSA.AccountabilityMate.Models.Domain;
+using TCSA.V2026.Data;
+using TCSA.V2026.Data.Enums;
+using TCSA.V2026.Data.Models;
+using TCSA.V2026.Data.Models.Options;
+using TCSA.V2026.Data.Models.Responses;
+
+namespace TCSA.V2026.Services;
+
+public interface IAccountabilityBuddyService
+{
+    Task<ServiceResponse<EnableAccountabilityResponse>> EnableAsync(EnableAccountabilityRequest request);
+}
+
+public class AccountabilityBuddyService : IAccountabilityBuddyService
+{
+    private readonly IDbContextFactory<ApplicationDbContext> _factory;
+    private readonly IStripeClient _stripeClient;
+    IOptions<StripeOptions> _stripeOptions;
+
+    public AccountabilityBuddyService(
+        IDbContextFactory<ApplicationDbContext> factory, 
+        IHttpClientFactory httpClientFactory)
+    {
+        _factory = factory;
+    }
+
+
+    public async Task<ServiceResponse<EnableAccountabilityResponse>> EnableAsync(EnableAccountabilityRequest request)
+    {
+        var serviceResponse = ValidateRequest(request);
+        if (!serviceResponse.IsSuccessful) return serviceResponse;
+
+        using var _context = await _factory.CreateDbContextAsync();
+        var account = await _context.UserStripe.FirstOrDefaultAsync(x => x.AppUserId == request.TcsaUserId);
+
+        if (account is null)
+        {
+            account = new UserStripe
+            {
+                AppUserId = request.TcsaUserId,
+                Status = AccountabilityStatus.Pending,
+                CreatedUtc = DateTime.UtcNow,
+                UpdatedUtc = DateTime.UtcNow
+            };
+
+            _context.UserStripe.Add(account);
+            await _context.SaveChangesAsync();
+        }
+
+        if (string.IsNullOrWhiteSpace(account.StripeCustomerId))
+        {
+            var customerService = new CustomerService(_stripeClient);
+
+            var customer = await customerService.CreateAsync(new CustomerCreateOptions
+            {
+                Email = request.Email,
+                Metadata = new Dictionary<string, string>
+                {
+                    ["app_user_id"] = request.TcsaUserId.ToString()
+                }
+            });
+
+            account.StripeCustomerId = customer.Id;
+            account.UpdatedUtc = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+        }
+
+        var sessionService = new SessionService(_stripeClient);
+
+        var session = await sessionService.CreateAsync(new SessionCreateOptions
+        {
+            Mode = "setup",
+            Customer = account.StripeCustomerId,
+            Currency = "usd",
+
+            ClientReferenceId = request.TcsaUserId.ToString(),
+
+            ConsentCollection = new SessionConsentCollectionOptions
+            {
+                PaymentMethodReuseAgreement = new SessionConsentCollectionPaymentMethodReuseAgreementOptions
+                {
+                    Position = "auto"
+                }
+            },
+
+            SetupIntentData = new SessionSetupIntentDataOptions
+            {
+                Description = "TCSA AccountabilityMate - save payment method",
+                Metadata = new Dictionary<string, string>
+                {
+                    ["app_user_id"] = request.TcsaUserId.ToString(),
+                    ["purpose"] = "accountability_setup"
+                }
+            },
+            SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/success?session_id={{CHECKOUT_SESSION_ID}}",
+            CancelUrl = $"{_stripeOptions.Value.BaseUrl}/cancel",
+        });
+
+        account.Status = AccountabilityStatus.Pending;
+        account.UpdatedUtc = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+
+        return new ServiceResponse<EnableAccountabilityResponse>
+        {
+            IsSuccessful = true,
+            Message = "Redirect the user to Stripe Checkout to save a payment method.",
+            Data = new EnableAccountabilityResponse
+            {
+                StripeCustomerId = account.StripeCustomerId,
+                CheckoutSessionId = session.Id,
+                CheckoutUrl = session.Url
+            }
+        };
+    }
+
+    private ServiceResponse<EnableAccountabilityResponse> ValidateRequest(EnableAccountabilityRequest request)
+    {
+        var result = new ServiceResponse<EnableAccountabilityResponse>();
+
+        if (request is null)
+        {
+            return new ServiceResponse<EnableAccountabilityResponse>
+            {
+                IsSuccessful = false,
+                Message = "Request cannot be null."
+            };
+        }
+
+        if (string.IsNullOrWhiteSpace(request.TcsaUserId))
+        {
+            return new ServiceResponse<EnableAccountabilityResponse>
+            {
+                IsSuccessful = false,
+                Message = "TcsaUserId is required."
+            };
+        }
+
+        result.IsSuccessful = true;
+
+        return result;
+    }
+}

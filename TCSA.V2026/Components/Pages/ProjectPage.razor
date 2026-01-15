@@ -1,5 +1,6 @@
 @page "/project/{ProjectId:int}/{ProjectSlug}"
 @using System.Security.Claims
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
@@ -256,17 +257,22 @@
                             </MudList>
                         }
                     }
+
                 </MudPaper>
             </MudItem>
         </MudGrid>
     }
 </MudContainer>
 
-@code {
+    @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
     [Inject] private ICodewarsService CodewarsService { get; set; }
+
+    [Inject] private IDialogService DialogService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
 
     [Parameter] public string ProjectSlug { get; set; }
     [Parameter] public int ProjectId { get; set; }
@@ -280,11 +286,37 @@
     private ProjectStatus Status { get; set; } = ProjectStatus.None;
 
     private string UserId = string.Empty;
+    private string UserEmail = string.Empty;
     private bool CodeWarsNotFoundShowing = false;
 
     protected async override Task OnInitializedAsync()
     {
         await OnParametersSetAsync();
+    }
+
+    private async Task OpenAccountabilityDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        var parameters = new DialogParameters<TCSAAccountabilityBuddyDialog>
+        {
+            { p => p.ProjectId, ProjectId },
+            { p => p.Email, UserEmail },
+            { p => p.UserId, UserId }
+        };
+
+        var dialog = await DialogService.ShowAsync<TCSAAccountabilityBuddyDialog>("Accountability Buddy", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Canceled)
+            return;
+
+        if (result.Data is string checkoutUrl && !string.IsNullOrWhiteSpace(checkoutUrl))
+        {
+            // forceLoad is important for external navigation
+            NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
+            return;
+        }
     }
 
     private string GetBanner()
@@ -344,6 +376,7 @@
             IsLoggedIn = true;
             var claims = AuthSate.User;
             UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserEmail = claims.FindFirstValue(ClaimTypes.Email);
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
         }

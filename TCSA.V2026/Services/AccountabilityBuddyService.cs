@@ -24,9 +24,13 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
     IOptions<StripeOptions> _stripeOptions;
 
     public AccountabilityBuddyService(
-        IDbContextFactory<ApplicationDbContext> factory, 
-        IHttpClientFactory httpClientFactory)
+        IDbContextFactory<ApplicationDbContext> factory,
+        IOptions<StripeOptions> stripeOptions,
+        IHttpClientFactory httpClientFactory,
+        IStripeClient stripeClient)
     {
+        _stripeOptions = stripeOptions;
+        _stripeClient = stripeClient;   
         _factory = factory;
     }
 

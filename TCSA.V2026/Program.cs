@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MudBlazor;
 using MudBlazor.Services;
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
+using Stripe;
 using TCSA.V2026.Components;
 using TCSA.V2026.Components.Account;
 using TCSA.V2026.Data;
@@ -16,16 +18,10 @@ using TCSA.V2026.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<LinksOptions>(builder.Configuration.GetSection("Links"));
+builder.Services.Configure<StripeOptions>(builder.Configuration.GetSection("Stripe"));
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-
-builder.Services.AddApplicationInsightsTelemetry();
-
-builder.Services.AddApplicationInsightsTelemetry(options =>
-{
-    options.ConnectionString = builder.Configuration["Values:LoggingString"];
-});
 
 builder.Services.AddMudServices(config =>
 {
@@ -41,6 +37,13 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddSingleton<IStripeClient>(sp =>
+{
+    var stripeOptions = sp.GetRequiredService<IOptions<StripeOptions>>().Value;
+
+    return new StripeClient(stripeOptions.ApiKey);
+});
 
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUserService, UserService>();

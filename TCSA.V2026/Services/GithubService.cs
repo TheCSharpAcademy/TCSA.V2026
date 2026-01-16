@@ -15,15 +15,8 @@ public interface IGithubService
     Task<BaseResponse> ProcessPullRequest(PullRequestDto pullRequestDto);
 }
 
-public class GithubService : IGithubService
+public class GithubService(IDbContextFactory<ApplicationDbContext> _factory) : IGithubService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public GithubService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<BaseResponse> ProcessPullRequest(PullRequestDto pullRequestDto)
     {
         if (!pullRequestDto.Action.Equals("opened"))

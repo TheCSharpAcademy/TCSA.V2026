@@ -19,15 +19,8 @@ public interface IProjectService
     Task<BaseResponse> AcknowledgeNotifications(string userId);
 }
 
-public class ProjectService : IProjectService
+public class ProjectService(IDbContextFactory<ApplicationDbContext> _factory) : IProjectService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public ProjectService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<BaseResponse> AcknowledgeNotifications(string userId)
     {
         try

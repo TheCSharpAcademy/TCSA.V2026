@@ -14,15 +14,8 @@ public interface ICommunityService
     Task<BaseResponse> CreateIssue(IssueType type, string issueUrl, string Title, string userId);
 }
 
-public class CommunityService : ICommunityService
+public class CommunityService(IDbContextFactory<ApplicationDbContext> _factory): ICommunityService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public CommunityService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<BaseResponse> CreateIssue(IssueType type, string issueUrl, string title, string userId)
     {
         string iconUrl = type switch

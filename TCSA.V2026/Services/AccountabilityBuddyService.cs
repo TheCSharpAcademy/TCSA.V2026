@@ -129,20 +129,16 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
 
         if (request is null)
         {
-            return new ServiceResponse<EnableAccountabilityResponse>
-            {
-                IsSuccessful = false,
-                Message = "Request cannot be null."
-            };
+            result.IsSuccessful = false;
+            result.Message = "Request cannot be null.";
+            return result;  
         }
 
         if (string.IsNullOrWhiteSpace(request.TcsaUserId))
         {
-            return new ServiceResponse<EnableAccountabilityResponse>
-            {
-                IsSuccessful = false,
-                Message = "TcsaUserId is required."
-            };
+            result.IsSuccessful = false;
+            result.Message = "TcsaUserId is required.";
+            return result;
         }
 
         result.IsSuccessful = true;

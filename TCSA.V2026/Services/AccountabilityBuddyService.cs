@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
-using TCSA.AccountabilityMate.Models.Domain;
+using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
@@ -15,6 +15,7 @@ namespace TCSA.V2026.Services;
 public interface IAccountabilityBuddyService
 {
     Task<ServiceResponse<EnableAccountabilityResponse>> EnableAsync(EnableAccountabilityRequest request);
+    Task<ServiceResponse<UserAccountabilityProject>> GetUserAccountability(string userId, int projectId);
 }
 
 public class AccountabilityBuddyService : IAccountabilityBuddyService
@@ -34,6 +35,26 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
         _factory = factory;
     }
 
+    public async Task<ServiceResponse<UserAccountabilityProject>> GetUserAccountability(string userId, int projectId)
+    {
+        var response = new ServiceResponse<UserAccountabilityProject>();
+
+        using var _context = await _factory.CreateDbContextAsync();
+        var accountability = await _context.UserAccountabilityProjects
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.AppUserId == userId && x.ProjectId == projectId);
+
+        if (accountability is null)
+        {
+            response.IsSuccessful = true;
+            response.Message = "No accountability found for the specified user and project.";
+            return response;
+        }
+
+        response.IsSuccessful = true;
+        response.Data = accountability;
+        return response;
+    }
 
     public async Task<ServiceResponse<EnableAccountabilityResponse>> EnableAsync(EnableAccountabilityRequest request)
     {
@@ -41,8 +62,9 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
         if (!serviceResponse.IsSuccessful) return serviceResponse;
 
         using var _context = await _factory.CreateDbContextAsync();
-        var account = await _context.UserStripe.FirstOrDefaultAsync(x => x.AppUserId == request.TcsaUserId);
 
+        // 1) Ensure mapping row exists
+        var account = await _context.UserStripe.FirstOrDefaultAsync(x => x.AppUserId == request.TcsaUserId);
         if (account is null)
         {
             account = new UserStripe
@@ -57,6 +79,7 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
             await _context.SaveChangesAsync();
         }
 
+        // 2) Ensure Stripe customer exists
         if (string.IsNullOrWhiteSpace(account.StripeCustomerId))
         {
             var customerService = new CustomerService(_stripeClient);
@@ -75,6 +98,40 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
             await _context.SaveChangesAsync();
         }
 
+        var accountability = new UserAccountabilityProject
+        {
+            AppUserId = request.TcsaUserId.ToString(),     
+            ProjectId = request.ProjectId,
+            CreatedUtc = DateTime.UtcNow,
+            DeadLineUtc = DateTime.UtcNow.AddDays(request.DeadlineDays),
+            Status = AccountabilityProjectStatus.Active,
+            Currency = "usd",
+            PledgeCents = request.PledgeAmount * 100            
+        };
+
+        _context.UserAccountabilityProjects.Add(accountability);
+        await _context.SaveChangesAsync(); // <-- generates accountability.Id
+
+        // 4) If payment method already saved, no redirect needed
+        if (!string.IsNullOrWhiteSpace(account.StripePaymentMethodId))
+        {
+            account.Status = AccountabilityStatus.Active;
+            account.UpdatedUtc = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return new ServiceResponse<EnableAccountabilityResponse>
+            {
+                IsSuccessful = true,
+                Message = "Accountability Buddy activated.",
+                Data = new EnableAccountabilityResponse
+                {
+                    StripeCustomerId = account.StripeCustomerId,
+                    CheckoutSessionId = null,
+                    CheckoutUrl = null
+                }
+            };
+        }
+
         var sessionService = new SessionService(_stripeClient);
 
         var session = await sessionService.CreateAsync(new SessionCreateOptions
@@ -82,7 +139,6 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
             Mode = "setup",
             Customer = account.StripeCustomerId,
             Currency = "usd",
-
             ClientReferenceId = request.TcsaUserId.ToString(),
 
             ConsentCollection = new SessionConsentCollectionOptions
@@ -99,7 +155,11 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
                 Metadata = new Dictionary<string, string>
                 {
                     ["app_user_id"] = request.TcsaUserId.ToString(),
-                    ["purpose"] = "accountability_setup"
+                    ["purpose"] = "accountability_setup",
+                    ["accountability_project_id"] = accountability.Id.ToString(),
+                    ["project_id"] = request.ProjectId.ToString(),
+                    ["pledge_cents"] = accountability.PledgeCents.ToString(),
+                    ["deadline_utc"] = accountability.DeadLineUtc.ToString("O")
                 }
             },
             SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/success?session_id={{CHECKOUT_SESSION_ID}}",

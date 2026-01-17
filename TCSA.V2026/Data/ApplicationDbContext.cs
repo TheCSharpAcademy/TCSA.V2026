@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TCSA.AccountabilityMate.Models.Domain;
+using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Data;
@@ -17,6 +17,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<ShowcaseItem> ShowcaseItems { get; set; }
     public virtual DbSet<UserReview> UserReviews { get; set; }
     public virtual DbSet<UserStripe> UserStripe { get; set; }
+    public virtual DbSet<UserAccountabilityProject> UserAccountabilityProjects { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

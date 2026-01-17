@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
+using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models.Options;
@@ -25,6 +26,7 @@ public class StripeWebhookController(
         var signatureHeader = Request.Headers["Stripe-Signature"];
 
         Event stripeEvent;
+
         try
         {
             stripeEvent = EventUtility.ConstructEvent(
@@ -52,34 +54,47 @@ public class StripeWebhookController(
             var paymentMethodId = setupIntent.PaymentMethodId;
             var stripeCustomerId = setupIntent.CustomerId ?? session.CustomerId;
 
-            Guid appUserId;
-
-            if (Guid.TryParse(session.ClientReferenceId, out appUserId))
+            int accountabilityProjectId = 0;
+            if (setupIntent.Metadata is not null &&
+                setupIntent.Metadata.TryGetValue("accountability_project_id", out var apIdRaw))
             {
-                var map = await _context.UserStripe.FindAsync(appUserId);
+                int.TryParse(apIdRaw, out accountabilityProjectId);
+            }
 
-                if (map is not null)
+            UserStripe? map = null;
+
+            if (!string.IsNullOrEmpty(session.ClientReferenceId))
+            {
+                map = await _context.UserStripe.FirstOrDefaultAsync(x => x.AppUserId == session.ClientReferenceId);
+            }
+            else if (!string.IsNullOrWhiteSpace(stripeCustomerId))
+            {
+                map = await _context.UserStripe.FirstOrDefaultAsync(x => x.StripeCustomerId == stripeCustomerId);
+            }
+
+            if (map is not null)
+            {
+                if (string.IsNullOrWhiteSpace(map.StripePaymentMethodId) ||
+                    map.StripePaymentMethodId != paymentMethodId)
                 {
                     map.StripeCustomerId = stripeCustomerId ?? map.StripeCustomerId;
                     map.StripePaymentMethodId = paymentMethodId;
                     map.Status = AccountabilityStatus.Active;
                     map.UpdatedUtc = DateTime.UtcNow;
-                    await _context.SaveChangesAsync();
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(stripeCustomerId))
-            {
-                var map = await _context.UserStripe
-                    .FirstOrDefaultAsync(x => x.StripeCustomerId == stripeCustomerId);
 
-                if (map is not null)
+            if (accountabilityProjectId > 0)
+            {
+                var ap = await _context.UserAccountabilityProjects.FindAsync(accountabilityProjectId);
+
+                if (ap is not null)
                 {
-                    map.StripePaymentMethodId = paymentMethodId;
-                    map.Status = AccountabilityStatus.Active;
-                    map.UpdatedUtc = DateTime.UtcNow;
-                    await _context.SaveChangesAsync();
+                    ap.PaymentMethodConfirmedUtc ??= DateTime.UtcNow;
                 }
             }
+
+            await _context.SaveChangesAsync();
         }
 
         return Ok();

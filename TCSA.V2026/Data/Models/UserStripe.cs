@@ -1,6 +1,6 @@
 ﻿using TCSA.V2026.Data.Enums;
 
-namespace TCSA.AccountabilityMate.Models.Domain;
+namespace TCSA.AccountabilityMate.Models;
 
 public sealed class UserStripe
 {

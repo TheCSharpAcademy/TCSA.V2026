@@ -1,5 +1,6 @@
 @page "/project/{ProjectId:int}/{ProjectSlug}"
 @using System.Security.Claims
+@using TCSA.AccountabilityMate.Models
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
@@ -258,6 +259,26 @@
                         }
                     }
 
+@*                     @if (AccountabilityBuddyInfo == null)
+                    {
+                        <MudButton Class="mt-2 ml-5 mr-5"
+                                   Size="@Size.Medium"
+                                   Variant="@Variant.Filled"
+                                   OnClick="@(() => OpenAccountabilityDialog())"
+                                   Color="Color.Primary"
+                                   StartIcon="fas fa-eye">
+                            Set Up Accountability Buddy
+                        </MudButton>
+                    }
+                    else
+                    {
+                        <MudAlert Class="mt-5" 
+                                  Severity="Severity.Warning" 
+                                  Elevation="2">
+                                  You've set up the accountability buddy for this project'.
+                              </MudAlert>
+                    } *@
+
                 </MudPaper>
             </MudItem>
         </MudGrid>
@@ -267,6 +288,7 @@
     @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IAccountabilityBuddyService AccountabilityBuddyService { get; set; }
     [Inject] private ICodewarsService CodewarsService { get; set; }
 
     [Inject] private IDialogService DialogService { get; set; }
@@ -284,6 +306,7 @@
     private bool IsLoading = false;
     private bool IsPendingReview = false;
     private ProjectStatus Status { get; set; } = ProjectStatus.None;
+    private UserAccountabilityProject AccountabilityBuddyInfo = null;
 
     private string UserId = string.Empty;
     private string UserEmail = string.Empty;
@@ -379,6 +402,11 @@
             UserEmail = claims.FindFirstValue(ClaimTypes.Email);
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
+            var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);
+            if (accountabilityResponse.IsSuccessful)
+            {
+                AccountabilityBuddyInfo = accountabilityResponse.Data;
+            };
         }
 
         if (!IsCompleted && Project.Area == Area.SQL)

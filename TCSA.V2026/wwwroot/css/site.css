@@ -118,3 +118,20 @@
     white-space: nowrap;
     border: 0;
 }
+
+.external-email-wrap {
+    width: 100% !important;
+    max-width: 520px !important; /* increase if you want */
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+    /* Force the floating container and input to stretch */
+.external-email-wrap .form-floating {
+        width: 100% !important;
+    }
+
+deep .external-email-wrap .form-floating > .form-control {
+            width: 100% !important;
+            min-width: 100% !important;
+        }

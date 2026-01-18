@@ -32,7 +32,13 @@ else
         <MudDataGrid Items="@FilteredAdminPendingProjects" RowStyle="GetRowStyle">
             <Columns>
                 <PropertyColumn Property="x => x.DateSubmitted" Title="DateTime" />
-                <PropertyColumn Property="x => x.DateChangesRequested" Title="Changes" />
+                <TemplateColumn Title="DateTime">
+                    <CellTemplate>
+                        <MudText Style="@(context.Item.DateChangesRequested?.Contains("01-Jan") == false ? "color:red;" : null)">
+                            @context.Item.DateChangesRequested
+                        </MudText>
+                    </CellTemplate>
+                </TemplateColumn>
                 <PropertyColumn Property="x => x.ReviewerName" Title="Changes" />
                 <PropertyColumn Property="x => x.ProjectName" Title="Name" />
                 <PropertyColumn Property="x => x.UserName" Title="Username" />

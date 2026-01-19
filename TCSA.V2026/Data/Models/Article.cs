@@ -188,5 +188,6 @@ public enum ArticleReference
     DryPrinciple = 30006,
     DotnetNames = 30007,
     ContributingToAcademy = 30008,
-    UnitTesting = 30009
+    UnitTesting = 30009,
+    AccountabilityBuddy = 30010
 }

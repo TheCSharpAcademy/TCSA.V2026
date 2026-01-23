@@ -10,15 +10,8 @@ public interface IActivityService
 {
     Task DeleteDupe(int activityId);
 }
-public class ActivityService : IActivityService
+public class ActivityService(IDbContextFactory<ApplicationDbContext> _factory) : IActivityService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public ActivityService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task DeleteDupe(int activityId)
     {
         try

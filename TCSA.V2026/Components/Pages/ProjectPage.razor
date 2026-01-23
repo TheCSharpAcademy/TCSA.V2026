@@ -1,7 +1,11 @@
 @page "/project/{ProjectId:int}/{ProjectSlug}"
 @using System.Security.Claims
+@using Microsoft.Extensions.Options
+@using TCSA.AccountabilityMate.Models
+@using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Options
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
@@ -257,17 +261,48 @@
                             </MudList>
                         }
                     }
+
+                    @if (FeatureToggles.Value.AccountabilityBuddy && IsLoggedIn && !IsCompleted) 
+                    {
+                        @if (AccountabilityBuddyInfo == null)
+                        {
+                            <MudButton Class="mt-2 ml-5 mr-5"
+                                       Size="@Size.Medium"
+                                       Variant="@Variant.Filled"
+                                       OnClick="@(() => OpenAccountabilityDialog())"
+                                       Color="Color.Primary"
+                                       StartIcon="fas fa-eye">
+                                Set Up Accountability Buddy
+                            </MudButton>
+                        }
+                        else
+                        {
+                            <MudAlert Class="mt-5"
+                                      Severity="Severity.Warning"
+                                      Elevation="2">
+                                You've set up the accountability buddy for this project'.
+                            </MudAlert>
+                        }
+                    }
+
                 </MudPaper>
             </MudItem>
         </MudGrid>
     }
 </MudContainer>
 
-@code {
+    @code {
     [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
     [Inject] private IProjectService ProjectService { get; set; }
+    [Inject] private IAccountabilityBuddyService AccountabilityBuddyService { get; set; }
     [Inject] private ICodewarsService CodewarsService { get; set; }
+
+    [Inject] private IDialogService DialogService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    [Inject] private IOptions<FeatureToggleOptions> FeatureToggles { get; set; }
+
 
     [Parameter] public string ProjectSlug { get; set; }
     [Parameter] public int ProjectId { get; set; }
@@ -279,13 +314,40 @@
     private bool IsLoading = false;
     private bool IsPendingReview = false;
     private ProjectStatus Status { get; set; } = ProjectStatus.None;
+    private UserAccountabilityProject AccountabilityBuddyInfo = null;
 
     private string UserId = string.Empty;
+    private string UserEmail = string.Empty;
     private bool CodeWarsNotFoundShowing = false;
 
     protected async override Task OnInitializedAsync()
     {
         await OnParametersSetAsync();
+    }
+
+    private async Task OpenAccountabilityDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        var parameters = new DialogParameters<TCSAAccountabilityBuddyDialog>
+        {
+            { p => p.ProjectId, ProjectId },
+            { p => p.Email, UserEmail },
+            { p => p.UserId, UserId }
+        };
+
+        var dialog = await DialogService.ShowAsync<TCSAAccountabilityBuddyDialog>("Accountability Buddy", parameters, options);
+        var result = await dialog.Result;
+
+        if (result.Canceled)
+            return;
+
+        if (result.Data is string checkoutUrl && !string.IsNullOrWhiteSpace(checkoutUrl))
+        {
+            // forceLoad is important for external navigation
+            NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
+            return;
+        }
     }
 
     private string GetBanner()
@@ -345,8 +407,14 @@
             IsLoggedIn = true;
             var claims = AuthSate.User;
             UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserEmail = claims.FindFirstValue(ClaimTypes.Email);
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
+            var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);
+            if (accountabilityResponse.IsSuccessful)
+            {
+                AccountabilityBuddyInfo = accountabilityResponse.Data;
+            };
         }
 
         if (!IsCompleted && Project.Area == Area.SQL)

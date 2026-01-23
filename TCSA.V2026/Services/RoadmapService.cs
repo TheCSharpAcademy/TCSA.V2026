@@ -10,15 +10,8 @@ public interface IRoadmapService
     Task<Level> CalculateUserBelt(string userId);
 }
 
-public class RoadmapService : IRoadmapService
+public class RoadmapService(IDbContextFactory<ApplicationDbContext> _factory) : IRoadmapService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public RoadmapService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<Level> CalculateUserBelt(string userId)
     {
         var userProjects = new HashSet<int>();

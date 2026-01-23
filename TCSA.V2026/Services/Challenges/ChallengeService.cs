@@ -12,15 +12,8 @@ public interface IChallengeService
     Task UpdateStreakInfo(string userId);
 }
 
-public class ChallengeService : IChallengeService
+public class ChallengeService(IDbContextFactory<ApplicationDbContext> _factory) : IChallengeService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public ChallengeService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<List<Challenge>> GetChallenges(Level level)
     {
         using (var context = _factory.CreateDbContext())

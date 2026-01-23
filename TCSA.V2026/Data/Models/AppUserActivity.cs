@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCSA.V2026.Data.Models;
 
@@ -36,5 +36,8 @@ public enum ActivityType
     ChallengeCompleted,
 
     [Display(Name = "New Belt")]
-    NewBelt
+    NewBelt,
+
+    [Display(Name = "New User")]
+    NewUser
 }

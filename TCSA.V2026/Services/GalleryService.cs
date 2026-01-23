@@ -15,15 +15,8 @@ public interface IGalleryService
     Task<BaseResponse> DeleteItem(ShowcaseItemDTO itemToDelete);
 }
 
-public class GalleryService : IGalleryService
+public class GalleryService(IDbContextFactory<ApplicationDbContext> _factory) : IGalleryService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public GalleryService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<BaseResponse> AddItem(ShowcaseItemDTO newItem)
     {
         var response = new BaseResponse

@@ -16,15 +16,8 @@ public interface ILeaderboardService
     Task<List<UserLeaderboardDisplay>> GetUsersForLeaderboard(int pageNumber);
     Task<List<UserReviewLeaderboardDisplay>> GetUserForReviewLeaderboard();
 }
-public class LeaderboardService : ILeaderboardService
+public class LeaderboardService(IDbContextFactory<ApplicationDbContext> _factory) : ILeaderboardService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public LeaderboardService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<List<UserReviewLeaderboardDisplay>> GetUserForReviewLeaderboard()
     {
         var users = new List<ApplicationUser>();

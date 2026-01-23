@@ -18,15 +18,8 @@ public interface IPeerReviewService
     Task<BaseResponse> ReleaseUserFromCodeReview(string userId, int id);
     Task<BaseResponse> MarkCodeReviewAsCompleted(string reviewerId, int dashboardProjectId);
 }
-public class PeerReviewService : IPeerReviewService
+public class PeerReviewService(IDbContextFactory<ApplicationDbContext> _factory) : IPeerReviewService
 {
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-
-    public PeerReviewService(IDbContextFactory<ApplicationDbContext> factory)
-    {
-        _factory = factory;
-    }
-
     public async Task<BaseResponse> AssignUserToCodeReview(string userId, int id)
     {
         var result = new BaseResponse();

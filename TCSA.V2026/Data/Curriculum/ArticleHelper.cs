@@ -49,7 +49,7 @@ public static class ArticleHelper
             },
             new Article
             {
-                Id = 5,
+                Id = (int)ArticleName.StartHere,
                 Title = "Start Here",
                 IconUrl = "icons8-door-80.png",
                 Description = "This is your starting point. Click on the door to find out how the academy works and to read very important tips that will help you in your journey.",
@@ -329,12 +329,12 @@ public static class ArticleHelper
             },
             new Article
             {
-                Id = 6,
+                Id = (int)ArticleName.GettingHelp,
                 Title = "Getting Help",
                 IconUrl = "icons8-helping-96.png",
                 BannerUrl = "",
                 CardImgUrl = "getting-help.png",
-                Slug="getting-help",
+                Slug = "getting-help",
                 Description = "You’ll get stuck. Many times. It’s the life of a developer. Find out how to solve problems like a professional programmer and where to get help.",
                 Area = Area.StartHere,
                 Level = Level.Green,
@@ -345,7 +345,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Introduction",
-                        ImgUrl= "icons8-anxious-96.png",
+                        ImgUrl = "icons8-anxious-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -361,7 +361,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Thought Patterns",
-                        ImgUrl= "icons8-headache-60.png",
+                        ImgUrl = "icons8-headache-60.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -374,14 +374,14 @@ public static class ArticleHelper
                             },
                             new Paragraph
                             {
-                                Body="Remember this: <b>there is a solution</b>. It will take many years of programming to run into problems that haven’t been solved before. So if you stick to it, no matter how long it takes, you will solve it. So let’s see how we solve problems in software development."
+                                Body = "Remember this: <b>there is a solution</b>. It will take many years of programming to run into problems that haven’t been solved before. So if you stick to it, no matter how long it takes, you will solve it. So let’s see how we solve problems in software development."
                             }
                         }
                     },
                     new Block
                     {
                         Title = "Double Check Your Code",
-                        ImgUrl= "icons8-magnifying-glass-64.png",
+                        ImgUrl = "icons8-magnifying-glass-64.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -397,7 +397,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Read The Error",
-                        ImgUrl= "icons8-error-64.png",
+                        ImgUrl = "icons8-error-64.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -409,7 +409,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Look It Up",
-                        ImgUrl= "icons8-google-shopping-96.png",
+                        ImgUrl = "icons8-google-shopping-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -425,7 +425,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Post Your Question",
-                        ImgUrl= "icons8-stack-overflow-96-1.png",
+                        ImgUrl = "icons8-stack-overflow-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -445,7 +445,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Ask Someone",
-                        ImgUrl= "icons8-apologise-96-1.png",
+                        ImgUrl = "icons8-apologise-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -461,7 +461,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Have a Break",
-                        ImgUrl= "icons8-relax-96.png",
+                        ImgUrl = "icons8-relax-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -478,12 +478,12 @@ public static class ArticleHelper
             },
             new Article
             {
-                Id = 7,
+                Id = (int)ArticleName.SettingUp,
                 Title = "Setting Up",
                 IconUrl = "icons8-project-setup-96-1.png",
                 BannerUrl = "",
                 CardImgUrl = "setting-up.png",
-                Slug="setting-up",
+                Slug = "setting-up",
                 Description = "Learn how to set up your develop environment with .NET framework and Visual Studio so you can get ready to start coding.",
                 Area = Area.StartHere,
                 Level = Level.Green,
@@ -494,7 +494,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Introduction",
-                        ImgUrl= "c-logo-icon-28402-1-300x288.png",
+                        ImgUrl = "c-logo-icon-28402-1-300x288.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -514,7 +514,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Code Editor",
-                        ImgUrl= "icons8-visual-studio-2019-96-1.png",
+                        ImgUrl = "icons8-visual-studio-2019-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -534,7 +534,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = ".NET Environment",
-                        ImgUrl= "icons8-visual-studio-2019-96-1.png",
+                        ImgUrl = "icons8-visual-studio-2019-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -557,7 +557,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Source Control",
-                        ImgUrl= "icons8-git-96.png",
+                        ImgUrl = "icons8-git-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -582,7 +582,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Taking Notes",
-                        ImgUrl= "icons8-google-docs-96-1.png",
+                        ImgUrl = "icons8-google-docs-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -603,10 +603,10 @@ public static class ArticleHelper
             },
             new Article
             {
-                Id = 8,
+                Id = (int)ArticleName.Foundations,
                 Title = "C# Foundations",
                 IconUrl = "icons8-sharp-94.png",
-                Slug="foundations",
+                Slug = "foundations",
                 CardImgUrl = "foundations.png",
                 BannerUrl = "",
                 Description = "Dive into basic C# syntax and control flow. You’ll learn just enough theory to have a solid foundation before jumping into our projects.",
@@ -634,7 +634,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "You don't need a lot to start building",
-                        ImgUrl= "icons8-builder-64.png",
+                        ImgUrl = "icons8-builder-64.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -654,7 +654,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Learning With Microsoft and Free Code Camp",
-                        ImgUrl= "icons8-bill-gates-100-1.png",
+                        ImgUrl = "icons8-bill-gates-100-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -708,7 +708,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Creating Your Library",
-                        ImgUrl= "icons8-books-96-1.png",
+                        ImgUrl = "icons8-books-96-1.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -724,7 +724,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "More Videos",
-                        ImgUrl= "external-video-tutorial-online-learning-photo3ideastudio-flat-photo3ideastudio-300x300.png",
+                        ImgUrl = "external-video-tutorial-online-learning-photo3ideastudio-flat-photo3ideastudio-300x300.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -759,7 +759,7 @@ public static class ArticleHelper
                 {
                     new Block
                     {
-                        ImgUrl= "icons8-command-line-96.png",
+                        ImgUrl = "icons8-command-line-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -778,7 +778,7 @@ public static class ArticleHelper
                     },
                     new Block
                     {
-                        ImgUrl= "icons8-console-64.png",
+                        ImgUrl = "icons8-console-64.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -813,7 +813,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "Congratulations",
-                        ImgUrl= "hexternal-celebration-soccer-and-football-match-kosonicon-lineal-color-kosonicon-300x300.png",
+                        ImgUrl = "hexternal-celebration-soccer-and-football-match-kosonicon-lineal-color-kosonicon-300x300.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -825,7 +825,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "What you've learned",
-                        ImgUrl= "icons8-checklist-64.png",
+                        ImgUrl = "icons8-checklist-64.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -849,7 +849,7 @@ public static class ArticleHelper
                     new Block
                     {
                         Title = "What Happens From Here",
-                        ImgUrl= "icons8-where-what-quest-96.png",
+                        ImgUrl = "icons8-where-what-quest-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -877,7 +877,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                     new Block
                     {
                         Title = "Before We Continue",
-                        ImgUrl= "icons8-permanent-job-96.png",
+                        ImgUrl = "icons8-permanent-job-96.png",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -912,7 +912,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                 ExperiencePoints = 5,
                 Blocks = new List<Block>
                 {
-                      new Block
+                    new Block
                     {
                         Paragraphs = new List<Paragraph>
                         {
@@ -1134,7 +1134,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
                 Area = Area.StandAlone,
                 ExperiencePoints = 5,
                 CardImgUrl = "code-reviews.png",
-                Slug="code-reviews",
+                Slug = "code-reviews",
                 BannerUrl = "code-review-banner.png",
                 Description = "In this article you’ll find out how to submit code to The C# Academy for review. The objective is to make it easy for reviewers to clone and test code and submit comments directly on code.",
                 Blocks = new List<Block>
@@ -1219,7 +1219,7 @@ But I'll be surprised if you get to the end of this list and you don't have a jo
 git commit -m ""type your message here""<br>
 git push</code>"
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = @"<b>IMPORTANT</b>: If you're moving a previously created project into our fork, and it was already a git repository, <b>make sure you remove the .git folder from your project's folder</b>, or it will be picked up as a submodule and we won't be able to review it. Keep in mind the .git folder is hidden by default, so you need to set your file explorer to see hidden files."
                             }
@@ -1241,7 +1241,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         Title = "6. Fix any code-analysis issues",
                         Paragraphs = new List<Paragraph>
@@ -1255,7 +1255,7 @@ git push</code>"
                                 IsPicture = true,
                                 PictureUrl = "code-review-6.png"
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = "\nThis means your code is currently being scanned by a code-analysis tool. Wait a few minutes and you'll see if any issues have been picked up. If  no problems were found, you don't need to do anything. You'll see the following message: "
                             },
@@ -1264,7 +1264,7 @@ git push</code>"
                                 IsPicture = true,
                                 PictureUrl = "code-review-7.png"
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = "If issues were found, you'll see the following message. Click on the 'details' link on the right side:  "
                             },
@@ -1282,11 +1282,11 @@ git push</code>"
                                 IsPicture = true,
                                 PictureUrl = "code-review-9.png"
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = "In the next screen you'll be able to see all pending issues. You can expand each alert to see exactly where the error is by click on the down arrow on the right side. Go back to your code, fix those errors, commit and push. Your PR will be updated automatically and the code-analysis will run again. Check if all tests passed and wait for The C# Academy to review your code."
                             },
-                              new Paragraph
+                            new Paragraph
                             {
                                 IsPicture = true,
                                 PictureUrl = "code-review-10.png"
@@ -1386,7 +1386,7 @@ git push</code>"
                 Description = "In this article you’ll find out how to review code in The C# Academy. By reviewing other student's projects, not only you're helping them and helping our community grow, but you are becoming a better developer",
                 CardImgUrl = "review-guidelines.png",
                 BannerUrl = "code-review-banner.png",
-                Slug="review-guidelines",
+                Slug = "review-guidelines",
                 Blocks = new List<Block>
                 {
                     new Block
@@ -1416,7 +1416,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         Title = "2. Assign yourself to the project on the dashboard",
                         Paragraphs = new List<Paragraph>
@@ -1458,7 +1458,7 @@ git push</code>"
                                 Body = @"Using the command line, clone the PROJECT'S REPOSITORY (not the Pull Request). Navigate into the project's folder and pull the PR with the following command:"
                             },
 
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = @"<code>git pull origin pull/pull-request-number/head</code>"
                             }
@@ -1491,7 +1491,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         Title = "6. Review the Code",
                         Paragraphs = new List<Paragraph>
@@ -1566,7 +1566,7 @@ git push</code>"
                 Id = 58,
                 Title = "Code Conventions",
                 Area = Area.StandAlone,
-                Slug="code-conventions",
+                Slug = "code-conventions",
                 CardImgUrl = "guidelines.png",
                 Description = "Coding conventions are a set of guidelines for a specific programming language that recommend programming style, practices, and methods for each aspect of a program written in that language",
                 ExperiencePoints = 5,
@@ -1582,7 +1582,7 @@ git push</code>"
                             {
                                 Body = @"Coding conventions are a set of guidelines for a specific programming language that recommend programming style, practices, and methods for each aspect of a program written in that language. These conventions usually cover file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices, programming principles, programming rules of thumb, architectural best practices, etc. "
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = @"These are guidelines for software structural quality. Software programmers are highly recommended to follow these guidelines to help improve the readability of their source code and make software maintenance easier. Coding conventions are only applicable to the human maintainers and peer reviewers of a software project. Conventions may be formalized in a documented set of rules that an entire team or company follows or may be as informal as the habitual coding practices of an individual. Coding conventions are not enforced by compilers. (<b>This paragraph was stolen from</b> <a href='https://en.wikipedia.org/wiki/Coding_conventions' target='_blank'>Wikipedia</a>)"
                             },
@@ -1731,7 +1731,7 @@ git push</code>"
                 Title = "Books",
                 Area = Area.StandAlone,
                 ExperiencePoints = 5,
-                Slug="books",
+                Slug = "books",
                 BannerUrl = "code-review-banner.png",
                 Blocks = new List<Block>
                 {
@@ -1771,7 +1771,7 @@ git push</code>"
                 Id = 20000,
                 Title = "The C# Academy Intro Guide",
                 IconUrl = "icons8-notes-64.png",
-                Slug="user-guide",
+                Slug = "user-guide",
                 BannerUrl = "pexels-karolina-grabowska-4959741.jpg",
                 CardImgUrl = "academy-introduction.png",
                 Description = "A quick overview of how to get the most out of the academy.",
@@ -1812,8 +1812,8 @@ git push</code>"
                             }
                         }
                     },
-                      new Block
-                      {
+                    new Block
+                    {
                         ImgUrl = "icons8-leaderboard-64.png",
                         Paragraphs = new List<Paragraph>
                         {
@@ -1856,7 +1856,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         ImgUrl = "icons8-console-64-1.png",
                         Paragraphs = new List<Paragraph>
@@ -1867,7 +1867,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         ImgUrl = "icons8-full-stack-64.png",
                         Paragraphs = new List<Paragraph>
@@ -1976,7 +1976,7 @@ git push</code>"
                             {
                                 Body = "<h3>Freestyle Projects</h3><p><p>We also give you the opportunity to submit projects <b>without any specific requirements for review</b>. Had an interesting idea but can't be bother creating a big app for it? <a href='https://thecsharpacademy.com/project/100001/free-style' target='_blank'>Send it our way and we'll review it!</a> We repeat: the best way to learn is enjoying yourself and there's no better way to do that than expressing your creativity. Points will be rewarded based on creativity and complexity."
                             }
-                          
+
                         }
                     },
                     new Block
@@ -2005,7 +2005,7 @@ git push</code>"
                 Id = 30000,
                 Title = "Legacy: A Little Bit about Me",
                 IconUrl = "",
-                Slug="legacy-a-little-bit-about-me",
+                Slug = "legacy-a-little-bit-about-me",
                 BannerUrl = "",
                 CardImgUrl = "blog1.png",
                 Description = "",
@@ -2146,7 +2146,7 @@ git push</code>"
                 Id = 30001,
                 Title = "Why The Hell Am I Creating a Blog Again?",
                 IconUrl = "",
-                Slug="why-the-hell-am-i-creating-a-blog",
+                Slug = "why-the-hell-am-i-creating-a-blog",
                 BannerUrl = "",
                 CardImgUrl = "blog2.png",
                 Description = "",
@@ -2200,7 +2200,7 @@ git push</code>"
                 Id = 30002,
                 Title = "How Can I Possibly do All of These Things?",
                 IconUrl = "",
-                Slug="how-can-i-possibly-do-all-of-these-things",
+                Slug = "how-can-i-possibly-do-all-of-these-things",
                 BannerUrl = "",
                 CardImgUrl = "blog3.png",
                 Description = "",
@@ -2294,7 +2294,7 @@ git push</code>"
                 Id = 30003,
                 Title = "The Best Book About Self-Discipline I’ve Ever Read",
                 IconUrl = "",
-                Slug="legacy-a-little-bit-about-me",
+                Slug = "legacy-a-little-bit-about-me",
                 BannerUrl = "",
                 CardImgUrl = "blog4.png",
                 Description = "",
@@ -2393,7 +2393,7 @@ git push</code>"
                 Id = 30004,
                 Title = "Three Years as a Software Engineer (Part 1)",
                 IconUrl = "",
-                Slug="three-years-as-a-software-engineer-part1",
+                Slug = "three-years-as-a-software-engineer-part1",
                 BannerUrl = "",
                 CardImgUrl = "blog5.png",
                 Description = "",
@@ -2462,7 +2462,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         Paragraphs = new List<Paragraph>
                         {
@@ -2472,7 +2472,7 @@ git push</code>"
                             }
                         }
                     },
-                      new Block
+                    new Block
                     {
                         Paragraphs = new List<Paragraph>
                         {
@@ -2524,7 +2524,7 @@ git push</code>"
                             }
                         }
                     },
-                     new Block
+                    new Block
                     {
                         Title = "Outliers",
                         Paragraphs = new List<Paragraph>
@@ -2542,7 +2542,7 @@ git push</code>"
                 Id = 30005,
                 Title = "Separation of Concerns in C#: Best Practices and Code Examples",
                 IconUrl = "",
-                Slug="separation-of-concerns-csharp",
+                Slug = "separation-of-concerns-csharp",
                 BannerUrl = "",
                 CardImgUrl = "separation-of-concerns.png",
                 Description = "Separation of concerns (SoC) is a fundamental software design principle aimed at dividing a program into distinct sections, each responsible for a specific functionality",
@@ -2632,7 +2632,7 @@ git push</code>"
                 Id = 30006,
                 Title = "Understanding the DRY Principle in C# Programming",
                 IconUrl = "",
-                Slug="dry-principle-csharp",
+                Slug = "dry-principle-csharp",
                 BannerUrl = "",
                 CardImgUrl = "dry.png",
                 Description = "The Don't Repeat Yourself (DRY) principle is a fundamental programming concept aimed at reducing redundancy in code",
@@ -2713,7 +2713,7 @@ git push</code>"
                             },
                             new Paragraph
                             {
-                                Body ="With time and experience you'll develop an eye for opportunities to decrease redundancy in your code. The refactored example illustrates how a common logic can be abstracted into a single method, enabling various operations to share the same functionality while retaining clarity and flexibility. Embracing the DRY principle leads to better software design and ultimately improves the overall development experience.\r\n\r\n"
+                                Body = "With time and experience you'll develop an eye for opportunities to decrease redundancy in your code. The refactored example illustrates how a common logic can be abstracted into a single method, enabling various operations to share the same functionality while retaining clarity and flexibility. Embracing the DRY principle leads to better software design and ultimately improves the overall development experience.\r\n\r\n"
                             }
                         }
                     }
@@ -2724,7 +2724,7 @@ git push</code>"
                 Id = 30007,
                 Title = "What's the Difference Between .NET, .NET Core ASP.NET, etc?",
                 IconUrl = "",
-                Slug="difference-net-core-asp-net",
+                Slug = "difference-net-core-asp-net",
                 BannerUrl = "",
                 CardImgUrl = "net-core-difference.png",
                 Description = "When I started learning .NET/C# I got lost pretty quickly in the notorious word salad Microsoft produced since 2002 when .NET was first released. .NET Framework, .NET Core, ASP.NET Core, ASP.NET. It's a lot. But is it really?",
@@ -2841,7 +2841,7 @@ git push</code>"
                             {
                                 Body = "In 2020, Microsoft released .NET 5, marking a significant milestone in the evolution of the .NET ecosystem. This version represented the <b>unification</b> of two .NET Framework and .NET Core. Before .NET 5, <b>developers had to choose</b> between the Windows-only .NET Framework, with its long history and wide compatibility, and the newer, lightweight, cross-platform .NET Core. Each framework had its own advantages, but this division caused fragmentation, requiring developers to pick a platform depending on their target environment. The release of .NET 5 eliminated this split by providing a <b>single platform</b> for all operating systems (Windows, Linux, and macOS), whether for web, desktop, mobile, cloud, or IoT."
                             },
-                             new Paragraph
+                            new Paragraph
                             {
                                 Body = "<b>Now here's the catch</b>. Even though the framework now is called simply .NET, ASP.NET Core retains the \"Core\" in the name. This is to differentiate it from the old ASP.NET. Hence the most up-to-date courses will have names such as ASP.NET Core Web API, ASP.NET Core MVC, ASP.NET Core Identity, and so on."
                             }
@@ -2873,7 +2873,7 @@ git push</code>"
                 Id = 30008,
                 Title = "Contributing to The C# Academy",
                 IconUrl = "",
-                Slug="contributing-csharp-academy",
+                Slug = "contributing-csharp-academy",
                 BannerUrl = "",
                 CardImgUrl = "open-source.jpg",
                 Description = "In this article you'll learn how to contribute to The C# Academy's project. This not only helps maintain the website, but it gives you experience collaborating in open-source projects.",
@@ -2953,7 +2953,7 @@ git push</code>"
                 Id = 30009,
                 Title = "Unit Testing",
                 IconUrl = "",
-                Slug="unit-testing-for-beginners",
+                Slug = "unit-testing-for-beginners",
                 BannerUrl = "unit-banner.jpg",
                 CardImgUrl = "unit-test-card.png",
                 Description = "Learn how to make your projects more reliable and bug-free",
@@ -3057,6 +3057,188 @@ git push</code>"
                     }
                 }
             },
+            new Article
+            {
+                Id = 30010,
+                Title = "How Accountability Buddy Works",
+                IconUrl = "",
+                Slug = "how-accountability-buddy-works",
+                BannerUrl = "accbuddybanner.png",
+                CardImgUrl = "accbuddy.jpeg",
+                Description = "Learn how Accountability Buddy helps you ship projects.",
+                ExperiencePoints = 1,
+                Area = Area.StandAlone,
+                Blocks = new List<Block>
+                {
+                    new Block
+                    {
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "Accountability Buddy is a simple commitment tool built into The C# Academy. " +
+                        "You pick a <b>pledge</b> and a <b>deadline</b>. If you finish on time, you pay nothing. " +
+                        "If you miss it, you get charged your pledge amount. The point isn’t punishment, it’s momentum. We're not always motivated an extra incentive will go a long way in keeping you on track." +
+                        "A small stake makes it much harder to \"do it tomorrow\"."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "What You Choose",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "When you enable Accountability Buddy for a project, you pick:" +
+                        "<ul>" +
+                        "<li><b>Pledge amount in USD.</b> (e.g., $5–$100)</li>" +
+                        "<li><b>Deadline</b> (e.g., 2–14 days)</li>." +
+                        "</ul>" +
+                        "We store this as an accountability record tied to your project."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "2. What Happens When You Activate",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "When you click <b>Activate</b>, a new row is created for your pledge + deadline. " +
+                        "If you already have a saved payment method on file, you’re done — no extra steps. " +
+                        "If you don’t, you’ll be redirected to Stripe to securely save a payment method."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "We don’t store your card details. Stripe handles all payment information. " +
+                        "Our database stores only identifiers like your Stripe Customer ID and the saved PaymentMethod ID needed for off-session charging."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "3. Stripe Setup (Behind the Scenes)",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "To keep this low-stress and reliable, Accountability Buddy uses Stripe Checkout in <b>setup mode</b>." +
+                        "<ul>" +
+                        "<li>Checkout collects and saves a payment method</li>" +
+                        "<li>Stripe creates a <b>SetupIntent</b></li>" +
+                        "<li>On completion, Stripe sends a <b>checkout.session.completed</b> webhook to our app</li>" +
+                        "</ul>"
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "We attach metadata to the SetupIntent (like <b>accountability_project_id</b> and <b>project_id</b>) so the webhook can safely tie the Stripe event back to the correct pledge row."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "4. The Webhook: Saving the Payment Method",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "When Stripe calls our webhook, we:" +
+                        "<ol>" +
+                        "<li>Verify the signature (so we know it’s really Stripe)</li>" +
+                        "<li>Read the Checkout Session and its SetupIntent</li>" +
+                        "<li>Extract the saved <b>PaymentMethod</b> ID</li>" +
+                        "<li>Update your Stripe mapping row and mark it <b>Active</b></li>" +
+                        "<li>Set <b>PaymentMethodConfirmedUtc</b> on the pledge record</li>" +
+                        "</ol>" +
+                        "This makes the pledge chargeable later without asking you to re-enter card details."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "5. If You Finish On Time",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "If you complete the project before the deadline, we mark the record as completed. " +
+                        "No charge is made. Your saved payment method remains on file for future pledges, so next time activation is instant."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "6. If You Miss The Deadline",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "If the deadline passes and the project isn’t marked completed, the pledge is considered derailed. " +
+                        "At that point, our system creates an <b>off-session</b> charge through Stripe using your saved payment method. " +
+                        "We store the resulting <b>PaymentIntent</b> ID and timestamp on your pledge row for auditability."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "Sometimes banks require extra authentication (3DS/SCA). If a charge requires action, we’ll prompt you to update/confirm payment details so you can resolve it."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Refund Policy",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>All Accountability Buddy charges are final.</b> There are no refunds, including for personal emergencies or unforeseen circumstances. An accountability buddy won't be very helpful if you can get a refund." +
+                        "Choose a pledge amount you can comfortably afford and a deadline you can realistically meet — the goal is motivation, not hardship."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "FAQ",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>Do you store my credit card?</b><br/>" +
+                        "No. Stripe stores payment details. We store only Stripe IDs required to manage your pledge."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>Can I create multiple pledges for the same project?</b><br/>" +
+                        "Yes — each pledge becomes its own record with its own deadline and outcome."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>How do I know it’s active?</b><br/>" +
+                        "Once Stripe setup completes, the webhook sets <b>PaymentMethodConfirmedUtc</b>. At that point the pledge is ready to enforce."
+                            }
+
+                        },
+                    }
+                }
+            }
         };
     }
 }
+
+
+

@@ -57,10 +57,10 @@ else
             If possible, follow them in order. They cover everything you need to prepare for your C# journey.
         </MudText>
 
-        <MudGrid Class="mt-5">
+        <div class="cards-grid mt-5">
             @foreach (var article in Articles.Where(x => x.Area == Area.StartHere && x.Id != 9)) // not showing "Console App" Article
             {
-                <MudItem xs="12" sm="6" md="3">
+                <div class="card-item">
                     <div class="clickable-card" @onclick="() => NavigateToArticle(article, false)">
                         <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
                             <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
@@ -76,10 +76,9 @@ else
                             </MudCardContent>
                         </MudCard>
                     </div>
-
-                </MudItem>
+                </div>
             }
-        </MudGrid>
+        </div>
     </MudContainer>
 
     <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
@@ -87,10 +86,10 @@ else
             style="font-weight: 500;">
             Console Apps
         </h2>
-        <MudGrid Class="mt-3">
+        <div class="cards-grid mt-3">
             @foreach (var p in Projects.Where(x => x.Area == Area.Console && x.Id != 52 && x.Id != 75))
             {
-                <MudItem xs="12" sm="6" md="3">
+                <div class="card-item">
                     <div class="clickable-card" @onclick="() => NavigateToArticle(p, true)">
                         <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
                             <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
@@ -108,10 +107,9 @@ else
                             </MudCardContent>
                         </MudCard>
                     </div>
-                </MudItem>
+                </div>
             }
-        </MudGrid>
-
+        </div>
     </MudContainer>
 
     @foreach (var a in Areas)
@@ -133,10 +131,10 @@ else
                 @a.Description
             </MudText>
 
-            <MudGrid Class="mt-5 d-flex flex-wrap justify-center">
+            <div class="cards-grid mt-5">
                 @foreach (var p in a.Projects)
                 {
-                    <MudItem xs="12" sm="6" md="3" Class="d-flex">
+                    <div class="card-item">
                         <div class="clickable-card" @onclick="() => NavigateToArticle(p, true)">
                             <MudCard Style="height: 100%;" Elevation="4" Class="hover-expand">
                                 <MudCardContent Class="d-flex justify-center mt-4 flex-grow-0">
@@ -153,9 +151,9 @@ else
                                 </MudCardContent>
                             </MudCard>
                         </div>
-                    </MudItem>
+                    </div>
                 }
-            </MudGrid>
+            </div>
         </MudContainer>
     }
 
@@ -182,9 +180,9 @@ else
 
         Articles = ArticleHelper.GetArticles();
         Projects = ProjectHelper.GetProjects();
-        CertificationProject = Projects.Single(x => x.Id == 75);
-        ConsoleArticle = Articles.Single(x => x.Id == 9);
-        GraduationArticle = Articles.Single(x => x.Id == 10);
+        CertificationProject = Projects.Single(x => x.Id == (int)ArticleName.FreecodeCamp);
+        ConsoleArticle = Articles.Single(x => x.Id == (int)ArticleName.ImportanceOfConsole);
+        GraduationArticle = Articles.Single(x => x.Id == (int)ArticleName.ConsoleGraduation);
 
         GetAreas();
 
@@ -330,4 +328,20 @@ else
             transform: scale(1.02);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
+
+    .cards-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, 250px);
+        justify-content: center;
+    }
+
+    .grid-item, .card-item {
+        width: 100%;
+    }
+
+    .card-item {
+        display: flex;
+        flex-direction: column;
+    }
 </style>

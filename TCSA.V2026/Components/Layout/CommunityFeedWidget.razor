@@ -1,0 +1,42 @@
+@using TCSA.V2026.Components.UI
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
+@using TCSA.V2026.Services
+<div class="pa-3">
+    <MudText Typo="Typo.body1" Align="Align.Center" Style="font-weight:bold">Community Feed</MudText>
+    @if (IsLoading)
+    {
+        <p>Loading recent feed items...</p>
+    }
+    else
+    {
+        @if (RecentFeed.Count > 0)
+        {
+            @foreach (var item in RecentFeed)
+            {
+                <MudDivider />
+                <div class="py-2 d-flex align-center gap-2">
+                    <FeedItemDisplay Item="item" />
+                </div>
+            }
+        }
+        else
+        {
+            <p>No recent feed items available.</p>
+        }
+    }
+</div>
+
+@code {
+    [Inject] private IFeedService FeedService { get; set; } = default!;
+
+    private List<FeedDisplay> RecentFeed { get; set; } = new List<FeedDisplay>();
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        RecentFeed = await FeedService.GetRecentFeedItems();
+        IsLoading = false;
+    }
+}

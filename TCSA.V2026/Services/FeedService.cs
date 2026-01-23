@@ -39,6 +39,7 @@ public class FeedService : IFeedService
                 User = ua.ApplicationUser,
                 ActivityType = ua.ActivityType,
                 ProjectId = (int?)ua.ProjectId,
+                Level = ua.Level,
                 Date = ua.DateSubmitted
             });
 
@@ -48,6 +49,7 @@ public class FeedService : IFeedService
                 User = u,
                 ActivityType = ActivityType.NewUser,
                 ProjectId = (int?)null,
+                Level = (Level?)null,
                 Date = u.CreatedDate
             });
 
@@ -70,6 +72,7 @@ public class FeedService : IFeedService
                 ActivityType = f.ActivityType,
                 ProjectName = f.ProjectId.HasValue ? ProjectHelper.GetProjectName(f.ProjectId.Value) : null,
                 ProjectIconUrl = f.ProjectId.HasValue ? ProjectHelper.GetProjectIconUrl(f.ProjectId.Value) : null,
+                Level = f.Level,
                 Date = f.Date
             })
             .ToList();

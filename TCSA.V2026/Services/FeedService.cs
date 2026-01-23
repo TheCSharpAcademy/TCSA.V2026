@@ -34,6 +34,7 @@ public class FeedService : IFeedService
         var activitiesQuery = context.UserActivity
             .Include(ua => ua.ApplicationUser)
             .Where(ua => ua.ActivityType == ActivityType.NewBelt || ua.ActivityType == ActivityType.ProjectCompleted)
+            .Where(ua => !context.Issues.Any(i => i.ProjectId == ua.ProjectId))
             .Select(ua => new
             {
                 User = ua.ApplicationUser,
@@ -87,6 +88,7 @@ public class FeedService : IFeedService
         var recentActivitiesTask = context.UserActivity
             .Include(ua => ua.ApplicationUser)
             .Where(ua => ua.ActivityType == ActivityType.NewBelt || ua.ActivityType == ActivityType.ProjectCompleted)
+            .Where(ua => !context.Issues.Any(i => i.ProjectId == ua.ProjectId))
             .OrderByDescending(ua => ua.DateSubmitted)
             .Take(FeedConstants.FeedWidgetItemLimits.RecentActivitiesLimit)
             .ToListAsync();

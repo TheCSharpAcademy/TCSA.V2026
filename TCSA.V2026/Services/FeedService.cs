@@ -68,10 +68,11 @@ public class FeedService : IFeedService
         var pagedItems = pageRows
             .Select(f => new FeedDisplay
             {
+                ProjectId = f.ProjectId,
                 User = f.User,
                 ActivityType = f.ActivityType,
-                ProjectName = f.ProjectId.HasValue ? ProjectHelper.GetProjectName(f.ProjectId.Value) : null,
-                ProjectIconUrl = f.ProjectId.HasValue ? ProjectHelper.GetProjectIconUrl(f.ProjectId.Value) : null,
+                ProjectName = ProjectHelper.GetProjectName(f.ProjectId),
+                ProjectIconUrl = ProjectHelper.GetProjectIconUrl(f.ProjectId),
                 Level = f.Level,
                 Date = f.Date
             })

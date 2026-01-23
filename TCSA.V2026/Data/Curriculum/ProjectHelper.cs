@@ -28,13 +28,13 @@ public static class ProjectHelper
             .ToList();
     }
 
-    public static string GetProjectIconUrl(int projectId)
+    public static string GetProjectIconUrl(int? projectId)
     {
         var project = GetProjects().FirstOrDefault(p => p.Id == projectId);
         return project != null ? project.IconUrl : string.Empty;
     }
 
-    public static string GetProjectName(int projectId)
+    public static string GetProjectName(int? projectId)
     {
         var project = GetProjects().FirstOrDefault(p => p.Id == projectId);
         return project != null ? project.Title : string.Empty;

@@ -4,6 +4,7 @@ namespace TCSA.V2026.Data.DTOs;
 
 public class FeedDisplay
 {
+    public int? ProjectId { get; set; }
     public ApplicationUser User { get; set; } = null!;
     public ActivityType ActivityType { get; set; }
     public string? ProjectName { get; set; }

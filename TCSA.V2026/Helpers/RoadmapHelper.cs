@@ -123,6 +123,12 @@ public static class RoadmapHelper
     public static List<int> reactProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.React).Select(x => x.Id).ToList();
     public static List<int> mvcProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MVC).Select(x => x.Id).ToList();
 
+    public static string GetUrl(Area area, int taskId, string taskSlug)
+    {
+        var firstPart = area == Area.StartHere && taskId != 75 ? "article" : "project";
+        return $"{firstPart}/{taskId}/{taskSlug}";
+    }
+
     public static string GetExpectedBelt(List<int> completedProjects, int issues, int reviews)
     {
         var level = Level.White;

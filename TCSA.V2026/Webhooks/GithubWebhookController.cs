@@ -41,37 +41,4 @@ public class GithubWebhookController(IGithubService GithubService) : Controller
 
         return Ok();
     }
-
-    //public async Task<IActionResult> Receive([FromBody] GitHubWebhookDto payload)
-    //{
-    //    if (payload.Action.Equals("opened"))
-    //    {
-    //        Console.WriteLine("yay");
-    //    }
-
-    //    int projectId = 0;
-
-    //    if (payload.Review?.State != "approved")
-    //    {
-    //        return NoContent();
-    //    }
-
-    //    if (Enum.IsDefined(typeof(GithubRepository), payload.Repository.Id))
-    //    {
-    //        var repo = (GithubRepository)payload.Repository.Id;
-
-    //        if (!RepoToArticleMap.TryGetValue(repo, out projectId))
-    //        {
-    //            return NoContent();
-    //        }
-
-    //        await GithubService.MarkAsCompleted(projectId, payload.PullRequest.Number);
-
-    //        return Ok();
-    //    }
-
-    //    return NoContent();
-    //}
-
-
 }

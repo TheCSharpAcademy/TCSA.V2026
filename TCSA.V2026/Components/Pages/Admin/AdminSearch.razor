@@ -22,23 +22,66 @@ else
     <MudGrid>
         <MudItem xs="12" sm="7">
             <MudPaper Class="pa-4">
-                <MudForm @ref="form" OnSubmit="Submit">
-                    <MudTextField T="string" Label="Email" @bind-Value="emailSearch" />            
-                    <div class="d-flex align-center justify-space-between">
-                        <MudButton OnClick=@Submit 
-                            Variant="Variant.Filled" 
-                            Color="Color.Primary" 
-                            Class="ml-auto" Type="Submit">Submit
-                        </MudButton>  
-                    </div>
+                <MudForm @ref="form" OnValidSubmit="Submit">
+                    <MudText Typo="Typo.h6" Class="mb-2">Search Users</MudText>
+
+                    <MudTextField T="string"
+                                  Label="Email"
+                                  @bind-Value="EmailSearch"
+                                  Clearable="true" />
+
+                    <MudTextField T="string"
+                                  Label="Username"
+                                  @bind-Value="UserNameSearch"
+                                  Clearable="true"
+                                  Class="mt-3" />
+
+                    <MudTextField T="string"
+                                  Label="Discord"
+                                  @bind-Value="DiscordSearch"
+                                  Clearable="true" />
+
+                    <MudTextField T="string"
+                                  Label="DisplayName"
+                                  @bind-Value="DisplayNameSearch"
+                                  Clearable="true"
+                                  Class="mt-3" />
+
+
+                    <MudDivider Class="my-4" />
+
+                    <MudStack Row Justify="Justify.FlexEnd" Spacing="2">
+                        <MudButton Variant="Variant.Outlined"
+                                   Disabled="@IsLoading"
+                                   OnClick="Clear">
+                            Clear
+                        </MudButton>
+
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Disabled="@(!CanSearch || IsLoading)"
+                                   OnClick="Submit">
+                            Search
+                        </MudButton>
+                    </MudStack>
+
+                    @if (!string.IsNullOrWhiteSpace(StatusMessage))
+                    {
+                        <MudText Class="mt-3" Color="Color.Secondary">@StatusMessage</MudText>
+                    }
                 </MudForm>
             </MudPaper>
         </MudItem>
     </MudGrid>
 
-    @if(users.Count > 0) {
-        <MudDataGrid Items="@users">
+
+
+    @if(Users.Count > 0) {
+        <MudDataGrid Items="@Users">
             <Columns>
+                <PropertyColumn Property="u => u.DiscordAlias" Title="Discord" />
+                <PropertyColumn Property="u => u.GithubUsername" Title="Github" />
+                <PropertyColumn Property="u => u.UserName" Title="UserName" />
                 <PropertyColumn Property="u => u.Email" Title="Email" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
@@ -58,14 +101,26 @@ else
 }
 
 @code {
-    [Inject] protected IUserService UserService { get; set; }
-    [Inject] protected IAdminService AdminService { get; set; }
-    [Inject] private NavigationManager Navigation { get; set; }
-    private bool IsLoading = true;
+    [Inject] protected IAdminService AdminService { get; set; } = default!;
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
 
-    MudForm form;
-    private List<ApplicationUser> users { get; set; } = new();
-    private string emailSearch { get; set; } 
+    private bool IsLoading = true;
+    private MudForm? form;
+
+    private List<ApplicationUser> Users { get; set; } = new();
+
+    private string? EmailSearch;
+    private string? UserNameSearch;
+    private string? DiscordSearch;
+    private string? DisplayNameSearch;
+
+    private string? StatusMessage;
+
+    private bool CanSearch =>
+        !string.IsNullOrWhiteSpace(EmailSearch) 
+        || !string.IsNullOrWhiteSpace(UserNameSearch) 
+        || !string.IsNullOrWhiteSpace(DiscordSearch) 
+        || !string.IsNullOrWhiteSpace(DisplayNameSearch);
 
     protected override async Task OnInitializedAsync()
     {
@@ -74,18 +129,39 @@ else
 
     private async Task Submit()
     {
-        IsLoading = true;
-        if (!string.IsNullOrEmpty(emailSearch))
+        if (!CanSearch)
         {
-            users = await AdminService.SearchUser(emailSearch); 
+            Users.Clear();
+            StatusMessage = "Enter an email and/or username to search.";
+            return;
         }
 
-        IsLoading = false;
+        try
+        {
+            IsLoading = true;
+            StatusMessage = null;
+            Users.Clear();
+
+            Users = await AdminService.SearchUsers(EmailSearch, UserNameSearch, DisplayNameSearch, DiscordSearch);
+
+            if (Users.Count == 0)
+                StatusMessage = "No users found for the given search terms.";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
-    private Task NavigateToDetails(string userId)
+    private void Clear()
     {
-        Navigation.NavigateTo($"/admin/{userId}");
-        return Task.CompletedTask;
+        EmailSearch = null;
+        UserNameSearch = null;
+        Users.Clear();
+        StatusMessage = null;
     }
+
+
+    private void NavigateToDetails(string userId)
+       => Navigation.NavigateTo($"/admin/{userId}");
 }

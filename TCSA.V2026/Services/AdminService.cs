@@ -13,10 +13,11 @@ public interface IAdminService
     Task<ApplicationUser> GetUserForAdmin(string id);
     Task<List<AdminEventDisplay>> GetAdminEvents();
     Task<List<AdminPendingDisplay>> GetAdminPendingProjects();
-    Task<List<ApplicationUser>> SearchUser(string email);
+    Task<List<ApplicationUser>> SearchUsers(string? email, string? userName, string? displayName, string? discordAlias);
     Task<BaseResponse> ChangeBelt(string userId, Level newBelt);
     Task<BaseResponse> ChangePoints(string userId, int points);
     Task<BaseResponse> RequestChanges(int dashboardProjectId);
+    Task<ServiceResponse> ChangeReviewPoints(string userId, int points);
 }
 
 public class AdminService(
@@ -47,6 +48,34 @@ public class AdminService(
             return new BaseResponse
             {
                 Status = ResponseStatus.Fail,
+                Message = ex.Message
+            };
+        }
+    }
+
+    public async Task<ServiceResponse> ChangeReviewPoints(string userId, int points)
+    {
+        try
+        {
+            using (var context = _factory.CreateDbContext())
+            {
+                var user = await context.AspNetUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+                user.ReviewExperiencePoints = points;
+
+                await context.SaveChangesAsync();
+
+            }
+            return new ServiceResponse
+            {
+                IsSuccessful = true,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ServiceResponse
+            {
+                IsSuccessful = false,
                 Message = ex.Message
             };
         }
@@ -238,11 +267,33 @@ public class AdminService(
         }
     }
 
-    public async Task<List<ApplicationUser>> SearchUser(string email)
+    public async Task<List<ApplicationUser>> SearchUsers(string? email, string? userName, string? displayName, string? discordAlias)
     {
-        using (var context = _factory.CreateDbContext())
-        {
-            return await context.AspNetUsers.Where(u => u.Email.Contains(email)).ToListAsync();
-        }
+        await using var context = _factory.CreateDbContext();
+
+        email = string.IsNullOrWhiteSpace(email) ? null : email.Trim();
+        userName = string.IsNullOrWhiteSpace(userName) ? null : userName.Trim();
+        discordAlias = string.IsNullOrWhiteSpace(discordAlias) ? null : discordAlias.Trim();
+        displayName = string.IsNullOrWhiteSpace(displayName) ? null : displayName.Trim();
+
+        if (email is null && userName is null && displayName is null && discordAlias is null)
+            return new List<ApplicationUser>();
+
+        IQueryable<ApplicationUser> query = context.AspNetUsers.AsNoTracking();
+
+        if (email is not null)
+            query = query.Where(u => EF.Functions.Like(u.Email!, $"%{email}%"));
+
+        if (userName is not null)
+            query = query.Where(u => EF.Functions.Like(u.UserName!, $"%{userName}%"));
+
+        if (discordAlias is not null)
+            query = query.Where(u => EF.Functions.Like(u.DiscordAlias!, $"%{discordAlias}%"));
+
+        if (displayName is not null)
+            query = query.Where(u => EF.Functions.Like(u.DisplayName!, $"%{displayName}%"));
+
+        return await query.ToListAsync();
     }
+
 }

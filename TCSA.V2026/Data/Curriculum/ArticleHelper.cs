@@ -3057,131 +3057,146 @@ git push</code>"
                     }
                 }
             },
-            //new Article
-            //{
-            //    Id = 30010,
-            //    Title = "How Accountability Buddy Works",
-            //    IconUrl = "",
-            //    Slug = "how-accountability-buddy-works",
-            //    BannerUrl = "accbuddybanner.png",
-            //    CardImgUrl = "accbuddy.jpeg",
-            //    Description = "Learn how Accountability Buddy helps you ship projects.",
-            //    ExperiencePoints = 1,
-            //    Area = Area.StandAlone,
-            //    Blocks = new List<Block>
-            //    {
-            //        new Block
-            //        {
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "Accountability Buddy is a simple commitment tool built into The C# Academy. " +
-            //            "You pick a <b>pledge</b> and a <b>deadline</b>. If you finish on time, you pay nothing." +
-            //            "If you miss it, you get charged your pledge amount. The point isn’t punishment, it’s momentum. We're not always motivated an extra incentive will go a long way in keeping you on track." +
-            //            "A small stake makes it much harder to \"do it tomorrow\"."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "1. What You Choose",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "When you enable Accountability Buddy for a project,you pick a <b>pledge amount (from 1 to 50 USD)</b> and a <b>deadline that can be from 2 to 14 days</b>. We believe 14 days is more than enough to complete any project in the academy. We then this as an accountability record tied to your project."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "2. What Happens When You Activate",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "When you click <b>Activate</b>, you’ll be redirected to Stripe to securely save a payment method. If you already have a saved payment method on file, you’re done. No extra steps are needed."
-            //                },
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "We don’t store your card details. Stripe handles all payment information. Our database stores only identifiers like your Stripe Customer ID and the saved PaymentMethod ID needed for off-session charging."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "3. If You Finish On Time",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "If you complete the project before the deadline, we mark the record as completed. No charge is made. Your saved payment method remains on file for future pledges, so next time activation is instant."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "4. If You Miss The Deadline",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "If the deadline passes and the project isn’t marked completed, the pledge is considered derailed, our system creates an <b>off-session</b> charge through Stripe using your saved payment method. We store the resulting <b>PaymentIntent</b> ID and timestamp on your pledge row for auditability."
-            //                },
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "Sometimes banks require extra authentication (3DS/SCA). If a charge requires action, we’ll prompt you to update/confirm payment details so you can resolve it."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "Refund Policy",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "<b>All Accountability Buddy charges are final.</b> There are no refunds, including for personal emergencies or unforeseen circumstances. An accountability buddy won't be very helpful if you can get a refund. Choose a pledge amount you can comfortably afford and a deadline you can realistically meet. The goal is motivation, not hardship."
-            //                }
-            //            }
-            //        },
-            //        new Block
-            //        {
-            //            Title = "FAQ",
-            //            Paragraphs = new List<Paragraph>
-            //            {
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "<b>Do you store my credit card?</b><br/>" +
-            //            "No. Stripe stores payment details. We store only Stripe IDs required to manage your pledge."
-            //                },
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "<b>Can I create multiple pledges for the same project?</b><br/>" +
-            //            "Yes. Each pledge becomes its own record with its own deadline and outcome."
-            //                },
-            //                new Paragraph
-            //                {
-            //                    Body =
-            //            "<b>How do I know it’s active?</b><br/>" +
-            //            "Once Stripe setup completes, the webhook sets <b>PaymentMethodConfirmedUtc</b>. At that point the pledge is ready to enforce. You'll also see the corresponding UI in the project page:"
-            //                }
+            new Article
+            {
+                Id = 30010,
+                Title = "How Accountability Buddy Works",
+                IconUrl = "",
+                Slug = "how-accountability-buddy-works",
+                BannerUrl = "accbuddybanner.png",
+                CardImgUrl = "accbuddy.jpeg",
+                Description = "Learn how Accountability Buddy helps you ship projects.",
+                ExperiencePoints = 1,
+                Area = Area.StandAlone,
+                Blocks = new List<Block>
+                {
+                    new Block
+                    {
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "Accountability Buddy is a simple commitment tool built into The C# Academy. " +
+                        "You pick a <b>pledge</b> and a <b>deadline</b>. If you finish on time, you pay nothing." +
+                        "If you miss it, you get charged your pledge amount. The point isn’t punishment, it’s momentum. We're not always motivated an extra incentive will go a long way in keeping you on track." +
+                        "A small stake makes it much harder to \"do it tomorrow\"."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "1. What You Choose",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "At the bottom of each project page that you haven't completed, there's a button to set up the accountability buddy service for that project:"
+                            },
+                            new Paragraph
+                            {
+                                IsPicture = true,
+                                PictureUrl = "articles/article-acc-buddy-1-setup.png",
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "When you enable Accountability Buddy for a project,you pick a <b>pledge amount (from 1 to 50 USD)</b> and a <b>deadline that can be from 2 to 14 days</b>. We believe 14 days is more than enough to complete any project in the academy. We then add this as an accountability record tied to your project."
+                            },
+                            new Paragraph
+                            {
+                                IsPicture = true,
+                                PictureUrl = "articles/article-acc-buddy-2-dialog.png",
+                            },
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "2. What Happens When You Activate",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "When you click <b>Activate</b>, you’ll be redirected to Stripe to securely save a payment method. If you already have a saved payment method on file, you’re done. No extra steps are needed."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "We don’t store your card details. Stripe handles all payment information. Our database stores only identifiers like your Stripe Customer ID and the saved PaymentMethod ID needed for off-session charging."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "3. If You Finish On Time",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "If you complete the project before the deadline, we mark the record as completed. No charge is made. Your saved payment method remains on file for future pledges, so next time activation is instant."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "4. If You Miss The Deadline",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "If the deadline passes and the project isn’t marked completed, the pledge is considered derailed, our system creates an <b>off-session</b> charge through Stripe using your saved payment method. We store the resulting <b>PaymentIntent</b> ID and timestamp on your pledge row for auditability."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "Sometimes banks require extra authentication (3DS/SCA). If a charge requires action, we’ll prompt you to update/confirm payment details so you can resolve it."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "Refund Policy",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>All Accountability Buddy charges are final.</b> There are no refunds, including for personal emergencies or unforeseen circumstances. An accountability buddy won't be very helpful if you can get a refund. Choose a pledge amount you can comfortably afford and a deadline you can realistically meet. The goal is motivation, not hardship."
+                            }
+                        }
+                    },
+                    new Block
+                    {
+                        Title = "FAQ",
+                        Paragraphs = new List<Paragraph>
+                        {
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>Do you store my credit card?</b><br/>" +
+                        "No. Stripe stores payment details. We store only Stripe IDs required to manage your pledge."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>Can I create multiple pledges for the same project?</b><br/>" +
+                        "Yes. Each pledge becomes its own record with its own deadline and outcome."
+                            },
+                            new Paragraph
+                            {
+                                Body =
+                        "<b>How do I know it’s active?</b><br/>" +
+                        "Once Stripe setup completes, the webhook sets <b>PaymentMethodConfirmedUtc</b>. At that point the pledge is ready to enforce. You'll also see the corresponding UI in the project page:"
+                            }
 
-            //            },
-            //        }
-            //    }
-            //}
+                        },
+                    }
+                }
+            }
         };
     }
 }

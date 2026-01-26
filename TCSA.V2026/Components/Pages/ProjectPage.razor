@@ -261,7 +261,7 @@
                         }
                     }
 
-                    @if (FeatureToggles.Value.AccountabilityBuddy && IsLoggedIn && !IsCompleted) 
+                    @if (IsLoggedIn && !IsCompleted && IsAdmin) 
                     {
                         @if (AccountabilityBuddyInfo == null)
                         {
@@ -318,6 +318,7 @@
     private string UserId = string.Empty;
     private string UserEmail = string.Empty;
     private bool CodeWarsNotFoundShowing = false;
+    private bool IsAdmin = false;
 
     protected async override Task OnInitializedAsync()
     {
@@ -407,6 +408,7 @@
             var claims = AuthSate.User;
             UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
             UserEmail = claims.FindFirstValue(ClaimTypes.Email);
+            IsAdmin = claims.IsInRole("Admin");
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
             var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);

@@ -1,3 +1,5 @@
+using TCSA.V2026.Data.Models;
+
 namespace TCSA.V2026.Data.DTOs;
 
 public class RoadmapTask
@@ -6,6 +8,8 @@ public class RoadmapTask
     public string IconUrl { get; set; }
     public string Name { get; set; }
     public string Slug { get; set; }
+    public string Url { get; set; }
+    public Area Area { get; set; }
     public bool IsProject { get; set; }
     public bool IsArticle { get; set; }
     public bool IsCompleted { get; set; }

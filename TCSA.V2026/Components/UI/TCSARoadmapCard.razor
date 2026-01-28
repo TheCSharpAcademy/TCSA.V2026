@@ -12,7 +12,7 @@
                         <MudAvatar Size="Size.Large"
                                    Class=@($"avatar-spacing clean-avatar {(task.IsCompleted ? "complete-border" : "incomplete-border")}")
                                    style="position: relative; overflow: hidden;">
-                            <MudLink OnClick='@(task.Id != 0 ? (Func<Task>)(async () => await JS.InvokeVoidAsync("window.open", RoadmapHelper.GetUrl(task.Area, task.Id, task.Slug), "_blank", "noopener,noreferrer")) : (Func<Task>)(() => Task.CompletedTask))'>
+                            <MudLink OnClick="@(() => HandleLinkClick(task))">
                                 <MudImage Src=@($"/img/icons/{task.IconUrl}")/>
                             </MudLink>
 
@@ -31,6 +31,13 @@
 @code {
     [Parameter] public List<RoadmapTask> Tasks { get; set; } = new List<RoadmapTask>();
     [Inject] private IJSRuntime JS { get; set; }
+
+    private async Task HandleLinkClick(RoadmapTask task)
+    {
+        var url = RoadmapHelper.GetUrl(task);
+        if (string.IsNullOrEmpty(url)) return;
+        await JS.InvokeVoidAsync("window.open", url, "_blank", "noopener,noreferrer");
+    }
 }
 
 <style>

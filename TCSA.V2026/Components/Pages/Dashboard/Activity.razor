@@ -30,6 +30,52 @@
     else
     {
         @* <MudText>LoadTime: @LoadTime.TotalSeconds.ToString()</MudText> *@
+        <MudContainer MaxWidth="MaxWidth.Large" Class="mt-10">
+            <div class="cards-grid">
+                <div class="card-item">
+                    <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
+                              Style="max-width: 240px; width: 100%;"
+                              Elevation="4">
+                        <h2 class="mud-typography-h4 mud-primary-text mb-1">@GetProjectsXp() XPs</h2>
+                        <div class="d-flex gap-1 align-center">
+                            <MudText Typo="Typo.body2" Style="font-weight: bold">Projects Completed</MudText>
+                        </div>
+                    </MudPaper>
+                </div>
+                <div class="card-item">
+                    <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
+                              Style="max-width: 240px; width: 100%;"
+                              Elevation="4">
+                        <h2 class="mud-typography-h4 mud-primary-text mb-1">@GetArticlesXp() XPs</h2>
+                        <div class="d-flex gap-1 align-center">
+                            <MudText Typo="Typo.body2" Style="font-weight: bold">Articles Read</MudText>
+                        </div>
+                    </MudPaper>
+                </div>
+
+                <div class="card-item">
+                    <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
+                              Style="max-width: 240px; width: 100%;"
+                              Elevation="4">
+                        <h2 class="mud-typography-h4 mud-primary-text mb-1">@GetIssuesXp() XPs</h2>
+                        <div class="d-flex gap-1 align-center">
+                            <MudText Typo="Typo.body2" Style="font-weight: bold">Issues Completed</MudText>
+                        </div>
+                    </MudPaper>
+                </div>
+                <div class="card-item">
+                    <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
+                              Style="max-width: 240px; width: 100%;"
+                              Elevation="4">
+                        <h2 class="mud-typography-h4 mud-primary-text mb-1">@GetCodeReviewsXp() XPs</h2>
+                        <div class="d-flex gap-1 align-center">
+                            <MudText Typo="Typo.body2" Style="font-weight: bold">Projects Reviewed</MudText>
+                        </div>
+                    </MudPaper>
+                </div>
+            </div>
+        </MudContainer>
+
         <MudSelect T="ActivityType?"
         Label="Filter by Activity Type"
         @bind-Value="SelectedActivityType"
@@ -220,4 +266,51 @@
             _boundaryCount = 2;
         }
     }
+
+    private int GetProjectsXp()
+    {
+        return AllUserActivity
+            .Where(x => x.ActivityType == ActivityType.ProjectCompleted)
+            .Sum(x => x.ExperiencePoints);
+    }
+
+    private int GetArticlesXp()
+    {
+        return AllUserActivity
+            .Where(x => x.ActivityType == ActivityType.ArticleRead)
+            .Sum(x => x.ExperiencePoints);
+    }
+
+    private int GetIssuesXp()
+    {
+        return AllUserActivity
+            .Where(x => x.ActivityType == ActivityType.IssueSubmitted)
+            .Sum(x => x.ExperiencePoints);
+    }
+
+    private int GetCodeReviewsXp()
+    {
+        return AllUserActivity
+            .Where(x => x.ActivityType == ActivityType.CodeReviewCompleted)
+            .Sum(x => x.ExperiencePoints);
+    }
 }
+
+<style>
+    .cards-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, 250px);
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .grid-item, .card-item {
+        width: 100%;
+    }
+
+    .card-item {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

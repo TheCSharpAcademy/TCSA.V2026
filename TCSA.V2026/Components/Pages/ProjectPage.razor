@@ -276,11 +276,19 @@
                         }
                         else
                         {
-                            <MudAlert Class="mt-5"
-                                      Severity="Severity.Warning"
-                                      Elevation="2">
-                                You've set up the accountability buddy for this project'.
-                            </MudAlert>
+                            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                                <MudCard Class="mt-1">
+                                    <MudCardHeader Class="d-flex align-items-center">
+                                        <CardHeaderAvatar>
+                                            <MudImage Width="40" Src="@($"img/icons/icons8-coach-64.png")" />
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <h3 class="mud-typography-body1 mud-primary-text" style="font-weight: bold;">You set up the accountability buddy for this project</h3>
+                                            <MudText Typo="Typo.body2">Your deadline is: @AccountabilityBuddyInfo.DeadLineUtc</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                </MudCard>
+                            </MudHidden>
                         }
                     }
 
@@ -347,6 +355,15 @@
             // forceLoad is important for external navigation
             NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
             return;
+        }
+
+        if (result.Data is bool noCheckoutNeeded && noCheckoutNeeded)
+        {
+            var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);
+            if (accountabilityResponse.IsSuccessful)
+            {
+                AccountabilityBuddyInfo = accountabilityResponse.Data;
+            }
         }
     }
 

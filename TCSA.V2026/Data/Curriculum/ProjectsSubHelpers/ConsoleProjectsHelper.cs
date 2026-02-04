@@ -568,7 +568,6 @@ public class ConsoleProjectsHelper
                     "When the users visualise the drink detail, there shouldn't be any properties with empty values.",
                     "You should handle errors so that if the API is down, the application doesn't crash."
                 },
-                RequirementsConclusion = "Don't panic! We'll help! 😁",
                 ResourcesIntro = "Here are the links for using HTTP calls with C# and to the Drinks API documentation:",
                 Resources = new List<string>
                 {
@@ -587,10 +586,6 @@ public class ConsoleProjectsHelper
                     "Find a way to show a picture of the drinks",
                     "Add a view count functionality so the users know which drinks have been visualized the most.",
                     "If you followed the tutorial in the resources, you noticed we used Rest Client for the handling of the HTTP requests. Try using .NET's HTTP client instead, as it's more commonly used in the industry."
-                },
-                Screenshots = new List<string>
-                {
-                    "drinks-1.png"
                 }
             },
              new Project

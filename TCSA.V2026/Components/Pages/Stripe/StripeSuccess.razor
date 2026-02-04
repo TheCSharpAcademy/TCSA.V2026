@@ -1,0 +1,14 @@
+﻿@page "/billing/stripe/success"
+@using Microsoft.AspNetCore.Components
+
+<MudContainer>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5">Payment method saved ✅</MudText>
+        <MudText Typo="Typo.body2">You can close this page and go back to your project.</MudText>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [SupplyParameterFromQuery(Name = "session_id")]
+    public string? SessionId { get; set; }
+}

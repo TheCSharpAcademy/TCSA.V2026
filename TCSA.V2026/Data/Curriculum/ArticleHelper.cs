@@ -3121,6 +3121,11 @@ git push</code>"
                                 Body =
                         "When you click <b>Activate</b>, you’ll be redirected to Stripe to securely save a payment method. If you already have a saved payment method on file, you’re done. No extra steps are needed."
                             },
+                             new Paragraph
+                            {
+                                IsPicture = true,
+                                PictureUrl = "articles/article-acc-buddy-3-credit-card.png",
+                            },
                             new Paragraph
                             {
                                 Body =
@@ -3149,11 +3154,6 @@ git push</code>"
                             {
                                 Body =
                         "If the deadline passes and the project isn’t marked completed, the pledge is considered derailed, our system creates an <b>off-session</b> charge through Stripe using your saved payment method. We store the resulting <b>PaymentIntent</b> ID and timestamp on your pledge row for auditability."
-                            },
-                            new Paragraph
-                            {
-                                Body =
-                        "Sometimes banks require extra authentication (3DS/SCA). If a charge requires action, we’ll prompt you to update/confirm payment details so you can resolve it."
                             }
                         }
                     },

@@ -1,3 +1,4 @@
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Data.DTOs;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
-using TCSA.V2026.Data.Models;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Helpers;
 
 namespace TCSA.V2026.Services;

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
-using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Enums;
+using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Options;
 
 namespace TCSA.V2026.Webhooks;

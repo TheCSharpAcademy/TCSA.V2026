@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using TCSA.V2026.Data.Enums;
 
 namespace TCSA.V2026.Data.Models;
 

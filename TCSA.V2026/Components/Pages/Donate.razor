@@ -1,0 +1,122 @@
+﻿@page "/donate"
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager Nav
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
+    <MudPaper Elevation="2" Class="pa-6" Rounded="true">
+        <MudText Typo="Typo.h4">Support The C# Academy</MudText>
+        <MudText Typo="Typo.body2" Class="mb-4">
+            Donations help cover hosting, development time, and keeping the platform free and improving.
+        </MudText>
+
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle2">Choose an amount</MudText>
+
+            <MudStack Direction="Row" Spacing="1" Wrap="Wrap.Wrap">
+                @foreach (var amt in Presets)
+                {
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               OnClick="@(() => SelectPreset(amt))"
+                               Disabled="@IsBusy">
+                        $@amt
+                    </MudButton>
+                }
+            </MudStack>
+
+            <MudNumericField T="int"
+                             Label="Or enter a custom amount (USD)"
+                             Min="1"
+                             Max="500"
+                             @bind-Value="AmountDollars"
+                             Disabled="@IsBusy"
+                             Variant="Variant.Outlined" />
+
+            @if (!string.IsNullOrWhiteSpace(Error))
+            {
+                <MudAlert Severity="Severity.Error" Dense="true">@Error</MudAlert>
+            }
+
+            <MudButton Color="Color.Primary"
+                       Variant="Variant.Filled"
+                       Disabled="@IsBusy"
+                       OnClick="DonateAsync"
+                       StartIcon="@Icons.Material.Filled.Favorite">
+                @(IsBusy ? "Redirecting..." : "Donate with Stripe")
+            </MudButton>
+
+            <MudText Typo="Typo.caption" Class="mt-2">
+                Payments are processed by Stripe. We never store your card details.
+            </MudText>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private bool IsBusy { get; set; }
+    private string? Error { get; set; }
+
+    private int[] Presets { get; } = [5, 10, 25, 50];
+    private int AmountDollars { get; set; } = 10;
+
+    // You can ignore this for now if you’re not doing subscriptions yet.
+    private bool IsRecurring { get; set; } = false;
+
+    private void SelectPreset(int amount) => AmountDollars = amount;
+
+    private async Task DonateAsync()
+    {
+        Error = null;
+
+        if (AmountDollars < 1 || AmountDollars > 500)
+        {
+            Error = "Please enter an amount between $1 and $500.";
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var resp = await Http.PostAsJsonAsync("api/donations/checkout", new
+            {
+                AmountDollars = AmountDollars,
+                Currency = "usd"
+            });
+
+            var body = await resp.Content.ReadFromJsonAsync<ServiceResponse<DonationCheckoutResponse>>();
+
+            if (!resp.IsSuccessStatusCode || body?.IsSuccessful != true || string.IsNullOrWhiteSpace(body.Data?.CheckoutUrl))
+            {
+                Error = body?.Message ?? "Could not start donation checkout.";
+                return;
+            }
+
+            Nav.NavigateTo(body.Data.CheckoutUrl!, forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+            Error = "Something went wrong starting checkout.";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    // Match your existing service response shape
+    public class ServiceResponse<T>
+    {
+        public bool IsSuccessful { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public T? Data { get; set; }
+    }
+
+    public class DonationCheckoutResponse
+    {
+        public string CheckoutUrl { get; set; } = "";
+        public string SessionId { get; set; } = "";
+    }
+}

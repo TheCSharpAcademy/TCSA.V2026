@@ -1,5 +1,6 @@
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Helpers;

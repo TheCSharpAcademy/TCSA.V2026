@@ -1,8 +1,9 @@
 ﻿@page "/donate"
-@using System.Net.Http.Json
-@inject HttpClient Http
-@inject NavigationManager Nav
-@inject ISnackbar Snackbar
+@using System.Security.Claims
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Requests
+@using TCSA.V2026.Services
 
 <MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
     <MudPaper Elevation="2" Class="pa-6" Rounded="true">
@@ -55,16 +56,40 @@
 </MudContainer>
 
 @code {
-    private bool IsBusy { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private ISnackbar SnackbarService { get; set; }
+
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] private IDonateService DonateService { get; set; }
+
+    private ApplicationUser User;
+
+    private bool IsBusy { get; set; } = true;
     private string? Error { get; set; }
+    private string UserId { get; set; }
 
     private int[] Presets { get; } = [5, 10, 25, 50];
     private int AmountDollars { get; set; } = 10;
 
-    // You can ignore this for now if you’re not doing subscriptions yet.
-    private bool IsRecurring { get; set; } = false;
-
     private void SelectPreset(int amount) => AmountDollars = amount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+
+        IsBusy = false;
+    }
 
     private async Task DonateAsync()
     {
@@ -76,47 +101,39 @@
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(User.Email))
+        {
+            Error = "You must be logged in to donate.";
+            return;
+        }
+
         IsBusy = true;
         try
         {
-            var resp = await Http.PostAsJsonAsync("api/donations/checkout", new
+            var result = await DonateService.CreateCheckoutAsync(new CreateDonationCheckoutRequest
             {
+                AppUserId = UserId,
+                Email = User.Email,
                 AmountDollars = AmountDollars,
                 Currency = "usd"
             });
 
-            var body = await resp.Content.ReadFromJsonAsync<ServiceResponse<DonationCheckoutResponse>>();
-
-            if (!resp.IsSuccessStatusCode || body?.IsSuccessful != true || string.IsNullOrWhiteSpace(body.Data?.CheckoutUrl))
+            if (!result.IsSuccessful || string.IsNullOrWhiteSpace(result.Data?.CheckoutUrl))
             {
-                Error = body?.Message ?? "Could not start donation checkout.";
+                Error = result.Message ?? "Could not start donation checkout.";
                 return;
             }
 
-            Nav.NavigateTo(body.Data.CheckoutUrl!, forceLoad: true);
+            Navigation.NavigateTo(result.Data.CheckoutUrl, forceLoad: true);
         }
         catch (Exception ex)
         {
-            Snackbar.Add(ex.Message, Severity.Error);
+            SnackbarService.Add(ex.Message, Severity.Error);
             Error = "Something went wrong starting checkout.";
         }
         finally
         {
             IsBusy = false;
         }
-    }
-
-    // Match your existing service response shape
-    public class ServiceResponse<T>
-    {
-        public bool IsSuccessful { get; set; }
-        public string Message { get; set; } = string.Empty;
-        public T? Data { get; set; }
-    }
-
-    public class DonationCheckoutResponse
-    {
-        public string CheckoutUrl { get; set; } = "";
-        public string SessionId { get; set; } = "";
     }
 }

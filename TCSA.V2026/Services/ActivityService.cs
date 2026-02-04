@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
-using TCSA.V2026.Data.DTOs;
-using TCSA.V2026.Data.Models;
-using TCSA.V2026.Data.Models.Responses;
 
 namespace TCSA.V2026.Services;
 

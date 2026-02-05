@@ -1,4 +1,4 @@
-﻿@page "/donate"
+﻿@page "/contribute"
 @using System.Security.Claims
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
@@ -9,7 +9,7 @@
     <MudPaper Elevation="2" Class="pa-6" Rounded="true">
         <MudText Typo="Typo.h4">Support The C# Academy</MudText>
         <MudText Typo="Typo.body2" Class="mb-4">
-            Donations help cover hosting, development time, and keeping the platform free and improving.
+            Your contribution helps cover hosting, development time, and keeping the platform free and improving.
         </MudText>
 
         <MudStack Spacing="2">
@@ -45,7 +45,7 @@
                        Disabled="@IsBusy"
                        OnClick="DonateAsync"
                        StartIcon="@Icons.Material.Filled.Favorite">
-                @(IsBusy ? "Redirecting..." : "Donate with Stripe")
+                @(IsBusy ? "Redirecting..." : "Contribute with Stripe")
             </MudButton>
 
             <MudText Typo="Typo.caption" Class="mt-2">
@@ -103,7 +103,7 @@
 
         if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(User.Email))
         {
-            Error = "You must be logged in to donate.";
+            Error = "You must be logged in to contribute.";
             return;
         }
 
@@ -120,7 +120,7 @@
 
             if (!result.IsSuccessful || string.IsNullOrWhiteSpace(result.Data?.CheckoutUrl))
             {
-                Error = result.Message ?? "Could not start donation checkout.";
+                Error = result.Message ?? "Could not start contribution checkout.";
                 return;
             }
 

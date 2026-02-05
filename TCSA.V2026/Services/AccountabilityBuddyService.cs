@@ -162,8 +162,8 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
                     ["deadline_utc"] = accountability.DeadLineUtc.ToString("O")
                 }
             },
-            SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/success?session_id={{CHECKOUT_SESSION_ID}}",
-            CancelUrl = $"{_stripeOptions.Value.BaseUrl}/cancel",
+            SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/billing/success?session_id={{CHECKOUT_SESSION_ID}}",
+            CancelUrl = $"{_stripeOptions.Value.BaseUrl}/billing/cancel",
         });
 
         account.Status = AccountabilityStatus.Pending;

@@ -73,7 +73,7 @@ public sealed class DonateService : IDonateService
         return new ServiceResponse<CreateDonationCheckoutResponse>
         {
             IsSuccessful = true,
-            Message = "Redirect the user to Stripe Checkout to complete the donation.",
+            Message = "Redirect the user to Stripe Checkout to complete the contribution.",
             Data = new CreateDonationCheckoutResponse
             {
                 CheckoutSessionId = session.Id,
@@ -109,10 +109,6 @@ public sealed class DonateService : IDonateService
         return response;
     }
 
-    // -----------------------
-    // Helpers
-    // -----------------------
-
     private ServiceResponse<CreateDonationCheckoutResponse> ValidateDonationRequest(CreateDonationCheckoutRequest request)
     {
         if (request is null)
@@ -121,11 +117,9 @@ public sealed class DonateService : IDonateService
         if (string.IsNullOrWhiteSpace(request.AppUserId))
             return new ServiceResponse<CreateDonationCheckoutResponse> { IsSuccessful = false, Message = "AppUserId is required." };
 
-        // Keep it simple + safe
         if (request.AmountDollars < 1 || request.AmountDollars > 500)
-            return new ServiceResponse<CreateDonationCheckoutResponse> { IsSuccessful = false, Message = "Donation amount must be between $1 and $500." };
+            return new ServiceResponse<CreateDonationCheckoutResponse> { IsSuccessful = false, Message = "Contribution amount must be between $1 and $500." };
 
-        // Optional, but helpful if you create customers
         if (string.IsNullOrWhiteSpace(request.Email))
             return new ServiceResponse<CreateDonationCheckoutResponse> { IsSuccessful = false, Message = "Email is required." };
 
@@ -168,7 +162,7 @@ public sealed class DonateService : IDonateService
             Metadata = new Dictionary<string, string>
             {
                 ["app_user_id"] = map.AppUserId,
-                ["purpose"] = "tcsa_donation"
+                ["purpose"] = "tcsa_contribution"
             }
         });
 
@@ -182,9 +176,8 @@ public sealed class DonateService : IDonateService
     {
         var sessionService = new SessionService(_stripeClient);
 
-        // Success/Cancel pages must exist in your Blazor app
-        var successUrl = $"{_stripeOptions.BaseUrl}/donate/success?session_id={{CHECKOUT_SESSION_ID}}";
-        var cancelUrl = $"{_stripeOptions.BaseUrl}/donate/cancel";
+        var successUrl = $"{_stripeOptions.BaseUrl}/contribute/success?session_id={{CHECKOUT_SESSION_ID}}";
+        var cancelUrl = $"{_stripeOptions.BaseUrl}/contribute/cancel";
 
         return await sessionService.CreateAsync(new SessionCreateOptions
         {
@@ -204,7 +197,7 @@ public sealed class DonateService : IDonateService
                         UnitAmount = donation.AmountCents,
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = "Donation to The C# Academy"
+                            Name = "Support The C# Academy"
                         }
                     }
                 }
@@ -212,8 +205,8 @@ public sealed class DonateService : IDonateService
 
             Metadata = new Dictionary<string, string>
             {
-                ["type"] = "donation",
-                ["donation_id"] = donation.Id.ToString(),
+                ["type"] = "support",
+                ["contribution_id"] = donation.Id.ToString(),
                 ["app_user_id"] = donation.AppUserId,
                 ["amount_cents"] = donation.AmountCents.ToString(),
                 ["currency"] = currency

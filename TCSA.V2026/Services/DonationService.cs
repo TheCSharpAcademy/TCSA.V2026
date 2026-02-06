@@ -14,7 +14,7 @@ namespace TCSA.V2026.Services;
 public interface IDonateService
 {
     Task<ServiceResponse<CreateDonationCheckoutResponse>> CreateCheckoutAsync(CreateDonationCheckoutRequest request);
-    Task<ServiceResponse<List<UserDonation>>> GetUserDonationsAsync(string userId, int take = 20);
+    Task<ServiceResponse<List<UserDonation>>> GetDonationsAsync();
 }
 
 public sealed class DonateService : IDonateService
@@ -46,11 +46,9 @@ public sealed class DonateService : IDonateService
 
         await using var db = await _factory.CreateDbContextAsync();
 
-        // 1) Ensure we have a Stripe customer stored for this user
         var userStripe = await GetOrCreateUserStripeAsync(db, request.AppUserId);
         await EnsureStripeCustomerAsync(db, userStripe, request.Email);
 
-        // 2) Create donation row first (gives us an internal ID for metadata)
         var donation = new UserDonation
         {
             AppUserId = request.AppUserId,
@@ -61,12 +59,10 @@ public sealed class DonateService : IDonateService
         };
 
         db.UserDonations.Add(donation);
-        await db.SaveChangesAsync(); // donation.Id created
+        await db.SaveChangesAsync(); 
 
-        // 3) Create Checkout Session in payment mode
         var session = await CreateDonationCheckoutSessionAsync(userStripe.StripeCustomerId, donation, currency);
 
-        // 4) Save Stripe session id for reconciliation/debugging
         donation.StripeCheckoutSessionId = session.Id;
         await db.SaveChangesAsync();
 
@@ -82,26 +78,16 @@ public sealed class DonateService : IDonateService
         };
     }
 
-    public async Task<ServiceResponse<List<UserDonation>>> GetUserDonationsAsync(string userId, int take = 20)
+    public async Task<ServiceResponse<List<UserDonation>>> GetDonationsAsync()
     {
         var response = new ServiceResponse<List<UserDonation>>();
-
-        if (string.IsNullOrWhiteSpace(userId))
-        {
-            response.IsSuccessful = false;
-            response.Message = "UserId is required.";
-            return response;
-        }
-
-        take = Math.Clamp(take, 1, 200);
 
         await using var db = await _factory.CreateDbContextAsync();
 
         var donations = await db.UserDonations
             .AsNoTracking()
-            .Where(x => x.AppUserId == userId)
+            .Where(d => d.PaidUtc.HasValue)
             .OrderByDescending(x => x.CreatedUtc)
-            .Take(take)
             .ToListAsync();
 
         response.IsSuccessful = true;
@@ -205,7 +191,7 @@ public sealed class DonateService : IDonateService
 
             Metadata = new Dictionary<string, string>
             {
-                ["type"] = "support",
+                ["type"] = "contribution",
                 ["contribution_id"] = donation.Id.ToString(),
                 ["app_user_id"] = donation.AppUserId,
                 ["amount_cents"] = donation.AmountCents.ToString(),

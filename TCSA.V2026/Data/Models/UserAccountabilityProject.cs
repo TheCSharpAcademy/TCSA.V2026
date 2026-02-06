@@ -1,6 +1,6 @@
 ﻿using TCSA.V2026.Data.Enums;
 
-namespace TCSA.AccountabilityMate.Models;
+namespace TCSA.V2026.Models;
 
 public sealed class UserAccountabilityProject
 {

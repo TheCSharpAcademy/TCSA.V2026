@@ -12,6 +12,42 @@
             Your contribution helps cover hosting, development time, and keeping the platform free and improving.
         </MudText>
 
+        @* Donation progress *@
+        <MudPaper Outlined="true" Class="pa-4">
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.subtitle2">Community progress</MudText>
+
+                @if (IsLoadingDonations)
+                {
+                    <MudSkeleton Height="18px" Width="60%" />
+                    <MudSkeleton Height="10px" Width="100%" />
+                }
+                else if (!string.IsNullOrWhiteSpace(DonationProgressError))
+                {
+                    <MudAlert Severity="Severity.Warning" Dense="true">
+                        @DonationProgressError
+                    </MudAlert>
+                }
+                else
+                {
+                    <MudText Typo="Typo.body2">
+                        <b>@CurrentDonatedDisplay</b> raised of <b>@GoalDisplay</b>
+                    </MudText>
+
+                    <MudProgressLinear Value="@ProgressPercent"
+                                       Rounded="true"
+                                       Size="Size.Large"
+                                       Color="Color.Success"
+                                       BufferValue="100d"
+                                       Striped="true" />
+
+                    <MudText Typo="Typo.caption">
+                        @ProgressPercent.ToString("0.#")% of goal
+                    </MudText>
+                }
+            </MudStack>
+        </MudPaper>
+
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle2">Choose an amount</MudText>
 
@@ -72,6 +108,16 @@
     private int[] Presets { get; } = [5, 10, 25, 50];
     private int AmountDollars { get; set; } = 10;
 
+    private bool IsLoadingDonations { get; set; } = true;
+    private string? DonationProgressError { get; set; }
+    private decimal DonationGoalUsd { get; set; } = 1000m;
+    private decimal CurrentDonatedUsd { get; set; } = 0m;
+    private double ProgressPercent =>
+    DonationGoalUsd <= 0m ? 0d : Math.Min(100d, (double)((CurrentDonatedUsd / DonationGoalUsd) * 100m));
+
+    private string CurrentDonatedDisplay => CurrentDonatedUsd.ToString("C0"); 
+    private string GoalDisplay => DonationGoalUsd.ToString("C0");
+
     private void SelectPreset(int amount) => AmountDollars = amount;
 
     protected override async Task OnInitializedAsync()
@@ -88,7 +134,35 @@
         UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
         User = await UserService.GetUserById(UserId);
 
+        await LoadDonationProgressAsync();
         IsBusy = false;
+    }
+
+    private async Task LoadDonationProgressAsync()
+    {
+        IsLoadingDonations = true;
+        DonationProgressError = null;
+
+        try
+        {
+            var result = await DonateService.GetDonationsAsync();
+
+            if (!result.IsSuccessful || result.Data is null)
+            {
+                DonationProgressError = result.Message ?? "Could not load contribution progress.";
+                return;
+            }
+
+            CurrentDonatedUsd = result.Data.Sum(d => (decimal)d.AmountCents) / 100m;
+        }
+        catch
+        {
+            DonationProgressError = "Could not load contribution progress right now.";
+        }
+        finally
+        {
+            IsLoadingDonations = false;
+        }
     }
 
     private async Task DonateAsync()

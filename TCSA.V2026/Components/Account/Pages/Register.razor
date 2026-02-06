@@ -60,7 +60,6 @@
                         width: 100%;
                     }
 
-
                     .custom-select {
                         position: relative;
                         width: 100%;
@@ -153,6 +152,8 @@
                     }
 
                     .custom-select-label {
+                        transform: translate(0, 1.5px) scale(0.75);
+                        transform-origin: top left;
                         font-size: 1rem;
                         font-weight: 400;
                         color: var(--mud-palette-text-primary);
@@ -163,6 +164,16 @@
 
                     .custom-select[open] + .custom-select-label {
                         color: var(--mud-palette-primary);
+                    }
+
+                    .custom-select-wrapper:has(div.mud-input-error) .custom-select-trigger {
+                        border-bottom-color: var(--mud-palette-error);
+                        border-bottom-width: 2px;
+                        margin-bottom: 3px;
+                    }
+
+                    .custom-select-wrapper:has(div.mud-input-error) .custom-select-label {
+                        color: var(--mud-palette-error);
                     }
                 </style>
                 <MudStaticTextField For="@(() => Input.Email)" @bind-Value="Input.Email"
@@ -230,8 +241,9 @@
 
                     const options = countryOptions.querySelectorAll('.custom-select-option');
                     for (const option of options) {
-                        const value = option.getAttribute('data-value');
-                        if (value.startsWith(searchChar)) {
+                        const radio = option.querySelector('input[type="radio"]');
+                        const value = radio?.value?.toLowerCase();
+                        if (value && value.startsWith(searchChar)) {
                             countryOptions.querySelector('.highlighted')?.classList.remove('highlighted');
                             option.classList.add('highlighted');
                             option.scrollIntoView({ block: 'nearest' });

@@ -305,6 +305,14 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
+        if (string.IsNullOrEmpty(Input.Country) || !Countries.Contains(Input.Country))
+        {
+            var messages = new ValidationMessageStore(editContext);
+            messages.Add(() => Input.Country, "Please select a valid country.");
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

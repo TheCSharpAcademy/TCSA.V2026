@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using TCSA.V2026.Data.Enums;
 
 namespace TCSA.V2026.Data.Models;
 
@@ -30,21 +31,3 @@ public class ApplicationUser : IdentityUser
     public virtual ICollection<UserChallenge> UserChallenges { get; set; } = new List<UserChallenge>();
     public virtual ICollection<ShowcaseItem> ShowcaseItems { get; set; } = new List<ShowcaseItem>();
 }
-
-public enum Level
-{
-    White = 1,
-    Green,
-    [Display(Name = "Olive Green")]
-    OliveGreen,
-    Yellow,
-    Orange,
-    Red,
-    Purple,
-    Brown,
-    Grey,
-    Blue,
-    Black
-}
-
-

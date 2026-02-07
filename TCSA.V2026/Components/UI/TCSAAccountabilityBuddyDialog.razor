@@ -5,9 +5,8 @@
 
 <MudDialog Style="min-width: 400px;">
     <DialogContent>
-        <MudText Typo="Typo.h6">Accountability Buddy</MudText>
         <MudText Typo="Typo.body2" Class="mb-3">
-            Pick your pledge and deadline. Miss it, and you pay.
+            Pick your pledge and deadline. Miss it, and you pay. Before making a pledge read our article <a href="https://thecsharpacademy.com/article/30010/how-accountability-buddy-works" target="_blank" rel="noopener noreferrer">What is Accountability Buddy?</a>
         </MudText>
 
         <MudStack Spacing="2">
@@ -94,6 +93,12 @@
             {
                 ErrorMessage = "Stripe Checkout URL was not returned.";
                 return;
+            }
+
+            if (response.IsSuccessful && !string.IsNullOrWhiteSpace(checkoutUrl))
+            {
+                MudDialog.Close(DialogResult.Ok(true));
+                Snackbar.Add("Accountability Buddy was successfully set for this project", Severity.Success);
             }
 
             MudDialog.Close(DialogResult.Ok(checkoutUrl));

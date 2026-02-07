@@ -1,0 +1,19 @@
+﻿@page "/contribute/success"
+@using Microsoft.AspNetCore.Components
+
+<MudContainer>
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5">Thanks for contributing ❤️</MudText>
+        <MudText Typo="Typo.body2">
+            Your support helps keep The C# Academy running and improving.
+        </MudText>
+        <MudText Typo="Typo.body2">
+            You can close this page and go back to your dashboard.
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [SupplyParameterFromQuery(Name = "session_id")]
+    public string? SessionId { get; set; }
+}

@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Services;

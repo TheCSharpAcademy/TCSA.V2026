@@ -16,7 +16,7 @@
             @foreach (var article in ArticlesList)
             {
                 <MudItem xs="12" sm="6" md="3">
-                    <MudLink OnClick="@(() => NavigateToArticle(article))">
+                    <MudLink OnClick="@(() => NavigateToArticle(article))" Underline="Underline.None">
                         <MudCard Style="height:100%" Elevation="3">
                             <MudCardMedia Image="@($"img/cardimages/{article.CardImgUrl}")" Height="200" />
                             <MudCardContent>
@@ -40,7 +40,7 @@
     [Parameter] public string articleType { get; set; }
 
     private List<Article> ArticlesList { get; set; } = new();
-    private List<int> NoDisplayIds { get; set; } = new() { 1, 2, 3, 4, 51, 100 };
+    private List<int> NoDisplayIds { get; set; } = new() { 1, 2, 3, 4, 51, 100, 30010 };
 
     private bool IsLoading = true;
 

@@ -1,5 +1,6 @@
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
 namespace TCSA.V2026.Helpers;
@@ -122,6 +123,15 @@ public static class RoadmapHelper
     public static List<int> blazorProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.Blazor).Select(x => x.Id).ToList();
     public static List<int> reactProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.React).Select(x => x.Id).ToList();
     public static List<int> mvcProjects = ProjectHelper.GetProjects().Where(x => x.Area == Area.MVC).Select(x => x.Id).ToList();
+
+    public static string GetUrl(RoadmapTask task)
+    {
+        if (task.Id == 0) return string.Empty;
+
+        var taskType = task.IsProject ? "project" : "article";
+        return $"{taskType}/{task.Id}/{task.Slug}";
+
+    }
 
     public static string GetExpectedBelt(List<int> completedProjects, int issues, int reviews)
     {

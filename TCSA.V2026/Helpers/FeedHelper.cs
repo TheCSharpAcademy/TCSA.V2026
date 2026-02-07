@@ -20,9 +20,11 @@ public static class FeedHelper
     {
         return new FeedDisplay
         {
+            ProjectId = activity.ProjectId,
             User = activity.ApplicationUser,
             ActivityType = activity.ActivityType,
             Date = activity.DateSubmitted,
+            Level = activity.Level,
             ProjectIconUrl = ProjectHelper.GetProjectIconUrl(activity.ProjectId),
             ProjectName = ProjectHelper.GetProjectName(activity.ProjectId)
         };

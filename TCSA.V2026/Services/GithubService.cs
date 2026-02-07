@@ -147,6 +147,7 @@ public class GithubService(IDbContextFactory<ApplicationDbContext> _factory) : I
                 {
                     review.User.ExperiencePoints = review.User.ExperiencePoints + points;
                     review.User.ReviewedProjects = review.User.ReviewedProjects + 1;
+                    review.User.ReviewExperiencePoints = review.User.ReviewExperiencePoints + points;
                     review.User.UserActivity.Add(new AppUserActivity
                     {
                         ActivityType = ActivityType.CodeReviewCompleted,

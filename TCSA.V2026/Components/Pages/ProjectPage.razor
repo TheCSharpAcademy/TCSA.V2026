@@ -1,13 +1,13 @@
 @page "/project/{ProjectId:int}/{ProjectSlug}"
 @using System.Security.Claims
 @using Microsoft.Extensions.Options
-@using TCSA.AccountabilityMate.Models
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Options
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
+@using TCSA.V2026.Models
 @using TCSA.V2026.Services
 @using TCSA.V2026.Services.Challenges
 
@@ -262,7 +262,7 @@
                         }
                     }
 
-                    @if (FeatureToggles.Value.AccountabilityBuddy && IsLoggedIn && !IsCompleted) 
+                    @if (IsLoggedIn && !IsCompleted && IsAdmin) 
                     {
                         @if (AccountabilityBuddyInfo == null)
                         {
@@ -277,11 +277,19 @@
                         }
                         else
                         {
-                            <MudAlert Class="mt-5"
-                                      Severity="Severity.Warning"
-                                      Elevation="2">
-                                You've set up the accountability buddy for this project'.
-                            </MudAlert>
+                            <MudHidden Breakpoint="Breakpoint.MdAndDown">
+                                <MudCard Class="mt-1">
+                                    <MudCardHeader Class="d-flex align-items-center">
+                                        <CardHeaderAvatar>
+                                            <MudImage Width="40" Src="@($"img/icons/icons8-coach-64.png")" />
+                                        </CardHeaderAvatar>
+                                        <CardHeaderContent>
+                                            <h3 class="mud-typography-body1 mud-primary-text" style="font-weight: bold;">You set up the accountability buddy for this project</h3>
+                                            <MudText Typo="Typo.body2">Your deadline is: @AccountabilityBuddyInfo.DeadLineUtc</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                </MudCard>
+                            </MudHidden>
                         }
                     }
 
@@ -319,6 +327,7 @@
     private string UserId = string.Empty;
     private string UserEmail = string.Empty;
     private bool CodeWarsNotFoundShowing = false;
+    private bool IsAdmin = false;
 
     protected async override Task OnInitializedAsync()
     {
@@ -347,6 +356,15 @@
             // forceLoad is important for external navigation
             NavigationManager.NavigateTo(checkoutUrl, forceLoad: true);
             return;
+        }
+
+        if (result.Data is bool noCheckoutNeeded && noCheckoutNeeded)
+        {
+            var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);
+            if (accountabilityResponse.IsSuccessful)
+            {
+                AccountabilityBuddyInfo = accountabilityResponse.Data;
+            }
         }
     }
 
@@ -408,6 +426,7 @@
             var claims = AuthSate.User;
             UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
             UserEmail = claims.FindFirstValue(ClaimTypes.Email);
+            IsAdmin = claims.IsInRole("Admin");
 
             IsCompleted = await ProjectService.IsProjectCompleted(UserId, ProjectId);
             var accountabilityResponse = await AccountabilityBuddyService.GetUserAccountability(UserId, ProjectId);

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data.Models;
+using TCSA.V2026.Models;
 
 namespace TCSA.V2026.Data;
 
@@ -18,7 +18,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<UserReview> UserReviews { get; set; }
     public virtual DbSet<UserStripe> UserStripe { get; set; }
     public virtual DbSet<UserAccountabilityProject> UserAccountabilityProjects { get; set; }
-
+    public virtual DbSet<UserDonation> UserDonations { get; set; }
+    public virtual DbSet<WebhookDebugLog> WebhookDebugLog { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,0 +1,213 @@
+﻿@page "/contribute"
+@using System.Security.Claims
+@using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Data.Models.Requests
+@using TCSA.V2026.Services
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
+    <MudPaper Elevation="2" Class="pa-6" Rounded="true">
+        <MudText Typo="Typo.h4">Support The C# Academy</MudText>
+        <MudText Typo="Typo.body2" Class="mb-4">
+            Your contribution helps cover hosting, development time, and keeping the platform free and improving.
+        </MudText>
+
+        @* Donation progress *@
+        <MudPaper Outlined="true" Class="pa-4">
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.subtitle2">Community progress</MudText>
+
+                @if (IsLoadingDonations)
+                {
+                    <MudSkeleton Height="18px" Width="60%" />
+                    <MudSkeleton Height="10px" Width="100%" />
+                }
+                else if (!string.IsNullOrWhiteSpace(DonationProgressError))
+                {
+                    <MudAlert Severity="Severity.Warning" Dense="true">
+                        @DonationProgressError
+                    </MudAlert>
+                }
+                else
+                {
+                    <MudText Typo="Typo.body2">
+                        <b>@CurrentDonatedDisplay</b> raised of <b>@GoalDisplay</b>
+                    </MudText>
+
+                    <MudProgressLinear Value="@ProgressPercent"
+                                       Rounded="true"
+                                       Size="Size.Large"
+                                       Color="Color.Success"
+                                       BufferValue="100d"
+                                       Striped="true" />
+
+                    <MudText Typo="Typo.caption">
+                        @ProgressPercent.ToString("0.#")% of goal
+                    </MudText>
+                }
+            </MudStack>
+        </MudPaper>
+
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle2">Choose an amount</MudText>
+
+            <MudStack Direction="Row" Spacing="1" Wrap="Wrap.Wrap">
+                @foreach (var amt in Presets)
+                {
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               OnClick="@(() => SelectPreset(amt))"
+                               Disabled="@IsBusy">
+                        $@amt
+                    </MudButton>
+                }
+            </MudStack>
+
+            <MudNumericField T="int"
+                             Label="Or enter a custom amount (USD)"
+                             Min="1"
+                             Max="500"
+                             @bind-Value="AmountDollars"
+                             Disabled="@IsBusy"
+                             Variant="Variant.Outlined" />
+
+            @if (!string.IsNullOrWhiteSpace(Error))
+            {
+                <MudAlert Severity="Severity.Error" Dense="true">@Error</MudAlert>
+            }
+
+            <MudButton Color="Color.Primary"
+                       Variant="Variant.Filled"
+                       Disabled="@IsBusy"
+                       OnClick="DonateAsync"
+                       StartIcon="@Icons.Material.Filled.Favorite">
+                @(IsBusy ? "Redirecting..." : "Contribute with Stripe")
+            </MudButton>
+
+            <MudText Typo="Typo.caption" Class="mt-2">
+                Payments are processed by Stripe. We never store your card details.
+            </MudText>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private ISnackbar SnackbarService { get; set; }
+
+    [Inject] private IUserService UserService { get; set; }
+    [Inject] private IDonateService DonateService { get; set; }
+
+    private ApplicationUser User;
+
+    private bool IsBusy { get; set; } = true;
+    private string? Error { get; set; }
+    private string UserId { get; set; }
+
+    private int[] Presets { get; } = [5, 10, 25, 50];
+    private int AmountDollars { get; set; } = 10;
+
+    private bool IsLoadingDonations { get; set; } = true;
+    private string? DonationProgressError { get; set; }
+    private decimal DonationGoalUsd { get; set; } = 1000m;
+    private decimal CurrentDonatedUsd { get; set; } = 0m;
+    private double ProgressPercent =>
+    DonationGoalUsd <= 0m ? 0d : Math.Min(100d, (double)((CurrentDonatedUsd / DonationGoalUsd) * 100m));
+
+    private string CurrentDonatedDisplay => CurrentDonatedUsd.ToString("C0"); 
+    private string GoalDisplay => DonationGoalUsd.ToString("C0");
+
+    private void SelectPreset(int amount) => AmountDollars = amount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!authSate.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("Account/Login");
+        }
+
+        var claims = authSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+
+        await LoadDonationProgressAsync();
+        IsBusy = false;
+    }
+
+    private async Task LoadDonationProgressAsync()
+    {
+        IsLoadingDonations = true;
+        DonationProgressError = null;
+
+        try
+        {
+            var result = await DonateService.GetDonationsAsync();
+
+            if (!result.IsSuccessful || result.Data is null)
+            {
+                DonationProgressError = result.Message ?? "Could not load contribution progress.";
+                return;
+            }
+
+            CurrentDonatedUsd = result.Data.Sum(d => (decimal)d.AmountCents) / 100m;
+        }
+        catch
+        {
+            DonationProgressError = "Could not load contribution progress right now.";
+        }
+        finally
+        {
+            IsLoadingDonations = false;
+        }
+    }
+
+    private async Task DonateAsync()
+    {
+        Error = null;
+
+        if (AmountDollars < 1 || AmountDollars > 500)
+        {
+            Error = "Please enter an amount between $1 and $500.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(User.Email))
+        {
+            Error = "You must be logged in to contribute.";
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var result = await DonateService.CreateCheckoutAsync(new CreateDonationCheckoutRequest
+            {
+                AppUserId = UserId,
+                Email = User.Email,
+                AmountDollars = AmountDollars,
+                Currency = "usd"
+            });
+
+            if (!result.IsSuccessful || string.IsNullOrWhiteSpace(result.Data?.CheckoutUrl))
+            {
+                Error = result.Message ?? "Could not start contribution checkout.";
+                return;
+            }
+
+            Navigation.NavigateTo(result.Data.CheckoutUrl, forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            SnackbarService.Add(ex.Message, Severity.Error);
+            Error = "Something went wrong starting checkout.";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+}

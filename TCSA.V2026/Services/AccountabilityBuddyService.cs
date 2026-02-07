@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
-using TCSA.AccountabilityMate.Models;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Options;
 using TCSA.V2026.Data.Models.Responses;
+using TCSA.V2026.Models;
 
 namespace TCSA.V2026.Services;
 
@@ -162,8 +162,8 @@ public class AccountabilityBuddyService : IAccountabilityBuddyService
                     ["deadline_utc"] = accountability.DeadLineUtc.ToString("O")
                 }
             },
-            SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/success?session_id={{CHECKOUT_SESSION_ID}}",
-            CancelUrl = $"{_stripeOptions.Value.BaseUrl}/cancel",
+            SuccessUrl = $"{_stripeOptions.Value.BaseUrl}/billing/success?session_id={{CHECKOUT_SESSION_ID}}",
+            CancelUrl = $"{_stripeOptions.Value.BaseUrl}/billing/cancel",
         });
 
         account.Status = AccountabilityStatus.Pending;

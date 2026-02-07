@@ -5,6 +5,7 @@
 @using TCSA.V2026.Components.UI
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
+@using TCSA.V2026.Data.Enums
 @using TCSA.V2026.Data.Models
 @using TCSA.V2026.Data.Models.Responses
 @using TCSA.V2026.Helpers
@@ -107,9 +108,15 @@
                 </MudButton>
             </MudItem>
             <MudItem xs="4">
-                <MudTextField @bind-Value="XPInput" Label="Update XP" />
+                <MudTextField @bind-Value="XpInput" Label="Update XP" />
             </MudItem>
             <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitPoints">
+                Submit
+            </MudButton>
+            <MudItem xs="4">
+                <MudTextField @bind-Value="ReviewsXpInput" Label="Update Reviews XP" />
+            </MudItem>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitReviewPoints">
                 Submit
             </MudButton>
         </MudPaper>
@@ -226,9 +233,10 @@
     private List<int>? IssuesIds;
 
     private bool IsLoading = true;
-    private int XPSum = 0;
+    private int XpSum = 0;
     private int ranking = 0;
-    private int XPInput = 0;
+    private int XpInput = 0;
+    private int ReviewsXpInput = 0;
     private TimeSpan loadTime;
 
     protected override async Task OnInitializedAsync()
@@ -323,7 +331,7 @@
 
     private async Task SubmitPoints()
     {
-        var result = await AdminService.ChangePoints(UserId, XPInput);
+        var result = await AdminService.ChangePoints(UserId, XpInput);
 
         if (result.Status == ResponseStatus.Success)
         {
@@ -336,6 +344,23 @@
             Snackbar.Add($"Error: {result.Message}", Severity.Error);
         }
     }
+
+    private async Task SubmitReviewPoints()
+    {
+        var result = await AdminService.ChangeReviewPoints(UserId, ReviewsXpInput);
+
+        if (result.IsSuccessful)
+        {
+            Snackbar.Add("Points Updated!", Severity.Success);
+
+            UserDisplay = await GetUserDisplay();
+        }
+        else
+        {
+            Snackbar.Add($"Error: {result.Message}", Severity.Error);
+        }
+    }
+
 
     private async Task LoadAdminActivity()
     {

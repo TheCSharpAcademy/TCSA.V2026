@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data;
 using TCSA.V2026.Data.Curriculum;
 using TCSA.V2026.Data.DTOs;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 using TCSA.V2026.Data.Models.Responses;
 using TCSA.V2026.Helpers;
@@ -34,11 +35,13 @@ public class FeedService : IFeedService
         var activitiesQuery = context.UserActivity
             .Include(ua => ua.ApplicationUser)
             .Where(ua => ua.ActivityType == ActivityType.NewBelt || ua.ActivityType == ActivityType.ProjectCompleted)
+            .Where(ua => !context.Issues.Any(i => i.ProjectId == ua.ProjectId))
             .Select(ua => new
             {
                 User = ua.ApplicationUser,
                 ActivityType = ua.ActivityType,
                 ProjectId = (int?)ua.ProjectId,
+                Level = ua.Level,
                 Date = ua.DateSubmitted
             });
 
@@ -48,6 +51,7 @@ public class FeedService : IFeedService
                 User = u,
                 ActivityType = ActivityType.NewUser,
                 ProjectId = (int?)null,
+                Level = (Level?)null,
                 Date = u.CreatedDate
             });
 
@@ -66,10 +70,12 @@ public class FeedService : IFeedService
         var pagedItems = pageRows
             .Select(f => new FeedDisplay
             {
+                ProjectId = f.ProjectId,
                 User = f.User,
                 ActivityType = f.ActivityType,
-                ProjectName = f.ProjectId.HasValue ? ProjectHelper.GetProjectName(f.ProjectId.Value) : null,
-                ProjectIconUrl = f.ProjectId.HasValue ? ProjectHelper.GetProjectIconUrl(f.ProjectId.Value) : null,
+                ProjectName = ProjectHelper.GetProjectName(f.ProjectId),
+                ProjectIconUrl = ProjectHelper.GetProjectIconUrl(f.ProjectId),
+                Level = f.Level,
                 Date = f.Date
             })
             .ToList();
@@ -83,6 +89,7 @@ public class FeedService : IFeedService
         var recentActivitiesTask = context.UserActivity
             .Include(ua => ua.ApplicationUser)
             .Where(ua => ua.ActivityType == ActivityType.NewBelt || ua.ActivityType == ActivityType.ProjectCompleted)
+            .Where(ua => !context.Issues.Any(i => i.ProjectId == ua.ProjectId))
             .OrderByDescending(ua => ua.DateSubmitted)
             .Take(FeedConstants.FeedWidgetItemLimits.RecentActivitiesLimit)
             .ToListAsync();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
@@ -6,18 +7,18 @@ namespace TCSA.V2026.Data;
 
 public static class SeedData
 {
-    public static void Seed(IServiceProvider serviceProvider)
+    public static async Task Seed(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-        SeedUsers(context);
+        await SeedUsers(context);
     }
 
-    private static void SeedUsers(ApplicationDbContext context)
+    private static async Task SeedUsers(ApplicationDbContext context)
     {
         var hasher = new PasswordHasher<ApplicationUser>();
 
@@ -596,7 +597,7 @@ public static class SeedData
         };
         user5.PasswordHash = hasher.HashPassword(user5, "Password123!");
 
-        context.Users.AddRange(user1, user2, user3, user4, user5);
-        context.SaveChanges();
+        await context.Users.AddRangeAsync(user1, user2, user3, user4, user5);
+        await context.SaveChangesAsync();
     }
 }

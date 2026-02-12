@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +8,11 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using TCSA.V2026.Data;
 
 namespace TCSA.V2026.EndToEndTests;
+
 public class EndToEndTestFactory : WebApplicationFactory<Program>
 {
+    private static readonly string DatabaseName = Guid.NewGuid().ToString();
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureAppConfiguration((context, config) =>
@@ -31,7 +33,7 @@ public class EndToEndTestFactory : WebApplicationFactory<Program>
 
             services.AddDbContextFactory<ApplicationDbContext>(options =>
             {
-                options.UseInMemoryDatabase("EndToEndTestDb");
+                options.UseInMemoryDatabase(DatabaseName);
             });
         });
     }

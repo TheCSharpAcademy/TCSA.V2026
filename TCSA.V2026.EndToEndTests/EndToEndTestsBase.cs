@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Playwright;
 using TCSA.V2026.Data;
 
 namespace TCSA.V2026.EndToEndTests;
+
 public class EndToEndTestsBase : PageTest
 {
     protected EndToEndTestFactory Factory;
@@ -19,24 +19,24 @@ public class EndToEndTestsBase : PageTest
     }
 
     [OneTimeTearDown]
-    public void OneTimeTearDown()
+    public async Task OneTimeTearDown()
     {
-        Factory.Dispose();
+        await Factory.DisposeAsync();
     }
 
     [SetUp]
     public async Task SetUp()
     {
-        using var scope = Factory.Services.CreateScope();
-
-        await SeedData.Seed(scope.ServiceProvider);
+        await SeedData.Seed(Factory.Services);
     }
 
     [TearDown]
     public async Task TearDown()
     {
         using var scope = Factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
+
+        await using var context = await contextFactory.CreateDbContextAsync();
         await context.Database.EnsureDeletedAsync();
     }
 

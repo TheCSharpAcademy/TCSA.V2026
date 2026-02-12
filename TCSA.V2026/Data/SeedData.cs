@@ -10,7 +10,8 @@ public static class SeedData
     public static async Task Seed(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
+        await using var context = await contextFactory.CreateDbContextAsync();
 
         await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();

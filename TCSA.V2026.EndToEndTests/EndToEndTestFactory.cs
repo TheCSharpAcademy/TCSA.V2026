@@ -11,7 +11,7 @@ namespace TCSA.V2026.EndToEndTests;
 
 public class EndToEndTestFactory : WebApplicationFactory<Program>
 {
-    private static readonly string DatabaseName = Guid.NewGuid().ToString();
+    private readonly string _databaseName = Guid.NewGuid().ToString();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -33,7 +33,7 @@ public class EndToEndTestFactory : WebApplicationFactory<Program>
 
             services.AddDbContextFactory<ApplicationDbContext>(options =>
             {
-                options.UseInMemoryDatabase(DatabaseName);
+                options.UseInMemoryDatabase(_databaseName);
             });
         });
     }

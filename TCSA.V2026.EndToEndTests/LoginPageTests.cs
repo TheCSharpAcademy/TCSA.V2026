@@ -2,7 +2,7 @@ using Microsoft.Playwright;
 
 namespace TCSA.V2026.EndToEndTests;
 
-[Parallelizable(ParallelScope.Self)]
+[NonParallelizable]
 [TestFixture]
 public class LoginPageTests : EndToEndTestsBase
 {

@@ -43,7 +43,7 @@
 
 
   <ItemGroup>
-    <None Include="Services\ChallengeService.cs" />
+    <None Include="Services\Challenges\ChallengeService.cs" />
     <None Include="wwwroot\img\Banners\article-banner.jpg" />
   </ItemGroup>
 

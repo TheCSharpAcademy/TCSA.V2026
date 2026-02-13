@@ -12,7 +12,7 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
-<AdminToolBar Count="AdminPendingProjects?.Count()"></AdminToolBar>
+<AdminToolBar Count="FilteredAdminPendingProjects?.Count()"></AdminToolBar>
 
 @if (IsLoading) 
 {
@@ -21,6 +21,7 @@
 else 
 {
     <MudPaper Class="pa-4 mb-5" Elevation="4">
+        <MudCheckBox @bind-Value="ShowAdvancedProjects" Label="Show advanced projects" Class="mb-2" />
         <MudSelect T="string" Label="Filter by Project" @bind-Value="SelectedProject" Class="my-2" Dense="true" Clearable="true">
             <MudSelectItem T="string" Value="null">All</MudSelectItem>
             @foreach (var p in ProjectHelper.GetProjects())
@@ -66,6 +67,22 @@ else
     private List<AdminPendingDisplay>? AdminPendingProjects { get; set; } = new();
     private List<AdminPendingDisplay>? FilteredAdminPendingProjects { get; set; } = new();
 
+    private readonly HashSet<string> AdvancedProjectNames = new()
+    {
+        "Math Game",
+        "Calculator",
+        "Habit Logger",
+        "Coding Tracker",
+        "Flashcards",
+        "Drinks Info",
+        "Phone Book",
+        "Shifts Logger",
+        "Excel Reader",
+        "Sports Results Notifier",
+        "Testing",
+        "Ecommerce"
+    };
+
     private string _selectedProject = null;
     private string SelectedProject
     {
@@ -75,6 +92,20 @@ else
             if (_selectedProject != value)
             {
                 _selectedProject = value;
+                FilterProject();
+            }
+        }
+    }
+
+    private bool _showAdvancedProjects = false;
+    private bool ShowAdvancedProjects
+    {
+        get => _showAdvancedProjects;
+        set
+        {
+            if (_showAdvancedProjects != value)
+            {
+                _showAdvancedProjects = value;
                 FilterProject();
             }
         }
@@ -92,15 +123,19 @@ else
 
     private void FilterProject()
     {
-        if (SelectedProject is null)
+        var filtered = AdminPendingProjects.AsEnumerable();
+
+        if (ShowAdvancedProjects)
         {
-            FilteredAdminPendingProjects = AdminPendingProjects;
-        }
-        else
-        {
-            FilteredAdminPendingProjects = AdminPendingProjects.Where(x => x.ProjectName == SelectedProject).ToList();
+            filtered = filtered.Where(x => !AdvancedProjectNames.Contains(x.ProjectName));
         }
 
+        if (SelectedProject is not null)
+        {
+            filtered = filtered.Where(x => x.ProjectName == SelectedProject);
+        }
+
+        FilteredAdminPendingProjects = filtered.ToList();
         StateHasChanged();
     }
 

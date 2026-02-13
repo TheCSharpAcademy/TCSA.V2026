@@ -18,7 +18,7 @@
             <MudText Class="mr-3" Style="font-weight: 500">@(((Level)User.Level).ToString() + " Belt")</MudText>
         </MudHidden>
         <MudImage Src="img/experience.png" Width="30"></MudImage>
-        <MudText Style="font-weight: 500">@User.ExperiencePoints</MudText>
+        <MudText UserAttributes="@(new() { { "data-testid", "user-xp" } })" Style="font-weight: 500">@User.ExperiencePoints</MudText>
         <MudSpacer />
         <div Class="d-flex justify-space-around flex-wrap">
             @if (Notifications.Any(x => x.IsActive))

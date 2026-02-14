@@ -86,23 +86,22 @@ internal static class ReactProjectsHelper
                 {
                     new Paragraph
                     {
-                        Body="Congratulations! You’ve finished your first React App. It was probably easy. After all, React’s documentation is excellent. It’s at the same time thorough but easy to follow. So let’s complicate things a little. "
+                        Body="Congratulations! You’ve finished your first React project. It was probably easy. After all, React’s documentation is excellent: compreehensive but easy to follow. So let’s complicate things a little. "
                     },
                      new Paragraph
                     {
-                        Body="It’s time for you to combine a React App to a .NET WebAPI. Since this is the first time you’re doing it, we will keep it simple. We will only be showing data coming from the API via Get requests. This will reinforce what you’ve learned in the first app, and will exercise your creativity. Oh, and by the way, we will also be training .NET Web Apis again. Let’s go!"
+                        Body="It’s time for you to combine a React front-end and an ASP.NET Core Web API. Since this is the first time you’re doing it, we'll keep it simple. All you need to do is to show data coming from the API via GET requests. This will reinforce what you’ve learned in the first app, and will exercise your creativity. At the same time you'll be polishing your knowledge of ASP.NET Core Web APIs. Let’s go!"
                     }
                 },
                 Requirements = new List<string>
                 {
-                    "This is an application where you should present data coming from a .NET WebAPI using React.",
+                    "This is an application where you should present data coming from an ASP.NET Core Web API using React.",
                     "Your application can only have GET requests.",
-                    "You cannot use AXIOS to fetch the data, you have to use JS Fetch API",
-                    "You should create an API of your choice, with a model representing a single table.",
-                    "One of the properties of your API's model should be imageUrl, with a link to pictures that will be shown by the react app.",
-                    "You can choose whatever ORM you want: Dapper, EF, ADO.NET.",
+                    "You cannot use libraries such as AXIOS to fetch the data. You have to use JS Fetch API.",
+                    "You should create an API with a business case of your choice, with a model representing a single table.",
+                    "One of the properties of your API's model should be imageUrl, with a link to pictures that will be shown by the React front end.",
                     "Your app needs to have a list of records and a page to visualise an individual record.",
-                    "Your app should show a 'Loading Data...' message while the request hasn't been completed.",
+                    "Your app should show a 'Loading Data...' message or some other UI element (i.e. spinner, loading bar) while the request hasn't been completed.",
                     "If there's a server error, the user should be informed."
                 },
                 Resources = new List<string>
@@ -114,14 +113,12 @@ internal static class ReactProjectsHelper
                 },
                 Challenges = new List<string>
                 {
-                    "If you want to push yourself early on, try adding all CRUD operations to your app.",
                     "Try to create an app that needs data from two different APIs: The one you created and a public one."
                 },
                 ResourcesConclusion = "Connecting to an API using Fetch JS is incredibly easy. But chances are you’ll find a cross-origin error. Don’t forget to visit these links to solve it. ",
                 Tips = new List<string>
                 {
-                    "This app should be relatively easy to build. Try not to over complicate it.",
-                    "If you want to add extra features, think of: pagination, filters and the ability to create a list of 'favourite' records.",
+                    "This app should be relatively easy to build. Try not to over complicate it. Focus on the connection between the front-end and the back-end. Study your requests carefully with the help of your browser's dev tools.",
                     "Think of a project that has plenty of good images online and keep it simple. Examples: Dogs, Cats, Movies, Cars, Athletes, Singers, Bands, Drinks.",
                     "<a target='_blank' href='https://github.com/public-apis/public-apis'>Another variation of this project would be to call a public api. Click to view a massive list.</a>"
                 }

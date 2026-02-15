@@ -28,7 +28,7 @@
             </MudPaper>
         </MudItem>
         <MudItem xs="12" md="9">
-            <MudPaper Class="d-flex flex-column mud-width-full mt-3 py-5 px-5">
+            <MudPaper Class="d-flex flex-column mud-width-full mt-3 pt-5 pb-5 px-5">
                 @if (IsLoggedIn && IsCompleted)
                 {
                     <MudAlert Class="mt-3 mb-3" Severity="Severity.Success" Elevation="2">You have completed this roadmap step.</MudAlert>
@@ -73,7 +73,7 @@
                             }
                             else
                             {
-                                <MudText Class="mt-2" Typo="Typo.body1">
+                                <MudText Class="mt-2 pb-5" Typo="Typo.body1">
                                     @((MarkupString)paragraph.Body)
                                 </MudText>
                             }

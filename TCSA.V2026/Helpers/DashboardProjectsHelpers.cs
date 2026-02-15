@@ -90,22 +90,9 @@ public static class DashboardProjectsHelpers
 
     public static Article GetProject(int projectId)
     {
-        var article = ArticleHelper.GetArticles().FirstOrDefault(a => a.Id == projectId);
-        if (article != null)
-        {
-            return article;
-        }
-        article = ProjectHelper.GetProjects().FirstOrDefault(p => p.Id == projectId);
-        if(article != null)
-        {
-            return article; 
-        }
-        article = CourseHelper.GetCourses().SelectMany(x => x.Articles).FirstOrDefault(a => a.Id == projectId);
-        if (article != null)
-        {
-            return article;
-        }
-        throw new Exception($"Article ID {projectId} not found");
+        return ArticleHelper.GetArticles().FirstOrDefault(a => a.Id == projectId)
+            ?? ProjectHelper.GetProjects().FirstOrDefault(p => p.Id == projectId)
+            ?? CourseHelper.GetCourses().SelectMany(x => x.Articles).FirstOrDefault(a => a.Id == projectId);
     }
 
     public static TaskStatus GetTaskStatus(int projectId, List<int> completedProjects, List<int> pendingProjects)

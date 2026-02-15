@@ -1,4 +1,4 @@
-﻿@page "/Account/Register"
+@page "/Account/Register"
 
 @using System.ComponentModel.DataAnnotations
 @using System.Text
@@ -33,6 +33,150 @@
                 <MudStaticTextField For="@(() => Input.DisplayName)" @bind-Value="Input.DisplayName"
                                     Label="DisplayName" Placeholder="display name"
                                     UserAttributes="@(new() { { "autocomplete", "displayname" }, { "aria-required", "true" } } )" />
+                <div class="custom-select-wrapper">
+                    <label class="custom-select-label" id="country-label" aria-labelledby="country-label">Country</label>
+                    <details class="custom-select" id="country-select">
+                        <summary class="custom-select-trigger mt-1">
+                            <span class="custom-select-value" id="country-display">@(string.IsNullOrEmpty(Input.Country) ? "Select a country..." : Input.Country)</span>
+                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </summary>
+                        <div class="custom-select-options" id="country-options">
+                            @foreach (var country in Countries)
+                            {
+                                <label class="custom-select-option">
+                                    <input type="radio" name="Input.Country" value="@country" checked="@(Input.Country == country)" />
+                                    <span>@country</span>
+                                </label>
+                            }
+                        </div>
+                    </details>
+                    <ValidationMessage For="@(() => Input.Country)" class="mud-input-helper-text mud-input-error" />
+                </div>
+
+                <style>
+                    .custom-select-wrapper {
+                        position: relative;
+                        width: 100%;
+                    }
+
+                    .custom-select {
+                        position: relative;
+                        width: 100%;
+                    }
+
+                    .custom-select-trigger {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        outline: none;
+                        padding: 0 0 7px;
+                        border: none;
+                        border-bottom: 1px solid var(--mud-palette-lines-inputs);
+                        background-color: transparent;
+                        color: var(--mud-palette-text-primary);
+                        cursor: pointer;
+                        list-style: none;
+                        font-size: 1rem;
+                    }
+
+                    .custom-select-trigger::-webkit-details-marker {
+                        display: none;
+                    }
+
+                    .custom-select-trigger:hover,
+                    .custom-select-trigger:focus,
+                    .custom-select-trigger:focus-within,
+                    .custom-select[open] .custom-select-trigger {
+                        border-bottom-color: var(--mud-palette-primary);
+                        border-bottom-width: 2px;
+                    }
+
+                    .custom-select[open] .custom-select-trigger {
+                        padding-bottom: 7px;
+                    }
+
+                    .custom-select-value {
+                        flex: 1;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    .custom-select-arrow {
+                        fill: var(--mud-palette-action-default);
+                        flex-shrink: 0;
+                    }
+
+                    .custom-select[open] .custom-select-arrow {
+                        transform: rotate(180deg);
+                    }
+
+                    .custom-select-options {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
+                        max-height: 300px;
+                        overflow-y: auto;
+                        background-color: var(--mud-palette-surface);
+                        border: 1px solid var(--mud-palette-lines-default);
+                        border-radius: var(--mud-default-borderradius);
+                        box-shadow: var(--mud-elevation-8);
+                        z-index: 1000;
+                        margin-top: 4px;
+                    }
+
+                    .custom-select-option {
+                        display: flex;
+                        padding: 12px 16px;
+                        cursor: pointer;
+                    }
+
+                    .custom-select-option:hover,
+                    .custom-select-option.highlighted {
+                        background-color: var(--mud-palette-action-default-hover);
+                    }
+
+                    .custom-select-option input[type="radio"] {
+                        display: none;
+                    }
+
+                    .custom-select-option input[type="radio"]:checked + span {
+                        color: var(--mud-palette-primary);
+                        font-weight: 500;
+                    }
+
+                    .custom-select-option:has(input:checked) {
+                        background-color: var(--mud-palette-primary-hover);
+                    }
+
+                    .custom-select-label {
+                        transform: translate(0, 1.5px) scale(0.75);
+                        transform-origin: top left;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        color: var(--mud-palette-text-primary);
+                        line-height: 1.15rem;
+                        letter-spacing: .00938em;
+                        pointer-events: none;
+                    }
+
+                    .custom-select[open] + .custom-select-label {
+                        color: var(--mud-palette-primary);
+                    }
+
+                    .custom-select-wrapper:has(div.mud-input-error) .custom-select-trigger {
+                        border-bottom-color: var(--mud-palette-error);
+                        border-bottom-width: 2px;
+                        margin-bottom: 3px;
+                    }
+
+                    .custom-select-wrapper:has(div.mud-input-error) .custom-select-label {
+                        color: var(--mud-palette-error);
+                    }
+                </style>
                 <MudStaticTextField For="@(() => Input.Email)" @bind-Value="Input.Email"
                                     Label="Email" Placeholder="name@example.com"
                                     UserAttributes="@(new() { { "autocomplete", "username" }, { "aria-required", "true" } } )" />
@@ -59,6 +203,76 @@
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         window.initializeThemeToggle?.();
+
+        const countrySelect = document.getElementById('country-select');
+        const countryDisplay = document.getElementById('country-display');
+        const countryOptions = document.getElementById('country-options');
+
+        if (countrySelect && countryOptions) {
+            countryOptions.addEventListener('click', (e) => {
+                const option = e.target.closest('.custom-select-option');
+                if (option) {
+                    const radio = option.querySelector('input[type="radio"]');
+                    if (radio) {
+                        radio.checked = true;
+                        countryDisplay.textContent = radio.value;
+                        countrySelect.removeAttribute('open');
+                    }
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (countrySelect.open && !countrySelect.contains(e.target)) {
+                    countrySelect.removeAttribute('open');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!countrySelect.open) return;
+
+                if (e.key === 'Escape') {
+                    countrySelect.removeAttribute('open');
+                    return;
+                }
+
+                if (e.key.length === 1 && e.key.match(/[a-zA-Z]/)) {
+                    e.preventDefault();
+                    
+                    const searchChar = e.key.toLowerCase();
+
+                    const options = countryOptions.querySelectorAll('.custom-select-option');
+                    for (const option of options) {
+                        const radio = option.querySelector('input[type="radio"]');
+                        const value = radio?.value?.toLowerCase();
+                        if (value && value.startsWith(searchChar)) {
+                            countryOptions.querySelector('.highlighted')?.classList.remove('highlighted');
+                            option.classList.add('highlighted');
+                            option.scrollIntoView({ block: 'nearest' });
+                            break;
+                        }
+                    }
+                }
+
+                if (e.key === 'Enter') {
+                    const highlighted = countryOptions.querySelector('.highlighted');
+                    if (highlighted) {
+                        e.preventDefault();
+                        const radio = highlighted.querySelector('input[type="radio"]');
+                        if (radio) {
+                            radio.checked = true;
+                            countryDisplay.textContent = radio.value;
+                            countrySelect.removeAttribute('open');
+                        }
+                    }
+                }
+            });
+
+            countrySelect.addEventListener('toggle', () => {
+                if (!countrySelect.open) {
+                    countryOptions.querySelector('.highlighted')?.classList.remove('highlighted');
+                }
+            });
+        }
     });
 </script>
 
@@ -92,13 +306,21 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
+        if (string.IsNullOrEmpty(Input.Country) || !Countries.Contains(Input.Country))
+        {
+            var messages = new ValidationMessageStore(editContext);
+            messages.Add(() => Input.Country, "Please select a valid country.");
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-        user.Country = string.Empty;
+        user.Country = Input.Country;
         user.FirstName = string.Empty;
         user.LastName = string.Empty;
         user.DisplayName = Input.DisplayName;
@@ -168,6 +390,10 @@
         [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
         [Display(Name = "Display Name")]
         public string DisplayName { get; set; } = "";
+
+        [Required]
+        [Display(Name = "Country")]
+        public string Country { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

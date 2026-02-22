@@ -22,6 +22,7 @@ else
 {
     <MudPaper Class="pa-4 mb-5" Elevation="4">
         <MudCheckBox @bind-Value="ShowAdvancedProjects" Label="Show advanced projects" Class="mb-2" />
+        <MudCheckBox @bind-Value="ShowUntouchedProjects" Label="Show untouched projects only" Class="mb-2" />
         <MudSelect T="string" Label="Filter by Project" @bind-Value="SelectedProject" Class="my-2" Dense="true" Clearable="true">
             <MudSelectItem T="string" Value="null">All</MudSelectItem>
             @foreach (var p in ProjectHelper.GetProjects())
@@ -111,6 +112,20 @@ else
         }
     }
 
+    private bool _showUntouchedProjects = false;
+    private bool ShowUntouchedProjects
+    {
+        get => _showUntouchedProjects;
+        set
+        {
+            if (_showUntouchedProjects != value)
+            {
+                _showUntouchedProjects = value;
+                FilterProject();
+            }
+        }
+    }
+
     private bool IsLoading = true;
 
     protected override async Task OnInitializedAsync() 
@@ -128,6 +143,11 @@ else
         if (ShowAdvancedProjects)
         {
             filtered = filtered.Where(x => !AdvancedProjectNames.Contains(x.ProjectName));
+        }
+
+        if (ShowUntouchedProjects)
+        {
+            filtered = filtered.Where(x => x.DateChangesRequested?.Contains("01-Jan") == true);
         }
 
         if (SelectedProject is not null)

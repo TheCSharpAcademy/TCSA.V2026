@@ -151,3 +151,19 @@ WHERE [ExperiencePoints] > @userExperiencePoints
 END;
 GO
 ```
+
+## 🧪 Testing
+
+### End-to-End Testing with Playwright
+
+This project uses Playwright for end-to-end testing. Before running the tests, you need to install the Playwright browsers.
+
+#### Installing Playwright Browsers
+
+```
+cd TCSA.V2026.EndToEndTests
+pwsh bin/Debug/net10.0/playwright.ps1 install
+```
+
+> [!NOTE]
+> This command needs to be run after building the test project for the first time.

@@ -111,7 +111,7 @@ ServiceProviderAccessor.ServiceProvider = app.Services;
 
 /*if (app.Environment.IsDevelopment())
 {
-    SeedData.Seed(app.Services);
+    await SeedData.Seed(app.Services);
 }*/
 
 if (app.Environment.IsDevelopment())

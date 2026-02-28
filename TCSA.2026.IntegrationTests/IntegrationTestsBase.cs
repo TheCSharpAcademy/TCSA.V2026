@@ -60,6 +60,30 @@ public class IntegrationTestsBase
                  LastName = "Userson",
                  Level = Level.Yellow,
                  ExperiencePoints = 100
+            },
+            new ApplicationUser
+            {
+                 Id = "orangeuser",
+                 UserName = "testuser3",
+                 Email = "test3@test.com",
+                 GithubUsername = "testGithubUsername3",
+                 Country = "Testistan",
+                 FirstName = "Testinik",
+                 LastName = "Userpapa",
+                 Level = Level.Orange,
+                 ExperiencePoints = 100
+            },
+             new ApplicationUser
+            {
+                 Id = "purpleuser",
+                 UserName = "testuser4",
+                 Email = "test4@test.com",
+                 GithubUsername = "testGithubUsername4",
+                 Country = "PurpleLand",
+                 FirstName = "Lila",
+                 LastName = "UserLila",
+                 Level = Level.Purple,
+                 ExperiencePoints = 100
             }
         };
 

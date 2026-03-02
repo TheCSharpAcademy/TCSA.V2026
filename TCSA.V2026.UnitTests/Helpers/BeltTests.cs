@@ -531,7 +531,7 @@ public class BeltTests
     public void GetFullStackAreasCompletedReturnsExpectedCount(List<int> completedProjects, int expectedCount)
     {
         var result = RoadmapHelper.GetFullStackAreasCompleted(completedProjects);
-        Assert.That(result, Is.EqualTo(expectedCount));
+        Assert.That(result, Has.Count.EqualTo(expectedCount));
     }
 
     private static IEnumerable<TestCaseData> FullStackAreaTestCases()

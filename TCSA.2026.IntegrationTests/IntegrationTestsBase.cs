@@ -83,7 +83,46 @@ public class IntegrationTestsBase
                  FirstName = "Lila",
                  LastName = "UserLila",
                  Level = Level.Purple,
-                 ExperiencePoints = 100
+                 ExperiencePoints = 100,
+                 DashboardProjects = new()
+                 {
+                     new DashboardProject
+                     {
+                         Id = 11,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.WaterLogger, // 11
+                         IsCompleted = true,
+                         GithubUrl = $"WaterLogger",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-3)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 12,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.Movies, // 12
+                         IsCompleted = true,
+                         GithubUrl = $"Movies",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-2)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 13,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.TodoList, // 53 - not in beginnerProjects
+                         IsCompleted = true,
+                         GithubUrl = $"TodoList",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-1)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 14,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.Budget,
+                         IsCompleted = true,
+                         GithubUrl = $"Budget",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-1)
+                     }
+                 }
             }
         };
 

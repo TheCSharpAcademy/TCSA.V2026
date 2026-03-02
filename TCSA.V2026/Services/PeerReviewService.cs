@@ -100,30 +100,24 @@ public class PeerReviewService(IDbContextFactory<ApplicationDbContext> _factory)
     public async Task<List<PeerReviewDisplay>> GetProjectsForPeerReview(string userId)
     {
         var url = "https://github.com/TheCSharpAcademy/CodeReviews";
-        var beginnerProjects = new List<int> { 11, 12, 13 };
 
         try
         {
             using (var context = _factory.CreateDbContext())
             {
                 var user = await context.AspNetUsers
+                    .AsNoTracking()
                     .Include(x => x.CodeReviewProjects)
+                    .Include(x => x.DashboardProjects.Where(dp => dp.IsCompleted))
                     .FirstOrDefaultAsync(x => x.Id.Equals(userId));
-                var level = user.Level;
 
-                if (level < Level.Yellow)
+                if (user.Level < Level.Yellow)
                 {
                     return new List<PeerReviewDisplay> { };
                 }
-                else if (level > Level.Yellow)
-                {
-                    beginnerProjects.AddRange(new List<int> { 14, 15, 16, 17 });
-                }
-
-                if (level > Level.Red)
-                {
-                    beginnerProjects.AddRange(new List<int> { 18, 19, 20, 21 });
-                }
+             
+                List<int> eligibleProjectIds = 
+                    PeerReviewHelpers.DetermineReviewableProjectIds(user.Level, user.DashboardProjects.Select(dp => dp.ProjectId));
 
                 var reviewProjects = context.UserReviews
                     .Where(x => x.AppUserId != user.Id)
@@ -134,7 +128,7 @@ public class PeerReviewService(IDbContextFactory<ApplicationDbContext> _factory)
                 .AsSplitQuery()
                 .Include(x => x.AppUser)
                 .Where(x => x.IsPendingReview
-                   && beginnerProjects.Contains(x.ProjectId)
+                   && eligibleProjectIds.Contains(x.ProjectId)
                    && !reviewProjects.Contains(x.Id)
                    && x.GithubUrl.StartsWith(url))
                 .OrderBy(x => x.DateSubmitted)

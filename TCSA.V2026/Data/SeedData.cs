@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Models;
 
@@ -6,19 +7,20 @@ namespace TCSA.V2026.Data;
 
 public static class SeedData
 {
-    public static void Seed(IServiceProvider serviceProvider)
+    public static async Task Seed(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
+        await using var context = await contextFactory.CreateDbContextAsync();
 
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
+        await context.Database.EnsureDeletedAsync();
+        await context.Database.EnsureCreatedAsync();
 
-        SeedChallenges(context);
-        SeedUsers(context);
+        await SeedChallenges(context);
+        await SeedUsers(context);
     }
 
-    private static void SeedUsers(ApplicationDbContext context)
+    private static async Task SeedUsers(ApplicationDbContext context)
     {
         var hasher = new PasswordHasher<ApplicationUser>();
 
@@ -27,9 +29,9 @@ public static class SeedData
 
             Id = Guid.NewGuid().ToString(),
             UserName = "user1@example.com",
-            NormalizedUserName = "user1@example.com",
+            NormalizedUserName = "USER1@EXAMPLE.COM",
             Email = "user1@example.com",
-            NormalizedEmail = "user1@example.com",
+            NormalizedEmail = "USER1@EXAMPLE.COM",
             FirstName = "John",
             LastName = "Doe",
             Country = "USA",
@@ -130,9 +132,9 @@ public static class SeedData
         {
             Id = Guid.NewGuid().ToString(),
             UserName = "user2@example.com",
-            NormalizedUserName = "user2@example.com",
+            NormalizedUserName = "USER2@EXAMPLE.COM",
             Email = "user2@example.com",
-            NormalizedEmail = "user2@example.com",
+            NormalizedEmail = "USER2@EXAMPLE.COM",
             FirstName = "Jane",
             LastName = "Smith",
             Country = "Canada",
@@ -149,9 +151,9 @@ public static class SeedData
         {
             Id = Guid.NewGuid().ToString(),
             UserName = "user3@example.com",
-            NormalizedUserName = "user3@example.com",
+            NormalizedUserName = "USER3@EXAMPLE.COM",
             Email = "user3@example.com",
-            NormalizedEmail = "user3@example.com",
+            NormalizedEmail = "USER3@EXAMPLE.COM",
             FirstName = "Jane",
             LastName = "Doe",
             Country = "AUS",
@@ -318,9 +320,9 @@ public static class SeedData
         {
             Id = Guid.NewGuid().ToString(),
             UserName = "user4@example.com",
-            NormalizedUserName = "user4@example.com",
+            NormalizedUserName = "USER4@EXAMPLE.COM",
             Email = "user4@example.com",
-            NormalizedEmail = "user4@example.com",
+            NormalizedEmail = "USER4@EXAMPLE.COM",
             FirstName = "Hulk",
             LastName = "Hogan",
             Country = "AUS",
@@ -501,9 +503,9 @@ public static class SeedData
         {
             Id = Guid.NewGuid().ToString(),
             UserName = "user5@example.com",
-            NormalizedUserName = "user5@example.com",
+            NormalizedUserName = "USER5@EXAMPLE.COM",
             Email = "user5@example.com",
-            NormalizedEmail = "user5@example.com",
+            NormalizedEmail = "USER5@EXAMPLE.COM",
             FirstName = "Walter",
             LastName = "White",
             Country = "Germany",
@@ -599,11 +601,11 @@ public static class SeedData
         };
         user5.PasswordHash = hasher.HashPassword(user5, "Password123!");
 
-        context.Users.AddRange(user1, user2, user3, user4, user5);
-        context.SaveChanges();
+        await context.Users.AddRangeAsync(user1, user2, user3, user4, user5);
+        await context.SaveChangesAsync();
     }
 
-    private static void SeedChallenges(ApplicationDbContext context)
+    private static async Task SeedChallenges(ApplicationDbContext context)
     {
         var challenges = new List<Challenge>
         {
@@ -828,7 +830,7 @@ public static class SeedData
             }
         };
 
-        context.Challenges.AddRange(challenges);
-        context.SaveChanges();
+        await context.Challenges.AddRangeAsync(challenges);
+        await context.SaveChangesAsync();
     }
 }

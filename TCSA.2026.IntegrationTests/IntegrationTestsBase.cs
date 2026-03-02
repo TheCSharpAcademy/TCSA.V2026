@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using TCSA.V2026.Data;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Helpers;
 using TCSA.V2026.Data.Models;
 
@@ -59,6 +60,69 @@ public class IntegrationTestsBase
                  LastName = "Userson",
                  Level = Level.Yellow,
                  ExperiencePoints = 100
+            },
+            new ApplicationUser
+            {
+                 Id = "orangeuser",
+                 UserName = "testuser3",
+                 Email = "test3@test.com",
+                 GithubUsername = "testGithubUsername3",
+                 Country = "Testistan",
+                 FirstName = "Testinik",
+                 LastName = "Userpapa",
+                 Level = Level.Orange,
+                 ExperiencePoints = 100
+            },
+             new ApplicationUser
+            {
+                 Id = "purpleuser",
+                 UserName = "testuser4",
+                 Email = "test4@test.com",
+                 GithubUsername = "testGithubUsername4",
+                 Country = "PurpleLand",
+                 FirstName = "Lila",
+                 LastName = "UserLila",
+                 Level = Level.Purple,
+                 ExperiencePoints = 100,
+                 DashboardProjects = new()
+                 {
+                     new DashboardProject
+                     {
+                         Id = 11,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.WaterLogger, // 11
+                         IsCompleted = true,
+                         GithubUrl = $"WaterLogger",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-3)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 12,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.Movies, // 12
+                         IsCompleted = true,
+                         GithubUrl = $"Movies",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-2)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 13,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.TodoList, // 53 - not in beginnerProjects
+                         IsCompleted = true,
+                         GithubUrl = $"TodoList",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-1)
+                     },
+                     new DashboardProject
+                     {
+                         Id = 14,
+                         AppUserId = "purpleuser",
+                         ProjectId = (int)ArticleName.Budget,
+                         IsCompleted = true,
+                         GithubUrl = $"Budget",
+                         DateSubmitted = DateTimeOffset.Now.AddDays(-1)
+                     }
+                 }
             }
         };
 

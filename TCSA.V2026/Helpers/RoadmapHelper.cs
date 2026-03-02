@@ -150,7 +150,7 @@ public static class RoadmapHelper
             level = Level.Red;
         }
 
-        int fullStackAreas = GetFullStackAreasCompleted(completedProjects);
+        int fullStackAreas = GetFullStackAreasCompleted(completedProjects).Count;
 
         if (level >= Level.Red
             && fullStackAreas >= 1
@@ -644,7 +644,7 @@ public static class RoadmapHelper
         var result = new RoadmapStage();
         result.Class = "custom-color-black";
 
-        int fullStackCompleted = GetFullStackAreasCompleted(completedProjects);
+        int fullStackCompleted = GetFullStackAreasCompleted(completedProjects).Count;
 
         var tasks = new List<RoadmapTask>();
 
@@ -748,16 +748,16 @@ public static class RoadmapHelper
         return result;
     }
 
-    public static int GetFullStackAreasCompleted(List<int> completedProjects)
+    public static List<Area> GetFullStackAreasCompleted(List<int> completedProjects)
     {
-        int fullStackCompleted = 0;
+        List<Area> fullStackAreas = new();
 
-        if (mvcProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
-        if (reactProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
-        if (angularProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
-        if (blazorProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
-        if (mauiProjects.All(x => completedProjects.Contains(x))) fullStackCompleted++;
+        if (mvcProjects.All(x => completedProjects.Contains(x))) fullStackAreas.Add(Area.MVC);
+        if (reactProjects.All(x => completedProjects.Contains(x))) fullStackAreas.Add(Area.React);
+        if (angularProjects.All(x => completedProjects.Contains(x))) fullStackAreas.Add(Area.Angular);
+        if (blazorProjects.All(x => completedProjects.Contains(x))) fullStackAreas.Add(Area.Blazor);    
+        if (mauiProjects.All(x => completedProjects.Contains(x))) fullStackAreas.Add(Area.MAUI);
 
-        return fullStackCompleted;
+        return fullStackAreas;
     }
 }

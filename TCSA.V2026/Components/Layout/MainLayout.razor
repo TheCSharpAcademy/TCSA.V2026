@@ -19,6 +19,26 @@
                        Edge="Edge.Start"
                        OnClick="@ToggleNavDrawer" />
         <MudImage Src="/img/logo.png" Width="40" />
+        <MudAutocomplete T="SearchItem"
+                         ToStringFunc="@(i => i?.Title ?? string.Empty)"
+                         Placeholder="Search articles & projects..."
+                         SearchFunc="SearchHelper.Search"
+                         AdornmentIcon="@Icons.Material.Filled.Search"
+                         ValueChanged="NavigateTo"
+                         Clearable
+                         Dense="true"
+                         Margin="Margin.Dense"
+                         Variant="Variant.Outlined"
+                         Style="max-width: 320px"
+                         Class="ml-4 appbar-search"
+                         AdornmentColor="Color.Primary">
+            <ItemTemplate Context="item">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                    <img src="img/icons/@(string.IsNullOrEmpty(item.IconUrl) ? "article-placeholder.png" : item.IconUrl)" style="height:2em;max-width:100%;" />
+                    <MudText Typo="Typo.body2">@item.Title</MudText>
+                </MudStack>
+            </ItemTemplate>
+        </MudAutocomplete>
         <MudSpacer />
         <MudSwitch UserAttributes="@(new Dictionary<string, object> { ["id"] = "theme-toggle" })"
                    ThumbIcon="@Icons.Material.Outlined.ModeNight"

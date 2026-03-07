@@ -1,0 +1,56 @@
+﻿@page "/dashboard/leaderboard"
+@using System.Security.Claims
+@using TCSA.V2026.Data.Models
+@using TCSA.V2026.Services
+
+
+<PageTitle>Statistics</PageTitle>
+
+<MudContainer>
+    @if (User != null)
+    {
+        <DashboardToolBar User=@User></DashboardToolBar>
+    }
+
+     @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+    }
+
+</MudContainer>
+
+@code 
+{
+
+    [Inject] private AuthenticationStateProvider AuthenticationState { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private IUserService UserService { get; set; }
+
+
+    private ApplicationUser User;
+    private string UserId = string.Empty;
+    private TimeSpan LoadTime = TimeSpan.Zero;
+    private bool IsLoading = true;
+    private int Ranking;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var startTime = DateTime.UtcNow;
+        var AuthSate = await AuthenticationState.GetAuthenticationStateAsync();
+
+        if (!AuthSate.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("Account/Login");
+        }
+
+        var claims = AuthSate.User;
+        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
+        User = await UserService.GetUserById(UserId);
+
+        LoadTime = DateTime.UtcNow - startTime;
+        IsLoading = false;
+    }
+}

@@ -15,6 +15,7 @@ public interface ILeaderboardService
     Task<int> GetTotalPages();
     Task<List<UserLeaderboardDisplay>> GetUsersForLeaderboard(int pageNumber);
     Task<List<UserReviewLeaderboardDisplay>> GetUserForReviewLeaderboard();
+
 }
 public class LeaderboardService(IDbContextFactory<ApplicationDbContext> _factory) : ILeaderboardService
 {

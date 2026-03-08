@@ -2,7 +2,7 @@
 {
     public class AppStatisticsCountries
     {
-        public string? Country { get; set; }
+        public string? CountryName { get; set; }
         public int UsersCount { get; set; } = 0;
 
         public int Ranking { get; set; }

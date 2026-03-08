@@ -36,6 +36,7 @@ public class LeaderboardService(IDbContextFactory<ApplicationDbContext> _factory
                     })
                     .OrderByDescending(x => x.UsersCount)
                     .ToListAsync();
+
                 var index = 1;
                 foreach (var country in result)
                 {

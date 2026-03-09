@@ -1,7 +1,8 @@
-@page "/"
+﻿@page "/"
 @using TCSA.V2026.Data.Curriculum
 @using TCSA.V2026.Data.DTOs
 @using TCSA.V2026.Data.Models
+@using TCSA.V2026.Helpers
 @using TCSA.V2026.Services
 <PageTitle>Home</PageTitle>
 
@@ -59,7 +60,6 @@ else
             </div>
             <div class="card-item">
                 <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
-                          Style="max-width: 240px; width: 100%;"
                           Elevation="4">
                     <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.CurrentYearUsers</h2>
                     <div class="d-flex gap-1 align-center">
@@ -70,7 +70,6 @@ else
            
             <div class="card-item">
                 <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
-                          Style="max-width: 240px; width: 100%;"
                           Elevation="4">
                     <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.AllReviewedProjects</h2>
                     <div class="d-flex gap-1 align-center">
@@ -80,11 +79,19 @@ else
             </div>
             <div class="card-item">
                 <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
-                          Style="max-width: 240px; width: 100%;"
                           Elevation="4">
                     <h2 class="mud-typography-h4 mud-primary-text mb-1">@Statistics.CurrentYearReviewedProjects</h2>
                     <div class="d-flex gap-1 align-center">
                         <MudText Typo="Typo.body2" Style="font-weight: bold">Projects Reviewed @Statistics.CurrentYear</MudText>
+                    </div>
+                </MudPaper>
+            </div>
+            <div class="card-item">
+                <MudPaper Class="px-4 py-2 d-flex flex-column align-center justify-center"
+                          Elevation="4">
+                    <h2 class="mud-typography-h4 mud-primary-text mb-1">@TimeSpanFormatter.FormatReviewTime(Statistics.AverageReviewTime)</h2>
+                    <div class="d-flex gap-1 align-center">
+                        <MudText Typo="Typo.body2" Style="font-weight: bold">Avg Review Time (30d)</MudText>
                     </div>
                 </MudPaper>
             </div>
@@ -382,7 +389,7 @@ else
     .cards-grid {
         display: grid;
         gap: 1.5rem;
-        grid-template-columns: repeat(auto-fit, 250px);
+        grid-template-columns: repeat(auto-fit, 200px);
         justify-content: center;
     }
 

@@ -1,6 +1,8 @@
-﻿using TCSA.V2026.Data.Enums;
+﻿using MudBlazor;
+using TCSA.V2026.Data.Enums;
 using TCSA.V2026.Data.Helpers;
 using TCSA.V2026.Data.Models;
+using static System.Net.WebRequestMethods;
 using Block = TCSA.V2026.Data.Models.Block;
 
 namespace TCSA.V2026.Data.Curriculum;
@@ -3199,4 +3201,6 @@ git push</code>"
         };
     }
 }
+
+
 

@@ -362,6 +362,7 @@
     [Inject] private IProjectService ProjectService { get; set; }
     [Inject] private IAccountabilityBuddyService AccountabilityBuddyService { get; set; }
     [Inject] private ICodewarsService CodewarsService { get; set; }
+    [Inject] private ISnackbar SnackbarService { get; set; }
 
     [Inject] private IDialogService DialogService { get; set; }
     [Inject] private IJSRuntime JS { get; set; }
@@ -451,14 +452,14 @@
 
             Project.CodeWarsChallenges = challengesResult.Value;
 
-            if (!IsCompleted && !Project.CodeWarsChallenges.Any(x => x.IsCompleted == false))
+            if (!IsCompleted && Project.CodeWarsChallenges.Any() && !Project.CodeWarsChallenges.Any(x => x.IsCompleted == false))
             {
                 await CodewarsService.MarkSqlProjectAsCompleted(Project.Id, UserId);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            SnackbarService.Add(ex.Message, Severity.Error);
         }
     }
 

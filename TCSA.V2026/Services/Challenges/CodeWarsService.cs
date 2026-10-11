@@ -90,6 +90,11 @@ public class CodewarsService : ICodewarsService, IChallengePlatformService
             return Result.Failure(new Error("CodeWars.UsernameNotFound", "Username not found. Go to the dashboard and click on 'Codewars Integration' to update your username."));
         }
 
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            return Result.Failure<List<CodeWarsChallenge>>(new Error("CodeWars.UnexpectedResponse", $"Codewars returned HTTP {(int)response.StatusCode} ({response.StatusCode})."));
+        }
+
         string jsonResponse = await response.Content.ReadAsStringAsync();
         CodeWarsApiResponse apiResponse = JsonSerializer.Deserialize<CodeWarsApiResponse>(jsonResponse);
 

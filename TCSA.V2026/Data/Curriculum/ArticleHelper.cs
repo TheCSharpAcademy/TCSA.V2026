@@ -1376,12 +1376,12 @@ git push</code>"
                     },
                     new Block
                     {
-                        Title = "1. Assign yourself to the project on your dashboard",
+                        Title = "1. Go to the Peer Reviews area",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
                             {
-                                Body = "In your dashboard, on your right side you'll see the number of projects available for review. Click on <b>Click to See</b> or <b>Code Reviews</b> on the left side-bar to access them."
+                                Body = "In your dashboard, on the side menu, click on Peer Reviews, where you'll see the projects available for review for your level."
                             },
                             new Paragraph
                             {
@@ -1397,7 +1397,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "You'll see a list of available projects along with the Experience Points you'll get for that review. You'll only be able to review projects from at least two belts below yours. Click on <b>Assign Myself</b> if you'd like to review that project."
+                                Body = "Projects available for review will have a <b>Pick</b> button. Once you click on pick you'll be assigned to the project and two different buttons will appear: <b>Drop</b> to unassign yourself and <b>Tick</b> to mark it as approved once you finished your review. The <b>View</b> button takes you to the Github repository and clicking on the project's name takes you to the project's page."
                             },
                             new Paragraph
                             {
@@ -1413,7 +1413,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = $"Click on 'View PR' on the project's card. On the new tab that will open, click on <b>assign yourself</b> on the <b>Assignees</b> area on the right side of the screen. If you're not able to click or see this option contact me on <a target='_blank' href='{discordLink}'>Discord</a> or via the e-mail <b>thecsharpacademy@gmail.com</b>"
+                                Body = $"Upon clicking on <b>View</b> and going to the Github page, click on <b>assign yourself</b> on the <b>Assignees</b> area on the right side of the screen. If you're not able to click or see this option let us know in <a target='_blank' href='{discordLink}'>our Discord Server</a> in the <b>#code-reviewers</b> channel.</b>"
                             },
                             new Paragraph
                             {
@@ -1440,7 +1440,7 @@ git push</code>"
                     },
                     new Block
                     {
-                        Title = "4. Open the project",
+                        Title = "5. Open the project",
                         Paragraphs = new List<Paragraph>
                         {
                             new Paragraph
@@ -1449,22 +1449,7 @@ git push</code>"
                             }
                         }
                     },
-                    new Block
-                    {
-                        Title = "5. Make sure the project is passing code-analysis ",
-                        Paragraphs = new List<Paragraph>
-                        {
-                            new Paragraph
-                            {
-                                Body = "If tests are passing, move on to step 6. If not, create a comment on the PR along the lines of: <b>Please fix the errors picked up by code analysis before I review your code. You can find instructions in item 6 of this article: https://www.thecsharpacademy.com/article/52/code-reviews. If you have any questions feel free to reply to this comment or reach out on Discord via the #codeReview channel</b>. Then wait for the student to fix the errors and move on to step 6. You won't get an e-mail once the student fixes the changes, so make sure you check the pull request for changes for changes."
-                            },
-                            new Paragraph
-                            {
-                                IsPicture = true,
-                                PictureUrl = "code-reviewer-4.png"
-                            }
-                        }
-                    },
+      
                     new Block
                     {
                         Title = "6. Review the Code",
@@ -1472,7 +1457,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = "\nRun the project and make sure it follows all requirements Then make sure the code follows our <a href='article/58/code-conventions' target='_blank'>code conventions</a> (Code analysis doesn't pick everything up yet). If it doesn't, make a comment in the relevant areas (you can create comments by hovering over the line numbers which prompts a + button. Once that's done click on <b>Request Changes</b> and <b>Finish Review</b> (or <b>Review Changes</b>) and <b>Submit Review</b>. "
+                                Body = "\nRun the project and make sure it follows all requirements Then make sure the code follows our <a href='article/58/code-conventions' target='_blank'>code conventions</a>. If it doesn't, make a comment in the relevant areas (you can create comments by hovering over the line numbers which prompts a + button. Once that's done click on <b>Request Changes</b> and <b>Finish Review</b> (or <b>Review Changes</b>) and <b>Submit Review</b>. "
                             },
                             new Paragraph
                             {
@@ -1486,7 +1471,7 @@ git push</code>"
                             },
                             new Paragraph
                             {
-                                Body = "\nIf the project is flawless, click on Approve. That's it, you're done. The project will be merged by The C# Academy team and you'll receive your Experience Points."
+                                Body = "\nIf the project is flawless, click on Approve. That's it, you're done. Our integration should mark the project as done in the dashboard and you and the student should get the Experience Points, provided your Github username is <a target='_blank' href='https://thecsharpacademy.com/Dashboard/profile'>correct in your profile</a>. Please check in the Peer Reviews section. If our integration didn't work and the project wasn't marked, simply click on <b>Tick</b> and you're done."
                             }
                         }
                     },
@@ -1508,7 +1493,7 @@ git push</code>"
                         {
                             new Paragraph
                             {
-                                Body = $"It will take a few iterations before getting used to the Code Review flow. Don't hesitate to ask questions on <a target='_blank' href='{discordLink}'>Discord</a> via the #codeReview channel or reach out to me personally."
+                                Body = $"It will take a few iterations before getting used to the Code Review flow. Don't hesitate to ask questions on <a target='_blank' href='{discordLink}'>Discord</a> via the #code-reviewers channel or reach out to me personally."
                             }
                         }
                     },
@@ -1523,12 +1508,13 @@ git push</code>"
                                      <ul> 
                                        <li>At the moment we're reviewing entry-level projects. We want the students to feel good about their journey. We want to approve their code! Keep that in mind and don't be too strict.</li>
                                        <li><b><u>Be nice</u></b>. Always use <b>please</b> when asking for a review. We want to create a supportive environment. Add an emoji if you think what you're saying might come across as blunt/direct/harsh. Words can be aggressive even if we don't want them to be and emojis are a good way to lighten the tone 😊.</li>
-                                       <li>Test each functionality of the app.</li>
-                                       <li>Try invalid inputs to make sure the validation works.</li>
+                                       <li>Test each requirement of manually. You don't need to test the challenges but the quality of the review is better when you do.</li>
                                        <li>It's ok if the project has MORE features than requested, but not LESS.</li>
-                                       <li>Most comments will relate to spacing, unused code, unused 'usings' and general code-organization/tidiness. Often times after requesting a change, the students will have fixed most of your comments, but will forget one or two. You can approve it anyways, we don't want too much back and forth in these entry-level projects. </li>
+                                       <li>Most comments will relate to spacing, unused code, unused 'usings' and general code-organization/tidiness. Often after requesting a change, the students will have fixed most of your comments, but will forget one or two. You can approve it anyways, we don't want too much back and forth in these entry-level projects. </li>
                                        <li>The C# Academy team will 'review your review' 2-3 times to ensure you understand the process.</li>
-                                       <li>It doesn't happen often, but some students will never fix their PR after you request changes. Unfortunately there isn't much we can do about it.</li>
+                                       <li>It doesn't happen often, but some students will never fix their PR after you request changes. If that's the case we will archive the project after 2 weeks and you'll still get your points for your efforts. And that project will count towards your belts requirements.</li>
+                                       <li>It's ok to use AI to have a look at the code and pick up things you perhaps wouldn't. However it often flags issues that are not relevant to a beginner's journey. Always review AI-generated feedback before applying it. And most importantly, do what AI can't do. Test the UI and UX.</li>
+                                       <li>Try invalid inputs to make sure the validation works.</li>
                                      </ul>"
                             }
                         }

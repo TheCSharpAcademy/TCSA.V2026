@@ -1699,7 +1699,7 @@ public class DiCourse
                                     },
                                     new Paragraph
                                     {
-                                        Body = "If you're following our <a href='https://thecsharpacademy.com/#' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>learning roadmap</a> there are upcoming projects where DI plays a central role, starting from <a href='https://thecsharpacademy.com/project/17/shifts-logger' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Shifts Logger</a>. Have your own idea for a project? Perfect! Try applying DI in a WebApi or start small with a CRUD service console app. <b>The best way to reinforce this knowledge is to build with it.</a>"
+                                        Body = "If you're following our <a href='https://thecsharpacademy.com/#' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>learning roadmap</a> there are upcoming projects where DI plays a central role, starting from <a href='https://thecsharpacademy.com/project/17/shifts-logger' target='_blank' style='color: #7DA2C8; text-decoration: underline;'>Shifts Logger</a>. Have your own idea for a project? Perfect! Try applying DI in a WebApi or start small with a CRUD service console app. <b>The best way to reinforce this knowledge is to build with it.</b>"
                                     },
                                     new Paragraph
                                     {

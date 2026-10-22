@@ -98,12 +98,11 @@
     [Inject] private IUserService UserService { get; set; }
     [Inject] private IDonateService DonateService { get; set; }
 
-    [PersistentState]
-    public ApplicationUser? User { get; set; }
+    private ApplicationUser? User { get; set; }
 
     private bool IsBusy { get; set; } = true;
     private string? Error { get; set; }
-    private string UserId { get; set; }
+    private string? UserId { get; set; }
 
     private int[] Presets { get; } = [5, 10, 25, 50];
     private int AmountDollars { get; set; } = 10;
@@ -122,20 +121,34 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var startTime = DateTime.UtcNow;
-        var authSate = await AuthenticationState.GetAuthenticationStateAsync();
-
-        if (!authSate.User.Identity.IsAuthenticated)
+        try
         {
-            Navigation.NavigateTo("Account/Login");
+            var authState = await AuthenticationState.GetAuthenticationStateAsync();
+            if (authState.User.Identity?.IsAuthenticated != true)
+            {
+                Navigation.NavigateTo("Account/Login");
+                return;
+            }
+
+            UserId = authState.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrWhiteSpace(UserId))
+            {
+                User = await UserService.GetUserProfileById(UserId);
+            }
+
+            if (User is null)
+                Error = "Could not load your profile. Please sign in again.";
+        }
+        catch
+        {
+            Error = "Could not load your profile. Please try again.";
+        }
+        finally
+        {
+            IsBusy = false;
         }
 
-        var claims = authSate.User;
-        UserId = claims.FindFirstValue(ClaimTypes.NameIdentifier);
-        User ??= await UserService.GetUserById(UserId);
-
         await LoadDonationProgressAsync();
-        IsBusy = false;
     }
 
     private async Task LoadDonationProgressAsync()
@@ -175,7 +188,7 @@
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(User.Email))
+        if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrWhiteSpace(User?.Email))
         {
             Error = "You must be logged in to contribute.";
             return;

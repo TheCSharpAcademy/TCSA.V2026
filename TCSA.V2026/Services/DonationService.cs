@@ -56,6 +56,9 @@ public sealed class DonateService : IDonateService
             Currency = currency,
             Status = DonationStatus.Created,
             CreatedUtc = DateTime.UtcNow,
+            // The database requires a unique, non-null session reference even
+            // before Stripe creates the session. Keep failed attempts distinct.
+            StripeCheckoutSessionId = $"pending_{Guid.NewGuid():N}",
         };
 
         db.UserDonations.Add(donation);
